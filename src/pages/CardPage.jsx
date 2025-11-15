@@ -6,7 +6,7 @@ import GuessInput from '../components/GuessInput';
 function usePokemonData() {
   const [pokemonData, setPokemonData] = useState(null);
   useEffect(() => {
-    fetch('/data/pokemon_data.json')
+    fetch('data/pokemon_data.json')
       .then(res => res.json())
       .then(setPokemonData);
   }, []);
@@ -16,7 +16,7 @@ function usePokemonData() {
 function useCardManifest() {
   const [cardManifest, setCardManifest] = useState(null);
   useEffect(() => {
-    fetch('/data/card_manifest.json')
+    fetch('data/card_manifest.json')
       .then(res => res.json())
       .then(setCardManifest);
   }, []);

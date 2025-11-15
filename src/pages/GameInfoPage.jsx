@@ -5,7 +5,7 @@ import GuessInput from '../components/GuessInput';
 function usePokemonData() {
     const [pokemonData, setPokemonData] = useState(null);
     useEffect(() => {
-        fetch('/data/pokemon_data.json')
+        fetch('data/pokemon_data.json')
             .then(res => res.json())
             .then(setPokemonData);
     }, []);
