@@ -120,7 +120,7 @@ function App() {
     <div style={{
       maxWidth: 900,
       margin: '0 auto',
-      padding: '112px 24px 24px 24px', // 96px header + 16px gap
+      padding: '112px 24px 24px 24px',
       fontFamily: 'Inter, Arial, sans-serif',
       minHeight: 'calc(100vh - 96px)',
       height: 'calc(100vh - 96px)',
@@ -131,7 +131,28 @@ function App() {
       justifyContent: 'flex-start',
       overflow: 'hidden',
     }}>
-      <div style={{
+      <style>{`
+        @media (max-width: 600px) {
+          .main-app {
+            padding: 80px 4px 4px 4px !important;
+            min-height: calc(100vh - 60px) !important;
+            height: auto !important;
+          }
+          .main-header {
+            height: 60px !important;
+            padding: 0 4px !important;
+          }
+          .main-header img {
+            height: 36px !important;
+            margin-right: 8px !important;
+          }
+          .main-header nav button {
+            font-size: 13px !important;
+            padding: 6px 8px !important;
+          }
+        }
+      `}</style>
+      <div className="main-header" style={{
         width: '100vw',
         left: 0,
         top: 0,
@@ -147,11 +168,12 @@ function App() {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           maxWidth: 1100,
           margin: '0 auto',
-          padding: '0 32px',
+          padding: '0 16px',
           height: 96,
+          gap: 0,
         }}>
           <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: '100%' }}>
             <img
@@ -162,29 +184,35 @@ function App() {
                 width: 'auto',
                 display: 'block',
                 objectFit: 'contain',
-                marginRight: 32,
+                marginRight: 24,
+                marginLeft: 0,
+                maxWidth: 120,
+                maxHeight: 80,
               }}
             />
           </div>
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <nav style={{ display: 'flex', gap: 12 }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto' }}>
+            <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%' }}>
               {PAGES.map(p => (
                 <button
                   key={p.key}
                   onClick={() => setPage(p.key)}
                   style={{
                     padding: '10px 22px',
-                    borderRadius: 8,
+                    borderRadius: 12,
                     background: page === p.key ? '#1976d2' : 'transparent',
                     color: page === p.key ? '#fff' : '#1976d2',
-                    border: page === p.key ? 'none' : '1.5px solid #1976d2',
-                    fontWeight: 600,
+                    border: page === p.key ? 'none' : '2px solid #1976d2',
+                    fontWeight: 700,
                     fontSize: 18,
                     cursor: 'pointer',
                     boxShadow: page === p.key ? '0 2px 8px #1976d233' : 'none',
                     transition: 'background 0.2s, color 0.2s',
                     marginLeft: 0,
                     marginRight: 0,
+                    minWidth: 90,
+                    marginBottom: 8,
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {p.label}
@@ -207,6 +235,34 @@ function App() {
   {page === 'locations' && <LocationsPage guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
   {page === 'card' && <CardPage guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
+      <style>{`
+        @media (max-width: 600px) {
+          .main-app {
+            padding: 80px 4px 4px 4px !important;
+            min-height: calc(100vh - 60px) !important;
+            height: auto !important;
+          }
+          .main-header {
+            height: 60px !important;
+            padding: 0 4px !important;
+          }
+          .main-header img {
+            height: 36px !important;
+            margin-right: 8px !important;
+            max-width: 80px !important;
+            max-height: 40px !important;
+          }
+          .main-header nav {
+            gap: 6px !important;
+          }
+          .main-header nav button {
+            font-size: 13px !important;
+            padding: 6px 8px !important;
+            min-width: 60px !important;
+            margin-bottom: 4px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

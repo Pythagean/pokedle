@@ -163,7 +163,28 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
   }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
+    <div style={{ textAlign: 'center', marginTop: 40, width: '100%' }}>
+      <style>{`
+        @media (max-width: 600px) {
+          .zoom-main {
+            margin-top: 16px !important;
+            padding: 0 2px !important;
+          }
+          .zoom-img-container {
+            width: 98vw !important;
+            height: 40vw !important;
+            max-width: 98vw !important;
+            max-height: 60vw !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+          }
+          .zoom-form {
+            flex-direction: column !important;
+            gap: 4px !important;
+            margin-bottom: 16px !important;
+          }
+        }
+      `}</style>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Zoom Mode</h2>
         <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -243,9 +264,9 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
           Reset
         </button>
       </div>
-      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>
-         <div style={{ margin: '0 auto', width: 360, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
+         <div className="zoom-img-container" style={{ margin: '0 auto', width: 360, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', maxWidth: '100vw', maxHeight: '60vw' }}>
            {imgLoaded && (
              <img
                src={realImagePath}
@@ -259,6 +280,7 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
       </div>
       {!isCorrect && (
         <form
+          className="zoom-form"
           onSubmit={e => {
             e.preventDefault();
             if (highlightedIdx >= 0 && filteredOptions.length > 0) {

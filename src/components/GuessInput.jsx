@@ -13,8 +13,9 @@ export default function GuessInput({
   handleGuessSubmit
 }) {
   return (
-    <div style={{ position: 'relative', minWidth: 220, flex: 1, maxWidth: '80%' }}>
+    <div style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
       <input
+        className="guess-input"
         ref={inputRef}
         type="text"
         value={guess}
@@ -42,12 +43,13 @@ export default function GuessInput({
           // Do not handle Enter here; let form onSubmit handle it
         }}
         placeholder="Enter a Pokémon name..."
-        style={{ width: '100%', minWidth: 180, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box' }}
+        style={{ width: '100%', minWidth: 120, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box' }}
         autoFocus
         autoComplete="off"
       />
       {dropdownOpen && guess.length > 0 && filteredOptions.length > 0 && (
         <ul
+          className="guess-dropdown"
           ref={dropdownRef}
           style={{
             position: 'absolute',
@@ -63,6 +65,8 @@ export default function GuessInput({
             margin: 0,
             padding: 0,
             listStyle: 'none',
+            width: '100%',
+            minWidth: 120,
           }}
         >
           {filteredOptions.map((opt, i) => (
@@ -75,6 +79,7 @@ export default function GuessInput({
                 display: 'flex',
                 alignItems: 'center',
                 gap: 10,
+                fontSize: 15,
               }}
               onMouseDown={() => {
                 handleGuessSubmit(null, opt.name);
@@ -96,6 +101,20 @@ export default function GuessInput({
           ))}
         </ul>
       )}
+      {/* Responsive mobile styles for GuessInput */}
+      <style>{`
+        @media (max-width: 600px) {
+          .guess-input {
+            min-width: 80px !important;
+            font-size: 14px !important;
+            padding: 7px 8px !important;
+          }
+          .guess-dropdown {
+            font-size: 13px !important;
+            min-width: 80px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

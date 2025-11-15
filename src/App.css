@@ -1,4 +1,3 @@
-#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +38,19 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Mobile-friendly tweaks */
+@media (max-width: 600px) {
+  #root {
+    padding: 0.5rem;
+    max-width: 100vw;
+  }
+  .card {
+    padding: 1em;
+  }
+  .logo {
+    height: 3em;
+    padding: 0.5em;
+  }
 }
