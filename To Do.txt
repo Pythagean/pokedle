@@ -1,0 +1,51 @@
+Card
+
+	Only show the picture part of the card
+	After 4 guesses, show the whole card
+	After 8 guesses, reveal the pokemon types
+
+	Full Art Fridays - 
+	Shiny Saturdays
+	Illustration Sundays - Illustration Cards
+
+	
+
+
+Classic
+Card
+Pokedex Entry
+Image - Silhouette / Zoom
+Colours
+Game Info - Stats / Ability / Locations / Moves / Category
+
+
+
+To Do List
+Card
+	Support for full art/illustration
+	Test out shinies
+	Add day specific text
+Privacy Policy
+Donate Button
+How to play - classic
+Background
+Settings
+	Units of measure
+	Language?
+Contact
+" Nintendo does not endorse or sponsor this project. "
+Pokémon Cry Page?
+Dark Mode
+
+
+	
+
+
+
+
+
+I guessed the #963 silhouette hidden #Pokedle Pokémon FIRST TRY 👤🖼️🌒✨
+Play at pokedle.com 🎮!
+
+I found #Pokédle pokémon #763 with a card in one shot (easy) ⚔️🥇
+https://pokedle.net
