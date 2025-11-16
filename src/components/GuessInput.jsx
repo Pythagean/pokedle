@@ -105,13 +105,13 @@ export default function GuessInput({
       <style>{`
         @media (max-width: 600px) {
           .guess-input {
-            min-width: 80px !important;
+            min-width: 60px !important;
             font-size: 14px !important;
             padding: 7px 8px !important;
           }
           .guess-dropdown {
             font-size: 13px !important;
-            min-width: 80px !important;
+            min-width: 60px !important;
           }
         }
       `}</style>

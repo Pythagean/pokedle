@@ -113,7 +113,7 @@ function ClassicPage({ guesses, setGuesses }) {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#f8fafc'}}>
       <div style={{ width: '100%', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
           <h2 style={{ margin: 0 }}>Classic Mode</h2>
@@ -156,83 +156,55 @@ function ClassicPage({ guesses, setGuesses }) {
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Color</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Height (m)</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight (kg)</div>
+            <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
+            <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
           </div>
           <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto' }}>
             <div>
               {guesses.map((poke, idx) => {
                 const cmp = getComparison(poke, dailyPokemon);
-                const ArrowIcon = ({ dir }) => {
-                  const color = '#333';
-                  if (dir === 'up') {
-                    return (
-                      <svg width="24" height="24" viewBox="0 0 32 32" style={{ display: 'inline', verticalAlign: 'middle' }}>
-                        <rect x="11" y="12" width="10" height="14" fill={color} />
-                        <path d="M 16 4 L 10 12 L 22 12 Z" fill={color} />
-                      </svg>
-                    );
-                  } else if (dir === 'down') {
-                    return (
-                      <svg width="24" height="24" viewBox="0 0 32 32" style={{ display: 'inline', verticalAlign: 'middle' }}>
-                        <rect x="11" y="6" width="10" height="14" fill={color} />
-                        <path d="M 16 28 L 10 20 L 22 20 Z" fill={color} />
-                      </svg>
-                    );
-                  } else {
-                    return null;
-                  }
-                };
                 const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
                 const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
                 return (
                   <div key={poke.name + idx} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
                     <div className="feedback-box feedback-pokemon-box">
-                      <img
-                        src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
-                        alt={poke.name}
-                        style={{ width: 32, height: 32, objectFit: 'contain', display: 'block', margin: '0 auto', transform: 'scale(1)' }}
-                        onError={e => { e.target.style.display = 'none'; }}
-                      />
+                      <div className="feedback-pokemon-img">
+                        <img
+                          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
+                          alt={poke.name}
+                          onError={e => { e.target.style.display = 'none'; }}
+                        />
+                      </div>
+                      <div className="feedback-box-content" aria-hidden="true"></div>
                     </div>
-                    <div className={`feedback-box ${cmp.color}`}>{poke.color}</div>
-                    <div className={`feedback-box ${cmp.types}`}>{poke.types.join(', ')}</div>
-                    <div className={`feedback-box ${cmp.habitat}`}>{poke.habitat}</div>
+                    <div className={`feedback-box ${cmp.color}`}>
+                      <div className="feedback-box-content">{poke.color}</div>
+                    </div>
+                    <div className={`feedback-box ${cmp.types}`}>
+                      <div className="feedback-box-content">{poke.types.join(', ')}</div>
+                    </div>
+                    <div className={`feedback-box ${cmp.habitat}`}>
+                      <div className="feedback-box-content">{poke.habitat}</div>
+                    </div>
                     <div className={`feedback-box ${heightStatus}`} style={{ position: 'relative' }}>
-                      {cmp.height !== 'match' && (
-                        <svg width="40" height="40" viewBox="0 0 100 100" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.2, pointerEvents: 'none' }}>
-                          {cmp.height === 'up' ? (
-                            <>
-                              <rect x="35" y="40" width="30" height="40" fill="#333" />
-                              <path d="M 50 15 L 23 40 L 77 40 Z" fill="#333" />
-                            </>
-                          ) : (
-                            <>
-                              <rect x="35" y="20" width="30" height="40" fill="#333" />
-                              <path d="M 50 85 L 23 60 L 77 60 Z" fill="#333" />
-                            </>
-                          )}
-                        </svg>
-                      )}
-                      <span style={{ position: 'relative', zIndex: 1 }}>{poke.height}</span>
+                            {cmp.height !== 'match' && (
+                              <div className="bg-icon" aria-hidden="true">
+                                <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
+                              </div>
+                            )}
+                      <div className="feedback-box-content">
+                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
+                      </div>
                     </div>
                     <div className={`feedback-box ${weightStatus}`} style={{ position: 'relative' }}>
-                      {cmp.weight !== 'match' && (
-                        <svg width="40" height="40" viewBox="0 0 100 100" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.2, pointerEvents: 'none' }}>
-                          {cmp.weight === 'up' ? (
-                            <>
-                              <rect x="35" y="40" width="30" height="40" fill="#333" />
-                              <path d="M 50 15 L 23 40 L 77 40 Z" fill="#333" />
-                            </>
-                          ) : (
-                            <>
-                              <rect x="35" y="20" width="30" height="40" fill="#333" />
-                              <path d="M 50 85 L 23 60 L 77 60 Z" fill="#333" />
-                            </>
-                          )}
-                        </svg>
-                      )}
-                      <span style={{ position: 'relative', zIndex: 1 }}>{poke.weight}</span>
+                            {cmp.weight !== 'match' && (
+                              <div className="bg-icon" aria-hidden="true">
+                                <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
+                              </div>
+                            )}
+                      <div className="feedback-box-content">
+                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -252,16 +224,11 @@ function ClassicPage({ guesses, setGuesses }) {
             margin-left: 0 !important;
             margin-right: 0 !important;
             border-radius: 0 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
           }
         }
         @media (max-width: 600px) {
           .classic-grid-header > div {
             font-size: 0.7em !important;
-          }
-          .classic-main-container {
-            padding: 6px 0 6px 0 !important;
           }
         }
         .feedback-grid {
@@ -274,14 +241,18 @@ function ClassicPage({ guesses, setGuesses }) {
         }
         .feedback-box {
           width: 100%;
-          height: 38px;
+          aspect-ratio: 1 / 1;
+          /* Fallback for browsers without aspect-ratio support */
+          height: 0;
+          padding-bottom: 100%;
+          position: relative;
           border: 2px solid #b2dfdb;
           border-radius: 8px;
           background: #c8e6c9;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 11px;
+          font-size: 14px;
           font-weight: 500;
           box-sizing: border-box;
           transition: background 0.2s, border 0.2s;
@@ -289,6 +260,57 @@ function ClassicPage({ guesses, setGuesses }) {
           text-align: center;
           overflow: hidden;
           white-space: pre-line;
+        }
+        .feedback-box > * {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .bg-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 110%;
+          height: 110%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .bg-icon img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+          opacity: 0.28;
+          pointer-events: none;
+          transform: none;
+        }
+        .bg-icon img.flip-vertical {
+          transform: scaleY(-1);
+        }
+        .feedback-pokemon-img {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          height: 90%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
+        }
+        .feedback-pokemon-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .feedback-box-content {
+          z-index: 2;
         }
         .feedback-pokemon-box {
           background: #fff !important;
@@ -317,21 +339,28 @@ function ClassicPage({ guesses, setGuesses }) {
           border-color: #b71c1c !important;
         }
         @media (max-width: 700px) {
-          .classic-main-container {
-            padding: 4px 0 4px 0 !important;
-          }
           .feedback-grid, .classic-grid-fit > div {
             width: 100% !important;
             min-width: 0 !important;
           }
           .feedback-box {
-            font-size: 10px !important;
-            height: 32px !important;
+            font-size: 11px !important;
             border-radius: 6px !important;
+            /* aspect-ratio and padding-bottom already handle sizing */
           }
           .feedback-pokemon-box img {
-            width: 22px !important;
-            height: 22px !important;
+            width: 90% !important;
+            height: 90% !important;
+          }
+          /* Ensure the arrow SVG stays visible and scales on mobile */
+          .bg-icon {
+            width: 110% !important;
+            height: 110% !important;
+          }
+          .bg-icon img {
+            opacity: 0.28 !important;
+            width: 100% !important;
+            height: 100% !important;
           }
         }
       `}</style>
