@@ -258,12 +258,13 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>
-         <div style={{ margin: '0 auto', width: 360, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
+         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
            {imgLoaded && (
              isCorrect ? (
                <img
                  src={realImagePath}
                  alt={dailyPokemon.name}
+                 className="silhouette-img"
                  style={{ ...imgStyle, filter: 'none', transform: 'scale(0.9,0.9)' }}
                  onLoad={() => setImgLoaded(true)}
                  onError={e => { setImgLoaded(false); }}
@@ -272,6 +273,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
                <img
                  src={silhouettePath}
                  alt="Silhouette"
+                 className="silhouette-img"
                  style={imgStyle}
                  onLoad={() => setImgLoaded(true)}
                  onError={e => { setImgLoaded(false); }}
@@ -370,4 +372,40 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
       )}
     </div>
   );
+}
+
+/* Component-specific responsive CSS for silhouette viewport */
+const _silhouetteStyles = `
+.silhouette-viewport {
+  margin: 0 auto;
+  width: min(90vw, 360px);
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
+  max-width: 100%;
+}
+.silhouette-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+@media (min-width: 521px) {
+  .silhouette-viewport { width: 360px; }
+}
+
+@media (max-width: 520px) {
+  .silhouette-viewport { width: min(90vw, 320px); }
+}
+
+@media (max-width: 360px) {
+  .silhouette-viewport { width: 92vw; }
+}
+`;
+
+// Inject styles into the document (only once)
+if (typeof document !== 'undefined' && !document.getElementById('pokedle-silhouette-styles')) {
+  const s = document.createElement('style');
+  s.id = 'pokedle-silhouette-styles';
+  s.innerHTML = _silhouetteStyles;
+  document.head.appendChild(s);
 }

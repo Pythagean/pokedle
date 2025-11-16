@@ -165,18 +165,33 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
   return (
     <div style={{ textAlign: 'center', marginTop: 10, width: '100%' }}>
       <style>{`
+        /* Make the zoom image container always square and responsive */
+        .zoom-img-container {
+          width: min(90vw, 360px);
+          aspect-ratio: 1 / 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: #fff;
+          margin: 0 auto;
+          max-width: 100%;
+        }
+        @media (min-width: 521px) {
+          .zoom-img-container { width: 360px; }
+        }
+        /* Grey box (wrapper) sizing - keep smaller on mobile */
+        .zoom-main { max-width: 500px; margin: 24px auto; padding: 18px; }
+        @media (max-width: 520px) {
+          .zoom-main { max-width: 92vw; padding: 12px; }
+        }
         @media (max-width: 600px) {
           .zoom-main {
             margin-top: 16px !important;
             padding: 0 2px !important;
           }
           .zoom-img-container {
-            width: 98vw !important;
-            height: 40vw !important;
-            max-width: 98vw !important;
-            max-height: 60vw !important;
-            min-width: 0 !important;
-            min-height: 0 !important;
+            width: min(98vw, 320px) !important;
           }
           .zoom-form {
             flex-direction: column !important;
@@ -264,9 +279,9 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
           Reset
         </button>
       </div>
-      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
+      <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>
-         <div className="zoom-img-container" style={{ margin: '0 auto', width: 360, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', maxWidth: '100vw', maxHeight: '60vw' }}>
+         <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', maxWidth: '100vw', maxHeight: '60vw' }}>
            {imgLoaded && (
              <img
                src={realImagePath}

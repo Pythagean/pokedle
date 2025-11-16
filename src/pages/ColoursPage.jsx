@@ -228,7 +228,7 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
         <div style={{ fontWeight: 600, marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           <span>Which Pokémon is made up of these colours?</span>
         </div>
-        <div style={{ margin: '0 auto', width: 500, height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
+        <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
           {/* Colour block image */}
           {imgLoaded && (
             <img
@@ -375,4 +375,37 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
       )}
     </div>
   );
+}
+
+/* Component-specific responsive CSS for colours viewport */
+const _coloursStyles = `
+.colours-viewport {
+  margin: 0 auto;
+  width: min(90vw, 500px);
+  aspect-ratio: 2 / 1; /* keep original 500x250 aspect ratio */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  gap: 0;
+}
+.colours-viewport img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 520px) {
+  .colours-viewport { width: min(78vw, 300px); }
+}
+
+@media (max-width: 360px) {
+  .colours-viewport { width: 94vw; }
+}
+`;
+
+if (typeof document !== 'undefined' && !document.getElementById('pokedle-colours-styles')) {
+  const s = document.createElement('style');
+  s.id = 'pokedle-colours-styles';
+  s.innerHTML = _coloursStyles;
+  document.head.appendChild(s);
 }
