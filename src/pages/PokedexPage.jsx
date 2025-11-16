@@ -97,7 +97,7 @@ export default function PokedexPage({ guesses, setGuesses, dailySeed }) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdownOpen]);
 
-  if (!pokemonData) return <div>Loading data...</div>;
+  if (!pokemonData) return <div>Loading Pokédex entries...</div>;
 
   function handleGuessSubmit(e, overrideGuess) {
     if (e) e.preventDefault();

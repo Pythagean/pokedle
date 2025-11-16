@@ -121,7 +121,7 @@ function ClassicPage({ guesses, setGuesses }) {
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
 
-  if (!pokemonData) return <div>Loading data...</div>;
+  if (!pokemonData) return <div>Loading Pokémon...</div>;
 
   // Comparison logic for feedback
   function getComparison(guessPoke, answerPoke) {

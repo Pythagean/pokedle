@@ -52,7 +52,7 @@ const PAGES = [
   { key: 'silhouette', label: 'Silhouette' },
   { key: 'zoom', label: 'Zoom' },
   { key: 'colours', label: 'Colours' },
-  { key: 'gameinfo', label: 'Game Info' },
+  { key: 'gameinfo', label: 'Game Data' },
 ];
 
 function App() {

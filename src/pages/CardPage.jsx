@@ -151,7 +151,7 @@ function CardPage({ guesses, setGuesses }) {
 
   const [showHelp, setShowHelp] = useState(false);
 
-  if (!pokemonData || !cardManifest) return <div>Loading data...</div>;
+  if (!pokemonData || !cardManifest) return <div>Shuffling Pokémon cards...</div>;
 
   function handleGuessSubmit(e, overrideGuess) {
     if (e) e.preventDefault();

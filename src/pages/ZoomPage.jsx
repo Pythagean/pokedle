@@ -92,7 +92,7 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
   // Pick edge: 0=top, 1=right, 2=bottom, 3=left
   const edge = useMemo(() => Math.floor(edgeSeed * 4), [edgeSeed]);
 
-  if (!pokemonData) return <div>Loading data...</div>;
+  if (!pokemonData) return <div>Loading Pokémon artwork...</div>;
 
   function handleGuessSubmit(e, overrideGuess) {
     if (e) e.preventDefault();
