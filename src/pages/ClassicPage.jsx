@@ -29,6 +29,7 @@ function getSeedFromUTCDate(date) {
 
 function ClassicPage({ guesses, setGuesses }) {
   const pokemonData = usePokemonData();
+  const MAX_PLACEHOLDER_ROWS = 1;
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -41,6 +42,7 @@ function ClassicPage({ guesses, setGuesses }) {
   const rng = useMemo(() => mulberry32(seed), [seed]);
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  const rowsToRender = Math.max(1, guesses.length);
 
   // Autocomplete options
   const pokemonNameMap = useMemo(() => {
@@ -162,54 +164,68 @@ function ClassicPage({ guesses, setGuesses }) {
           </div>
           <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto' }}>
             <div>
-              {guesses.map((poke, idx) => {
-                const cmp = getComparison(poke, dailyPokemon);
-                const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
-                const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
+              {Array.from({ length: rowsToRender }).map((_, rowIdx) => {
+                  if (rowIdx < guesses.length) {
+                  const poke = guesses[rowIdx];
+                  const cmp = getComparison(poke, dailyPokemon);
+                  const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
+                  const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
+                  return (
+                    <div key={poke.name + rowIdx} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
+                      <div className="feedback-box feedback-pokemon-box">
+                        <div className="feedback-pokemon-img">
+                          <img
+                            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
+                            alt={poke.name}
+                            onError={e => { e.target.style.display = 'none'; }}
+                          />
+                        </div>
+                        <div className="feedback-box-content" aria-hidden="true"></div>
+                      </div>
+                      <div className={`feedback-box ${cmp.color}`}>
+                        <div className="feedback-box-content">{poke.color}</div>
+                      </div>
+                      <div className={`feedback-box ${cmp.types}`}>
+                        <div className="feedback-box-content">{poke.types.join(', ')}</div>
+                      </div>
+                      <div className={`feedback-box ${cmp.habitat}`}>
+                        <div className="feedback-box-content">{poke.habitat}</div>
+                      </div>
+                      <div className={`feedback-box ${heightStatus}`} style={{ position: 'relative' }}>
+                        {cmp.height !== 'match' && (
+                          <div className="bg-icon" aria-hidden="true">
+                            <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
+                          </div>
+                        )}
+                        <div className="feedback-box-content">
+                          <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
+                        </div>
+                      </div>
+                      <div className={`feedback-box ${weightStatus}`} style={{ position: 'relative' }}>
+                        {cmp.weight !== 'match' && (
+                          <div className="bg-icon" aria-hidden="true">
+                            <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
+                          </div>
+                        )}
+                        <div className="feedback-box-content">
+                          <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+
+                // Placeholder row
                 return (
-                  <div key={poke.name + idx} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
-                    <div className="feedback-box feedback-pokemon-box">
-                      <div className="feedback-pokemon-img">
-                        <img
-                          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
-                          alt={poke.name}
-                          onError={e => { e.target.style.display = 'none'; }}
-                        />
+                  <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
+                    {Array.from({ length: 6 }).map((__, colIdx) => (
+                      <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`}>
+                        <div className="feedback-box-content">?</div>
                       </div>
-                      <div className="feedback-box-content" aria-hidden="true"></div>
-                    </div>
-                    <div className={`feedback-box ${cmp.color}`}>
-                      <div className="feedback-box-content">{poke.color}</div>
-                    </div>
-                    <div className={`feedback-box ${cmp.types}`}>
-                      <div className="feedback-box-content">{poke.types.join(', ')}</div>
-                    </div>
-                    <div className={`feedback-box ${cmp.habitat}`}>
-                      <div className="feedback-box-content">{poke.habitat}</div>
-                    </div>
-                    <div className={`feedback-box ${heightStatus}`} style={{ position: 'relative' }}>
-                            {cmp.height !== 'match' && (
-                              <div className="bg-icon" aria-hidden="true">
-                                <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
-                              </div>
-                            )}
-                      <div className="feedback-box-content">
-                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
+                    ))}
                       </div>
-                    </div>
-                    <div className={`feedback-box ${weightStatus}`} style={{ position: 'relative' }}>
-                            {cmp.weight !== 'match' && (
-                              <div className="bg-icon" aria-hidden="true">
-                                <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
-                              </div>
-                            )}
-                      <div className="feedback-box-content">
-                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })}
             </div>
           </div>
         </div>
@@ -363,6 +379,16 @@ function ClassicPage({ guesses, setGuesses }) {
             width: 100% !important;
             height: 100% !important;
           }
+        }
+        /* Placeholder rows shown before any guesses are made */
+        .placeholder {
+          background: #fff !important;
+          border-color: #d0d0d0 !important;
+          color: #333 !important;
+        }
+        .placeholder .feedback-box-content {
+          font-weight: 700;
+          font-size: 1.1rem;
         }
       `}</style>
     </div>
