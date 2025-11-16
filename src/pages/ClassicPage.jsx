@@ -44,7 +44,7 @@ function ClassicPage({ guesses, setGuesses }) {
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
   const rowsToRender = Math.max(1, guesses.length);
   const BOX_COUNT = 6;
-  const BOX_DELAY_STEP = 0.4; // seconds between boxes (updated to match per-box delays)
+  const BOX_DELAY_STEP = 0.3; // seconds between boxes (updated to match per-box delays)
   const BOX_ANIM_DURATION_MS = 420; // matches CSS animation duration
   const [revealRow, setRevealRow] = useState(null);
   const prevGuessesLenRef = useRef(guesses.length);
@@ -324,7 +324,6 @@ function ClassicPage({ guesses, setGuesses }) {
           font-size: 14px;
           font-weight: 500;
           box-sizing: border-box;
-          transition: background 0.2s, border 0.2s;
           margin-bottom: 0;
           text-align: center;
           overflow: hidden;
@@ -412,19 +411,26 @@ function ClassicPage({ guesses, setGuesses }) {
             width: 100% !important;
             min-width: 0 !important;
           }
+           /* Keep all six boxes on one line; give each a small min width
+             so boxes are larger on very narrow screens and allow horizontal
+             scrolling via the wrapper '.classic-feedback-scroll'. */
+          .feedback-grid {
+            grid-template-columns: repeat(6, minmax(53px, 1fr)) !important;
+            gap: 4px !important;
+          }
           .feedback-box {
-            font-size: 9px !important;
-            border-radius: 6px !important;
-            /* aspect-ratio and padding-bottom already handle sizing */
+            font-size: 12px !important;
+            border-radius: 8px !important;
+            /* aspect-ratio keeps boxes square */
           }
           .feedback-pokemon-box img {
-            width: 90% !important;
-            height: 90% !important;
+            width: 100% !important;
+            height: 100% !important;
           }
           /* Ensure the arrow SVG stays visible and scales on mobile */
           .bg-icon {
-            width: 110% !important;
-            height: 110% !important;
+            width: 100% !important;
+            height: 100% !important;
           }
           .bg-icon img {
             opacity: 0.28 !important;
@@ -454,9 +460,9 @@ function ClassicPage({ guesses, setGuesses }) {
           }
 
           @keyframes reveal-wipe {
-            0% { clip-path: inset(0 100% 0 0); opacity: 1; transform: scale(0.9); }
+            0% { clip-path: inset(0 100% 0 0); opacity: 1; transform: scale(0.95); }
             60% { clip-path: inset(0 20% 0 0); }
-            100% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
+            80% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
           }
         }
         @media (prefers-reduced-motion: reduce) {
