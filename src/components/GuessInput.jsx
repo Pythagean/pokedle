@@ -43,7 +43,7 @@ export default function GuessInput({
           // Do not handle Enter here; let form onSubmit handle it
         }}
         placeholder="Enter a Pokémon name..."
-        style={{ width: '100%', minWidth: 120, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box' }}
+        style={{ width: '100%', minWidth: 120, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
         autoFocus
         autoComplete="off"
       />
