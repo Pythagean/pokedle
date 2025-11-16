@@ -79,3 +79,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Ensure the app root matches the viewport width and prevent horizontal scrolling */
+html, body, #root {
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+}

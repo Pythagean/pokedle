@@ -113,7 +113,7 @@ function ClassicPage({ guesses, setGuesses }) {
   }
 
   return (
-    <div style={{ backgroundColor: '#f8fafc'}}>
+    <div>
       <div style={{ width: '100%', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
           <h2 style={{ margin: 0 }}>Classic Mode</h2>
@@ -135,7 +135,7 @@ function ClassicPage({ guesses, setGuesses }) {
               setDropdownOpen(false);
             }
           }}
-          style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 32, flexWrap: 'wrap' }}
+          style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}
         >
           <GuessInput
             guess={guess}
@@ -150,6 +150,7 @@ function ClassicPage({ guesses, setGuesses }) {
             handleGuessSubmit={handleGuessSubmit}
           />
         </form>
+        </div>
         <div className="classic-grid-fit" style={{ width: '100%' }}>
           <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', fontWeight: 600, gap: 4, marginBottom: 8, alignItems: 'center', width: '100%' }}>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
@@ -212,15 +213,15 @@ function ClassicPage({ guesses, setGuesses }) {
             </div>
           </div>
         </div>
-      </div>
+      
       <style>{`
         @media (max-width: 700px) {
           .classic-grid-header > div {
             font-size: 0.85em !important;
           }
           .classic-main-container {
-            max-width: 100vw !important;
-            width: 100vw !important;
+            max-width: 88vw !important;
+            width: 88vw !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             border-radius: 0 !important;
