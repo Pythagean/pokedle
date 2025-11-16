@@ -118,6 +118,19 @@ function ClassicPage({ guesses, setGuesses }) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdownOpen]);
 
+  // Preload common assets (arrow) so it appears instantly when used
+  useEffect(() => {
+    const arrowImg = new Image();
+    arrowImg.src = 'images/arrow-up.svg';
+    // no-op handlers to keep reference until unmount
+    arrowImg.onload = () => {};
+    arrowImg.onerror = () => {};
+    return () => {
+      arrowImg.onload = null;
+      arrowImg.onerror = null;
+    };
+  }, []);
+
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
 
