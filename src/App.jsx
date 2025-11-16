@@ -143,7 +143,6 @@ function App() {
         alignItems: 'stretch',
         justifyContent: 'flex-start',
         minHeight: 'calc(100vh - 96px)',
-        overflow: 'auto'
       }}>
         {/* Page Content */}
         {page === 'classic' && <ClassicPage guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
