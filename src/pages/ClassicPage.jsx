@@ -43,6 +43,46 @@ function ClassicPage({ guesses, setGuesses }) {
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
   const rowsToRender = Math.max(1, guesses.length);
+  const BOX_COUNT = 6;
+  const BOX_DELAY_STEP = 0.4; // seconds between boxes (updated to match per-box delays)
+  const BOX_ANIM_DURATION_MS = 420; // matches CSS animation duration
+  const [revealRow, setRevealRow] = useState(null);
+  const prevGuessesLenRef = useRef(guesses.length);
+  const revealRowRef = useRef(null);
+
+  useEffect(() => {
+    // If a new guess was prepended, animate the top row
+    if (guesses.length > prevGuessesLenRef.current) {
+      setRevealRow(0);
+      prevGuessesLenRef.current = guesses.length;
+      return;
+    }
+    prevGuessesLenRef.current = guesses.length;
+  }, [guesses.length]);
+
+  // When a revealRow is active, listen for the last box's animationend to clear it.
+  useEffect(() => {
+    if (revealRow === null) return;
+    const container = revealRowRef.current;
+    if (!container) return;
+    const boxes = container.querySelectorAll('.feedback-box');
+    if (!boxes || boxes.length === 0) return;
+    const lastBox = boxes[boxes.length - 1];
+    let cleared = false;
+    const onEnd = () => {
+      if (cleared) return;
+      cleared = true;
+      setRevealRow(null);
+    };
+    lastBox.addEventListener('animationend', onEnd);
+    // Fallback timeout in case animationend doesn't fire
+    const fallbackMs = Math.ceil(((BOX_COUNT - 1) * BOX_DELAY_STEP * 1000) + BOX_ANIM_DURATION_MS + 150);
+    const t = setTimeout(onEnd, fallbackMs);
+    return () => {
+      lastBox.removeEventListener('animationend', onEnd);
+      clearTimeout(t);
+    };
+  }, [revealRow, BOX_ANIM_DURATION_MS, BOX_COUNT, BOX_DELAY_STEP]);
 
   // Autocomplete options
   const pokemonNameMap = useMemo(() => {
@@ -77,6 +117,9 @@ function ClassicPage({ guesses, setGuesses }) {
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdownOpen]);
+
+  // Check if the daily Pokemon has been guessed
+  const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
 
   if (!pokemonData) return <div>Loading data...</div>;
 
@@ -122,42 +165,51 @@ function ClassicPage({ guesses, setGuesses }) {
         </div>
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            if (highlightedIdx >= 0 && filteredOptions.length > 0) {
-              handleGuessSubmit(null, filteredOptions[highlightedIdx].name);
-              setDropdownOpen(false);
-            } else if (
-              guess.length > 0 &&
-              filteredOptions.length > 0 &&
-              filteredOptions.some(opt => opt.name.toLowerCase() === guess.trim().toLowerCase())
-            ) {
-              handleGuessSubmit(null, guess);
-              setDropdownOpen(false);
-            }
-          }}
-          style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}
-        >
-          <GuessInput
-            guess={guess}
-            setGuess={setGuess}
-            highlightedIdx={highlightedIdx}
-            setHighlightedIdx={setHighlightedIdx}
-            filteredOptions={filteredOptions}
-            dropdownOpen={dropdownOpen}
-            setDropdownOpen={setDropdownOpen}
-            inputRef={inputRef}
-            dropdownRef={dropdownRef}
-            handleGuessSubmit={handleGuessSubmit}
-          />
-        </form>
+        {solved ? (
+          <div style={{ textAlign: 'center', margin: '12px 0' }}>
+            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Congratulations!</div>
+            <div style={{ fontSize: 16 }}>
+              You guessed today's Classic Mode Pokémon in {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}!
+            </div>
+          </div>
+        ) : (
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              if (highlightedIdx >= 0 && filteredOptions.length > 0) {
+                handleGuessSubmit(null, filteredOptions[highlightedIdx].name);
+                setDropdownOpen(false);
+              } else if (
+                guess.length > 0 &&
+                filteredOptions.length > 0 &&
+                filteredOptions.some(opt => opt.name.toLowerCase() === guess.trim().toLowerCase())
+              ) {
+                handleGuessSubmit(null, guess);
+                setDropdownOpen(false);
+              }
+            }}
+            style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}
+          >
+            <GuessInput
+              guess={guess}
+              setGuess={setGuess}
+              highlightedIdx={highlightedIdx}
+              setHighlightedIdx={setHighlightedIdx}
+              filteredOptions={filteredOptions}
+              dropdownOpen={dropdownOpen}
+              setDropdownOpen={setDropdownOpen}
+              inputRef={inputRef}
+              dropdownRef={dropdownRef}
+              handleGuessSubmit={handleGuessSubmit}
+            />
+          </form>
+        )}
         </div>
         <div className="classic-grid-fit" style={{ width: '100%' }}>
           <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', fontWeight: 600, gap: 4, marginBottom: 8, alignItems: 'center', width: '100%' }}>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Color</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
+            <div style={{ textAlign: 'center', fontSize: '1em' }}>Color</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
@@ -171,8 +223,8 @@ function ClassicPage({ guesses, setGuesses }) {
                   const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
                   const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
                   return (
-                    <div key={poke.name + rowIdx} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
-                      <div className="feedback-box feedback-pokemon-box">
+                    <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
+                      <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-pokemon-img">
                           <img
                             src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
@@ -182,16 +234,16 @@ function ClassicPage({ guesses, setGuesses }) {
                         </div>
                         <div className="feedback-box-content" aria-hidden="true"></div>
                       </div>
-                      <div className={`feedback-box ${cmp.color}`}>
-                        <div className="feedback-box-content">{poke.color}</div>
-                      </div>
-                      <div className={`feedback-box ${cmp.types}`}>
-                        <div className="feedback-box-content">{poke.types.join(', ')}</div>
-                      </div>
-                      <div className={`feedback-box ${cmp.habitat}`}>
+                        <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.types.join(', ')}</div>
+                        </div>
+                          <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.color}</div>
+                        </div>
+                        <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-box-content">{poke.habitat}</div>
                       </div>
-                      <div className={`feedback-box ${heightStatus}`} style={{ position: 'relative' }}>
+                        <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${4 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                         {cmp.height !== 'match' && (
                           <div className="bg-icon" aria-hidden="true">
                             <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
@@ -201,7 +253,7 @@ function ClassicPage({ guesses, setGuesses }) {
                           <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
                         </div>
                       </div>
-                      <div className={`feedback-box ${weightStatus}`} style={{ position: 'relative' }}>
+                      <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                         {cmp.weight !== 'match' && (
                           <div className="bg-icon" aria-hidden="true">
                             <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
@@ -219,7 +271,7 @@ function ClassicPage({ guesses, setGuesses }) {
                 return (
                   <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(6, 1fr)', width: '100%' }}>
                     {Array.from({ length: 6 }).map((__, colIdx) => (
-                      <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`}>
+                      <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-box-content">?</div>
                       </div>
                     ))}
@@ -251,7 +303,7 @@ function ClassicPage({ guesses, setGuesses }) {
         .feedback-grid {
           display: grid;
           grid-template-columns: repeat(6, 1fr);
-          gap: 4px;
+          gap: 8px;
           margin-bottom: 8px;
           align-items: center;
           width: 100%;
@@ -361,7 +413,7 @@ function ClassicPage({ guesses, setGuesses }) {
             min-width: 0 !important;
           }
           .feedback-box {
-            font-size: 11px !important;
+            font-size: 9px !important;
             border-radius: 6px !important;
             /* aspect-ratio and padding-bottom already handle sizing */
           }
@@ -389,6 +441,31 @@ function ClassicPage({ guesses, setGuesses }) {
         .placeholder .feedback-box-content {
           font-weight: 700;
           font-size: 1.1rem;
+        }
+        /* Reveal animation (clip-path wipe) for newly added guess row */
+        @media (prefers-reduced-motion: no-preference) {
+          .reveal-row .feedback-box {
+            animation-name: reveal-wipe;
+            animation-duration: 420ms;
+            animation-fill-mode: both;
+            animation-timing-function: ease;
+            transform-origin: center center;
+            will-change: clip-path, opacity;
+          }
+
+          @keyframes reveal-wipe {
+            0% { clip-path: inset(0 100% 0 0); opacity: 1; transform: scale(0.9); }
+            60% { clip-path: inset(0 20% 0 0); }
+            100% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .reveal-row .feedback-box {
+            animation: none !important;
+            clip-path: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
         }
       `}</style>
     </div>
