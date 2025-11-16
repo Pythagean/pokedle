@@ -120,7 +120,7 @@ function App() {
     <div style={{
       maxWidth: 900,
       margin: '0 auto',
-      padding: '112px 24px 24px 24px',
+      padding: '112px 24px 24px 0px',
       fontFamily: 'Inter, Arial, sans-serif',
       minHeight: 'calc(100vh - 96px)',
       height: 'calc(100vh - 96px)',
