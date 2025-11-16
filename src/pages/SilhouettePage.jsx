@@ -175,7 +175,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
   }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
+    <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Silhouette Mode</h2>
         <div style={{ position: 'relative', display: 'inline-block' }}>

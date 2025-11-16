@@ -116,7 +116,7 @@ export default function PokedexPage({ guesses, setGuesses, dailySeed }) {
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
 
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
+    <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
         <button

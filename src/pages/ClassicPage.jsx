@@ -158,7 +158,7 @@ function ClassicPage({ guesses, setGuesses }) {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ width: '100%', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
           <h2 style={{ margin: 0 }}>Classic Mode</h2>

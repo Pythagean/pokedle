@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function GuessInput({
   guess,
@@ -12,6 +12,31 @@ export default function GuessInput({
   dropdownRef,
   handleGuessSubmit
 }) {
+  const [loadedSprites, setLoadedSprites] = useState({});
+
+  // Prefetch sprite images for visible filtered options so they show up quicker
+  useEffect(() => {
+    if (!filteredOptions || filteredOptions.length === 0) return undefined;
+    const images = [];
+    filteredOptions.forEach(opt => {
+      if (!opt || !opt.id) return;
+      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${opt.id}-front.png`;
+      // If we already know the state, skip creating a new Image
+      if (loadedSprites[opt.id]) return;
+      const img = new Image();
+      img.src = url;
+      img.onload = () => setLoadedSprites(prev => ({ ...prev, [opt.id]: true }));
+      img.onerror = () => setLoadedSprites(prev => ({ ...prev, [opt.id]: 'error' }));
+      images.push(img);
+    });
+    return () => {
+      images.forEach(i => {
+        i.onload = null;
+        i.onerror = null;
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredOptions]);
   return (
     <div style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
       <input
@@ -43,8 +68,7 @@ export default function GuessInput({
           // Do not handle Enter here; let form onSubmit handle it
         }}
         placeholder="Enter a Pokémon name..."
-        style={{ width: '100%', minWidth: 120, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
-        autoFocus
+        style={{ width: '100%', minWidth: 120, maxWidth: 500, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
         autoComplete="off"
       />
       {dropdownOpen && guess.length > 0 && filteredOptions.length > 0 && (
@@ -90,12 +114,57 @@ export default function GuessInput({
               }}
               onMouseEnter={() => setHighlightedIdx(i)}
             >
-              <img
-                src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${opt.id}-front.png`}
-                alt={opt.name}
-                style={{ width: 32, height: 32, objectFit: 'contain', marginRight: 6 }}
-                onError={e => { e.target.style.display = 'none'; }}
-              />
+              <div style={{ width: 32, height: 32, marginRight: 6, position: 'relative', flex: '0 0 32px' }}>
+                {/* Placeholder box shown while sprite loads (or on error) */}
+                <div style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: 4,
+                  background: '#f2f2f2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  {/* Use local pokeball icon while sprite is loading or on error */}
+                  {loadedSprites[opt.id] !== true && (
+                    <img
+                  src={`data/pokeball.ico`}
+                  alt="pokeball"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    objectFit: 'contain',
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    transition: 'opacity 200ms ease',
+                    opacity: loadedSprites[opt.id] === true ? 0 : 1,
+                    zIndex: 1,
+                  }}
+                  onError={e => { e.target.style.display = 'none'; }}
+                />
+                  )}
+                </div>
+                <img
+                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${opt.id}-front.png`}
+                  alt={opt.name}
+                  onLoad={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: true }))}
+                  onError={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: 'error' }))}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    objectFit: 'contain',
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    transition: 'opacity 200ms ease',
+                    opacity: loadedSprites[opt.id] === true ? 1 : 0,
+                     zIndex: 2,
+                  }}
+                />
+              </div>
               <span>{opt.name}</span>
             </li>
           ))}
@@ -106,12 +175,14 @@ export default function GuessInput({
         @media (max-width: 600px) {
           .guess-input {
             min-width: 60px !important;
+            max-width: 300px !important;
             font-size: 14px !important;
             padding: 7px 8px !important;
           }
           .guess-dropdown {
             font-size: 13px !important;
             min-width: 60px !important;
+            max-width: 300px !important;
           }
         }
       `}</style>

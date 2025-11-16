@@ -163,7 +163,7 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
   }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: 40, width: '100%' }}>
+    <div style={{ textAlign: 'center', marginTop: 10, width: '100%' }}>
       <style>{`
         @media (max-width: 600px) {
           .zoom-main {

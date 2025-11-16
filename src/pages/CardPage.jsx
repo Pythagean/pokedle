@@ -228,7 +228,7 @@ function CardPage({ guesses, setGuesses }) {
   }
 
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
+    <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
         <h2 style={{ margin: 0 }}>Card Mode</h2>
         <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -320,7 +320,7 @@ function CardPage({ guesses, setGuesses }) {
       </div>
         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
           <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is on this card?</div>
-          <div style={{ position: 'relative', margin: '0 auto', width: 322, height: 448, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
+          <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
             {cardFile ? (
               <>
                 {/* For full_art or special: always show resized image */}
@@ -328,11 +328,8 @@ function CardPage({ guesses, setGuesses }) {
                   <img
                     src={cardPath.resized}
                     alt={answer ? answer.name : 'Pokemon Card'}
+                    className="card-img card-img-resized"
                     style={{
-                      display: 'block',
-                      maxWidth: '100%',
-                      maxHeight: '100%',
-                      objectFit: 'contain',
                       borderRadius: 8,
                       filter: `blur(${blurLevel}px)`,
                       transition: 'filter 0.4s',
@@ -346,13 +343,8 @@ function CardPage({ guesses, setGuesses }) {
                       <img
                         src={cardPath.resized}
                         alt={answer ? answer.name : 'Pokemon Card'}
+                        className="card-img card-img-resized overlay"
                         style={{
-                          position: 'absolute',
-                          left: -35,
-                          top: 0,
-                          width: 400,
-                          height: 448,
-                          objectFit: 'contain',
                           zIndex: 1,
                           borderRadius: 8,
                           filter: `blur(${blurLevel}px)`,
@@ -365,14 +357,8 @@ function CardPage({ guesses, setGuesses }) {
                       <img
                         src={cardPath.cropped}
                         alt={answer ? answer.name : 'Pokemon Card'}
+                        className="card-img card-img-cropped overlay"
                         style={{
-                          position: 'absolute',
-                          left: -35,
-                          top: -90,
-                          scale: 0.85,
-                          width: 400,
-                          height: 448,
-                          objectFit: 'none',
                           zIndex: 2,
                           borderRadius: 8,
                           background: 'transparent',
@@ -494,7 +480,7 @@ function CardPage({ guesses, setGuesses }) {
             marginBottom: guesses.length > 1 ? 16 : 0,
           }}>
             <img
-              src={`/data/sprites/${guesses[0].id}-front.png`}
+              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${guesses[0].id}-front.png`}
               alt={guesses[0].name}
               style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 8, transform: 'scale(2.0)' }}
               onError={e => { e.target.style.display = 'none'; }}
@@ -519,7 +505,7 @@ function CardPage({ guesses, setGuesses }) {
                   fontWeight: 600,
                 }}>
                   <img
-                    src={`/data/sprites/${g.id}-front.png`}
+                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${g.id}-front.png`}
                     alt={g.name}
                     style={{ width: 24, height: 24, objectFit: 'contain', marginBottom: 4, transform: 'scale(1.5)' }}
                     onError={e => { e.target.style.display = 'none'; }}
@@ -537,3 +523,44 @@ function CardPage({ guesses, setGuesses }) {
 }
 
 export default CardPage;
+
+/* Component-specific responsive CSS for card viewport */
+const _cardStyles = `
+.card-viewport {
+  position: relative;
+  margin: 0 auto;
+  width: 322px;
+  height: 448px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+}
+.card-img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+.card-img.overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+.card-img-resized { width: 100%; height: 100%; object-fit: contain; }
+.card-img-cropped { width: 100%; height: 100%; object-fit: cover; transform-origin: center; }
+
+@media (max-width: 520px) {
+  .card-viewport {
+    width: min(90vw, 280px);
+    height: calc(min(90vw, 280px) * 448 / 322);
+  }
+  .card-img.overlay { object-fit: cover; }
+}
+
+@media (max-width: 360px) {
+  .card-viewport { width: 92vw; height: calc(92vw * 448 / 322); }
+}
+`;
+
+// Inject styles into the document (only once)
+if (typeof document !== 'undefined' && !document.getElementById('pokedle-card-styles')) {
+  const s = document.createElement('style');
+  s.id = 'pokedle-card-styles';
+  s.innerHTML = _cardStyles;
+  document.head.appendChild(s);
+}
+
