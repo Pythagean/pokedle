@@ -15,7 +15,7 @@ function usePokemonData() {
 
 function useTitleImg() {
   // Just return the public path
-  return '/data/title.png';
+  return 'data/title.png';
 }
 import './App.css';
 
@@ -171,7 +171,8 @@ function App() {
           justifyContent: 'flex-start',
           maxWidth: 1100,
           margin: '0 auto',
-          padding: '0 16px',
+          padding: '0 12px',
+          paddingLeft: '6px',
           height: 96,
           gap: 0,
         }}>
@@ -238,28 +239,32 @@ function App() {
       <style>{`
         @media (max-width: 600px) {
           .main-app {
-            padding: 80px 4px 4px 4px !important;
-            min-height: calc(100vh - 60px) !important;
+            padding: 100px 4px 4px 4px !important;
+            min-height: calc(100vh - 80px) !important;
             height: auto !important;
           }
           .main-header {
-            height: 60px !important;
-            padding: 0 4px !important;
+            height: 100px !important;
+            padding: 4px 4px !important;
           }
           .main-header img {
-            height: 36px !important;
-            margin-right: 8px !important;
-            max-width: 80px !important;
-            max-height: 40px !important;
+            height: 56px !important;
+            margin-right: 12px !important;
+            max-width: 120px !important;
+            max-height: 60px !important;
           }
           .main-header nav {
-            gap: 6px !important;
+            gap: 4px !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
           }
           .main-header nav button {
             font-size: 13px !important;
-            padding: 6px 8px !important;
-            min-width: 60px !important;
-            margin-bottom: 4px !important;
+            padding: 3px 3px !important;
+            min-width: 50px !important;
+            margin-bottom: 2px !important;
+            flex: 1 1 28%;
+            max-width: 28vw;
           }
         }
       `}</style>
