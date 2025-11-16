@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 // import pokemonData from '../data/pokemon_data.json';
 // import titleImg from '../data/title.png';
 
@@ -27,6 +28,7 @@ import ZoomPage from './pages/ZoomPage';
 import ColoursPage from './pages/ColoursPage';
 import CardPage from './pages/CardPage';
 import GameInfoPage from './pages/GameInfoPage';
+import Header from './components/Header';
 
 
 // Simple deterministic PRNG using a seed
@@ -117,20 +119,8 @@ function App() {
   }
 
   return (
-    <div style={{
-      maxWidth: 900,
-      margin: '0 auto',
-      padding: '112px 24px 24px 0px',
-      fontFamily: 'Inter, Arial, sans-serif',
-      minHeight: 'calc(100vh - 96px)',
-      height: 'calc(100vh - 96px)',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      justifyContent: 'flex-start',
-      overflow: 'hidden',
-    }}>
+    <>
+      {/* Fixed header at top-level so it never scrolls with content */}
       <style>{`
         @media (max-width: 600px) {
           .main-app {
@@ -138,93 +128,25 @@ function App() {
             min-height: calc(100vh - 60px) !important;
             height: auto !important;
           }
-          .main-header {
-            height: 60px !important;
-            padding: 0 4px !important;
-          }
-          .main-header img {
-            height: 36px !important;
-            margin-right: 8px !important;
-          }
-          .main-header nav button {
-            font-size: 13px !important;
-            padding: 6px 8px !important;
-          }
         }
       `}</style>
-      <div className="main-header" style={{
-        width: '100vw',
-        left: 0,
-        top: 0,
-        position: 'fixed',
-        background: '#f8fafc',
-        borderBottom: '1px solid #e0e0e0',
-        boxShadow: '0 2px 8px #0001',
-        padding: 0,
-        margin: 0,
-        zIndex: 100,
+      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} />
+      {/* Page Content - separate scrollable container so header stays fixed */}
+      <div style={{
+        maxWidth: 900,
+        margin: '0 auto',
+        padding: '112px 24px 24px 0px',
+        fontFamily: 'Inter, Arial, sans-serif',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'flex-start',
+        minHeight: 'calc(100vh - 96px)',
+        overflow: 'auto'
       }}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          maxWidth: 1100,
-          margin: '0 auto',
-          padding: '0 12px',
-          paddingLeft: '6px',
-          height: 96,
-          gap: 0,
-        }}>
-          <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: '100%' }}>
-            <img
-              src={titleImg}
-              alt="Pokédle"
-              style={{
-                height: 72,
-                width: 'auto',
-                display: 'block',
-                objectFit: 'contain',
-                marginRight: 24,
-                marginLeft: 0,
-                maxWidth: 120,
-                maxHeight: 80,
-              }}
-            />
-          </div>
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto' }}>
-            <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%' }}>
-              {PAGES.map(p => (
-                <button
-                  key={p.key}
-                  onClick={() => setPage(p.key)}
-                  style={{
-                    padding: '10px 22px',
-                    borderRadius: 12,
-                    background: page === p.key ? '#1976d2' : 'transparent',
-                    color: page === p.key ? '#fff' : '#1976d2',
-                    border: page === p.key ? 'none' : '2px solid #1976d2',
-                    fontWeight: 700,
-                    fontSize: 18,
-                    cursor: 'pointer',
-                    boxShadow: page === p.key ? '0 2px 8px #1976d233' : 'none',
-                    transition: 'background 0.2s, color 0.2s',
-                    marginLeft: 0,
-                    marginRight: 0,
-                    minWidth: 90,
-                    marginBottom: 8,
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </div>
-  {/* Page Content */}
-  {page === 'classic' && <ClassicPage guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
+        {/* Page Content */}
+        {page === 'classic' && <ClassicPage guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
   {page === 'pokedex' && <PokedexPage guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
   {page === 'stats' && <StatsPage guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
   {page === 'ability' && <AbilityPage guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
@@ -236,6 +158,7 @@ function App() {
   {page === 'locations' && <LocationsPage guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
   {page === 'card' && <CardPage guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
+      </div>
       <style>{`
         @media (max-width: 600px) {
           .main-app {
@@ -243,32 +166,9 @@ function App() {
             min-height: calc(100vh - 80px) !important;
             height: auto !important;
           }
-          .main-header {
-            height: 100px !important;
-            padding: 4px 4px !important;
-          }
-          .main-header img {
-            height: 56px !important;
-            margin-right: 12px !important;
-            max-width: 120px !important;
-            max-height: 60px !important;
-          }
-          .main-header nav {
-            gap: 4px !important;
-            flex-wrap: wrap !important;
-            justify-content: center !important;
-          }
-          .main-header nav button {
-            font-size: 13px !important;
-            padding: 3px 3px !important;
-            min-width: 50px !important;
-            margin-bottom: 2px !important;
-            flex: 1 1 28%;
-            max-width: 28vw;
-          }
         }
       `}</style>
-    </div>
+    </>
   );
 }
 export default App;
