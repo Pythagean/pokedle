@@ -31,8 +31,15 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
 
-  // Pick random flavor text entries for the clues/hints
-  const flavorEntries = dailyPokemon ? (dailyPokemon.flavor_text_entries || []) : [];
+  // Determine whether the daily Pokemon has been guessed correctly
+  const lastGuess = guesses && guesses.length > 0 ? guesses[0] : null;
+  const isCorrect = !!(lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name);
+
+  // Pick random flavor text entries for the clues/hints. If the Pokemon has been
+  // correctly guessed, show the preserved original entries instead.
+  const flavorEntries = dailyPokemon
+    ? (isCorrect ? (dailyPokemon.flavor_text_entries_original || dailyPokemon.flavor_text_entries || []) : (dailyPokemon.flavor_text_entries || []))
+    : [];
   // Always show at least one clue
   const mainFlavorIdx = useMemo(() => flavorEntries.length > 0 ? Math.floor(rng() * flavorEntries.length) : 0, [rng, flavorEntries.length]);
   // For hints, pick other random indices (but not the main one)
@@ -57,6 +64,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const dropdownRef = useRef(null);
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
@@ -101,14 +109,44 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
     if (inputRef.current) inputRef.current.focus();
   }
 
-  // Only show the most recent guess
-  const lastGuess = guesses[0];
-  const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+  // Only show the most recent guess (variables `lastGuess` and `isCorrect` are
+  // computed earlier to determine whether to reveal original flavor text.)
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
+        <button
+          aria-label="How to play"
+          onClick={() => setShowHelp(s => !s)}
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: 14,
+            border: '1px solid #ccc',
+            background: '#f5f5f5',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            fontWeight: 700,
+            marginLeft: 4
+          }}
+        >
+          ?
+        </button>
+      </div>
+      {showHelp && (
+        <div role="dialog" aria-label="How to play Pokedex Mode" style={{ maxWidth: 640, margin: '8px auto', background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 12, textAlign: 'left', fontSize: 14 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <strong>How to play</strong>
+            <button onClick={() => setShowHelp(false)} aria-label="Close help" style={{ border: 'none', background: 'transparent', fontSize: 18, cursor: 'pointer' }}>×</button>
+          </div>
+          <div style={{ marginTop: 8, lineHeight: 1.4 }}>
+            Enter Pokémon names into the input to guess which Pokémon matches the shown Pokédex entries. After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed. Making the correct guess will reveal the original (unscrubbed) Pokédex entries.
+          </div>
+        </div>
+      )}
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
@@ -122,7 +160,6 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
         >
           Reset
         </button> */}
-      </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (
           <div style={{ fontWeight: 600, marginBottom: 8 }}>
@@ -136,7 +173,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
           <div style={{ color: '#333', marginBottom: (showThirdHint || (guesses.length >= 4 && guesses.length < 8)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             {flavorEntries[secondFlavorIdx]}
           </div>
-        ) : (guesses.length > 0 && guesses.length < 4 && flavorEntries.length > 1 && (
+        ) : (!isCorrect && guesses.length > 0 && guesses.length < 4 && flavorEntries.length > 1 && (
           <div style={{ color: '#aaa', marginBottom: guesses.length + 1 < 4 ? 12 : 0, borderTop: '1px dashed #eee', paddingTop: 10 }}>
             Second Pokedex entry in {4 - guesses.length} guess{4 - guesses.length === 1 ? '' : 'es'}
           </div>
@@ -146,7 +183,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
           <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             {flavorEntries[thirdFlavorIdx]}
           </div>
-        ) : (guesses.length >= 4 && guesses.length < 8 && flavorEntries.length > 2 && (
+        ) : (!isCorrect && guesses.length >= 4 && guesses.length < 8 && flavorEntries.length > 2 && (
           <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
             Third Pokedex entry in {8 - guesses.length} guess{8 - guesses.length === 1 ? '' : 'es'}
           </div>
@@ -156,7 +193,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
           <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             <span style={{ fontWeight: 700 }}>Types:</span> {dailyPokemon.types && dailyPokemon.types.length > 0 ? dailyPokemon.types.join(', ') : 'Unknown'}
           </div>
-        ) : (guesses.length >= 8 && guesses.length < 12 && (
+        ) : (!isCorrect && guesses.length >= 8 && guesses.length < 12 && (
           <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
             Types revealed in {12 - guesses.length} guess{12 - guesses.length === 1 ? '' : 'es'}
           </div>
