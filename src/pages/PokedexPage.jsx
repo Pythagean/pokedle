@@ -64,7 +64,6 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
   const dropdownRef = useRef(null);
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
@@ -116,37 +115,70 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
-        <button
-          aria-label="How to play"
-          onClick={() => setShowHelp(s => !s)}
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: 14,
-            border: '1px solid #ccc',
-            background: '#f5f5f5',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            fontWeight: 700,
-            marginLeft: 4
-          }}
-        >
-          ?
-        </button>
-      </div>
-      {showHelp && (
-        <div role="dialog" aria-label="How to play Pokedex Mode" style={{ maxWidth: 640, margin: '8px auto', background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 12, textAlign: 'left', fontSize: 14 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <strong>How to play</strong>
-            <button onClick={() => setShowHelp(false)} aria-label="Close help" style={{ border: 'none', background: 'transparent', fontSize: 18, cursor: 'pointer' }}>×</button>
-          </div>
-          <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-            Enter Pokémon names into the input to guess which Pokémon matches the shown Pokédex entries. After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed. Making the correct guess will reveal the original (unscrubbed) Pokédex entries.
+        <div style={{ position: 'relative', display: 'inline-block' }}>
+          <button
+            style={{
+              width: 22,
+              height: 22,
+              borderRadius: '50%',
+              background: '#e3eafc',
+              border: '1px solid #90caf9',
+              color: '#1976d2',
+              fontWeight: 700,
+              fontSize: 15,
+              cursor: 'pointer',
+              padding: 0,
+              lineHeight: '22px',
+              textAlign: 'center',
+              marginLeft: 2
+            }}
+            tabIndex={0}
+            aria-label="What is Pokedex Mode?"
+            onMouseEnter={e => {
+              const tooltip = e.currentTarget.nextSibling;
+              if (tooltip) tooltip.style.visibility = 'visible';
+            }}
+            onMouseLeave={e => {
+              const tooltip = e.currentTarget.nextSibling;
+              if (tooltip) tooltip.style.visibility = 'hidden';
+            }}
+            onFocus={e => {
+              const tooltip = e.currentTarget.nextSibling;
+              if (tooltip) tooltip.style.visibility = 'visible';
+            }}
+            onBlur={e => {
+              const tooltip = e.currentTarget.nextSibling;
+              if (tooltip) tooltip.style.visibility = 'hidden';
+            }}
+          >
+            ?
+          </button>
+          <div
+            style={{
+              visibility: 'hidden',
+              background: '#333',
+              color: '#fff',
+              textAlign: 'left',
+              borderRadius: 6,
+              padding: '8px 12px',
+              position: 'absolute',
+              zIndex: 100,
+              left: '110%',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              minWidth: 220,
+              fontSize: 14,
+              boxShadow: '0 2px 8px #0002',
+              pointerEvents: 'none',
+              whiteSpace: 'normal',
+            }}
+            role="tooltip"
+          >
+            Guess the Pokémon from its Pokédex entries.<br /><br />
+            After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed. Making the correct guess will reveal the original (unscrubbed) Pokédex entries.
           </div>
         </div>
-      )}
+      </div>
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
