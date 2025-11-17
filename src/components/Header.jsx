@@ -36,7 +36,7 @@ export default function Header({ pages, page, setPage, titleImg }) {
                 left: 0,
                 right: 0,
                 width: '100%',
-                background: '#f8fafc',
+                background: '#d8ecffff',
                 borderBottom: '1px solid #e0e0e0',
                 boxShadow: '0 2px 8px #0001',
                 padding: 0,
@@ -82,7 +82,7 @@ export default function Header({ pages, page, setPage, titleImg }) {
                                     style={{
                                         padding: '10px 22px',
                                         borderRadius: 12,
-                                        background: page === p.key ? '#1976d2' : 'transparent',
+                                        background: page === p.key ? '#1976d2' : '#f4f4f4ff',
                                         color: page === p.key ? '#fff' : '#1976d2',
                                         border: page === p.key ? 'none' : '2px solid #1976d2',
                                         fontWeight: 700,
