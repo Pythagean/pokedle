@@ -102,10 +102,17 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
 
   // --- Hints logic (types, sprite colours) ---
   const types = dailyPokemon.types || [];
+  const generation = dailyPokemon.generation || "N/A";
+  let generationHint = null;
+  let generationHintPlaceholder = null;
   let typeHint = null;
   let typeHintPlaceholder = null;
   let spriteColourHint = null;
   let spriteColourHintPlaceholder = null;
+  if (guesses.length >= 12) {
+    // Show generation
+      generationHint = <span><span style={{ fontWeight: 700 }}>Generation:</span> <span>{generation}</span></span>;
+  }
   if (guesses.length >= 8) {
     // Show all types
     if (types.length === 1) {
@@ -136,7 +143,10 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
         />
       </div>
     );
-    if (guesses.length < 8 && types.length > 0) {
+    if (guesses.length < 12) {
+      generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {12 - guesses.length} guess{12 - guesses.length === 1 ? '' : 'es'}!</span>;
+    }
+    if (guesses.length < 8 && types.length > 0 && guesses.length >= 4) {
       typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {8 - guesses.length} guess{8 - guesses.length === 1 ? '' : 'es'}!</span>;
     }
   }
@@ -288,6 +298,25 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
             fontSize: 15
           }}>{typeHintPlaceholder}</div>
         )}
+        {generationHint && (
+          <div style={{
+            color: '#333',
+            borderTop: '1px dashed #bbb',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 16
+          }}>{generationHint}</div>
+        )}
+        {generationHintPlaceholder && (
+          <div style={{
+            color: '#888',
+            borderTop: '1px dashed #eee',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 15
+          }}>{generationHintPlaceholder}</div>
+        )}
+        
       </div>
       {!isCorrect && (
         <form
