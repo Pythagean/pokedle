@@ -21,7 +21,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 function mulberry32(a) {
-  return function() {
+  return function () {
     var t = a += 0x6D2B79F5;
     t = Math.imul(t ^ t >>> 15, t | 1);
     t ^= t + Math.imul(t ^ t >>> 7, t | 61);
@@ -32,7 +32,7 @@ function mulberry32(a) {
 export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
   const inputRef = useRef(null);
   const pokemonData = usePokemonData();
-  
+
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
   const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 7 * 1000 + 's'.charCodeAt(0)); // UTC-based
@@ -48,7 +48,8 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [imgLoaded, setImgLoaded] = useState(true);
+  const [silhouetteLoaded, setSilhouetteLoaded] = useState(false);
+  const [realLoaded, setRealLoaded] = useState(false);
   const [silhouetteMeta, setSilhouetteMeta] = useState(null);
   const [debugOverlay, setDebugOverlay] = useState(false);
   const pokemonNameMap = useMemo(() => {
@@ -85,7 +86,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
     fetch('data/silhouette_meta.json')
       .then(r => r.json())
       .then(setSilhouetteMeta)
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // --- Mirroring Logic ---
@@ -131,7 +132,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
   // Quadratic ease-in: t = guesses.length / (maxSteps - 1), zoom = maxZoom - (maxZoom - minZoom) * (1 - (1-t)^2)
   let t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   let zoom = maxZoom - (maxZoom - minZoom) * (1 - Math.pow(1 - t, 2));
-  
+
 
   // Pan logic: at max zoom, center on edge; at min zoom, center (0.5,0.5)
   // (x, y) in 0..1, where (0,0)=top-left, (1,1)=bottom-right
@@ -266,7 +267,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
 
   if (isCorrect) {
     zoom = 0.9;
-    
+
   }
   // Combine mirroring and zoom — use transform-origin only (no translate)
   // Using translate after scale causes double-scaling and mispositioning; relying on
@@ -353,112 +354,153 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
             <b>Note:</b> The silhouette may be <b>mirrored</b> (flipped horizontally) for extra challenge.
           </div>
         </div>
-        <button
-          style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 20 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
-          onClick={() => {
-            if (resetCount >= 20) return;
-            setGuesses([]);
-            // Use Date.now() + Math.random() for a more unique seed
-            setResetSeed(Date.now() + Math.floor(Math.random() * 1000000000));
-            setResetCount(resetCount + 1);
-          }}
-          disabled={resetCount >= 20}
-        >
-          Reset
-        </button>
-        <button
-          style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
-          onClick={() => setDebugOverlay(d => !d)}
-          aria-pressed={debugOverlay}
-          aria-label="Toggle silhouette debug overlay"
-        >
-          {debugOverlay ? 'Debug: ON' : 'Debug'}
-        </button>
+        {/*
+          <button
+            style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 20 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
+            onClick={() => {
+              if (resetCount >= 20) return;
+              setGuesses([]);
+              // Use Date.now() + Math.random() for a more unique seed
+              setResetSeed(Date.now() + Math.floor(Math.random() * 1000000000));
+              setResetCount(resetCount + 1);
+            }}
+            disabled={resetCount >= 20}
+          >
+            Reset
+          </button>
+          <button
+            style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
+            onClick={() => setDebugOverlay(d => !d)}
+            aria-pressed={debugOverlay}
+            aria-label="Toggle silhouette debug overlay"
+          >
+            {debugOverlay ? 'Debug: ON' : 'Debug'}
+          </button>
+          */}
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>
-         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
-           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-             {imgLoaded && (
-               isCorrect ? (
-                 <img
-                   src={realImagePath}
-                   alt={dailyPokemon.name}
-                   className="silhouette-img"
-                   style={{ ...imgStyle, filter: 'none', transform: 'scale(0.9,0.9)' }}
-                   onLoad={() => setImgLoaded(true)}
-                   onError={e => { setImgLoaded(false); }}
-                 />
-               ) : (
-                 <img
-                   src={silhouettePath}
-                   alt="Silhouette"
-                   className="silhouette-img"
-                   style={imgStyle}
-                   onLoad={() => setImgLoaded(true)}
-                   onError={e => { setImgLoaded(false); }}
-                 />
-               )
-             )}
+        {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
+        {isCorrect && (
+          <div style={{ textAlign: 'center', margin: '12px 0' }}>
+            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Congratulations!</div>
+            <div className="silhouette-congrats" style={{ marginTop: 6 }}>
+              <div className="congrats-text" style={{ fontSize: 16 }}>
+                {`You guessed today's Silhouette Mode Pokémon in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}!`}
+              </div>
+              <button
+                style={{
+                  padding: '4px',
+                  borderRadius: 6,
+                  background: '#e3eafc',
+                  border: '1px solid #626262ff',
+                  color: '#e9e9e9ff',
+                  fontWeight: 600,
+                  fontSize: 14,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                onClick={() => {
+                  const text = isCorrect
+                    ? `You guessed today's Silhouette Mode Pokémon in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}!`
+                    : 'Which Pokémon is this?';
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text);
+                  }
+                }}
+                aria-label="Copy text to clipboard"
+                title="Copy text to clipboard"
+                type="button"
+              >
+                {/* Copy icon SVG */}
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false" style={{ display: 'block' }}>
+                  <rect x="6" y="6" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.5" fill="#fff" />
+                  <rect x="3" y="3" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.2" fill="#e3eafc" />
+                </svg>
+              </button>
+            </div>
 
-             {debugOverlay && (
-               <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-                 {/* draw bbox, per-edge points and chosen focal point if metadata exists */}
-                 {focalMeta && (() => {
-                   const cx = typeof focalMeta.cx === 'number' ? focalMeta.cx : 0.5;
-                   const cy = typeof focalMeta.cy === 'number' ? focalMeta.cy : 0.5;
-                   const bw = typeof focalMeta.bw === 'number' ? focalMeta.bw : 1.0;
-                   const bh = typeof focalMeta.bh === 'number' ? focalMeta.bh : 1.0;
-                   const minX = Math.max(0, cx - bw / 2);
-                   const maxX = Math.min(1, cx + bw / 2);
-                   const minY = Math.max(0, cy - bh / 2);
-                   const maxY = Math.min(1, cy + bh / 2);
-                   const et = focalMeta.edge_top || null;
-                   const er = focalMeta.edge_right || null;
-                   const eb = focalMeta.edge_bottom || null;
-                   const el = focalMeta.edge_left || null;
-                   const eps = Array.isArray(focalMeta.edge_points) ? focalMeta.edge_points : null;
+          </div>
+        )}
+        <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {/* Always render both images and cross-fade between them when the real image is loaded */}
+            <img
+              src={silhouettePath}
+              alt="Silhouette"
+              className="silhouette-img"
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect || !realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
+              onLoad={() => setSilhouetteLoaded(true)}
+              onError={e => { setSilhouetteLoaded(false); }}
+            />
+            <img
+              src={realImagePath}
+              alt={dailyPokemon.name}
+              className="silhouette-img"
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(0.9,0.9)' : imgStyle.transform }}
+              onLoad={() => setRealLoaded(true)}
+              onError={e => { setRealLoaded(false); }}
+            />
 
-                   // If mirrored, display positions should be flipped horizontally
-                   const display = (x, y) => {
-                     const dx = shouldMirror ? (1 - x) : x;
-                     const dy = y; // vertical unchanged
-                     return { x: dx, y: dy };
-                   };
+            {debugOverlay && (
+              <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                {/* draw bbox, per-edge points and chosen focal point if metadata exists */}
+                {focalMeta && (() => {
+                  const cx = typeof focalMeta.cx === 'number' ? focalMeta.cx : 0.5;
+                  const cy = typeof focalMeta.cy === 'number' ? focalMeta.cy : 0.5;
+                  const bw = typeof focalMeta.bw === 'number' ? focalMeta.bw : 1.0;
+                  const bh = typeof focalMeta.bh === 'number' ? focalMeta.bh : 1.0;
+                  const minX = Math.max(0, cx - bw / 2);
+                  const maxX = Math.min(1, cx + bw / 2);
+                  const minY = Math.max(0, cy - bh / 2);
+                  const maxY = Math.min(1, cy + bh / 2);
+                  const et = focalMeta.edge_top || null;
+                  const er = focalMeta.edge_right || null;
+                  const eb = focalMeta.edge_bottom || null;
+                  const el = focalMeta.edge_left || null;
+                  const eps = Array.isArray(focalMeta.edge_points) ? focalMeta.edge_points : null;
 
-                   const bboxLeft = shouldMirror ? (1 - maxX) : minX;
-                   const bboxTop = minY;
-                   const bboxWidth = maxX - minX;
-                   const bboxHeight = maxY - minY;
+                  // If mirrored, display positions should be flipped horizontally
+                  const display = (x, y) => {
+                    const dx = shouldMirror ? (1 - x) : x;
+                    const dy = y; // vertical unchanged
+                    return { x: dx, y: dy };
+                  };
 
-                   const dc = display(cx, cy);
-                   const det = et ? display(et.x, et.y) : null;
-                   const der = er ? display(er.x, er.y) : null;
-                   const deb = eb ? display(eb.x, eb.y) : null;
-                   const del = el ? display(el.x, el.y) : null;
-                   const dt = display(targetX, targetY);
+                  const bboxLeft = shouldMirror ? (1 - maxX) : minX;
+                  const bboxTop = minY;
+                  const bboxWidth = maxX - minX;
+                  const bboxHeight = maxY - minY;
 
-                   return (
-                     <>
-                       <div style={{ position: 'absolute', left: `${bboxLeft * 100}%`, top: `${bboxTop * 100}%`, width: `${bboxWidth * 100}%`, height: `${bboxHeight * 100}%`, border: '2px solid rgba(255,0,0,0.95)', background: 'rgba(255,0,0,0.04)' }} />
-                       <div style={{ position: 'absolute', left: `${dc.x * 100}%`, top: `${dc.y * 100}%`, transform: 'translate(-50%,-50%)', width: 12, height: 12, borderRadius: 6, background: 'yellow', border: '2px solid #333' }} title="bbox center" />
-                       {et && <div style={{ position: 'absolute', left: `${det.x * 100}%`, top: `${det.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'magenta', border: '2px solid #333' }} title="edge top" />}
-                       {er && <div style={{ position: 'absolute', left: `${der.x * 100}%`, top: `${der.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'orange', border: '2px solid #333' }} title="edge right" />}
-                       {deb && <div style={{ position: 'absolute', left: `${deb.x * 100}%`, top: `${deb.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'lime', border: '2px solid #333' }} title="edge bottom" />}
-                       {del && <div style={{ position: 'absolute', left: `${del.x * 100}%`, top: `${del.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'cyan', border: '2px solid #333' }} title="edge left" />}
-                       {eps && eps.map((p, i) => {
-                         const dp = display(p.x, p.y);
-                         return <div key={i} style={{ position: 'absolute', left: `${dp.x * 100}%`, top: `${dp.y * 100}%`, transform: 'translate(-50%,-50%)', width: 6, height: 6, borderRadius: 3, background: 'rgba(128,0,128,0.9)', border: '1px solid #222' }} title={`edge point ${i}`} />;
-                       })}
-                       <div style={{ position: 'absolute', left: `${dt.x * 100}%`, top: `${dt.y * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#00bcd4', border: '2px solid #003' }} title="chosen target" />
-                       <div style={{ position: 'absolute', left: `${dt.x * 100 + 2}%`, top: `${dt.y * 100 + 2}%`, color: '#000', background: '#fff', fontSize: 11, padding: '2px 4px', borderRadius: 4 }}>{`t:${dt.x.toFixed(2)},${dt.y.toFixed(2)}`}</div>
-                     </>
-                   );
-                 })()}
-               </div>
-             )}
-           </div>
-         </div>
+                  const dc = display(cx, cy);
+                  const det = et ? display(et.x, et.y) : null;
+                  const der = er ? display(er.x, er.y) : null;
+                  const deb = eb ? display(eb.x, eb.y) : null;
+                  const del = el ? display(el.x, el.y) : null;
+                  const dt = display(targetX, targetY);
+
+                  return (
+                    <>
+                      <div style={{ position: 'absolute', left: `${bboxLeft * 100}%`, top: `${bboxTop * 100}%`, width: `${bboxWidth * 100}%`, height: `${bboxHeight * 100}%`, border: '2px solid rgba(255,0,0,0.95)', background: 'rgba(255,0,0,0.04)' }} />
+                      <div style={{ position: 'absolute', left: `${dc.x * 100}%`, top: `${dc.y * 100}%`, transform: 'translate(-50%,-50%)', width: 12, height: 12, borderRadius: 6, background: 'yellow', border: '2px solid #333' }} title="bbox center" />
+                      {et && <div style={{ position: 'absolute', left: `${det.x * 100}%`, top: `${det.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'magenta', border: '2px solid #333' }} title="edge top" />}
+                      {er && <div style={{ position: 'absolute', left: `${der.x * 100}%`, top: `${der.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'orange', border: '2px solid #333' }} title="edge right" />}
+                      {deb && <div style={{ position: 'absolute', left: `${deb.x * 100}%`, top: `${deb.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'lime', border: '2px solid #333' }} title="edge bottom" />}
+                      {del && <div style={{ position: 'absolute', left: `${del.x * 100}%`, top: `${del.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'cyan', border: '2px solid #333' }} title="edge left" />}
+                      {eps && eps.map((p, i) => {
+                        const dp = display(p.x, p.y);
+                        return <div key={i} style={{ position: 'absolute', left: `${dp.x * 100}%`, top: `${dp.y * 100}%`, transform: 'translate(-50%,-50%)', width: 6, height: 6, borderRadius: 3, background: 'rgba(128,0,128,0.9)', border: '1px solid #222' }} title={`edge point ${i}`} />;
+                      })}
+                      <div style={{ position: 'absolute', left: `${dt.x * 100}%`, top: `${dt.y * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#00bcd4', border: '2px solid #003' }} title="chosen target" />
+                      <div style={{ position: 'absolute', left: `${dt.x * 100 + 2}%`, top: `${dt.y * 100 + 2}%`, color: '#000', background: '#fff', fontSize: 11, padding: '2px 4px', borderRadius: 4 }}>{`t:${dt.x.toFixed(2)},${dt.y.toFixed(2)}`}</div>
+                    </>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
       {!isCorrect && (
         <form
@@ -564,6 +606,7 @@ const _silhouetteStyles = `
   overflow: hidden;
   background: #fff;
   max-width: 100%;
+  border: 2px solid #ccc;
 }
 .silhouette-img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
@@ -577,6 +620,25 @@ const _silhouetteStyles = `
 
 @media (max-width: 360px) {
   .silhouette-viewport { width: 92vw; }
+}
+
+/* Congrats layout: keep on one line for larger screens, allow wrap on small screens */
+.silhouette-congrats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+.silhouette-congrats .congrats-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 420px) {
+  .silhouette-congrats { flex-wrap: wrap; gap: 8px; }
+  .silhouette-congrats .congrats-text { white-space: normal; overflow: visible; text-overflow: clip; }
 }
 `;
 
