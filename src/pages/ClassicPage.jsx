@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
+import CongratsMessage from '../components/CongratsMessage';
 
 function usePokemonData() {
   const [pokemonData, setPokemonData] = useState(null);
@@ -179,12 +180,7 @@ function ClassicPage({ guesses, setGuesses }) {
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
         {solved ? (
-          <div style={{ textAlign: 'center', margin: '12px 0' }}>
-            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Congratulations!</div>
-            <div style={{ fontSize: 16 }}>
-              You guessed today's Classic Mode Pokémon in {guesses.length} {guesses.length === 1 ? 'guess' : 'guesses'}!
-            </div>
-          </div>
+          <CongratsMessage guessCount={guesses.length} mode="Classic Mode" />
         ) : (
           <form
             onSubmit={e => {

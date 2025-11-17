@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
+import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function usePokemonData() {
@@ -225,9 +226,12 @@ export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
         </button>
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-        <div style={{ fontWeight: 600, marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-          <span>Which Pokémon is made up of these colours?</span>
-        </div>
+        {!isCorrect && (
+          <div style={{ fontWeight: 600, marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <span>Which Pokémon is made up of these colours?</span>
+          </div>
+        )}
+        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />}
         <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
           {/* Colour block image */}
           {imgLoaded && (

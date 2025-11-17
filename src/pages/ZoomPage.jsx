@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
+import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function usePokemonData() {
@@ -292,7 +293,8 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
         </button>
       </div>
       <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>
+        {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
+        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Zoom Mode" />}
          <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
            {imgLoaded && (
              <img
@@ -357,7 +359,7 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
             marginBottom: guesses.length > 1 ? 16 : 0,
           }}>
             <img
-              src={`/data/sprites/${lastGuess.id}-front.png`}
+              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${lastGuess.id}-front.png`}
               alt={lastGuess.name}
               style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 8, transform: 'scale(2.0)' }}
               onError={e => { e.target.style.display = 'none'; }}
@@ -382,7 +384,7 @@ export default function ZoomPage({ guesses, setGuesses, dailySeed }) {
                   fontWeight: 600,
                 }}>
                   <img
-                    src={`/data/sprites/${g.id}-front.png`}
+                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${g.id}-front.png`}
                     alt={g.name}
                     style={{ width: 24, height: 24, objectFit: 'contain', marginBottom: 4, transform: 'scale(1.5)' }}
                     onError={e => { e.target.style.display = 'none'; }}

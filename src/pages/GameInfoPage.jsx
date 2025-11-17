@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
+import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function usePokemonData() {
@@ -276,7 +277,8 @@ function GameInfoPage({ guesses, setGuesses, dailySeed }) {
                 </button>
             </div>
                         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-                                <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>
+                                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
+                                {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />}
                                 {shownClues.map(type => renderClue(type))}
                                 {/* Hint placeholder text for next clue, specifying clue type */}
                                 {(() => {
@@ -356,7 +358,7 @@ function GameInfoPage({ guesses, setGuesses, dailySeed }) {
                         marginBottom: guesses.length > 1 ? 16 : 0,
                     }}>
                         <img
-                            src={`/data/sprites/${lastGuess.id}-front.png`}
+                            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${lastGuess.id}-front.png`}
                             alt={lastGuess.name}
                             style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 8, transform: 'scale(2.0)' }}
                             onError={e => { e.target.style.display = 'none'; }}
@@ -381,7 +383,7 @@ function GameInfoPage({ guesses, setGuesses, dailySeed }) {
                                     fontWeight: 600,
                                 }}>
                                     <img
-                                        src={`/data/sprites/${g.id}-front.png`}
+                                        src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${g.id}-front.png`}
                                         alt={g.name}
                                         style={{ width: 24, height: 24, objectFit: 'contain', marginBottom: 4, transform: 'scale(1.5)' }}
                                         onError={e => { e.target.style.display = 'none'; }}
