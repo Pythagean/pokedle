@@ -20,7 +20,7 @@ function mulberry32(a) {
   }
 }
 
-export default function SilhouettePage({ pokemonData, guesses, setGuesses, dailySeed }) {
+export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, dailySeed }) {
   const inputRef = useRef(null);
 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
@@ -40,7 +40,6 @@ export default function SilhouettePage({ pokemonData, guesses, setGuesses, daily
   const dropdownRef = useRef(null);
   const [silhouetteLoaded, setSilhouetteLoaded] = useState(false);
   const [realLoaded, setRealLoaded] = useState(false);
-  const [silhouetteMeta, setSilhouetteMeta] = useState(null);
   const [debugOverlay, setDebugOverlay] = useState(false);
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
@@ -71,13 +70,7 @@ export default function SilhouettePage({ pokemonData, guesses, setGuesses, daily
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdownOpen]);
 
-  // Load precomputed silhouette metadata (cx, cy, bw, bh)
-  useEffect(() => {
-    fetch('data/silhouette_meta.json')
-      .then(r => r.json())
-      .then(setSilhouetteMeta)
-      .catch(() => { });
-  }, []);
+  // `silhouetteMeta` is supplied from App.jsx to avoid repeated fetches.
 
   // --- Mirroring Logic ---
   // Deterministic random: use seed + 54321 for mirroring decision

@@ -40,6 +40,24 @@ function useCardManifest() {
   return cardManifest;
 }
 
+// Load silhouette metadata once at app level to avoid repeated network calls
+function useSilhouetteMeta() {
+  const [silhouetteMeta, setSilhouetteMeta] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('data/silhouette_meta.json')
+      .then(res => res.json())
+      .then(data => {
+        if (!cancelled) setSilhouetteMeta(data);
+      })
+      .catch(() => {
+        if (!cancelled) setSilhouetteMeta(null);
+      });
+    return () => { cancelled = true; };
+  }, []);
+  return silhouetteMeta;
+}
+
 function useTitleImg() {
   // Just return the public path
   return 'data/title.png';
@@ -84,6 +102,7 @@ const PAGES = [
 function App() {
   const pokemonData = usePokemonData();
   const cardManifest = useCardManifest();
+  const silhouetteMeta = useSilhouetteMeta();
   const titleImg = useTitleImg();
   const [page, setPage] = useState('classic');
   // Store guesses per page
@@ -188,7 +207,7 @@ function App() {
   {page === 'ability' && <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
   {page === 'moves' && <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />}
   {page === 'category' && <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />}
-  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
+  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
   {page === 'zoom' && <ZoomPage pokemonData={pokemonData} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
   {page === 'colours' && <ColoursPage pokemonData={pokemonData} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
   {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
