@@ -10,10 +10,24 @@ export default function Header({ pages, page, setPage, titleImg }) {
           .main-header { height: 60px !important; padding: 0 4px !important; }
           .main-header img { height: 36px !important; margin-right: 8px !important; }
           .main-header nav button { font-size: 13px !important; padding: 6px 4px !important; }
-          .main-header { height: 100px !important; padding: 4px 4px !important; }
+          .main-header { height: 70px !important; padding: 4px 4px !important; }
           .main-header img { height: 56px !important; margin-right: 12px !important; max-width: 120px !important; max-height: 60px !important; }
-          .main-header nav { gap: 4px !important; flex-wrap: wrap !important; justify-content: center !important; }
-          .main-header nav button { font-size: 13px !important; padding: 3px 3px !important; min-width: 50px !important; margin-bottom: 2px !important; flex: 1 1 28%; max-width: 28vw; }
+                    /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
+                    .main-header nav { gap: 3px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
+                    .main-header nav button { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
+                    /* Mobile: hide textual label and show icon instead on very small screens */
+                    .main-header nav button .nav-label { display: inline !important; }
+                    .main-header nav button .nav-icon { display: none !important; }
+                    @media (max-width: 480px) {
+                        .main-header nav button { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
+                        .main-header nav button .nav-label { display: none !important; }
+                        .main-header nav button .nav-icon { display: inline-block !important; width: 40px !important; height: 40px !important; margin-right: 0 !important; }
+                            .main-header nav button { height: 44px !important; border-radius: 8px !important; border: 2px solid #1976d2 !important; box-shadow: none !important; outline: none !important; }
+                            .main-header nav button:focus { outline: none !important; box-shadow: none !important; }
+                            .main-header nav button .nav-label { display: none !important; }
+                            .main-header nav button .nav-icon { display: inline-block !important; width: 28px !important; height: 44px !important; margin-right: 0 !important; }
+                            .main-header nav button[style*="background: #1976d2"] { border: none !important; }
+                    }
         }
       `}</style>
             <div className="main-header" style={{
@@ -63,6 +77,8 @@ export default function Header({ pages, page, setPage, titleImg }) {
                                 <button
                                     key={p.key}
                                     onClick={() => setPage(p.key)}
+                                    aria-label={p.label}
+                                    title={p.label}
                                     style={{
                                         padding: '10px 22px',
                                         borderRadius: 12,
@@ -79,9 +95,13 @@ export default function Header({ pages, page, setPage, titleImg }) {
                                         minWidth: 90,
                                         marginBottom: 8,
                                         whiteSpace: 'nowrap',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    {p.label}
+                                    <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'none', width: 40, height: 40, marginRight: 2 }} />
+                                    <span className="nav-label">{p.label}</span>
                                 </button>
                             ))}
                         </nav>
