@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
+import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function usePokemonData() {
@@ -380,49 +381,7 @@ export default function SilhouettePage({ guesses, setGuesses, dailySeed }) {
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
-        {isCorrect && (
-          <div style={{ textAlign: 'center', margin: '12px 0' }}>
-            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Congratulations!</div>
-            <div className="silhouette-congrats" style={{ marginTop: 6 }}>
-              <div className="congrats-text" style={{ fontSize: 16 }}>
-                {`You guessed today's Silhouette Mode Pokémon in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}!`}
-              </div>
-              <button
-                style={{
-                  padding: '4px',
-                  borderRadius: 6,
-                  background: '#e3eafc',
-                  border: '1px solid #626262ff',
-                  color: '#e9e9e9ff',
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-                onClick={() => {
-                  const text = isCorrect
-                    ? `You guessed today's Silhouette Mode Pokémon in ${guesses.length} ${guesses.length === 1 ? 'guess' : 'guesses'}!`
-                    : 'Which Pokémon is this?';
-                  if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text);
-                  }
-                }}
-                aria-label="Copy text to clipboard"
-                title="Copy text to clipboard"
-                type="button"
-              >
-                {/* Copy icon SVG */}
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false" style={{ display: 'block' }}>
-                  <rect x="6" y="6" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.5" fill="#fff" />
-                  <rect x="3" y="3" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.2" fill="#e3eafc" />
-                </svg>
-              </button>
-            </div>
-
-          </div>
-        )}
+        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />}
         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* Always render both images and cross-fade between them when the real image is loaded */}
@@ -620,25 +579,6 @@ const _silhouetteStyles = `
 
 @media (max-width: 360px) {
   .silhouette-viewport { width: 92vw; }
-}
-
-/* Congrats layout: keep on one line for larger screens, allow wrap on small screens */
-.silhouette-congrats {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: nowrap;
-}
-.silhouette-congrats .congrats-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (max-width: 420px) {
-  .silhouette-congrats { flex-wrap: wrap; gap: 8px; }
-  .silhouette-congrats .congrats-text { white-space: normal; overflow: visible; text-overflow: clip; }
 }
 `;
 
