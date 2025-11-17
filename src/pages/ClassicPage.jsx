@@ -147,7 +147,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
     const answerEvo = getEvoStage(answerPoke);
     return {
       name: guessPoke.name === answerPoke.name ? 'match' : 'miss',
-      color: guessPoke.color === answerPoke.color ? 'match' : 'miss',
+      color: (guessPoke.main_colour || guessPoke.color) === (answerPoke.main_colour || answerPoke.color) ? 'match' : 'miss',
       types: JSON.stringify(guessPoke.types) === JSON.stringify(answerPoke.types)
         ? 'match'
         : (partialMatch(guessPoke.types, answerPoke.types) ? 'partial' : 'miss'),
@@ -246,7 +246,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                           <div className="feedback-box-content">{poke.types.join(', ')}</div>
                         </div>
                           <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.color}</div>
+                          <div className="feedback-box-content">{poke.main_colour || poke.color}</div>
                         </div>
                         <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-box-content">{poke.habitat}</div>

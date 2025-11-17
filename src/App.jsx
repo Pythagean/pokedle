@@ -153,7 +153,7 @@ function App() {
     const answerEvo = getEvoStage(answerPoke);
     return {
       name: guessPoke.name === answerPoke.name ? 'match' : 'miss',
-      color: guessPoke.color === answerPoke.color ? 'match' : 'miss',
+      color: (guessPoke.main_colour || guessPoke.color) === (answerPoke.main_colour || answerPoke.color) ? 'match' : 'miss',
       types: JSON.stringify(guessPoke.types) === JSON.stringify(answerPoke.types)
         ? 'match'
         : (partialMatch(guessPoke.types, answerPoke.types) ? 'partial' : 'miss'),
