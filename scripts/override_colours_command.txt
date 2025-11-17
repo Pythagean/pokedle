@@ -1,0 +1,1 @@
+python .\\scripts\\override_colours.py --csv .\\temp\\pokemon_colours_override.csv --input .\\public\\data\\pokemon_data.json --output .\\public\\data\\pokemon_data_overridden.json --images-dir ..\pokedle_assets\images\
