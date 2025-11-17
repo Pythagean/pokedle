@@ -364,6 +364,13 @@ function CardPage({ guesses, setGuesses }) {
                           background: 'transparent',
                           filter: `blur(${blurLevel}px)`,
                           transition: 'filter 0.4s',
+                          /* Display the cropped image smaller and inset within the viewport
+                             so only a portion is visible (like a magnified crop). */
+                          left: '8%',
+                          top: '-10%',
+                          width: '84%',
+                          height: '84%',
+                          objectFit: 'contain',
                         }}
                       />
                     )}
