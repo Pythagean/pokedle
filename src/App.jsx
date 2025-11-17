@@ -135,7 +135,7 @@ function App() {
       <div style={{
         maxWidth: 900,
         margin: '0 auto',
-        padding: '70px 0px 24px 0px',
+        padding: '30px 0px 24px 0px',
         fontFamily: 'Inter, Arial, sans-serif',
         boxSizing: 'border-box',
         display: 'flex',

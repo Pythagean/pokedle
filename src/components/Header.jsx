@@ -10,8 +10,8 @@ export default function Header({ pages, page, setPage, titleImg }) {
           .main-header { height: 60px !important; padding: 0 4px !important; }
           .main-header img { height: 36px !important; margin-right: 8px !important; }
           .main-header nav button { font-size: 13px !important; padding: 6px 4px !important; }
-          .main-header { height: 70px !important; padding: 4px 4px !important; }
-          .main-header img { height: 56px !important; margin-right: 12px !important; max-width: 120px !important; max-height: 60px !important; }
+          .main-header { height: 60px !important; padding: 4px 4px !important; }
+          .main-header img { height: 56px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
                     /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
                     .main-header nav { gap: 3px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
                     .main-header nav button { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
@@ -51,7 +51,7 @@ export default function Header({ pages, page, setPage, titleImg }) {
                     maxWidth: 1100,
                     margin: '0 auto',
                     padding: '0 12px',
-                    paddingLeft: '6px',
+                    paddingLeft: '0px',
                     height: 96,
                     gap: 0,
                 }}>
@@ -64,7 +64,7 @@ export default function Header({ pages, page, setPage, titleImg }) {
                                 width: 'auto',
                                 display: 'block',
                                 objectFit: 'contain',
-                                marginRight: 24,
+                                marginRight: 12,
                                 marginLeft: 0,
                                 maxWidth: 120,
                                 maxHeight: 80,
