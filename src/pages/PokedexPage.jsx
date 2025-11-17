@@ -175,7 +175,8 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
             role="tooltip"
           >
             Guess the Pokémon from its Pokédex entries.<br /><br />
-            After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed. Making the correct guess will reveal the original (unscrubbed) Pokédex entries.
+            After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed.<br /><br />
+            All Pokémon names have been removed from the Pokédex entries
           </div>
         </div>
       </div>
