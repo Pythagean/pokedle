@@ -3,16 +3,6 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
-function usePokemonData() {
-  const [pokemonData, setPokemonData] = useState(null);
-  useEffect(() => {
-    fetch('data/pokemon_data.json')
-      .then(res => res.json())
-      .then(setPokemonData);
-  }, []);
-  return pokemonData;
-}
-
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
@@ -30,9 +20,8 @@ function mulberry32(a) {
   }
 }
 
-export default function ColoursPage({ guesses, setGuesses, dailySeed }) {
+export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySeed }) {
   const inputRef = useRef(null);
-  const pokemonData = usePokemonData();
   const today = new Date();
   const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 9 * 1000 + 'c'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);

@@ -28,8 +28,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function ClassicPage({ guesses, setGuesses }) {
-  const pokemonData = usePokemonData();
+function ClassicPage({ pokemonData, guesses, setGuesses }) {
   const MAX_PLACEHOLDER_ROWS = 1;
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);

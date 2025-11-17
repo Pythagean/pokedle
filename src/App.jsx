@@ -7,9 +7,17 @@ import ReactDOM from 'react-dom';
 function usePokemonData() {
   const [pokemonData, setPokemonData] = useState(null);
   useEffect(() => {
+    let cancelled = false;
     fetch('data/pokemon_data.json')
       .then(res => res.json())
-      .then(setPokemonData);
+      .then(data => {
+        if (!cancelled) {
+          setPokemonData(data);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
   return pokemonData;
 }
@@ -155,18 +163,18 @@ function App() {
             }
           `}</style>
           {/* Page Content */}
-        {page === 'classic' && <ClassicPage guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
-  {page === 'pokedex' && <PokedexPage guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
-  {page === 'stats' && <StatsPage guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
-  {page === 'ability' && <AbilityPage guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
-  {page === 'moves' && <MovesPage guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />}
-  {page === 'category' && <CategoryPage guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />}
-  {page === 'silhouette' && <SilhouettePage guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
-  {page === 'zoom' && <ZoomPage guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
-  {page === 'colours' && <ColoursPage guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
-  {page === 'locations' && <LocationsPage guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
-  {page === 'card' && <CardPage guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
-  {page === 'gameinfo' && <GameInfoPage guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
+        {page === 'classic' && <ClassicPage pokemonData={pokemonData} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
+  {page === 'pokedex' && <PokedexPage pokemonData={pokemonData} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
+  {page === 'stats' && <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
+  {page === 'ability' && <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
+  {page === 'moves' && <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />}
+  {page === 'category' && <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />}
+  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
+  {page === 'zoom' && <ZoomPage pokemonData={pokemonData} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
+  {page === 'colours' && <ColoursPage pokemonData={pokemonData} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
+  {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
+  {page === 'card' && <CardPage pokemonData={pokemonData} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
+  {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
       <style>{`
         @media (max-width: 600px) {

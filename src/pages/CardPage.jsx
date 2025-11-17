@@ -48,8 +48,7 @@ function getCardTypeByDay(day, rng) {
   return 'normal'; // Mon-Fri
 }
 
-function CardPage({ guesses, setGuesses }) {
-  const pokemonData = usePokemonData();
+function CardPage({ pokemonData, guesses, setGuesses }) {
   const cardManifest = useCardManifest();
   
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found

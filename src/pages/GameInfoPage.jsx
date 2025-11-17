@@ -3,16 +3,6 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 // import pokemonData from '../../data/pokemon_data.json';
 
-function usePokemonData() {
-    const [pokemonData, setPokemonData] = useState(null);
-    useEffect(() => {
-        fetch('data/pokemon_data.json')
-            .then(res => res.json())
-            .then(setPokemonData);
-    }, []);
-    return pokemonData;
-}
-
 function mulberry32(a) {
   return function() {
     var t = a += 0x6D2B79F5;
@@ -33,11 +23,10 @@ function getSeedFromUTCDate(date) {
 
 const BASE_CLUE_TYPES = ['stats', 'ability', 'moves', 'category', 'locations', 'held_items', 'shape'];
 
-function GameInfoPage({ guesses, setGuesses, dailySeed }) {
+function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const inputRef = useRef(null);
-    const pokemonData = usePokemonData();
     const today = new Date();
     const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
     const [resetSeed, setResetSeed] = useState(null);
