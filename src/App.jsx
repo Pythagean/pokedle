@@ -22,6 +22,24 @@ function usePokemonData() {
   return pokemonData;
 }
 
+// Load card manifest once at app level to avoid repeated network calls
+function useCardManifest() {
+  const [cardManifest, setCardManifest] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('data/card_manifest.json')
+      .then(res => res.json())
+      .then(data => {
+        if (!cancelled) setCardManifest(data);
+      })
+      .catch(() => {
+        if (!cancelled) setCardManifest(null);
+      });
+    return () => { cancelled = true; };
+  }, []);
+  return cardManifest;
+}
+
 function useTitleImg() {
   // Just return the public path
   return 'data/title.png';
@@ -65,6 +83,7 @@ const PAGES = [
 
 function App() {
   const pokemonData = usePokemonData();
+  const cardManifest = useCardManifest();
   const titleImg = useTitleImg();
   const [page, setPage] = useState('classic');
   // Store guesses per page
@@ -173,7 +192,7 @@ function App() {
   {page === 'zoom' && <ZoomPage pokemonData={pokemonData} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
   {page === 'colours' && <ColoursPage pokemonData={pokemonData} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
   {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
-  {page === 'card' && <CardPage pokemonData={pokemonData} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
+  {page === 'card' && <CardPage pokemonData={pokemonData} cardManifest={cardManifest} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
       <style>{`

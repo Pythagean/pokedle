@@ -4,26 +4,6 @@ import CongratsMessage from '../components/CongratsMessage';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
 
-function usePokemonData() {
-  const [pokemonData, setPokemonData] = useState(null);
-  useEffect(() => {
-    fetch('data/pokemon_data.json')
-      .then(res => res.json())
-      .then(setPokemonData);
-  }, []);
-  return pokemonData;
-}
-
-function useCardManifest() {
-  const [cardManifest, setCardManifest] = useState(null);
-  useEffect(() => {
-    fetch('data/card_manifest.json')
-      .then(res => res.json())
-      .then(setCardManifest);
-  }, []);
-  return cardManifest;
-}
-
 function mulberry32(a) {
   return function() {
     var t = a += 0x6D2B79F5;
@@ -48,8 +28,7 @@ function getCardTypeByDay(day, rng) {
   return 'normal'; // Mon-Fri
 }
 
-function CardPage({ pokemonData, guesses, setGuesses }) {
-  const cardManifest = useCardManifest();
+function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
   
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
