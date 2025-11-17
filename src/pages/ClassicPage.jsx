@@ -43,8 +43,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
   const rowsToRender = Math.max(1, guesses.length);
-  // One additional box added for Secondary Colours
-  const BOX_COUNT = 7;
+  // Two additional boxes added: Generation and Evolution Stage (total now 9)
+  const BOX_COUNT = 9;
   const BOX_DELAY_STEP = 0.3; // seconds between boxes (updated to match per-box delays)
   const BOX_ANIM_DURATION_MS = 420; // matches CSS animation duration
   const [revealRow, setRevealRow] = useState(null);
@@ -141,6 +141,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
   function getComparison(guessPoke, answerPoke) {
     if (!guessPoke || !answerPoke) return {};
     function partialMatch(arr1, arr2) {
+      if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
       return arr1.some(item => arr2.includes(item));
     }
     const getEvoStage = poke => poke.evolution_stage || 1;
@@ -148,6 +149,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
     const answerEvo = getEvoStage(answerPoke);
     return {
       name: guessPoke.name === answerPoke.name ? 'match' : 'miss',
+      generation: guessPoke.generation === answerPoke.generation ? 'match' : 'miss',
       color: (guessPoke.main_colour || guessPoke.color) === (answerPoke.main_colour || answerPoke.color) ? 'match' : 'miss',
       secondary_colours: JSON.stringify(guessPoke.secondary_colours) === JSON.stringify(answerPoke.secondary_colours)
         ? 'match'
@@ -218,11 +220,13 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
         )}
         </div>
         <div className="classic-grid-fit" style={{ width: '100%' }}>
-          <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', fontWeight: 600, gap: 4, marginBottom: 8, alignItems: 'center', width: '100%' }}>
+          <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(9, 1fr)', fontWeight: 600, gap: 4, marginBottom: 8, alignItems: 'center', width: '100%' }}>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
+            <div style={{ textAlign: 'center', fontSize: '1em' }}>Generation</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Main Colour</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Secondary Colours</div>
+            <div style={{ textAlign: 'center', fontSize: '1em' }}>Evolution Stage</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
             <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
@@ -236,8 +240,10 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                   const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
                   const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
                   const secondaryStatus = cmp.secondary_colours === 'match' ? 'match' : (cmp.secondary_colours === 'partial' ? 'partial' : 'miss');
+                  const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
+                  const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
                   return (
-                    <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                    <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(9, 1fr)', width: '100%' }}>
                       <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-pokemon-img">
                           <img
@@ -248,19 +254,25 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                         </div>
                         <div className="feedback-box-content" aria-hidden="true"></div>
                       </div>
-                        <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
+                        <div className={`feedback-box ${generationStatus}`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.generation}</div>
+                        </div>
+                        <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
                           <div className="feedback-box-content">{poke.types.join(', ')}</div>
                         </div>
-                        <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
+                        <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
                           <div className="feedback-box-content">{poke.main_colour || poke.color}</div>
                         </div>
-                        <div className={`feedback-box ${secondaryStatus}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
+                        <div className={`feedback-box ${secondaryStatus}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
                           <div className="feedback-box-content">{poke.secondary_colours && poke.secondary_colours.length ? poke.secondary_colours.join(', ') : 'None'}</div>
                         </div>
-                        <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
+                        <div className={`feedback-box ${evolutionStatus}`} style={revealRow === rowIdx ? { animationDelay: `${5 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.evolution_stage || 1}</div>
+                        </div>
+                        <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${6 * BOX_DELAY_STEP}s` } : undefined}>
                           <div className="feedback-box-content">{poke.habitat}</div>
                         </div>
-                        <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
+                        <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${7 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                         {cmp.height !== 'match' && (
                           <div className="bg-icon" aria-hidden="true">
                             <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
@@ -270,7 +282,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                           <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
                         </div>
                       </div>
-                      <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${6 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
+                      <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${8 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                         {cmp.weight !== 'match' && (
                           <div className="bg-icon" aria-hidden="true">
                             <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
@@ -286,8 +298,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
 
                 // Placeholder row
                 return (
-                  <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
-                    {Array.from({ length: 7 }).map((__, colIdx) => (
+                  <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(9, 1fr)', width: '100%' }}>
+                    {Array.from({ length: 9 }).map((__, colIdx) => (
                       <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
                         <div className="feedback-box-content">?</div>
                       </div>
@@ -319,7 +331,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
         }
         .feedback-grid {
           display: grid;
-          grid-template-columns: repeat(7, 1fr);
+          grid-template-columns: repeat(9, 1fr);
           gap: 8px;
           margin-bottom: 8px;
           align-items: center;
@@ -432,7 +444,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
              so boxes are larger on very narrow screens and allow horizontal
              scrolling via the wrapper '.classic-feedback-scroll'. */
           .feedback-grid {
-            grid-template-columns: repeat(7, minmax(53px, 1fr)) !important;
+            grid-template-columns: repeat(9, minmax(53px, 1fr)) !important;
             gap: 4px !important;
           }
           .feedback-box {
