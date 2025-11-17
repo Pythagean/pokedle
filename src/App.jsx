@@ -124,7 +124,7 @@ function App() {
       <style>{`
         @media (max-width: 600px) {
           .main-app {
-            padding: 80px 4px 4px 4px !important;
+            padding: 30px 4px 4px 4px !important;
             min-height: calc(100vh - 60px) !important;
             height: auto !important;
           }
@@ -132,19 +132,29 @@ function App() {
       `}</style>
       <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} />
       {/* Page Content - separate scrollable container so header stays fixed */}
-      <div style={{
-        maxWidth: 900,
-        margin: '0 auto',
-        padding: '30px 0px 24px 0px',
-        fontFamily: 'Inter, Arial, sans-serif',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'flex-start',
-        minHeight: 'calc(100vh - 96px)',
-      }}>
-        {/* Page Content */}
+        <div
+          className="main-app"
+          style={{
+            maxWidth: 900,
+            margin: '0 auto',
+            padding: '60px 0px 24px 0px',
+            fontFamily: 'Inter, Arial, sans-serif',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            justifyContent: 'flex-start',
+            minHeight: 'calc(100vh - 96px)',
+          }}
+        >
+          <style>{`
+            @media (max-width: 600px) {
+          .main-app {
+            padding: '30px 0px 24px 0px !important;',
+          }
+            }
+          `}</style>
+          {/* Page Content */}
         {page === 'classic' && <ClassicPage guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
   {page === 'pokedex' && <PokedexPage guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
   {page === 'stats' && <StatsPage guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
@@ -161,7 +171,6 @@ function App() {
       <style>{`
         @media (max-width: 600px) {
           .main-app {
-            padding: 100px 4px 4px 4px !important;
             min-height: calc(100vh - 80px) !important;
             height: auto !important;
           }
