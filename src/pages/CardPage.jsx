@@ -266,13 +266,13 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
             </div>
           )}
         </div>
-        <button
+        {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={handleReset}
           disabled={resetCount >= 2}
         >
           Reset
-        </button>
+        </button> */}
         {/**
         // Debug text for folder/card type
         {folder && (

@@ -268,7 +268,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, dailySeed }
             <b>Note:</b> The image may be <b>mirrored</b> (flipped horizontally) for extra challenge.
           </div>
         </div>
-        <button
+        {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
             if (resetCount >= 2) return;
@@ -279,7 +279,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, dailySeed }
           disabled={resetCount >= 2}
         >
           Reset
-        </button>
+        </button> */}
       </div>
       <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}

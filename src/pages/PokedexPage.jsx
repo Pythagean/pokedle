@@ -109,7 +109,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
-        <button
+        {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
             if (resetCount >= 2) return;
@@ -121,7 +121,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySee
           disabled={resetCount >= 2}
         >
           Reset
-        </button>
+        </button> */}
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (

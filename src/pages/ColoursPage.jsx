@@ -211,7 +211,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySee
             The colours are arranged from most to least common, left to right.<br />
           </div>
         </div>
-        <button
+        {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
             if (resetCount >= 2) return;
@@ -222,7 +222,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySee
           disabled={resetCount >= 2}
         >
           Reset
-        </button>
+        </button> */}
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (

@@ -252,7 +252,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
                         After 4, 8, 12 and 16 guesses, you will receive additional clues.
                     </div>
                 </div>
-                <button
+                {/* <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -263,7 +263,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
                     disabled={resetCount >= 2}
                 >
                     Reset
-                </button>
+                </button> */}
             </div>
                         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
