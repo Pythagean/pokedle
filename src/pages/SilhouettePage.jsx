@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -273,70 +274,17 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Silhouette Mode</h2>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <button
-            style={{
-              width: 22,
-              height: 22,
-              borderRadius: '50%',
-              background: '#e3eafc',
-              border: '1px solid #90caf9',
-              color: '#1976d2',
-              fontWeight: 700,
-              fontSize: 15,
-              cursor: 'pointer',
-              padding: 0,
-              lineHeight: '22px',
-              textAlign: 'center',
-              marginLeft: 2
-            }}
-            tabIndex={0}
-            aria-label="What is Silhouette Mode?"
-            onMouseEnter={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'visible';
-            }}
-            onMouseLeave={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'hidden';
-            }}
-            onFocus={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'visible';
-            }}
-            onBlur={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'hidden';
-            }}
-          >
-            ?
-          </button>
-          <div
-            style={{
-              visibility: 'hidden',
-              background: '#333',
-              color: '#fff',
-              textAlign: 'left',
-              borderRadius: 6,
-              padding: '8px 12px',
-              position: 'absolute',
-              zIndex: 100,
-              left: '110%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              minWidth: 220,
-              fontSize: 14,
-              boxShadow: '0 2px 8px #0002',
-              pointerEvents: 'none',
-              whiteSpace: 'normal',
-            }}
-            role="tooltip"
-          >
-            Guess the Pokémon from its silhouette!<br /><br />
-            Each incorrect guess zooms out to reveal more of the silhouette.<br /><br />
-            <b>Note:</b> The silhouette may be <b>mirrored</b> (flipped horizontally) for extra challenge.
-          </div>
-        </div>
+        <InfoButton
+          ariaLabel="How to Play"
+          placement="right"
+          content={
+            <div style={{ textAlign: 'left' }}>
+              Guess the Pokémon from its silhouette!<br /><br />
+              Each incorrect guess zooms out to reveal more of the silhouette.<br /><br />
+              <b>Note:</b> The silhouette may be <b>mirrored</b> (flipped horizontally) for extra challenge.
+            </div>
+          }
+        />
         {/*
           <button
             style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 20 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}

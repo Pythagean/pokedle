@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
@@ -199,59 +200,17 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
         <div style={{ textAlign: 'center', marginTop: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                 <h2 style={{ margin: 0 }}>Game Info Mode</h2>
-                <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <button
-                        style={{
-                            width: 22,
-                            height: 22,
-                            borderRadius: '50%',
-                            background: '#e3eafc',
-                            border: '1px solid #90caf9',
-                            color: '#1976d2',
-                            fontWeight: 700,
-                            fontSize: 15,
-                            cursor: 'pointer',
-                            padding: 0,
-                            lineHeight: '22px',
-                            textAlign: 'center',
-                            marginLeft: 2
-                        }}
-                        tabIndex={0}
-                        aria-label="What is Game Info Mode?"
-                        onMouseEnter={() => setInfoVisible(true)}
-                        onMouseLeave={() => setInfoVisible(false)}
-                        onFocus={() => setInfoVisible(true)}
-                        onBlur={() => setInfoVisible(false)}
-                        ref={infoRef}
-                    >
-                        ?
-                    </button>
-                    <div
-                        style={{
-                            visibility: infoVisible ? 'visible' : 'hidden',
-                            background: '#333',
-                            color: '#fff',
-                            textAlign: 'left',
-                            borderRadius: 6,
-                            padding: '8px 12px',
-                            position: 'absolute',
-                            zIndex: 100,
-                            left: '110%',
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            minWidth: 220,
-                            fontSize: 14,
-                            boxShadow: '0 2px 8px #0002',
-                            pointerEvents: 'none',
-                            whiteSpace: 'normal',
-                        }}
-                        role="tooltip"
-                    >
-                        Guess the Pokémon from a random set of clues based on in-game information!<br /><br />
-                        One random clue (Base Stats, Abilities, Moves Learnt by Level Up, Category, Shape or In-Game Locations) is shown first.<br /><br />
-                        After 4, 8, 12 and 16 guesses, you will receive additional clues.
-                    </div>
-                </div>
+                <InfoButton
+                    ariaLabel="How to Play"
+                    placement="right"
+                    content={
+                        <div style={{ textAlign: 'left' }}>
+                            Guess the Pokémon from a random set of clues based on in-game information!<br /><br />
+                            One random clue (Base Stats, Abilities, Moves Learnt by Level Up, Category, Shape or In-Game Locations) is shown first.<br /><br />
+                            After 4, 8, 12 and 16 guesses, you will receive additional clues.
+                        </div>
+                    }
+                />
                 {/* <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
                     onClick={() => {

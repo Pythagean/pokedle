@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -148,69 +149,16 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySee
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Colours Mode</h2>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <button
-            style={{
-              width: 22,
-              height: 22,
-              borderRadius: '50%',
-              background: '#e3eafc',
-              border: '1px solid #90caf9',
-              color: '#1976d2',
-              fontWeight: 700,
-              fontSize: 15,
-              cursor: 'pointer',
-              padding: 0,
-              lineHeight: '22px',
-              textAlign: 'center',
-              marginLeft: 2
-            }}
-            tabIndex={0}
-            aria-label="What is Colours Mode?"
-            onMouseEnter={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'visible';
-            }}
-            onMouseLeave={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'hidden';
-            }}
-            onFocus={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'visible';
-            }}
-            onBlur={e => {
-              const tooltip = e.currentTarget.nextSibling;
-              if (tooltip) tooltip.style.visibility = 'hidden';
-            }}
-          >
-            ?
-          </button>
-          <div
-            style={{
-              visibility: 'hidden',
-              background: '#333',
-              color: '#fff',
-              textAlign: 'left',
-              borderRadius: 6,
-              padding: '8px 12px',
-              position: 'absolute',
-              zIndex: 100,
-              left: '110%',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              minWidth: 220,
-              fontSize: 14,
-              boxShadow: '0 2px 8px #0002',
-              pointerEvents: 'none',
-              whiteSpace: 'normal',
-            }}
-            role="tooltip"
-          >
-            The image below shows the most common colours found in the Pokémon. (based on Ken Sugimori's artwork)<br /><br />
-            The colours are arranged from most to least common, left to right.<br />
-          </div>
-        </div>
+        <InfoButton
+          ariaLabel="How to Play"
+          placement="right"
+          content={
+            <div style={{ textAlign: 'left' }}>
+              The image below shows the most common colours found in the Pokémon. (based on Ken Sugimori's artwork)<br /><br />
+              The colours are arranged from most to least common, left to right.<br />
+            </div>
+          }
+        />
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {

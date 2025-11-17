@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import InfoButton from '../components/InfoButton';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -128,7 +129,7 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
     return { cardPath: chosenCard, answer: chosen, folder, cardFile, cardType };
   }, [baseSeed, reloadSeed, effectiveDay, pokemonData, cardManifest]);
 
-  const [showHelp, setShowHelp] = useState(false);
+  
 
   if (!pokemonData || !cardManifest) return <div>Shuffling Pokémon cards...</div>;
 
@@ -210,62 +211,19 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
         <h2 style={{ margin: 0 }}>Card Mode</h2>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <button
-            style={{
-              width: 22,
-              height: 22,
-              borderRadius: '50%',
-              background: '#e3eafc',
-              border: '1px solid #90caf9',
-              color: '#1976d2',
-              fontWeight: 700,
-              fontSize: 15,
-              cursor: 'pointer',
-              padding: 0,
-              lineHeight: '22px',
-              textAlign: 'center',
-              marginLeft: 2
-            }}
-            tabIndex={0}
-            aria-label="What is Card Mode?"
-            onMouseEnter={() => setShowHelp(true)}
-            onMouseLeave={() => setShowHelp(false)}
-            onFocus={() => setShowHelp(true)}
-            onBlur={() => setShowHelp(false)}
-          >
-            ?
-          </button>
-          {showHelp && (
-            <div
-              style={{
-                visibility: 'visible',
-                background: '#333',
-                color: '#fff',
-                textAlign: 'left',
-                borderRadius: 6,
-                padding: '8px 12px',
-                position: 'absolute',
-                zIndex: 100,
-                left: '110%',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                minWidth: 250,
-                fontSize: 14,
-                boxShadow: '0 2px 8px #0002',
-                pointerEvents: 'none',
-                whiteSpace: 'normal',
-              }}
-              role="tooltip"
-            >
-              Guess the Pokémon from its TCG card art!<br /><br />
+        <InfoButton
+          ariaLabel="How to Play"
+          placement="right"
+          content={
+            <div style={{ textAlign: 'left' }}>
+              Guess the Pokémon from its TCG (or TCG Pocket) card art!<br /><br />
               The type of card picked is based on the day of the week:<br /><br />
               - <b>Weekdays:</b> Normal cards<br />
               - <b>Saturdays:</b> Full Art or Shiny cards<br />
               - <b>Sundays:</b> Illustration cards<br />
             </div>
-          )}
-        </div>
+          }
+        />
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={handleReset}
