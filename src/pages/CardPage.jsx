@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
@@ -299,7 +300,12 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       </div>
         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
           {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is on this card?</div>}
-          {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Card Mode" />}
+          {isCorrect && (
+            <>
+              <CongratsMessage guessCount={guesses.length} mode="Card Mode" />
+              <ResetCountdown active={isCorrect} resetHourUtc={23} />
+            </>
+          )}
           <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
             {cardFile ? (
               <>

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -232,7 +233,12 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
             </div>
                         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
-                                {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />}
+                                {isCorrect && (
+                                    <>
+                                        <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />
+                                        <ResetCountdown active={isCorrect} resetHourUtc={23} />
+                                    </>
+                                )}
                                 {shownClues.map(type => renderClue(type))}
                                 {/* Hint placeholder text for next clue, specifying clue type */}
                                 {!isCorrect && (() => {

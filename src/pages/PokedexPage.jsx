@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -156,7 +157,12 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
             {guesses.length >= 4 ? 'What Pokémon has these Pokédex entries?' : 'What Pokémon has this Pokédex entry?'}
           </div>
         )}
-        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Pokedex Mode" />}
+        {isCorrect && (
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Pokedex Mode" />
+            <ResetCountdown active={isCorrect} resetHourUtc={23} />
+          </>
+        )}
         <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length > 0 && guesses.length < 4)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
         {/* Second hint or placeholder */}
         {showSecondHint && flavorEntries.length > 1 ? (

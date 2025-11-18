@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 
 function usePokemonData() {
@@ -230,7 +231,10 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
         {solved ? (
-          <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
+            <ResetCountdown active={true} resetHourUtc={23} />
+          </>
         ) : (
           <form
             onSubmit={e => {

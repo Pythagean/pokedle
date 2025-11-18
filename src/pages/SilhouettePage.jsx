@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import InfoButton from '../components/InfoButton';
+import ResetCountdown from '../components/ResetCountdown';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -29,10 +30,7 @@ function mulberry32(a) {
 export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
 
-  // Countdown state: milliseconds until next UTC reset (23:00 UTC)
-  const [msUntilReset, setMsUntilReset] = useState(null);
-  const [nextResetLocalTime, setNextResetLocalTime] = useState('');
-  const [nextResetLocalDate, setNextResetLocalDate] = useState('');
+  // Countdown state moved to reusable ResetCountdown component
 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
@@ -143,84 +141,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     }
   }, [dailyPokemon && dailyPokemon.id]);
 
-  // Compute ms until next UTC reset (23:00 UTC) and update every second when the puzzle is solved
-  useEffect(() => {
-    function computeMsUntilNextUtcReset() {
-      const now = new Date();
-      // Reset is at 23:00 UTC
-      const RESET_HOUR_UTC = 23;
-      let nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
-      if (now.getTime() >= nextReset.getTime()) {
-        // already past today's reset time — use tomorrow
-        nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
-      }
-      return nextReset.getTime() - now.getTime();
-    }
-
-    // Initialize immediately if correct
-    if (isCorrect) {
-      const next = (function(){
-        const now = new Date();
-        // Reset at 23:00 UTC (today or tomorrow depending on current time)
-        const RESET_HOUR_UTC = 23;
-        let nr = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
-        if (now.getTime() >= nr.getTime()) {
-          nr = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
-        }
-        return nr;
-      })();
-      setMsUntilReset(next.getTime() - Date.now());
-      try {
-        // Format local representation of the reset moment (date + time)
-        const localTimeStr = next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
-        const localDateStr = next.toLocaleDateString();
-        setNextResetLocalTime(localTimeStr);
-        setNextResetLocalDate(localDateStr);
-      } catch (e) {
-        setNextResetLocalTime('');
-        setNextResetLocalDate('');
-      }
-    }
-
-    let timer = null;
-      if (isCorrect) {
-      // update every second
-      timer = setInterval(() => {
-        const now = new Date();
-        const RESET_HOUR_UTC = 23;
-        let nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
-        if (now.getTime() >= nextReset.getTime()) {
-          nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
-        }
-        setMsUntilReset(nextReset.getTime() - now.getTime());
-        try {
-          setNextResetLocalTime(nextReset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }));
-          setNextResetLocalDate(nextReset.toLocaleDateString());
-        } catch (e) {
-          setNextResetLocalTime('');
-          setNextResetLocalDate('');
-        }
-      }, 1000);
-    }
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [isCorrect]);
-
-  // Helper to format milliseconds to HH:MM:SS (days included if needed)
-  function formatMs(ms) {
-    if (ms == null) return '';
-    if (ms < 0) ms = 0;
-    const totalSeconds = Math.floor(ms / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    const hh = String(hours).padStart(2, '0');
-    const mm = String(minutes).padStart(2, '0');
-    const ss = String(seconds).padStart(2, '0');
-    return (days > 0 ? `${days}d ` : '') + `${hh}:${mm}:${ss}`;
-  }
+  // Countdown moved to `ResetCountdown` component
 
   // Zoom logic: start at 2.8, go to 0.9 over 10 steps (guesses), quadratic ease-out
   const maxZoom = 2.8;
@@ -425,14 +346,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
-          <>
+            <>
             <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />
-            <div style={{ marginTop: 8, marginBottom: 12, fontSize: 13, color: '#444' }}>
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                Next puzzle resets on {nextResetLocalDate ? `${nextResetLocalDate} ` : ''}at {nextResetLocalTime || '—'}
-              </div>
-              <div aria-live="polite">Time until reset: <span>{formatMs(msUntilReset)}</span></div>
-            </div>
+            <ResetCountdown active={isCorrect} resetHourUtc={23} />
           </>
         )}
         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>

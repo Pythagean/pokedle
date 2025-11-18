@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -237,7 +238,12 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
       </div>
       <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
-        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Zoom Mode" />}
+        {isCorrect && (
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Zoom Mode" />
+            <ResetCountdown active={isCorrect} resetHourUtc={23} />
+          </>
+        )}
          <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
            {imgLoaded && (
              <img

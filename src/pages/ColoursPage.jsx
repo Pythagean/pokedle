@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -218,7 +219,12 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
             <span>Which Pokémon is made up of these colours?</span>
           </div>
         )}
-        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />}
+        {isCorrect && (
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />
+            <ResetCountdown active={isCorrect} resetHourUtc={23} />
+          </>
+        )}
         <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
           {/* Colour block image */}
           {imgLoaded && (
