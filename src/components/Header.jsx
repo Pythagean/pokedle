@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false }) {
     return ReactDOM.createPortal(
         <>
                         <style>{`
@@ -114,37 +114,41 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     </div>
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'hidden'}}>
                         <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', paddingRight: 8 }}>
-                            {pages.map(p => (
-                                <button
-                                    key={p.key}
-                                    onClick={() => setPage(p.key)}
-                                    aria-label={p.label}
-                                    title={p.label}
-                                    style={{
-                                        padding: '10px 12px',
-                                        borderRadius: 12,
-                                        background: page === p.key ? '#1976d2' : '#f4f4f4ff',
-                                        color: page === p.key ? '#fff' : '#1976d2',
-                                        border: page === p.key ? 'none' : '2px solid #1976d2',
-                                        fontWeight: 700,
-                                        fontSize: 18,
-                                        cursor: 'pointer',
-                                        boxShadow: page === p.key ? '0 2px 8px #1976d233' : 'none',
-                                        transition: 'background 0.2s, color 0.2s',
-                                        marginLeft: 0,
-                                        marginRight: 0,
-                                        minWidth: 90,
-                                        marginBottom: 8,
-                                        whiteSpace: 'nowrap',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
-                                    <span className="nav-label">{p.label}</span>
-                                </button>
-                            ))}
+                            {pages.map(p => {
+                                const isSelected = !completionActive && page === p.key;
+                                return (
+                                    <button
+                                        key={p.key}
+                                        onClick={() => setPage(p.key)}
+                                        aria-label={p.label}
+                                        title={p.label}
+                                        aria-pressed={isSelected}
+                                        style={{
+                                            padding: '10px 12px',
+                                            borderRadius: 12,
+                                            background: isSelected ? '#1976d2' : '#f4f4f4ff',
+                                            color: isSelected ? '#fff' : '#1976d2',
+                                            border: isSelected ? 'none' : '2px solid #1976d2',
+                                            fontWeight: 700,
+                                            fontSize: 18,
+                                            cursor: 'pointer',
+                                            boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
+                                            transition: 'background 0.2s, color 0.2s',
+                                            marginLeft: 0,
+                                            marginRight: 0,
+                                            minWidth: 90,
+                                            marginBottom: 8,
+                                            whiteSpace: 'nowrap',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
+                                        <span className="nav-label">{p.label}</span>
+                                    </button>
+                                );
+                            })}
                             <button
                                 key="completion-summary"
                                 onClick={() => onCompletionClick && onCompletionClick()}
@@ -154,13 +158,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 style={{
                                     padding: '10px 12px',
                                     borderRadius: 12,
-                                    background: '#f4f4f4ff',
-                                    color: '#1976d2',
-                                    border: '2px solid #1976d2',
+                                    background: completionActive ? '#1976d2' : '#f4f4f4ff',
+                                    color: completionActive ? '#fff' : '#1976d2',
+                                    border: completionActive ? 'none' : '2px solid #1976d2',
                                     fontWeight: 700,
                                     fontSize: 18,
                                     cursor: 'pointer',
-                                    boxShadow: 'none',
+                                    boxShadow: completionActive ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
                                     marginLeft: 0,
                                     marginRight: 0,

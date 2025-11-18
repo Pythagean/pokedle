@@ -392,7 +392,7 @@ function App() {
           }
         }
       `}</style>
-      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} />
+      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} />
       {/* Page Content - separate scrollable container so header stays fixed */}
         <div
           className="main-app"

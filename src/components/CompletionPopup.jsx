@@ -24,7 +24,7 @@ export default function CompletionPopup({ open, onClose, results }) {
     return (
         <div role="dialog" aria-modal="true" aria-label="Results" style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 20000 }}>
             <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
-                <div style={{ width: 340, maxWidth: '74vw', background: '#fff', borderRadius: 8, padding: 14, boxShadow: '0 8px 36px rgba(0,0,0,0.35)', position: 'relative', zIndex: 20001, overflow: 'hidden' }}>
+                <div style={{ width: 260, maxWidth: '64vw', background: '#fff', borderRadius: 8, padding: 14, boxShadow: '0 8px 36px rgba(0,0,0,0.35)', position: 'relative', zIndex: 20001, overflow: 'hidden' }}>
                     <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(60%)', pointerEvents: 'none', margin: '25px' }} />
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
