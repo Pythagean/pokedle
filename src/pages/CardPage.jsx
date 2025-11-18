@@ -14,7 +14,6 @@ function mulberry32(a) {
   }
 }
 
-
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
   const year = date.getUTCFullYear();
@@ -214,13 +213,29 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
+          marginTop={230}
           content={
             <div style={{ textAlign: 'left' }}>
-              Guess the Pokémon from its TCG (or TCG Pocket) card art!<br /><br />
-              The type of card picked is based on the day of the week:<br /><br />
-              - <b>Weekdays:</b> Normal cards<br />
-              - <b>Saturdays:</b> Full Art or Shiny cards<br />
-              - <b>Sundays:</b> Illustration cards<br />
+              <div style={{ marginBottom: 8 }}>Guess the Pokémon from its TCG (or TCG Pocket) card art!</div>
+              <div style={{ marginBottom: 8 }}>
+                The type of card picked is based on the day of the week:
+                <ul style={{ marginTop: 6, marginBottom: 6, paddingLeft: 18 }}>
+                  <li><b>Weekdays:</b> Normal cards</li>
+                  <li><b>Saturdays:</b> Full Art or Shiny cards</li>
+                  <li><b>Sundays:</b> Illustration cards</li>
+                </ul>
+              </div>
+
+              <div style={{ marginTop: 6 }}>
+                The card image becomes progressively less blurred with each incorrect guess, revealing more detail as you guess.
+              </div>
+
+              <div style={{ fontWeight: 700, marginTop: 6 }}>Example:</div>
+
+              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                <img src="images/card_hint_1.png" alt="Card hint 1" style={{ maxWidth: '38%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                <img src="images/card_hint_2.png" alt="Card hint 2" style={{ maxWidth: '38%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+              </div>
             </div>
           }
         />
