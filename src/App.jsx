@@ -193,18 +193,6 @@ function App() {
   const allCompleted = perPageResults.length > 0 && perPageResults.every(r => r.solved);
   const [completionOpen, setCompletionOpen] = useState(false);
 
-  // Debug: print a compact summary of perPageResults whenever it changes
-  useEffect(() => {
-    try {
-      const summary = perPageResults.map(r => ({ key: r.key, solved: !!r.solved, guessCount: r.guessCount, daily: r.daily ? r.daily.name : null }));
-      // eslint-disable-next-line no-console
-      console.log('DEBUG perPageResults:', summary);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('Error logging perPageResults', e);
-    }
-  }, [perPageResults]);
-
   if (!pokemonData) return <div>Loading data...</div>;
 
   // Helper to get/set guesses for current page
