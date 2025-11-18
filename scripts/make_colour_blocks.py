@@ -45,8 +45,13 @@ from sklearn.cluster import KMeans
 def parse_args():
     parser = argparse.ArgumentParser(description="Extract most common colors from images in a directory and create color block images.")
     parser.add_argument('src_dir', type=str, help='Directory containing input images (PNG)')
+    parser.add_argument('--input-json', type=str, default=None, help='Path to pokemon_data.json (overrides default)')
     parser.add_argument('--verbose', action='store_true', help='Print verbose output')
     parser.add_argument('--partial', action='store_true', help='Only process 10 files')
+    parser.add_argument('--sprites', action='store_true', help='Only process sprite files with "-front" in the filename')
+    parser.add_argument('--num-colors', type=int, default=10, help='Number of colors to extract via KMeans (default: 10)')
+    parser.add_argument('--threshold', type=float, default=3.0, help='Lab distance threshold for considering colors similar (default: 3.0)')
+    parser.add_argument('--jpg', action='store_true', help='Save color block images as JPEG instead of PNG')
     return parser.parse_args()
 
 # --- Main processing ---
@@ -66,7 +71,19 @@ def get_most_common_colors(image_path, num_colors=10):
     with Image.open(image_path) as img:
         img = img.convert('RGBA')
         # Resize to speed up color counting
-        small = img.resize((128, 128), Image.LANCZOS)
+        small = img.resize((256, 256), Image.LANCZOS)
+        # If verbose/debug mode is enabled, save the resized image to the debug dir
+        try:
+            if globals().get('VERBOSE', False):
+                debug_dir = globals().get('DEBUG_RESIZED_DIR')
+                if debug_dir:
+                    small_rgb = small.convert('RGB')
+                    base = os.path.basename(image_path)
+                    name = os.path.splitext(base)[0] + '_resized.png'
+                    small_rgb.save(os.path.join(debug_dir, name))
+        except Exception as e:
+            if globals().get('VERBOSE', False):
+                print(f"Warning saving resized image for {image_path}: {e}", file=sys.stderr)
         arr = np.array(small)
         # Exclude fully transparent and near-black pixels
         mask = (arr[..., 3] > 0) & (arr[..., :3].sum(axis=-1) > 30)
@@ -88,7 +105,16 @@ def is_similar(c1, c2, threshold=6):
     # Compare in Lab color space
     lab1 = rgb_to_lab(c1)
     lab2 = rgb_to_lab(c2)
-    return lab_distance(lab1, lab2) < threshold
+    dist = lab_distance(lab1, lab2)
+    result = dist < threshold
+    # When verbose, print diagnostic info about the comparison
+    try:
+        # Avoid referencing args here; caller should pass verbose flag if needed
+        if globals().get('VERBOSE', False):
+            print(f"is_similar: {c1} vs {c2} -> lab_dist={dist:.3f} threshold={threshold} => {result}")
+    except Exception:
+        pass
+    return result
 
 def create_color_blocks(colors, out_path):
     total_pixels = sum(count for color, count in colors)
@@ -111,6 +137,9 @@ def create_color_blocks(colors, out_path):
 
 def main():
     args = parse_args()
+    # Expose verbose to other helper functions for diagnostic printing
+    global VERBOSE
+    VERBOSE = bool(args.verbose)
     src_dir = os.path.abspath(args.src_dir)
     if not os.path.isdir(src_dir):
         print(f"Source directory does not exist: {src_dir}", file=sys.stderr)
@@ -120,13 +149,26 @@ def main():
     src_base = os.path.basename(src_dir.rstrip(os.sep))
     out_dir = os.path.join(parent_dir, src_base + '_colours')
     os.makedirs(out_dir, exist_ok=True)
-    files = [f for f in os.listdir(src_dir) if f.lower().endswith('.png') and 'front' in f.lower()]
+    # If verbose mode, create a debug directory for resized images
+    if VERBOSE:
+        global DEBUG_RESIZED_DIR
+        DEBUG_RESIZED_DIR = os.path.join(out_dir, 'resized_debug')
+        os.makedirs(DEBUG_RESIZED_DIR, exist_ok=True)
+    # Choose which files to process
+    if args.sprites:
+        files = [f for f in os.listdir(src_dir) if f.lower().endswith('.png') and '-front' in f.lower()]
+    else:
+        files = [f for f in os.listdir(src_dir) if f.lower().endswith('.png')]
     if args.partial:
         files = files[:10]
 
     import json
     # Load id->name mapping from JSON
-    data_json_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/pokemon_data.json'))
+    # Allow passing a custom JSON path via --input-json; otherwise use the repo default
+    if args.input_json:
+        data_json_path = os.path.abspath(args.input_json)
+    else:
+        data_json_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/pokemon_data.json'))
     with open(data_json_path, encoding='utf-8') as f:
         pokemon_data = json.load(f)
     id_to_name = {str(p['id']): p['name'] for p in pokemon_data}
@@ -138,10 +180,13 @@ def main():
         # Remove '-front' from filename if present
         out_fname = fname.replace('-front', '')
         out_path = os.path.join(out_dir, out_fname)
+        # If requested, change output extension to .jpg
+        if args.jpg:
+            out_path = os.path.splitext(out_path)[0] + '.jpg'
         if args.verbose:
             print(f"[{idx+1}/{len(files)}] Processing {fname} -> {out_fname} ...")
         try:
-            colors = get_most_common_colors(in_path, 10)
+            colors = get_most_common_colors(in_path, args.num_colors)
             create_color_blocks(colors, out_path)
             # Only consider top 5 colors, and select up to 3 visually distinct names with special rules
             top_colors = colors[:5]
@@ -153,7 +198,7 @@ def main():
                 # Check for visual similarity to already chosen CSV colors (stricter threshold)
                 is_similar_to_csv = False
                 for prev_rgb, prev_name in csv_colors:
-                    if is_similar(color, prev_rgb, threshold=3):
+                    if is_similar(color, prev_rgb, threshold=args.threshold):
                         is_similar_to_csv = True
                         break
                 if is_similar_to_csv:
