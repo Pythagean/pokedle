@@ -273,7 +273,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const translateY = (0.5 - centerY) * 100 * zoom;
 
   if (isCorrect) {
-    zoom = 0.9;
+    zoom = 1.0;
 
   }
   // Combine mirroring and zoom — use transform-origin only (no translate)
@@ -287,7 +287,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   imgStyle.transformOrigin = `${originX * 100}% ${originY * 100}%`;
   imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
 
-  if (zoom === 0.9) {
+  if (zoom === 1.0) {
     imgStyle.width = '100%';
     imgStyle.height = '100%';
     imgStyle.objectFit = 'contain';
@@ -308,8 +308,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             </div>
           }
         />
-        {/*
-          <button
+        
+          {/* <button
             style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 20 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
             onClick={() => {
               if (resetCount >= 20) return;
@@ -329,13 +329,13 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             aria-label="Toggle silhouette debug overlay"
           >
             {debugOverlay ? 'Debug: ON' : 'Debug'}
-          </button>
-         */}
+          </button> */}
+        
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />}
-        <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
+        <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* Always render both images and cross-fade between them when the real image is loaded */}
             <img
