@@ -37,6 +37,26 @@ export default function GuessInput({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredOptions]);
+
+  // When highlighted index changes, ensure the highlighted item is visible in the dropdown
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    if (typeof highlightedIdx !== 'number' || highlightedIdx < 0) return;
+    const list = dropdownRef && dropdownRef.current;
+    if (!list) return;
+    try {
+      const items = list.querySelectorAll('li');
+      if (!items || items.length === 0) return;
+      const idx = Math.min(highlightedIdx, items.length - 1);
+      const el = items[idx];
+      if (el && typeof el.scrollIntoView === 'function') {
+        // Use nearest so it doesn't always jump; keep behavior instant for accessibility
+        el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [highlightedIdx, dropdownOpen, dropdownRef]);
   return (
     <div style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
       <input
