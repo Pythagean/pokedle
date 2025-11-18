@@ -16,9 +16,14 @@ function mulberry32(a) {
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
+  const RESET_HOUR_UTC = 23;
+  let d = date;
+  if (date.getUTCHours() >= RESET_HOUR_UTC) {
+    d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
+  }
+  const year = d.getUTCFullYear();
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
   return parseInt(`${year}${month}${day}`, 10);
 }
 

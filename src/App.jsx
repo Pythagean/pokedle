@@ -87,8 +87,14 @@ function mulberry32(a) {
 }
 
 function getSeedFromDate(date) {
-  // YYYYMMDD as integer
-  return parseInt(date.toISOString().slice(0,10).replace(/-/g, ''), 10);
+  // YYYYMMDD as integer, using a UTC reset hour (23 = 11PM UTC)
+  const RESET_HOUR_UTC = 23;
+  // If current UTC hour is on/after the reset hour, use the next UTC day
+  let effective = date;
+  if (date.getUTCHours() >= RESET_HOUR_UTC) {
+    effective = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
+  }
+  return parseInt(effective.toISOString().slice(0,10).replace(/-/g, ''), 10);
 }
 const PAGES = [
   { key: 'classic', label: 'Classic' },
@@ -176,7 +182,13 @@ function App() {
         const chosen = pokemonData[idx];
         // Try card types in the same way CardPage does (weekday vs weekend)
         // We can't know user debugDay, so use today's UTC day
-        const utcDay = (new Date()).getUTCDay();
+        const now = new Date();
+        const RESET_HOUR_UTC = 23;
+        let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+        if (now.getUTCHours() >= RESET_HOUR_UTC) {
+          dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+        }
+        const utcDay = dayForCard.getUTCDay();
         let cardType = 'normal';
         if (utcDay === 0) cardType = 'special';
         else if (utcDay === 6) cardType = (localRng() < 0.5 ? 'full_art' : 'shiny');

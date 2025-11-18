@@ -7,9 +7,14 @@ import InfoButton from '../components/InfoButton';
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
+  const RESET_HOUR_UTC = 23; // 11 PM UTC
+  let d = date;
+  if (date.getUTCHours() >= RESET_HOUR_UTC) {
+    d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
+  }
+  const year = d.getUTCFullYear();
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
   return parseInt(`${year}${month}${day}`, 10);
 }
 function mulberry32(a) {
@@ -24,9 +29,10 @@ function mulberry32(a) {
 export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
 
-  // Countdown state: milliseconds until next UTC midnight
+  // Countdown state: milliseconds until next UTC reset (23:00 UTC)
   const [msUntilReset, setMsUntilReset] = useState(null);
   const [nextResetLocalTime, setNextResetLocalTime] = useState('');
+  const [nextResetLocalDate, setNextResetLocalDate] = useState('');
 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
@@ -137,42 +143,62 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     }
   }, [dailyPokemon && dailyPokemon.id]);
 
-  // Compute ms until next UTC midnight and update every second when the puzzle is solved
+  // Compute ms until next UTC reset (23:00 UTC) and update every second when the puzzle is solved
   useEffect(() => {
-    function computeMsUntilNextUtcMidnight() {
+    function computeMsUntilNextUtcReset() {
       const now = new Date();
-      // next day at 00:00:00 UTC
-      const nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-      return nextUtcMidnight.getTime() - now.getTime();
+      // Reset is at 23:00 UTC
+      const RESET_HOUR_UTC = 23;
+      let nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
+      if (now.getTime() >= nextReset.getTime()) {
+        // already past today's reset time — use tomorrow
+        nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
+      }
+      return nextReset.getTime() - now.getTime();
     }
 
     // Initialize immediately if correct
     if (isCorrect) {
       const next = (function(){
         const now = new Date();
-        return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+        // Reset at 23:00 UTC (today or tomorrow depending on current time)
+        const RESET_HOUR_UTC = 23;
+        let nr = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
+        if (now.getTime() >= nr.getTime()) {
+          nr = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
+        }
+        return nr;
       })();
       setMsUntilReset(next.getTime() - Date.now());
       try {
-        // Format local representation of the UTC midnight moment
-        const localStr = next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
-        setNextResetLocalTime(localStr);
+        // Format local representation of the reset moment (date + time)
+        const localTimeStr = next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+        const localDateStr = next.toLocaleDateString();
+        setNextResetLocalTime(localTimeStr);
+        setNextResetLocalDate(localDateStr);
       } catch (e) {
         setNextResetLocalTime('');
+        setNextResetLocalDate('');
       }
     }
 
     let timer = null;
-    if (isCorrect) {
+      if (isCorrect) {
       // update every second
       timer = setInterval(() => {
         const now = new Date();
-        const nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-        setMsUntilReset(nextUtcMidnight.getTime() - now.getTime());
+        const RESET_HOUR_UTC = 23;
+        let nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC, 0, 0));
+        if (now.getTime() >= nextReset.getTime()) {
+          nextReset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, RESET_HOUR_UTC, 0, 0));
+        }
+        setMsUntilReset(nextReset.getTime() - now.getTime());
         try {
-          setNextResetLocalTime(nextUtcMidnight.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }));
+          setNextResetLocalTime(nextReset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }));
+          setNextResetLocalDate(nextReset.toLocaleDateString());
         } catch (e) {
           setNextResetLocalTime('');
+          setNextResetLocalDate('');
         }
       }, 1000);
     }
@@ -401,9 +427,11 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
         {isCorrect && (
           <>
             <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />
-            <div style={{ marginTop: 8, fontSize: 13, color: '#444' }}>
-              <div style={{ fontWeight: 600, marginBottom: 4 }}>Next puzzle resets at midnight UTC{nextResetLocalTime ? ` (${nextResetLocalTime})` : ''}</div>
-              <div aria-live="polite">Time until reset: <span style={{ fontFamily: 'monospace' }}>{formatMs(msUntilReset)}</span></div>
+            <div style={{ marginTop: 8, marginBottom: 12, fontSize: 13, color: '#444' }}>
+              <div style={{ fontWeight: 600, marginBottom: 4 }}>
+                Next puzzle resets on {nextResetLocalDate ? `${nextResetLocalDate} ` : ''}at {nextResetLocalTime || '—'}
+              </div>
+              <div aria-live="polite">Time until reset: <span>{formatMs(msUntilReset)}</span></div>
             </div>
           </>
         )}
