@@ -21,7 +21,7 @@ function mulberry32(a) {
   }
 }
 
-export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, dailySeed }) {
+export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
 
   // Countdown state: milliseconds until next UTC midnight
@@ -30,13 +30,14 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
-  const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 7 * 1000 + 's'.charCodeAt(0)); // UTC-based
+  const defaultSeed = (getSeedFromUTCDate(today) + 7 * 1000 + 's'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);
   const seed = resetSeed !== null ? resetSeed : defaultSeed;
   const rng = useMemo(() => mulberry32(seed), [seed]);
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
-  const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
+  const dailyPokemon = daily || computedDaily;
 
   // Guessing state (controlled input for GuessInput)
   const [guess, setGuess] = useState('');

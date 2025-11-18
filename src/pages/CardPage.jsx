@@ -28,7 +28,7 @@ function getCardTypeByDay(day, rng) {
   return 'normal'; // Mon-Fri
 }
 
-function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
+function CardPage({ pokemonData, cardManifest, guesses, setGuesses, daily }) {
   
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
@@ -114,11 +114,10 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
     let cardFile = null;
     let cardType = null;
     let localRng = mulberry32(baseSeed + reloadSeed);
-    while (attempts < 50 && !chosenCard) {
-      const idx = Math.floor(localRng() * pokemonData.length);
-      chosen = pokemonData[idx];
+    // If App provided a chosen daily pokemon, prefer that and pick an available card for it
+    if (daily) {
+      chosen = daily;
       cardType = getCardTypeByDay(effectiveDay, localRng);
-      // New folder structure
       if (cardType === 'normal' || cardType === 'shiny') {
         folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
       } else {
@@ -127,21 +126,42 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
       const manifestList = cardManifest[cardType]?.[chosen.id];
       if (manifestList && manifestList.length > 0) {
         cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-        // For normal/shiny, cropped is in /cropped, resized is in /resized
-        // For full_art/special, just in the folder
         if (cardType === 'normal' || cardType === 'shiny') {
-          chosenCard = {
-            cropped: `${folder}/cropped/${cardFile}`,
-            resized: `${folder}/resized/${cardFile}`
-          };
+          chosenCard = { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}` };
         } else {
-          chosenCard = {
-            cropped: `${folder}/${cardFile}`,
-            resized: `${folder}/${cardFile}`
-          };
+          chosenCard = { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}` };
         }
       }
-      attempts++;
+    } else {
+      while (attempts < 50 && !chosenCard) {
+        const idx = Math.floor(localRng() * pokemonData.length);
+        chosen = pokemonData[idx];
+        cardType = getCardTypeByDay(effectiveDay, localRng);
+        // New folder structure
+        if (cardType === 'normal' || cardType === 'shiny') {
+          folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+        } else {
+          folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+        }
+        const manifestList = cardManifest[cardType]?.[chosen.id];
+        if (manifestList && manifestList.length > 0) {
+          cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
+          // For normal/shiny, cropped is in /cropped, resized is in /resized
+          // For full_art/special, just in the folder
+          if (cardType === 'normal' || cardType === 'shiny') {
+            chosenCard = {
+              cropped: `${folder}/cropped/${cardFile}`,
+              resized: `${folder}/resized/${cardFile}`
+            };
+          } else {
+            chosenCard = {
+              cropped: `${folder}/${cardFile}`,
+              resized: `${folder}/${cardFile}`
+            };
+          }
+        }
+        attempts++;
+      }
     }
     return { cardPath: chosenCard, answer: chosen, folder, cardFile, cardType };
   }, [baseSeed, reloadSeed, effectiveDay, pokemonData, cardManifest]);

@@ -180,6 +180,7 @@ function App() {
         let cardType = 'normal';
         if (utcDay === 0) cardType = 'special';
         else if (utcDay === 6) cardType = (localRng() < 0.5 ? 'full_art' : 'shiny');
+    
         const manifestList = cardManifest[cardType]?.[chosen.id];
         if (manifestList && manifestList.length > 0) return chosen;
         attempts++;
@@ -207,6 +208,56 @@ function App() {
       return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
     });
   }, [pokemonData, guessesByPage, today, cardManifest]);
+
+  // Map of daily pokemon objects by page key for easy access and prop passing
+  const dailyByPage = useMemo(() => {
+    const map = {};
+    perPageResults.forEach(r => { map[r.key] = r.daily || null; });
+    return map;
+  }, [perPageResults]);
+
+  // Console-log a compact summary of the selected pokemon for debugging/visibility
+  useEffect(() => {
+    if (!perPageResults || perPageResults.length === 0) return;
+    try {
+      const summary = perPageResults.map(r => ({ key: r.key, id: r.daily?.id ?? null, name: r.daily?.name ?? null, solved: !!r.solved, guessCount: r.guessCount ?? null }));
+      console.log('Pokedle per-page daily selection:', summary);
+      console.log('Pokedle dailyByPage map:', dailyByPage);
+    } catch (e) {
+      console.log('Error logging perPageResults', e);
+    }
+  }, [perPageResults, dailyByPage]);
+
+  // Preload common images (sprites, full image, silhouette) for each selected daily pokemon
+  useEffect(() => {
+    if (!perPageResults || perPageResults.length === 0) return;
+    const imgs = [];
+    try {
+      const pushed = new Set();
+      perPageResults.forEach(r => {
+        const p = r.daily;
+        if (!p || !p.id) return;
+        const id = p.id;
+        const candidates = [
+          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${id}-front.png`,
+          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${id}.png`,
+          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${id}.png`,
+          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${id}.png`
+        ];
+        candidates.forEach(u => {
+          if (!pushed.has(u)) {
+            pushed.add(u);
+            const img = new Image();
+            img.src = u;
+            imgs.push(img);
+          }
+        });
+      });
+    } catch (e) {
+      // ignore
+    }
+    return () => { imgs.length = 0; };
+  }, [perPageResults]);
 
   const allCompleted = perPageResults.length > 0 && perPageResults.every(r => r.solved);
   const [completionOpen, setCompletionOpen] = useState(false);
@@ -283,18 +334,18 @@ function App() {
             }
           `}</style>
           {/* Page Content */}
-        {page === 'classic' && <ClassicPage pokemonData={pokemonData} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
-  {page === 'pokedex' && <PokedexPage pokemonData={pokemonData} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
+          {page === 'classic' && <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
+        {page === 'pokedex' && <PokedexPage pokemonData={pokemonData} daily={dailyByPage.pokedex} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
   {page === 'stats' && <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
   {page === 'ability' && <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
   {page === 'moves' && <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />}
   {page === 'category' && <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />}
-  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
-  {page === 'zoom' && <ZoomPage pokemonData={pokemonData} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
-  {page === 'colours' && <ColoursPage pokemonData={pokemonData} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
+  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
+  {page === 'zoom' && <ZoomPage pokemonData={pokemonData} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
+  {page === 'colours' && <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
   {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
-  {page === 'card' && <CardPage pokemonData={pokemonData} cardManifest={cardManifest} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
-  {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
+  {page === 'card' && <CardPage pokemonData={pokemonData} cardManifest={cardManifest} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
+  {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
       <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} />
       <style>{`
