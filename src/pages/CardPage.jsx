@@ -132,6 +132,27 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
 
   if (!pokemonData || !cardManifest) return <div>Shuffling Pokémon cards...</div>;
 
+  // Preload cropped/resized card images so they appear immediately when revealed
+  useEffect(() => {
+    if (!cardPath) return;
+    try {
+      const imgs = [];
+      const urls = [];
+      if (cardPath.resized) urls.push(cardPath.resized);
+      if (cardPath.cropped) urls.push(cardPath.cropped);
+      urls.forEach(u => {
+        const img = new Image();
+        img.src = u;
+        img.onload = () => { /* cached */ };
+        img.onerror = () => { /* ignore */ };
+        imgs.push(img);
+      });
+      return () => { imgs.length = 0; };
+    } catch (e) {
+      // ignore
+    }
+  }, [cardPath && cardPath.cropped, cardPath && cardPath.resized]);
+
   function handleGuessSubmit(e, overrideGuess) {
     if (e) e.preventDefault();
     const guessValue = overrideGuess !== undefined ? overrideGuess : guess;

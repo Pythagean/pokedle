@@ -109,6 +109,29 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const silhouettePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${dailyPokemon.id}.png`;
   const realImagePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
 
+  // Preload silhouette and real images so they appear immediately when switched
+  useEffect(() => {
+    if (!dailyPokemon) return;
+    try {
+      const silImg = new Image();
+      silImg.src = silhouettePath;
+      const realImg = new Image();
+      realImg.src = realImagePath;
+      silImg.onload = () => { /* cached */ };
+      silImg.onerror = () => { /* ignore */ };
+      realImg.onload = () => { /* cached */ };
+      realImg.onerror = () => { /* ignore */ };
+      return () => {
+        silImg.onload = null;
+        silImg.onerror = null;
+        realImg.onload = null;
+        realImg.onerror = null;
+      };
+    } catch (e) {
+      // ignore
+    }
+  }, [dailyPokemon && dailyPokemon.id]);
+
   // Zoom logic: start at 2.8, go to 0.9 over 10 steps (guesses), quadratic ease-out
   const maxZoom = 2.8;
   const minZoom = 0.9;
