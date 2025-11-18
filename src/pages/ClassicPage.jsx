@@ -206,7 +206,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
         {solved ? (
-          <CongratsMessage guessCount={guesses.length} mode="Classic Mode" />
+          <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
         ) : (
           <form
             onSubmit={e => {
