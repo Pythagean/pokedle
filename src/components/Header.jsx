@@ -15,13 +15,15 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     .main-header img { height: 36px !important; margin-right: 8px !important; }
                     .main-header nav button { font-size: 13px !important; padding: 6px 4px !important; }
                     .main-header { height: 60px !important; padding: 4px 4px !important; }
-                    .main-header img { height: 56px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
+                    .main-header img { height: 30px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
                                         /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
                                         .main-header nav { gap: 3px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
                                         .main-header nav button { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
                                         /* On small mobile screens show icon-only */
                                         .main-header nav button .nav-label { display: inline !important; }
                                         .main-header nav button .nav-icon { display: inline-block !important; }
+                    /* Left-align header content on narrow screens by removing the auto-centering margin */
+                    .main-header .main-header-inner { margin: 0 !important; max-width: none !important; padding-left: 8px !important; }
                 }
                                         @media (max-width: 480px) {
                                                 .main-header nav button { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
@@ -47,7 +49,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                 margin: 0,
                 zIndex: 10000,
             }}>
-                <div style={{
+                <div className="main-header-inner" style={{
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',

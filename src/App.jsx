@@ -105,6 +105,24 @@ function App() {
   const cardManifest = useCardManifest();
   const silhouetteMeta = useSilhouetteMeta();
   const titleImg = useTitleImg();
+  // Preload navigation icons (including the Results icon) so they appear immediately when header renders
+  useEffect(() => {
+    const imgs = [];
+    try {
+      const iconPaths = PAGES.map(p => `icons/${p.key}.png`).concat(['icons/results.png']);
+      iconPaths.forEach(path => {
+        const img = new Image();
+        img.src = path;
+        imgs.push(img);
+      });
+    } catch (e) {
+      // ignore
+    }
+    return () => {
+      // help GC
+      imgs.length = 0;
+    };
+  }, []);
   const [page, setPage] = useState('classic');
   // Store guesses per page
   const [guessesByPage, setGuessesByPage] = useState({

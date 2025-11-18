@@ -22,7 +22,7 @@ export default function CompletionPopup({ open, onClose, results }) {
     return (
         <div role="dialog" aria-modal="true" aria-label="Results" style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 20000 }}>
             <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)' }} onClick={onClose} />
-            <div style={{ width: 420, maxWidth: '94vw', background: '#fff', borderRadius: 8, padding: 16, boxShadow: '0 8px 36px rgba(0,0,0,0.35)', position: 'relative', zIndex: 20001 }}>
+            <div style={{ width: 420, maxWidth: '84vw', background: '#fff', borderRadius: 8, padding: 16, boxShadow: '0 8px 36px rgba(0,0,0,0.35)', position: 'relative', zIndex: 20001 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                     <h3 style={{ margin: 0, fontSize: 18 }}>Results</h3>
                     <button onClick={onClose} aria-label="Close" style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer' }}>×</button>
