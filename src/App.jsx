@@ -332,6 +332,19 @@ function App() {
   const allCompleted = perPageResults.length > 0 && perPageResults.every(r => r.solved);
   const [completionOpen, setCompletionOpen] = useState(false);
 
+  // Transient highlight flag: becomes true briefly when allCompleted transitions false->true
+  const [completionJustCompleted, setCompletionJustCompleted] = useState(false);
+  const prevAllCompletedRef = useRef(!!allCompleted);
+  useEffect(() => {
+    const prev = prevAllCompletedRef.current;
+    if (!prev && allCompleted) {
+      setCompletionJustCompleted(true);
+      const t = setTimeout(() => setCompletionJustCompleted(false), 6000);
+      return () => clearTimeout(t);
+    }
+    prevAllCompletedRef.current = allCompleted;
+  }, [allCompleted]);
+
   if (!pokemonData) return <div>Loading data...</div>;
 
   // Helper to get/set guesses for current page
@@ -379,7 +392,7 @@ function App() {
           }
         }
       `}</style>
-      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} />
+      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} />
       {/* Page Content - separate scrollable container so header stays fixed */}
         <div
           className="main-app"

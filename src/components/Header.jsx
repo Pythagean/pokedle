@@ -2,13 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false }) {
     return ReactDOM.createPortal(
         <>
                         <style>{`
                 /* Desktop defaults: show both icon and label */
                 .main-header nav button .nav-icon { display: inline-block !important; }
                 .main-header nav button .nav-label { display: inline-block !important; }
+
+                /* Completion highlight and badge */
+                /* Prevent page-level horizontal scroll when the header pulses */
+                html, body { overflow-x: hidden; }
+                @keyframes completion-pulse {
+                    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(25,118,210,0.35); }
+                    70% { transform: scale(1.02); box-shadow: 0 10px 30px -6px rgba(25,118,210,0.25); }
+                    100% { transform: scale(1); box-shadow: 0 0 0 8px rgba(25,118,210,0); }
+                }
+                .completion-highlight {
+                    /* Run the pulse for ~60 iterations (about 60s at 1s per loop) to aid debugging */
+                    animation: completion-pulse 1s ease-in-out 0s 3;
+                    position: relative !important;
+                    z-index: 2;
+                    transform-origin: center center;
+                    will-change: transform;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                }
+                .completion-badge {
+                    position: absolute;
+                    top: 6px;
+                    right: 10px;
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    background: #ff5252;
+                    border-radius: 999px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                    border: 2px solid #fff;
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .completion-highlight { animation: none !important; }
+                }
 
                 @media (max-width: 600px) {
                     .main-header { height: 60px !important; padding: 0 4px !important; }
@@ -55,9 +89,10 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     alignItems: 'center',
                     justifyContent: 'flex-start',
                     maxWidth: 1300,
-                    margin: '0 auto',
-                    padding: '0 12px',
-                    paddingLeft: '0px',
+                       margin: '0 auto',
+                       padding: '0 12px',
+                       paddingLeft: '0px',
+                       paddingRight: 48,
                     height: 96,
                     gap: 0,
                 }}>
@@ -77,8 +112,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             }}
                         />
                     </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto' }}>
-                        <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap', width: '100%' }}>
+                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'hidden'}}>
+                        <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', paddingRight: 8 }}>
                             {pages.map(p => (
                                 <button
                                     key={p.key}
@@ -115,6 +150,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 onClick={() => onCompletionClick && onCompletionClick()}
                                 aria-label="Results"
                                 title="Results"
+                                className={highlightCompletion ? 'completion-highlight' : undefined}
                                 style={{
                                     padding: '10px 12px',
                                     borderRadius: 12,
@@ -138,6 +174,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             >
                                 <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
                                 <span className="nav-label">Results</span>
+                                {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
                             </button>
                         </nav>
                     </div>
