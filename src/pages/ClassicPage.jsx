@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
+import InfoButton from '../components/InfoButton';
 
 function usePokemonData() {
   const [pokemonData, setPokemonData] = useState(null);
@@ -181,6 +182,26 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
       <div style={{ width: '100%', justifyContent: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
           <h2 style={{ margin: 0 }}>Classic Mode</h2>
+          <InfoButton
+            ariaLabel="How to Play"
+            marginTop={200}
+            placement="right"
+            content={
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ marginBottom: 8 }}>Guess the Pokémon for the current daily puzzle.</div>
+                <div style={{ marginBottom: 8 }}>Each guess shows feedback across columns (Generation, Types, Evolution Stage, Habitat, Height, Weight).</div>
+                <div style={{ fontWeight: 700, marginTop: 6, marginBottom: 6 }}>Example hints</div>
+                  <div style={{ width: '100%', textAlign: 'center' }}>
+                    <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>A partial type match (Water) - today’s Pokémon is dual-typed and includes Water:</div>
+                    <img src="images/classic_hint_1.png" alt="Hint 1" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                  </div>
+                  <div style={{ width: '100%', textAlign: 'center' }}>
+                    <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>Generation and Evolution Stage match - this shows the correct generation and that the Pokémon is at that evolution stage:</div>
+                    <img src="images/classic_hint_2.png" alt="Hint 2" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                  </div>
+              </div>
+            }
+          />
         </div>
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
