@@ -73,6 +73,7 @@ import ColoursPage from './pages/ColoursPage';
 import CardPage from './pages/CardPage';
 import GameInfoPage from './pages/GameInfoPage';
 import Header from './components/Header';
+import CompletionPopup from './components/CompletionPopup';
 
 
 // Simple deterministic PRNG using a seed
@@ -131,6 +132,78 @@ function App() {
   // Pick daily pokemon for the current page
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  // Compute per-page daily pokemon and solved status (run this hook unconditionally)
+  const perPageResults = useMemo(() => {
+    if (!pokemonData) return [];
+
+    // Seed offsets per page to match the logic used inside each page component
+    const SEED_OFFSETS = {
+      classic: { offset: 7 * 1000, letter: 'c' },
+      card: { offset: 9999, letter: null },
+      pokedex: { offset: 7 * 1000, letter: 'p' },
+      silhouette: { offset: 7 * 1000, letter: 's' },
+      zoom: { offset: 8 * 1000, letter: 'z' },
+      colours: { offset: 9 * 1000, letter: 'c' },
+      gameinfo: { offset: 13 * 1000, letter: 'g' },
+    };
+
+    function getCardAnswer() {
+      // Replicate CardPage selection logic to pick a pokemon that has a card manifest entry
+      if (!cardManifest) return null;
+      const baseSeed = getSeedFromDate(today) + 9999;
+      let localRng = mulberry32(baseSeed);
+      let attempts = 0;
+      while (attempts < 200) {
+        const idx = Math.floor(localRng() * pokemonData.length);
+        const chosen = pokemonData[idx];
+        // Try card types in the same way CardPage does (weekday vs weekend)
+        // We can't know user debugDay, so use today's UTC day
+        const utcDay = (new Date()).getUTCDay();
+        let cardType = 'normal';
+        if (utcDay === 0) cardType = 'special';
+        else if (utcDay === 6) cardType = (localRng() < 0.5 ? 'full_art' : 'shiny');
+        const manifestList = cardManifest[cardType]?.[chosen.id];
+        if (manifestList && manifestList.length > 0) return chosen;
+        attempts++;
+      }
+      return null;
+    }
+
+    return PAGES.map(p => {
+      const meta = SEED_OFFSETS[p.key] || { offset: p.key.length * 1000, letter: p.key.charAt(0) };
+      let seedFor;
+      if (p.key === 'card') {
+        // Card page uses a special base seed and additional manifest-based filtering
+        const cardAnswer = getCardAnswer();
+        const pageGuesses = guessesByPage[p.key] || [];
+        const solved = cardAnswer && pageGuesses.some(g => g.name === cardAnswer.name);
+        return { key: p.key, label: p.label, daily: cardAnswer, solved, guessCount: solved ? pageGuesses.length : null };
+      } else {
+        seedFor = getSeedFromDate(today) + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
+      }
+      const rngFor = mulberry32(seedFor);
+      const idx = Math.floor(rngFor() * pokemonData.length);
+      const daily = pokemonData[idx];
+      const pageGuesses = guessesByPage[p.key] || [];
+      const solved = daily && pageGuesses.some(g => g.name === (daily.name));
+      return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
+    });
+  }, [pokemonData, guessesByPage, today, cardManifest]);
+
+  const allCompleted = perPageResults.length > 0 && perPageResults.every(r => r.solved);
+  const [completionOpen, setCompletionOpen] = useState(false);
+
+  // Debug: print a compact summary of perPageResults whenever it changes
+  useEffect(() => {
+    try {
+      const summary = perPageResults.map(r => ({ key: r.key, solved: !!r.solved, guessCount: r.guessCount, daily: r.daily ? r.daily.name : null }));
+      // eslint-disable-next-line no-console
+      console.log('DEBUG perPageResults:', summary);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Error logging perPageResults', e);
+    }
+  }, [perPageResults]);
 
   if (!pokemonData) return <div>Loading data...</div>;
 
@@ -139,6 +212,9 @@ function App() {
   const setGuesses = (newGuesses) => {
     setGuessesByPage(g => ({ ...g, [page]: newGuesses }));
   };
+
+  // (perPageResults, allCompleted, and completionOpen are declared earlier so
+  // hooks run in a stable order regardless of data-loading state)
 
   // Comparison logic for feedback
   function getComparison(guessPoke, answerPoke) {
@@ -176,7 +252,7 @@ function App() {
           }
         }
       `}</style>
-      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} />
+      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} />
       {/* Page Content - separate scrollable container so header stays fixed */}
         <div
           className="main-app"
@@ -214,6 +290,7 @@ function App() {
   {page === 'card' && <CardPage pokemonData={pokemonData} cardManifest={cardManifest} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
+      <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} />
       <style>{`
         @media (max-width: 600px) {
           .main-app {

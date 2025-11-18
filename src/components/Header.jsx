@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null }) {
     return ReactDOM.createPortal(
         <>
             <style>{`
@@ -104,6 +104,36 @@ export default function Header({ pages, page, setPage, titleImg }) {
                                     <span className="nav-label">{p.label}</span>
                                 </button>
                             ))}
+                            {showCompletionButton && (
+                                <button
+                                    key="completion-summary"
+                                    onClick={() => onCompletionClick && onCompletionClick()}
+                                    aria-label="Completion Summary"
+                                    title="Completion Summary"
+                                    style={{
+                                        padding: '10px 22px',
+                                        borderRadius: 12,
+                                        background: '#f4f4f4ff',
+                                        color: '#1976d2',
+                                        border: '2px solid #1976d2',
+                                        fontWeight: 700,
+                                        fontSize: 18,
+                                        cursor: 'pointer',
+                                        boxShadow: 'none',
+                                        transition: 'background 0.2s, color 0.2s',
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        minWidth: 90,
+                                        marginBottom: 8,
+                                        whiteSpace: 'nowrap',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <span className="nav-label">Summary</span>
+                                </button>
+                            )}
                         </nav>
                     </div>
                 </div>
