@@ -32,6 +32,33 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySee
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
 
+  // Preload the full Pokémon image so it appears immediately after a correct guess
+  useEffect(() => {
+    if (!dailyPokemon) return;
+    try {
+      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
+      const img = new Image();
+      img.src = url;
+      // Also preload the sprite colour blocks image used as a hint
+      const spriteUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${dailyPokemon.id}.png`;
+      const spriteImg = new Image();
+      spriteImg.src = spriteUrl;
+      // assign handlers to help with debugging in verbose dev runs
+      img.onload = () => { /* loaded into browser cache */ };
+      img.onerror = () => { /* ignore preload failures */ };
+      spriteImg.onload = () => { /* loaded into browser cache */ };
+      spriteImg.onerror = () => { /* ignore preload failures */ };
+      return () => {
+        img.onload = null;
+        img.onerror = null;
+        spriteImg.onload = null;
+        spriteImg.onerror = null;
+      };
+    } catch (e) {
+      // ignore
+    }
+  }, [dailyPokemon && dailyPokemon.id]);
+
   // Guessing state (controlled input for GuessInput)
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
