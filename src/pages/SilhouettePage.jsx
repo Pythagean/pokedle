@@ -134,7 +134,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Zoom logic: start at 2.8, go to 0.9 over 10 steps (guesses), quadratic ease-out
   const maxZoom = 2.8;
-  const minZoom = 0.9;
+  const minZoom = 1.0;
   const maxSteps = 10;
   // Quadratic ease-in: t = guesses.length / (maxSteps - 1), zoom = maxZoom - (maxZoom - minZoom) * (1 - (1-t)^2)
   let t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
@@ -330,7 +330,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           >
             {debugOverlay ? 'Debug: ON' : 'Debug'}
           </button>
-          */}
+         */}
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
@@ -350,7 +350,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               src={realImagePath}
               alt={dailyPokemon.name}
               className="silhouette-img"
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(0.9,0.9)' : imgStyle.transform }}
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
               onLoad={() => setRealLoaded(true)}
               onError={e => { setRealLoaded(false); }}
             />
