@@ -28,7 +28,7 @@ function getCardTypeByDay(day, rng) {
   return 'normal'; // Mon-Fri
 }
 
-function CardPage({ pokemonData, cardManifest, guesses, setGuesses, daily }) {
+function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
@@ -102,73 +102,36 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses, daily }) {
     }
   }, []);
 
-  // Helper to select a pokemon and card
+  // Helper to select a pokemon and card. Prefer `daily` provided by App (which may be
+  // either a pokemon object or an object shaped { pokemon, card }) and fall back to
+  // local selection when necessary.
+  // Rely on `daily` supplied by App. `daily` may be either a pokemon object or
+  // an object { pokemon, card } where `card` contains `cropped` and `resized` URLs.
   const { cardPath, answer, folder, cardFile, cardType } = useMemo(() => {
-    if (!pokemonData || !cardManifest) {
-      return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
-    }
-    let attempts = 0;
-    let chosen = null;
-    let chosenCard = null;
-    let folder = null;
-    let cardFile = null;
-    let cardType = null;
-    let localRng = mulberry32(baseSeed + reloadSeed);
-    // If App provided a chosen daily pokemon, prefer that and pick an available card for it
+    if (!pokemonData) return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
     if (daily) {
-      chosen = daily;
-      cardType = getCardTypeByDay(effectiveDay, localRng);
-      if (cardType === 'normal' || cardType === 'shiny') {
-        folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-      } else {
-        folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+      const providedPokemon = daily.pokemon ? daily.pokemon : daily;
+      const providedCard = daily.card ? daily.card : null;
+      if (providedCard) {
+        return {
+          cardPath: providedCard,
+          answer: providedPokemon,
+          folder: providedCard.folder || null,
+          cardFile: providedCard.cardFile || providedCard.card_file || null,
+          cardType: providedCard.cardType || providedCard.card_type || null
+        };
       }
-      const manifestList = cardManifest[cardType]?.[chosen.id];
-      if (manifestList && manifestList.length > 0) {
-        cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-        if (cardType === 'normal' || cardType === 'shiny') {
-          chosenCard = { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}` };
-        } else {
-          chosenCard = { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}` };
-        }
-      }
-    } else {
-      while (attempts < 50 && !chosenCard) {
-        const idx = Math.floor(localRng() * pokemonData.length);
-        chosen = pokemonData[idx];
-        cardType = getCardTypeByDay(effectiveDay, localRng);
-        // New folder structure
-        if (cardType === 'normal' || cardType === 'shiny') {
-          folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-        } else {
-          folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-        }
-        const manifestList = cardManifest[cardType]?.[chosen.id];
-        if (manifestList && manifestList.length > 0) {
-          cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-          // For normal/shiny, cropped is in /cropped, resized is in /resized
-          // For full_art/special, just in the folder
-          if (cardType === 'normal' || cardType === 'shiny') {
-            chosenCard = {
-              cropped: `${folder}/cropped/${cardFile}`,
-              resized: `${folder}/resized/${cardFile}`
-            };
-          } else {
-            chosenCard = {
-              cropped: `${folder}/${cardFile}`,
-              resized: `${folder}/${cardFile}`
-            };
-          }
-        }
-        attempts++;
-      }
+      // If no card metadata provided, we can't reliably select a card without the manifest.
+      // Fall back to using the provided pokemon as the answer and no cardPath.
+      return { cardPath: null, answer: providedPokemon, folder: null, cardFile: null, cardType: null };
     }
-    return { cardPath: chosenCard, answer: chosen, folder, cardFile, cardType };
-  }, [baseSeed, reloadSeed, effectiveDay, pokemonData, cardManifest]);
+    // No `daily` provided yet (maybe loading) — show nothing.
+    return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
+  }, [daily, pokemonData]);
 
   
 
-  if (!pokemonData || !cardManifest) return <div>Shuffling Pokémon cards...</div>;
+  if (!pokemonData) return <div>Shuffling Pokémon cards...</div>;
 
   // Preload cropped/resized card images so they appear immediately when revealed
   useEffect(() => {

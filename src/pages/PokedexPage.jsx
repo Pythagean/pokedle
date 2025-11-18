@@ -20,17 +20,18 @@ function mulberry32(a) {
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   }
 }
-export default function PokedexPage({ pokemonData, guesses, setGuesses, dailySeed }) {
+export default function PokedexPage({ pokemonData, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
   
   const today = new Date();
-  const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 7 * 1000 + 'p'.charCodeAt(0)); // UTC-based
+  const defaultSeed = (getSeedFromUTCDate(today) + 7 * 1000 + 'p'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);
   const seed = resetSeed !== null ? resetSeed : defaultSeed;
   const rng = useMemo(() => mulberry32(seed), [seed]);
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
-  const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
+  const dailyPokemon = daily || computedDaily;
 
   // Determine whether the daily Pokemon has been guessed correctly
   const lastGuess = guesses && guesses.length > 0 ? guesses[0] : null;

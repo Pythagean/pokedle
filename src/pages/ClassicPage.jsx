@@ -29,7 +29,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function ClassicPage({ pokemonData, guesses, setGuesses }) {
+function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const MAX_PLACEHOLDER_ROWS = 1;
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
@@ -42,7 +42,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
   const seed = getSeedFromUTCDate(today) + 7 * 1000 + 'classic'.charCodeAt(0); // UTC-based
   const rng = useMemo(() => mulberry32(seed), [seed]);
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
-  const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
+  const dailyPokemon = daily || computedDaily;
   const rowsToRender = Math.max(1, guesses.length);
   // Using 7 visible boxes (Main/Secondary colour columns temporarily hidden)
   const BOX_COUNT = 7;

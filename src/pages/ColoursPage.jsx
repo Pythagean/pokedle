@@ -21,16 +21,17 @@ function mulberry32(a) {
   }
 }
 
-export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySeed }) {
+export default function ColoursPage({ pokemonData, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
   const today = new Date();
-  const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 9 * 1000 + 'c'.charCodeAt(0)); // UTC-based
+  const defaultSeed = (getSeedFromUTCDate(today) + 9 * 1000 + 'c'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);
   const seed = resetSeed !== null ? resetSeed : defaultSeed;
   const rng = useMemo(() => mulberry32(seed), [seed]);
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
-  const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+  const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
+  const dailyPokemon = daily || computedDaily;
 
   // Preload the full Pokémon image so it appears immediately after a correct guess
   useEffect(() => {

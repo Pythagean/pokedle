@@ -24,18 +24,19 @@ function getSeedFromUTCDate(date) {
 
 const BASE_CLUE_TYPES = ['stats', 'ability', 'moves', 'category', 'locations', 'held_items', 'shape'];
 
-function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
+function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const inputRef = useRef(null);
     const today = new Date();
-    const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
+    const defaultSeed = (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
     const [resetSeed, setResetSeed] = useState(null);
     const [resetCount, setResetCount] = useState(0);
     const seed = resetSeed !== null ? resetSeed : defaultSeed;
     const rng = useMemo(() => mulberry32(seed), [seed]);
     const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
-    const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+    const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
+    const dailyPokemon = daily || computedDaily;
 
     // Build and shuffle clues for the day
     const cluesForDay = useMemo(() => {
@@ -115,7 +116,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
 
     // Only show the most recent guess
     const lastGuess = guesses[0];
-    const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+    const isCorrect = lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name;
 
     // Clue renderers
     function renderClue(type) {

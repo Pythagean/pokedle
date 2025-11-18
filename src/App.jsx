@@ -180,9 +180,32 @@ function App() {
         let cardType = 'normal';
         if (utcDay === 0) cardType = 'special';
         else if (utcDay === 6) cardType = (localRng() < 0.5 ? 'full_art' : 'shiny');
-    
+
         const manifestList = cardManifest[cardType]?.[chosen.id];
-        if (manifestList && manifestList.length > 0) return chosen;
+        if (manifestList && manifestList.length > 0) {
+          // pick a file deterministically
+          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
+          const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+          let cardObj = null;
+          if (cardType === 'normal' || cardType === 'shiny') {
+            cardObj = {
+              cropped: `${folder}/cropped/${cardFile}`,
+              resized: `${folder}/resized/${cardFile}`,
+              cardFile,
+              folder,
+              cardType
+            };
+          } else {
+            cardObj = {
+              cropped: `${folder}/${cardFile}`,
+              resized: `${folder}/${cardFile}`,
+              cardFile,
+              folder,
+              cardType
+            };
+          }
+          return { pokemon: chosen, card: cardObj };
+        }
         attempts++;
       }
       return null;
@@ -191,12 +214,12 @@ function App() {
     return PAGES.map(p => {
       const meta = SEED_OFFSETS[p.key] || { offset: p.key.length * 1000, letter: p.key.charAt(0) };
       let seedFor;
-      if (p.key === 'card') {
+        if (p.key === 'card') {
         // Card page uses a special base seed and additional manifest-based filtering
-        const cardAnswer = getCardAnswer();
+        const cardAnswerObj = getCardAnswer(); // { pokemon, card }
         const pageGuesses = guessesByPage[p.key] || [];
-        const solved = cardAnswer && pageGuesses.some(g => g.name === cardAnswer.name);
-        return { key: p.key, label: p.label, daily: cardAnswer, solved, guessCount: solved ? pageGuesses.length : null };
+        const solved = cardAnswerObj && cardAnswerObj.pokemon && pageGuesses.some(g => g.name === cardAnswerObj.pokemon.name);
+        return { key: p.key, label: p.label, daily: cardAnswerObj, solved, guessCount: solved ? pageGuesses.length : null };
       } else {
         seedFor = getSeedFromDate(today) + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
       }
@@ -219,12 +242,28 @@ function App() {
   // Console-log a compact summary of the selected pokemon for debugging/visibility
   useEffect(() => {
     if (!perPageResults || perPageResults.length === 0) return;
+    // Only log in development to avoid noisy production consoles
+    if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'production') return;
     try {
-      const summary = perPageResults.map(r => ({ key: r.key, id: r.daily?.id ?? null, name: r.daily?.name ?? null, solved: !!r.solved, guessCount: r.guessCount ?? null }));
+      const summary = perPageResults.map(r => {
+        const base = { key: r.key, solved: !!r.solved, guessCount: r.guessCount ?? null };
+        if (!r.daily) return { ...base, id: null, name: null };
+        // Card page returns an object { pokemon, card }
+        if (r.key === 'card' && r.daily.pokemon) {
+          return {
+            ...base,
+            id: r.daily.pokemon.id ?? null,
+            name: r.daily.pokemon.name ?? null,
+            cardFile: r.daily.card?.cardFile ?? null,
+            cardType: r.daily.card?.cardType ?? r.daily.card?.card_type ?? null,
+          };
+        }
+        return { ...base, id: r.daily.id ?? null, name: r.daily.name ?? null };
+      });
       console.log('Pokedle per-page daily selection:', summary);
       console.log('Pokedle dailyByPage map:', dailyByPage);
     } catch (e) {
-      console.log('Error logging perPageResults', e);
+      if (typeof console !== 'undefined') console.log('Error logging perPageResults', e);
     }
   }, [perPageResults, dailyByPage]);
 
@@ -236,22 +275,41 @@ function App() {
       const pushed = new Set();
       perPageResults.forEach(r => {
         const p = r.daily;
-        if (!p || !p.id) return;
-        const id = p.id;
-        const candidates = [
-          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${id}-front.png`,
-          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${id}.png`,
-          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${id}.png`,
-          `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${id}.png`
-        ];
-        candidates.forEach(u => {
-          if (!pushed.has(u)) {
-            pushed.add(u);
-            const img = new Image();
-            img.src = u;
-            imgs.push(img);
-          }
-        });
+        if (!p) return;
+        // if card page, r.daily may be { pokemon, card }
+        const pokemonObj = p.pokemon ? p.pokemon : p;
+        if (pokemonObj && pokemonObj.id) {
+          const id = pokemonObj.id;
+          const candidates = [
+            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${id}-front.png`,
+            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${id}.png`,
+            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${id}.png`,
+            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${id}.png`
+          ];
+          candidates.forEach(u => {
+            if (!pushed.has(u)) {
+              pushed.add(u);
+              const img = new Image();
+              img.src = u;
+              imgs.push(img);
+            }
+          });
+        }
+        // Preload card images if provided
+        if (p.card) {
+          const cp = p.card;
+          const cardUrls = [];
+          if (cp.resized) cardUrls.push(cp.resized);
+          if (cp.cropped) cardUrls.push(cp.cropped);
+          cardUrls.forEach(u => {
+            if (!pushed.has(u)) {
+              pushed.add(u);
+              const img = new Image();
+              img.src = u;
+              imgs.push(img);
+            }
+          });
+        }
       });
     } catch (e) {
       // ignore
@@ -344,7 +402,7 @@ function App() {
   {page === 'zoom' && <ZoomPage pokemonData={pokemonData} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
   {page === 'colours' && <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
   {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
-  {page === 'card' && <CardPage pokemonData={pokemonData} cardManifest={cardManifest} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
+  {page === 'card' && <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
       <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} />
