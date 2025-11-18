@@ -125,8 +125,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
     const arrowImg = new Image();
     arrowImg.src = 'images/arrow-up.svg';
     // no-op handlers to keep reference until unmount
-    arrowImg.onload = () => {};
-    arrowImg.onerror = () => {};
+    arrowImg.onload = () => { };
+    arrowImg.onerror = () => { };
     return () => {
       arrowImg.onload = null;
       arrowImg.onerror = null;
@@ -191,14 +191,14 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                 <div style={{ marginBottom: 8 }}>Guess the Pokémon for the current daily puzzle.</div>
                 <div style={{ marginBottom: 8 }}>Each guess shows feedback across columns (Generation, Types, Evolution Stage, Habitat, Height, Weight).</div>
                 <div style={{ fontWeight: 700, marginTop: 6, marginBottom: 6 }}>Example hints</div>
-                  <div style={{ width: '100%', textAlign: 'center' }}>
-                    <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>A partial type match (Water) - today’s Pokémon is dual-typed and includes Water:</div>
-                    <img src="images/classic_hint_1.png" alt="Hint 1" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
-                  </div>
-                  <div style={{ width: '100%', textAlign: 'center' }}>
-                    <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>Generation and Evolution Stage match - this shows the correct generation and that the Pokémon is at that evolution stage:</div>
-                    <img src="images/classic_hint_2.png" alt="Hint 2" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
-                  </div>
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                  <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>A partial type match (Water) - today’s Pokémon is dual-typed and includes Water:</div>
+                  <img src="images/classic_hint_1.png" alt="Hint 1" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                </div>
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                  <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>Generation and Evolution Stage match - this shows the correct generation and that the Pokémon is at that evolution stage:</div>
+                  <img src="images/classic_hint_2.png" alt="Hint 2" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                </div>
               </div>
             }
           />
@@ -239,125 +239,125 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
             />
           </form>
         )}
+      </div>
+      <div className="classic-grid-fit" style={{ width: '100%' }}>
+        <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', fontWeight: 600, gap: 1, marginBottom: 8, alignItems: 'center', width: '100%' }}>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Gen</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
+          {/* Main Colour column temporarily hidden */}
+          {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Main Colour</div> */}
+          {/* Secondary Colours column temporarily hidden */}
+          {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Secondary Colours</div> */}
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Evolution Stage</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
         </div>
-        <div className="classic-grid-fit" style={{ width: '100%' }}>
-          <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', fontWeight: 600, gap: 4, marginBottom: 8, alignItems: 'center', width: '100%' }}>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Generation</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
-            {/* Main Colour column temporarily hidden */}
-            {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Main Colour</div> */}
-            {/* Secondary Colours column temporarily hidden */}
-            {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Secondary Colours</div> */}
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Evolution Stage</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
-            <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
-          </div>
-          <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto' }}>
-            <div>
-              {Array.from({ length: rowsToRender }).map((_, rowIdx) => {
-                  if (rowIdx < guesses.length) {
-                  const poke = guesses[rowIdx];
-                  const cmp = getComparison(poke, dailyPokemon);
-                  const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
-                  const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
-                  const secondaryStatus = cmp.secondary_colours === 'match' ? 'match' : (cmp.secondary_colours === 'partial' ? 'partial' : 'miss');
-                  const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
-                  const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
-                  return (
-                    <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
-                      <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
-                        <div className="feedback-pokemon-img">
-                          <img
-                            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
-                            alt={poke.name}
-                            onError={e => { e.target.style.display = 'none'; }}
-                          />
-                        </div>
-                        <div
-                          className="feedback-box-content"
-                          aria-hidden={false}
-                          style={{
-                            position: 'absolute',
-                            top: 'auto',
-                            bottom: 6,
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            zIndex: 3,
-                            fontSize: 12,
-                            fontWeight: 700,
-                            background: 'rgba(255,255,255,0.85)',
-                            padding: '2px 6px',
-                            borderRadius: 6,
-                            maxWidth: '86%',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}
-                        >
-                          {poke.name}
-                        </div>
+        <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto' }}>
+          <div>
+            {Array.from({ length: rowsToRender }).map((_, rowIdx) => {
+              if (rowIdx < guesses.length) {
+                const poke = guesses[rowIdx];
+                const cmp = getComparison(poke, dailyPokemon);
+                const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
+                const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
+                const secondaryStatus = cmp.secondary_colours === 'match' ? 'match' : (cmp.secondary_colours === 'partial' ? 'partial' : 'miss');
+                const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
+                const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
+                return (
+                  <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                    <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-pokemon-img">
+                        <img
+                          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
+                          alt={poke.name}
+                          onError={e => { e.target.style.display = 'none'; }}
+                        />
                       </div>
-                        <div className={`feedback-box ${generationStatus}`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.generation}</div>
-                        </div>
-                        <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.types.join(', ')}</div>
-                        </div>
-                        {/* Main Colour box temporarily hidden */}
-                        {/* <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.main_colour || poke.color}</div>
-                        </div> */}
-                        {/* Secondary Colours box temporarily hidden */}
-                        {/* <div className={`feedback-box ${secondaryStatus}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.secondary_colours && poke.secondary_colours.length ? poke.secondary_colours.join(', ') : 'None'}</div>
-                        </div> */}
-                        <div className={`feedback-box ${evolutionStatus}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.evolution_stage || 1}</div>
-                        </div>
-                        <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
-                          <div className="feedback-box-content">{poke.habitat}</div>
-                        </div>
-                        <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
-                        {cmp.height !== 'match' && (
-                          <div className="bg-icon" aria-hidden="true">
-                            <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
-                          </div>
-                        )}
-                        <div className="feedback-box-content">
-                          <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
-                        </div>
-                      </div>
-                      <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${6 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
-                        {cmp.weight !== 'match' && (
-                          <div className="bg-icon" aria-hidden="true">
-                            <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
-                          </div>
-                        )}
-                        <div className="feedback-box-content">
-                          <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
-                        </div>
+                      <div
+                        className="feedback-box-content"
+                        aria-hidden={false}
+                        style={{
+                          position: 'absolute',
+                          top: 'auto',
+                          bottom: 6,
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                          zIndex: 3,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          background: 'rgba(255,255,255,0.85)',
+                          padding: '2px 6px',
+                          borderRadius: 6,
+                          maxWidth: '86%',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {poke.name}
                       </div>
                     </div>
-                  );
-                }
+                    <div className={`feedback-box ${generationStatus} feedback-box-large-text`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-box-content">{poke.generation}</div>
+                    </div>
+                    <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-box-content">{poke.types.join(', ')}</div>
+                    </div>
+                    {/* Main Colour box temporarily hidden */}
+                    {/* <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.main_colour || poke.color}</div>
+                        </div> */}
+                    {/* Secondary Colours box temporarily hidden */}
+                    {/* <div className={`feedback-box ${secondaryStatus}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
+                          <div className="feedback-box-content">{poke.secondary_colours && poke.secondary_colours.length ? poke.secondary_colours.join(', ') : 'None'}</div>
+                        </div> */}
+                    <div className={`feedback-box ${evolutionStatus} feedback-box-large-text`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-box-content">{poke.evolution_stage || 1}</div>
+                    </div>
+                    <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-box-content">{poke.habitat}</div>
+                    </div>
+                    <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
+                      {cmp.height !== 'match' && (
+                        <div className="bg-icon" aria-hidden="true">
+                          <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
+                        </div>
+                      )}
+                      <div className="feedback-box-content">
+                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
+                      </div>
+                    </div>
+                    <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${6 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
+                      {cmp.weight !== 'match' && (
+                        <div className="bg-icon" aria-hidden="true">
+                          <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
+                        </div>
+                      )}
+                      <div className="feedback-box-content">
+                        <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
 
-                // Placeholder row
-                return (
-                  <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
-                    {Array.from({ length: 7 }).map((__, colIdx) => (
-                      <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
-                        <div className="feedback-box-content">?</div>
-                      </div>
-                    ))}
-                      </div>
-                    );
-                  })}
-            </div>
+              // Placeholder row
+              return (
+                <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                  {Array.from({ length: 7 }).map((__, colIdx) => (
+                    <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
+                      <div className="feedback-box-content">?</div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
           </div>
         </div>
-      
+      </div>
+
       <style>{`
         @media (max-width: 700px) {
           .classic-grid-header > div {
@@ -491,14 +491,17 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
              so boxes are larger on very narrow screens and allow horizontal
              scrolling via the wrapper '.classic-feedback-scroll'. */
           .feedback-grid {
-            grid-template-columns: repeat(7, minmax(53px, 1fr)) !important;
+            grid-template-columns: repeat(7, minmax(43px, 1fr)) !important;
             gap: 4px !important;
           }
           .feedback-box {
-            font-size: 12px !important;
+            font-size: 9px !important;
             border-radius: 8px !important;
             /* aspect-ratio keeps boxes square */
           }
+            .feedback-box-large-text {
+            font-size: 12px !important;
+            }
           .feedback-pokemon-box img {
             width: 100% !important;
             height: 100% !important;
@@ -513,6 +516,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
             width: 100% !important;
             height: 100% !important;
           }
+          /* On small screens hide the pokemon name label in the leftmost box */
+          .feedback-pokemon-box .feedback-box-content { display: none !important; }
         }
         /* Placeholder rows shown before any guesses are made */
         .placeholder {
