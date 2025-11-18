@@ -275,7 +275,29 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
                             onError={e => { e.target.style.display = 'none'; }}
                           />
                         </div>
-                        <div className="feedback-box-content" aria-hidden="true"></div>
+                        <div
+                          className="feedback-box-content"
+                          aria-hidden={false}
+                          style={{
+                            position: 'absolute',
+                            top: 'auto',
+                            bottom: 6,
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            zIndex: 3,
+                            fontSize: 12,
+                            fontWeight: 700,
+                            background: 'rgba(255,255,255,0.85)',
+                            padding: '2px 6px',
+                            borderRadius: 6,
+                            maxWidth: '86%',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {poke.name}
+                        </div>
                       </div>
                         <div className={`feedback-box ${generationStatus}`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
                           <div className="feedback-box-content">{poke.generation}</div>
