@@ -229,7 +229,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, dailySeed }) {
                                 {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />}
                                 {shownClues.map(type => renderClue(type))}
                                 {/* Hint placeholder text for next clue, specifying clue type */}
-                                {(() => {
+                                {!isCorrect && (() => {
                                     const thresholds = [4, 8, 12, 16];
                                     const nextIdx = thresholds.findIndex(t => guesses.length < t);
                                     if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {

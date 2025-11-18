@@ -145,6 +145,13 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, dailySee
     spriteColourHintPlaceholder = <span style={{ color: '#888' }}>The in-game sprite colours will be revealed in {4 - guesses.length} guess{4 - guesses.length === 1 ? '' : 'es'}!</span>;
   }
 
+  // If the puzzle has been solved, remove any placeholders for hints that haven't been shown.
+  if (isCorrect) {
+    generationHintPlaceholder = null;
+    typeHintPlaceholder = null;
+    spriteColourHintPlaceholder = null;
+  }
+
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
