@@ -133,6 +133,24 @@ function ClassicPage({ pokemonData, guesses, setGuesses }) {
     };
   }, []);
 
+  // Preload hint images used in the InfoButton so they show instantly when opened
+  useEffect(() => {
+    try {
+      const imgs = [];
+      const urls = ['images/classic_hint_1.png', 'images/classic_hint_2.png'];
+      urls.forEach(u => {
+        const i = new Image();
+        i.src = u;
+        i.onload = () => { /* cached */ };
+        i.onerror = () => { /* ignore */ };
+        imgs.push(i);
+      });
+      return () => { imgs.length = 0; };
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
 

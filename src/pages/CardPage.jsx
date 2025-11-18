@@ -84,6 +84,24 @@ function CardPage({ pokemonData, cardManifest, guesses, setGuesses }) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [dropdownOpen]);
 
+  // Preload CardPage hint images used in the InfoButton so the help shows immediately
+  useEffect(() => {
+    try {
+      const hintImgs = ['images/card_hint_1.png', 'images/card_hint_2.png'];
+      const imgs = [];
+      hintImgs.forEach(src => {
+        const i = new Image();
+        i.src = src;
+        i.onload = () => { /* warmed */ };
+        i.onerror = () => { /* ignore */ };
+        imgs.push(i);
+      });
+      return () => { imgs.length = 0; };
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   // Helper to select a pokemon and card
   const { cardPath, answer, folder, cardFile, cardType } = useMemo(() => {
     if (!pokemonData || !cardManifest) {
