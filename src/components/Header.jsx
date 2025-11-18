@@ -110,37 +110,35 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     <span className="nav-label">{p.label}</span>
                                 </button>
                             ))}
-                            {showCompletionButton && (
-                                <button
-                                    key="completion-summary"
-                                    onClick={() => onCompletionClick && onCompletionClick()}
-                                    aria-label="Results"
-                                    title="Results"
-                                    style={{
-                                        padding: '10px 12px',
-                                        borderRadius: 12,
-                                        background: '#f4f4f4ff',
-                                        color: '#1976d2',
-                                        border: '2px solid #1976d2',
-                                        fontWeight: 700,
-                                        fontSize: 18,
-                                        cursor: 'pointer',
-                                        boxShadow: 'none',
-                                        transition: 'background 0.2s, color 0.2s',
-                                        marginLeft: 0,
-                                        marginRight: 0,
-                                        minWidth: 90,
-                                        marginBottom: 8,
-                                        whiteSpace: 'nowrap',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
-                                    <span className="nav-label">Results</span>
-                                </button>
-                            )}
+                            <button
+                                key="completion-summary"
+                                onClick={() => onCompletionClick && onCompletionClick()}
+                                aria-label="Results"
+                                title="Results"
+                                style={{
+                                    padding: '10px 12px',
+                                    borderRadius: 12,
+                                    background: '#f4f4f4ff',
+                                    color: '#1976d2',
+                                    border: '2px solid #1976d2',
+                                    fontWeight: 700,
+                                    fontSize: 18,
+                                    cursor: 'pointer',
+                                    boxShadow: 'none',
+                                    transition: 'background 0.2s, color 0.2s',
+                                    marginLeft: 0,
+                                    marginRight: 0,
+                                    minWidth: 90,
+                                    marginBottom: 8,
+                                    whiteSpace: 'nowrap',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
+                                <span className="nav-label">Results</span>
+                            </button>
                         </nav>
                     </div>
                 </div>
