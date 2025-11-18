@@ -48,7 +48,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
-                    maxWidth: 1100,
+                    maxWidth: 1200,
                     margin: '0 auto',
                     padding: '0 12px',
                     paddingLeft: '0px',
@@ -108,8 +108,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 <button
                                     key="completion-summary"
                                     onClick={() => onCompletionClick && onCompletionClick()}
-                                    aria-label="Completion Summary"
-                                    title="Completion Summary"
+                                    aria-label="Results"
+                                    title="Results"
                                     style={{
                                         padding: '10px 22px',
                                         borderRadius: 12,
@@ -131,7 +131,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <span className="nav-label">Summary</span>
+                                    <span className="nav-label">Results</span>
                                 </button>
                             )}
                         </nav>
