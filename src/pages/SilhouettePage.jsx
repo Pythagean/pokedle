@@ -24,6 +24,10 @@ function mulberry32(a) {
 export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, dailySeed }) {
   const inputRef = useRef(null);
 
+  // Countdown state: milliseconds until next UTC midnight
+  const [msUntilReset, setMsUntilReset] = useState(null);
+  const [nextResetLocalTime, setNextResetLocalTime] = useState('');
+
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
   const defaultSeed = dailySeed || (getSeedFromUTCDate(today) + 7 * 1000 + 's'.charCodeAt(0)); // UTC-based
@@ -131,6 +135,65 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       // ignore
     }
   }, [dailyPokemon && dailyPokemon.id]);
+
+  // Compute ms until next UTC midnight and update every second when the puzzle is solved
+  useEffect(() => {
+    function computeMsUntilNextUtcMidnight() {
+      const now = new Date();
+      // next day at 00:00:00 UTC
+      const nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+      return nextUtcMidnight.getTime() - now.getTime();
+    }
+
+    // Initialize immediately if correct
+    if (isCorrect) {
+      const next = (function(){
+        const now = new Date();
+        return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+      })();
+      setMsUntilReset(next.getTime() - Date.now());
+      try {
+        // Format local representation of the UTC midnight moment
+        const localStr = next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+        setNextResetLocalTime(localStr);
+      } catch (e) {
+        setNextResetLocalTime('');
+      }
+    }
+
+    let timer = null;
+    if (isCorrect) {
+      // update every second
+      timer = setInterval(() => {
+        const now = new Date();
+        const nextUtcMidnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+        setMsUntilReset(nextUtcMidnight.getTime() - now.getTime());
+        try {
+          setNextResetLocalTime(nextUtcMidnight.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }));
+        } catch (e) {
+          setNextResetLocalTime('');
+        }
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isCorrect]);
+
+  // Helper to format milliseconds to HH:MM:SS (days included if needed)
+  function formatMs(ms) {
+    if (ms == null) return '';
+    if (ms < 0) ms = 0;
+    const totalSeconds = Math.floor(ms / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(minutes).padStart(2, '0');
+    const ss = String(seconds).padStart(2, '0');
+    return (days > 0 ? `${days}d ` : '') + `${hh}:${mm}:${ss}`;
+  }
 
   // Zoom logic: start at 2.8, go to 0.9 over 10 steps (guesses), quadratic ease-out
   const maxZoom = 2.8;
@@ -334,7 +397,15 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
-        {isCorrect && <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />}
+        {isCorrect && (
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />
+            <div style={{ marginTop: 8, fontSize: 13, color: '#444' }}>
+              <div style={{ fontWeight: 600, marginBottom: 4 }}>Next puzzle resets at midnight UTC{nextResetLocalTime ? ` (${nextResetLocalTime})` : ''}</div>
+              <div aria-live="polite">Time until reset: <span style={{ fontFamily: 'monospace' }}>{formatMs(msUntilReset)}</span></div>
+            </div>
+          </>
+        )}
         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* Always render both images and cross-fade between them when the real image is loaded */}
