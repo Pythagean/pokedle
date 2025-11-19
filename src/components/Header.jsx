@@ -78,7 +78,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                 width: '100%',
                 background: '#e7e9edff',
                 borderBottom: '5px solid #f1f2f4ff',
-                boxShadow: '0 6px 6px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 6px 6px rgba(0, 0, 0, 0.07)',
                 padding: 0,
                 margin: 0,
                 zIndex: 10000,
