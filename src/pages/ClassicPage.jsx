@@ -55,6 +55,9 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const BOX_COUNT = 7;
   const BOX_DELAY_STEP = 0.3; // seconds between boxes (updated to match per-box delays)
   const BOX_ANIM_DURATION_MS = 420; // matches CSS animation duration
+  // Placeholder fade timing (make this faster by reducing delay and duration)
+  const PLACEHOLDER_BOX_DELAY = 0.12; // seconds between placeholder boxes
+  const PLACEHOLDER_ANIM_DURATION_MS = 200; // ms for placeholder fade animation
   const [revealRow, setRevealRow] = useState(null);
   const prevGuessesLenRef = useRef(guesses.length);
   const revealRowRef = useRef(null);
@@ -187,6 +190,18 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
 
+  // Delay showing the CongratsMessage until after the revealRow animation completes
+  const [congratsVisible, setCongratsVisible] = useState(false);
+  useEffect(() => {
+    if (solved) {
+      // If no reveal is in progress, show immediately; otherwise wait until revealRow clears
+      if (revealRow === null) setCongratsVisible(true);
+      else setCongratsVisible(false);
+    } else {
+      setCongratsVisible(false);
+    }
+  }, [solved, revealRow]);
+
   if (!pokemonData) return <div>Loading Pokémon...</div>;
 
   // Comparison logic for feedback
@@ -284,8 +299,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         }
       };
       el.addEventListener('animationend', onChildEnd);
-      // safety timeout in case some events are missed : max delay (0.2s * 6) + duration (360ms) + buffer
-      const maxDelayMs = Math.ceil((0.2 * (totalBoxes - 1) * 1000) + 360 + 100);
+      // safety timeout in case some events are missed : max delay + duration + buffer
+      const maxDelayMs = Math.ceil((PLACEHOLDER_BOX_DELAY * (totalBoxes - 1) * 1000) + PLACEHOLDER_ANIM_DURATION_MS + 100);
       timeoutId = setTimeout(() => {
         el.removeEventListener('animationend', onChildEnd);
         if (pendingFirstGuessRef.current) {
@@ -296,7 +311,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         setIsFadingPlaceholder(false);
       }, maxDelayMs);
     } else {
-      // fallback: insert after small delay
+      // fallback: insert after small delay based on new placeholder duration
       timeoutId = setTimeout(() => {
         if (pendingFirstGuessRef.current) {
           setGuesses([pendingFirstGuessRef.current, ...guesses]);
@@ -304,7 +319,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           pendingFirstGuessRef.current = null;
         }
         setIsFadingPlaceholder(false);
-      }, 360 + 200);
+      }, PLACEHOLDER_ANIM_DURATION_MS + 200);
     }
 
     return () => clearTimeout(timeoutId);
@@ -416,7 +431,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         </div>
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
-        {solved ? (
+        {congratsVisible ? (
           <>
             <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
             <ResetCountdown active={true} resetHourUtc={23} />
@@ -560,8 +575,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
               // Placeholder row
               return (
                 <div key={`placeholder-${rowIdx}`} ref={rowIdx === 0 ? placeholderRowRef : null} className={`feedback-grid ${isFadingPlaceholder && rowIdx === 0 ? 'fade-placeholder' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
-                  {Array.from({ length: 7 }).map((__, colIdx) => {
-                    const phDelay = (isFadingPlaceholder && rowIdx === 0) ? `${colIdx * 0.2}s` : (revealRow === rowIdx ? `${colIdx * BOX_DELAY_STEP}s` : undefined);
+                    {Array.from({ length: 7 }).map((__, colIdx) => {
+                    const phDelay = (isFadingPlaceholder && rowIdx === 0) ? `${colIdx * PLACEHOLDER_BOX_DELAY}s` : (revealRow === rowIdx ? `${colIdx * BOX_DELAY_STEP}s` : undefined);
                     const style = phDelay ? { animationDelay: phDelay } : (revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined);
                     return (
                       <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={style}>
@@ -763,7 +778,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           /* Fade each placeholder box with staggered delays */
           .fade-placeholder .feedback-box {
             animation-name: placeholder-box-fade;
-            animation-duration: 360ms;
+            animation-duration: 200ms;
             animation-fill-mode: both;
             animation-timing-function: ease;
             will-change: opacity, transform;
