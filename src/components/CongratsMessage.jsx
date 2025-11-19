@@ -59,7 +59,7 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
             justifyContent: 'center'
           }}
           onClick={() => {
-            const text = `You guessed today's ${mode} Pokémon in ${guessCount} ${guessCount === 1 ? 'guess' : 'guesses'}!`;
+            const text = `I guessed today's ${mode} Pokémon in ${guessCount} ${guessCount === 1 ? 'guess' : 'guesses'}!`;
             let toCopy = text;
             if (classic && Array.isArray(guesses) && answer) {
               const partialMatch = (arr1, arr2) => {
