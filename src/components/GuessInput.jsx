@@ -38,6 +38,13 @@ export default function GuessInput({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredOptions]);
 
+  // Sort filtered options alphabetically for the dropdown display
+  const sortedOptions = React.useMemo(() => {
+    if (!filteredOptions || filteredOptions.length === 0) return [];
+    // create a shallow copy and sort by name using localeCompare for consistency
+    return [...filteredOptions].sort((a, b) => (a && b && a.name) ? a.name.localeCompare(b.name) : 0);
+  }, [filteredOptions]);
+
   // When highlighted index changes, ensure the highlighted item is visible in the dropdown
   useEffect(() => {
     if (!dropdownOpen) return;
@@ -70,19 +77,19 @@ export default function GuessInput({
           setDropdownOpen(true);
         }}
         onFocus={() => {
-          if (guess.length > 0 && filteredOptions.length > 0) setDropdownOpen(true);
+          if (guess.length > 0 && sortedOptions.length > 0) setDropdownOpen(true);
         }}
         onBlur={() => {
           // Don't close here, handled by outside click
         }}
         onKeyDown={e => {
-          if (e.key === 'ArrowDown' && filteredOptions.length > 0) {
+          if (e.key === 'ArrowDown' && sortedOptions.length > 0) {
             e.preventDefault();
-            setHighlightedIdx(idx => (idx + 1) % filteredOptions.length);
+            setHighlightedIdx(idx => (idx + 1) % sortedOptions.length);
             setDropdownOpen(true);
-          } else if (e.key === 'ArrowUp' && filteredOptions.length > 0) {
+          } else if (e.key === 'ArrowUp' && sortedOptions.length > 0) {
             e.preventDefault();
-            setHighlightedIdx(idx => (idx + filteredOptions.length - 1) % filteredOptions.length);
+            setHighlightedIdx(idx => (idx + sortedOptions.length - 1) % sortedOptions.length);
             setDropdownOpen(true);
           }
           // Do not handle Enter here; let form onSubmit handle it
@@ -91,7 +98,7 @@ export default function GuessInput({
         style={{ width: '100%', minWidth: 120, maxWidth: 500, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
         autoComplete="off"
       />
-      {dropdownOpen && guess.length > 0 && filteredOptions.length > 0 && (
+      {dropdownOpen && guess.length > 0 && sortedOptions.length > 0 && (
         <ul
           className="guess-dropdown"
           ref={dropdownRef}
@@ -113,7 +120,7 @@ export default function GuessInput({
             minWidth: 120,
           }}
         >
-          {filteredOptions.map((opt, i) => (
+          {sortedOptions.map((opt, i) => (
             <li
               key={opt.name}
               style={{
