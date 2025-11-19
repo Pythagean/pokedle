@@ -242,42 +242,52 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
     }
 
     const el = placeholderRowRef.current;
-    let t;
+    let timeoutId;
     if (el) {
-      const onEnd = () => {
-        el.removeEventListener('animationend', onEnd);
-        if (pendingFirstGuessRef.current) {
-          setGuesses([pendingFirstGuessRef.current, ...guesses]);
-          // start per-box reveal for the newly-inserted row
-          setRevealRow(0);
-          pendingFirstGuessRef.current = null;
+      const totalBoxes = 7;
+      let ended = 0;
+      const onChildEnd = (ev) => {
+        // only count animationend from the placeholder boxes
+        const target = ev.target;
+        if (!target || !target.classList) return;
+        if (!target.classList.contains('placeholder')) return;
+        ended += 1;
+        if (ended >= totalBoxes) {
+          el.removeEventListener('animationend', onChildEnd);
+          if (pendingFirstGuessRef.current) {
+            setGuesses([pendingFirstGuessRef.current, ...guesses]);
+            setRevealRow(0);
+            pendingFirstGuessRef.current = null;
+          }
+          setIsFadingPlaceholder(false);
+          if (timeoutId) clearTimeout(timeoutId);
         }
-        setIsFadingPlaceholder(false);
       };
-      el.addEventListener('animationend', onEnd);
-      // safety timeout
-      t = setTimeout(() => {
-        el.removeEventListener('animationend', onEnd);
+      el.addEventListener('animationend', onChildEnd);
+      // safety timeout in case some events are missed : max delay (0.2s * 6) + duration (360ms) + buffer
+      const maxDelayMs = Math.ceil((0.2 * (totalBoxes - 1) * 1000) + 360 + 100);
+      timeoutId = setTimeout(() => {
+        el.removeEventListener('animationend', onChildEnd);
         if (pendingFirstGuessRef.current) {
           setGuesses([pendingFirstGuessRef.current, ...guesses]);
           setRevealRow(0);
           pendingFirstGuessRef.current = null;
         }
         setIsFadingPlaceholder(false);
-      }, 420 + 50);
+      }, maxDelayMs);
     } else {
       // fallback: insert after small delay
-      t = setTimeout(() => {
+      timeoutId = setTimeout(() => {
         if (pendingFirstGuessRef.current) {
           setGuesses([pendingFirstGuessRef.current, ...guesses]);
           setRevealRow(0);
           pendingFirstGuessRef.current = null;
         }
         setIsFadingPlaceholder(false);
-      }, 360);
+      }, 360 + 200);
     }
 
-    return () => clearTimeout(t);
+    return () => clearTimeout(timeoutId);
   }, [isFadingPlaceholder]);
 
   // After DOM update, run FLIP to animate previous rows moving down into place
@@ -530,11 +540,15 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
               // Placeholder row
               return (
                 <div key={`placeholder-${rowIdx}`} ref={rowIdx === 0 ? placeholderRowRef : null} className={`feedback-grid ${isFadingPlaceholder && rowIdx === 0 ? 'fade-placeholder' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
-                  {Array.from({ length: 7 }).map((__, colIdx) => (
-                    <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
-                      <div className="feedback-box-content">?</div>
-                    </div>
-                  ))}
+                  {Array.from({ length: 7 }).map((__, colIdx) => {
+                    const phDelay = (isFadingPlaceholder && rowIdx === 0) ? `${colIdx * 0.2}s` : (revealRow === rowIdx ? `${colIdx * BOX_DELAY_STEP}s` : undefined);
+                    const style = phDelay ? { animationDelay: phDelay } : (revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined);
+                    return (
+                      <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={style}>
+                        <div className="feedback-box-content">?</div>
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}
@@ -726,17 +740,18 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
             transform: translateY(8px) scale(0.98);
           }
 
-          /* Fade whole placeholder row (first guess) */
-          .fade-placeholder {
-            animation-name: placeholder-fade;
+          /* Fade each placeholder box with staggered delays */
+          .fade-placeholder .feedback-box {
+            animation-name: placeholder-box-fade;
             animation-duration: 360ms;
             animation-fill-mode: both;
             animation-timing-function: ease;
+            will-change: opacity, transform;
           }
 
-          @keyframes placeholder-fade {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-8px); }
+          @keyframes placeholder-box-fade {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-6px) scale(0.98); }
           }
 
           @keyframes cascade-reveal {
@@ -751,7 +766,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
             opacity: 1 !important;
             transform: none !important;
           }
-          .fade-placeholder {
+          .fade-placeholder .feedback-box {
             animation: none !important;
             opacity: 0 !important;
             transform: none !important;
