@@ -64,6 +64,26 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const [isFadingPlaceholder, setIsFadingPlaceholder] = useState(false);
   const pendingFirstGuessRef = useRef(null);
   const placeholderRowRef = useRef(null);
+  // Mobile detection for responsive headings (matches CSS breakpoint)
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' && window.matchMedia) ? window.matchMedia('(max-width:700px)').matches : false);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(max-width:700px)');
+    const onChange = (e) => setIsMobile(e.matches);
+    try {
+      // modern browsers
+      mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+    } catch (e) {
+      mq.addListener(onChange);
+    }
+    return () => {
+      try {
+        mq.removeEventListener ? mq.removeEventListener('change', onChange) : mq.removeListener(onChange);
+      } catch (e) {
+        mq.removeListener(onChange);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // If a new guess was prepended, animate the top row
@@ -436,14 +456,14 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
       </div>
       <div className="classic-grid-fit" style={{ width: '100%' }}>
         <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', fontWeight: 600, gap: 1, marginBottom: 8, alignItems: 'center', width: '100%' }}>
-          <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokemon</div>
-          <div style={{ textAlign: 'center', fontSize: '1em' }}>Gen</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokémon</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>{isMobile ? 'Gen' : 'Generation'}</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Types</div>
           {/* Main Colour column temporarily hidden */}
           {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Main Colour</div> */}
           {/* Secondary Colours column temporarily hidden */}
           {/* <div style={{ textAlign: 'center', fontSize: '1em' }}>Secondary Colours</div> */}
-          <div style={{ textAlign: 'center', fontSize: '1em' }}>Evolution Stage</div>
+          <div style={{ textAlign: 'center', fontSize: '1em' }}>{isMobile ? 'Evo Stage' : 'Evolution Stage'}</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Habitat</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
