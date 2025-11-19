@@ -491,6 +491,37 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                 const cmp = getComparison(poke, dailyPokemon);
                 const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
                 const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
+                // Scale the arrows proportional to how far the guess is from the answer.
+                // Larger difference => bigger arrow. Clamp to a sensible range.
+                function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+                let heightScale = 1;
+                let weightScale = 1;
+                try {
+                  if (dailyPokemon && typeof poke.height === 'number' && typeof dailyPokemon.height === 'number') {
+                    const hDiff = Math.abs((poke.height || 0) - (dailyPokemon.height || 0));
+                    console.log('hDiff', hDiff);
+                    const norm = Math.max(1, dailyPokemon.height || 1);
+                    console.log('norm', norm);
+                    console.log('hDiff / norm', hDiff / norm);
+                    console.log('1 + (hDiff / norm) * 0.2', (1 + (hDiff / norm)) * 0.2);
+                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.45, 1.05);
+                    console.log('heightScale', heightScale);
+                    console.log("");
+                  }
+                  if (dailyPokemon && typeof poke.weight === 'number' && typeof dailyPokemon.weight === 'number') {
+                    const wDiff = Math.abs((poke.weight || 0) - (dailyPokemon.weight || 0));
+                    console.log('wDiff', wDiff);
+                    const normW = Math.max(1, dailyPokemon.weight || 1);
+                    console.log('normW', normW);
+                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.45, 1.05);
+                    console.log('weightScale', weightScale);
+                  }
+                  console.log("---");
+                } catch (e) {
+                  // fallback to defaults
+                  heightScale = 1;
+                  weightScale = 1;
+                }
                 const secondaryStatus = cmp.secondary_colours === 'match' ? 'match' : (cmp.secondary_colours === 'partial' ? 'partial' : 'miss');
                 const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
                 const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
@@ -551,7 +582,12 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                     <div className={`feedback-box ${heightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                       {cmp.height !== 'match' && (
                         <div className="bg-icon" aria-hidden="true">
-                          <img src={`images/arrow-up.svg`} alt="" className={cmp.height === 'up' ? '' : 'flip-vertical'} />
+                          <img
+                            src={`images/arrow-up.svg`}
+                            alt=""
+                            className={cmp.height === 'up' ? '' : 'flip-vertical'}
+                            style={{ transform: `${cmp.height === 'up' ? '' : 'scaleY(-1) '}scale(${heightScale})` }}
+                          />
                         </div>
                       )}
                       <div className="feedback-box-content">
@@ -561,7 +597,12 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                     <div className={`feedback-box ${weightStatus}`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${6 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                       {cmp.weight !== 'match' && (
                         <div className="bg-icon" aria-hidden="true">
-                          <img src={`images/arrow-up.svg`} alt="" className={cmp.weight === 'up' ? '' : 'flip-vertical'} />
+                          <img
+                            src={`images/arrow-up.svg`}
+                            alt=""
+                            className={cmp.weight === 'up' ? '' : 'flip-vertical'}
+                            style={{ transform: `${cmp.weight === 'up' ? '' : 'scaleY(-1) '}scale(${weightScale})` }}
+                          />
                         </div>
                       )}
                       <div className="feedback-box-content">
