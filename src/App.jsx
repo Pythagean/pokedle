@@ -430,7 +430,7 @@ function App() {
   {page === 'card' && <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
   {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
       </div>
-      <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} />
+      <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} guessesByPage={guessesByPage} />
       <style>{`
         @media (max-width: 600px) {
           .main-app {
