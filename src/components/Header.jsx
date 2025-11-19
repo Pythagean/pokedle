@@ -57,7 +57,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                         .main-header nav button .nav-label { display: inline !important; }
                                         .main-header nav button .nav-icon { display: inline-block !important; }
                     /* Left-align header content on narrow screens by removing the auto-centering margin */
-                    .main-header .main-header-inner { margin: 0 !important; max-width: none !important; padding-left: 8px !important; }
+                    .main-header .main-header-inner { margin: 0 !important; max-width: none !important; padding-left: 4px !important; }
                 }
                                         @media (max-width: 480px) {
                                                 .main-header nav button { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
