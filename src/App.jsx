@@ -272,8 +272,8 @@ function App() {
         }
         return { ...base, id: r.daily.id ?? null, name: r.daily.name ?? null };
       });
-      console.log('Pokedle per-page daily selection:', summary);
-      console.log('Pokedle dailyByPage map:', dailyByPage);
+      //console.log('Pokedle per-page daily selection:', summary);
+      //console.log('Pokedle dailyByPage map:', dailyByPage);
     } catch (e) {
       if (typeof console !== 'undefined') console.log('Error logging perPageResults', e);
     }

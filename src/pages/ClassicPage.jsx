@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
@@ -58,6 +58,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const [revealRow, setRevealRow] = useState(null);
   const prevGuessesLenRef = useRef(guesses.length);
   const revealRowRef = useRef(null);
+  // Store DOM rects snapshots in a queue so fast successive captures aren't lost
+  const prevRowRectsQueueRef = useRef([]);
 
   useEffect(() => {
     // If a new guess was prepended, animate the top row
@@ -195,12 +197,98 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
     const guessValue = overrideGuess !== undefined ? overrideGuess : guess;
     const guessName = guessValue.trim().toLowerCase();
     const guessedPokemon = pokemonData.find(p => p.name.toLowerCase() === guessName);
-    if (!guessedPokemon) return;
+    if (!guessedPokemon) return; 
+    // Capture current row positions before DOM updates for FLIP
+    try {
+      const rows = Array.from(document.querySelectorAll('.feedback-grid')) || [];
+      const snapshot = rows.map(r => ({ key: r.dataset ? r.dataset.poke || null : null, rect: r.getBoundingClientRect() }));
+      prevRowRectsQueueRef.current.push(snapshot);
+    } catch (err) {
+      // failed to capture prev rows — ignore
+    }
     setGuesses([guessedPokemon, ...guesses]);
     setGuess('');
     setHighlightedIdx(-1);
     if (inputRef.current) inputRef.current.focus();
   }
+
+  // After DOM update, run FLIP to animate previous rows moving down into place
+  useLayoutEffect(() => {
+    // Consume the oldest queued snapshot (if any)
+    const prevRects = (prevRowRectsQueueRef.current && prevRowRectsQueueRef.current.length) ? prevRowRectsQueueRef.current.shift() : null;
+    if (!prevRects) return;
+    // If number of previous rects is zero, nothing to animate
+    if (!prevRects.length) return;
+    // Respect reduced-motion preference
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // New rows after render
+    const newRows = Array.from(document.querySelectorAll('.feedback-grid')) || [];
+    // Map previous rows to their matching new element by data-poke key
+    const animated = [];
+    for (let j = 0; j < prevRects.length; j++) {
+      const prev = prevRects[j];
+      const prevKey = prev.key;
+      // If prev row had no key (placeholder), skip
+      if (!prevKey) continue;
+      const newElem = newRows.find(el => el.dataset && el.dataset.poke === prevKey);
+      if (!newElem) continue;
+      const prevRect = prev.rect;
+      const newRect = newElem.getBoundingClientRect();
+      const deltaY = prevRect.top - newRect.top;
+      if (Math.abs(deltaY) < 0.5) continue;
+      // Apply inverse transform so element appears at old position
+      // Also temporarily disable any CSS animations on the element so FLIP transition is not overridden
+      newElem.style.animation = 'none';
+      newElem.style.transition = 'none';
+      newElem.style.willChange = 'transform';
+      newElem.style.transform = `translateY(${deltaY}px)`;
+      // Use double RAF to ensure the browser registers the starting transform
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          // Now animate to natural position
+            newElem.style.transition = 'transform 360ms cubic-bezier(.2,.9,.3,1)';
+            newElem.style.transform = '';
+        });
+      });
+      // Cleanup on transition end
+      const onEnd = (ev) => {
+        if (ev.propertyName !== 'transform') return;
+        newElem.removeEventListener('transitionend', onEnd);
+        newElem.style.transition = '';
+        newElem.style.transform = '';
+        newElem.style.willChange = '';
+        // restore any CSS animation
+        newElem.style.animation = '';
+      };
+      newElem.addEventListener('transitionend', onEnd);
+      animated.push(newElem);
+    }
+
+    if (animated.length === 0) return;
+
+    // Cleanup after animations
+    const cleanup = () => {
+      animated.forEach(el => {
+        el.style.transition = '';
+        el.style.transform = '';
+      });
+    };
+
+    const timers = animated.map(el => {
+      const t = setTimeout(() => {
+        // remove inline styles
+        el.style.transition = '';
+        el.style.transform = '';
+      }, 420);
+      return t;
+    });
+
+    return () => {
+      timers.forEach(t => clearTimeout(t));
+      cleanup();
+    };
+  }, [guesses.length]);
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
@@ -282,7 +370,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Height</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Weight</div>
         </div>
-        <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto' }}>
+        <div className="classic-feedback-scroll" style={{ width: '100%', overflowX: 'auto', overflowY: 'visible', paddingTop: 10, overflow: 'hidden' }}>
           <div>
             {Array.from({ length: rowsToRender }).map((_, rowIdx) => {
               if (rowIdx < guesses.length) {
@@ -294,7 +382,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                 const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
                 const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
                 return (
-                  <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                  <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} data-poke={poke.name} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
                     <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
                       <div className="feedback-pokemon-img">
                         <img
@@ -430,7 +518,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           box-sizing: border-box;
           margin-bottom: 0;
           text-align: center;
-          overflow: hidden;
+          overflow: visible; /* allow scale animations to extend outside box without being clipped */
           white-space: pre-line;
         }
         .feedback-box > * {
@@ -557,27 +645,28 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           font-weight: 700;
           font-size: 1.1rem;
         }
-        /* Reveal animation (clip-path wipe) for newly added guess row */
+        /* Staggered cascade reveal for newly added guess row - uses per-box animation-delay set inline */
         @media (prefers-reduced-motion: no-preference) {
           .reveal-row .feedback-box {
-            animation-name: reveal-wipe;
-            animation-duration: 420ms;
+            animation-name: cascade-reveal;
+            animation-duration: 360ms;
             animation-fill-mode: both;
-            animation-timing-function: ease;
+            animation-timing-function: cubic-bezier(.2,.9,.3,1);
             transform-origin: center center;
-            will-change: clip-path, opacity;
+            will-change: transform, opacity;
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
           }
 
-          @keyframes reveal-wipe {
-            0% { clip-path: inset(0 100% 0 0); opacity: 1; transform: scale(0.95); }
-            60% { clip-path: inset(0 20% 0 0); }
-            80% { clip-path: inset(0 0 0 0); opacity: 1; transform: scale(1); }
+          @keyframes cascade-reveal {
+            0% { opacity: 0; transform: translateY(9px) scale(0.96); }
+            60% { opacity: 0.7; transform: translateY(-4px) scale(1.04); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
           }
         }
         @media (prefers-reduced-motion: reduce) {
           .reveal-row .feedback-box {
             animation: none !important;
-            clip-path: none !important;
             opacity: 1 !important;
             transform: none !important;
           }
