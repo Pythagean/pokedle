@@ -41,3 +41,19 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Tiled, low-opacity background using a fixed pseudo-element so child
+   content opacity is not affected. Uses public/images/background_icon.png */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image: url('/images/background_image.png');
+  background-repeat: repeat;
+  /* Small subtle tiles */
+  background-size: 1000px 800px;
+  opacity: 0.05;
+  will-change: opacity;
+}
