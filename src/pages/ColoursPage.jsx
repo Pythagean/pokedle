@@ -230,7 +230,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
           {imgLoaded && (
             <img
               src={colourPath}
-              alt="Colour blocks"
+              alt=""
               style={{
                 display: 'block',
                 width: isCorrect ? '60%' : '100%',
