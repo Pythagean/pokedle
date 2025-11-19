@@ -60,6 +60,10 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const revealRowRef = useRef(null);
   // Store DOM rects snapshots in a queue so fast successive captures aren't lost
   const prevRowRectsQueueRef = useRef([]);
+  // Placeholder-first-guess handling
+  const [isFadingPlaceholder, setIsFadingPlaceholder] = useState(false);
+  const pendingFirstGuessRef = useRef(null);
+  const placeholderRowRef = useRef(null);
 
   useEffect(() => {
     // If a new guess was prepended, animate the top row
@@ -206,11 +210,75 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
     } catch (err) {
       // failed to capture prev rows — ignore
     }
+    // If this is the first guess, fade the placeholder row first, then insert the guess
+    if (guesses.length === 0) {
+      pendingFirstGuessRef.current = guessedPokemon;
+      setIsFadingPlaceholder(true);
+      // clear input and focus
+      setGuess('');
+      setHighlightedIdx(-1);
+      if (inputRef.current) inputRef.current.focus();
+      return;
+    }
+
     setGuesses([guessedPokemon, ...guesses]);
     setGuess('');
     setHighlightedIdx(-1);
     if (inputRef.current) inputRef.current.focus();
   }
+
+  // When placeholder fade completes, insert the pending first guess and trigger reveal
+  useEffect(() => {
+    if (!isFadingPlaceholder) return;
+    // If user prefers reduced motion, skip fade and insert immediately
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (pendingFirstGuessRef.current) {
+        setGuesses([pendingFirstGuessRef.current, ...guesses]);
+        setRevealRow(0);
+        pendingFirstGuessRef.current = null;
+      }
+      setIsFadingPlaceholder(false);
+      return;
+    }
+
+    const el = placeholderRowRef.current;
+    let t;
+    if (el) {
+      const onEnd = () => {
+        el.removeEventListener('animationend', onEnd);
+        if (pendingFirstGuessRef.current) {
+          setGuesses([pendingFirstGuessRef.current, ...guesses]);
+          // start per-box reveal for the newly-inserted row
+          setRevealRow(0);
+          pendingFirstGuessRef.current = null;
+        }
+        setIsFadingPlaceholder(false);
+      };
+      el.addEventListener('animationend', onEnd);
+      // safety timeout
+      t = setTimeout(() => {
+        el.removeEventListener('animationend', onEnd);
+        if (pendingFirstGuessRef.current) {
+          setGuesses([pendingFirstGuessRef.current, ...guesses]);
+          setRevealRow(0);
+          pendingFirstGuessRef.current = null;
+        }
+        setIsFadingPlaceholder(false);
+      }, 420 + 50);
+    } else {
+      // fallback: insert after small delay
+      t = setTimeout(() => {
+        if (pendingFirstGuessRef.current) {
+          setGuesses([pendingFirstGuessRef.current, ...guesses]);
+          setRevealRow(0);
+          pendingFirstGuessRef.current = null;
+        }
+        setIsFadingPlaceholder(false);
+      }, 360);
+    }
+
+    return () => clearTimeout(t);
+  }, [isFadingPlaceholder]);
 
   // After DOM update, run FLIP to animate previous rows moving down into place
   useLayoutEffect(() => {
@@ -461,7 +529,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
 
               // Placeholder row
               return (
-                <div key={`placeholder-${rowIdx}`} className="feedback-grid" style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                <div key={`placeholder-${rowIdx}`} ref={rowIdx === 0 ? placeholderRowRef : null} className={`feedback-grid ${isFadingPlaceholder && rowIdx === 0 ? 'fade-placeholder' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
                   {Array.from({ length: 7 }).map((__, colIdx) => (
                     <div key={`ph-${rowIdx}-${colIdx}`} className={`feedback-box placeholder`} style={revealRow === rowIdx ? { animationDelay: `${colIdx * BOX_DELAY_STEP}s` } : undefined}>
                       <div className="feedback-box-content">?</div>
@@ -658,6 +726,19 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
             transform: translateY(8px) scale(0.98);
           }
 
+          /* Fade whole placeholder row (first guess) */
+          .fade-placeholder {
+            animation-name: placeholder-fade;
+            animation-duration: 360ms;
+            animation-fill-mode: both;
+            animation-timing-function: ease;
+          }
+
+          @keyframes placeholder-fade {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-8px); }
+          }
+
           @keyframes cascade-reveal {
             0% { opacity: 0; transform: translateY(9px) scale(0.96); }
             60% { opacity: 0.7; transform: translateY(-4px) scale(1.04); }
@@ -668,6 +749,11 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           .reveal-row .feedback-box {
             animation: none !important;
             opacity: 1 !important;
+            transform: none !important;
+          }
+          .fade-placeholder {
+            animation: none !important;
+            opacity: 0 !important;
             transform: none !important;
           }
         }
