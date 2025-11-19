@@ -130,6 +130,76 @@ function App() {
     };
   }, []);
   const [page, setPage] = useState('classic');
+  // Mobile swipe navigation: track small viewport and attach touch handlers
+  const mainAppRef = useRef(null);
+  const [isMobileView, setIsMobileView] = useState(() => (typeof window !== 'undefined' && window.matchMedia) ? window.matchMedia('(max-width:700px)').matches : false);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(max-width:700px)');
+    const onChange = e => setIsMobileView(e.matches);
+    try {
+      mq.addEventListener ? mq.addEventListener('change', onChange) : mq.addListener(onChange);
+    } catch (e) {
+      mq.addListener(onChange);
+    }
+    return () => {
+      try {
+        mq.removeEventListener ? mq.removeEventListener('change', onChange) : mq.removeListener(onChange);
+      } catch (e) {
+        mq.removeListener(onChange);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileView) return;
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    let ignore = false;
+    const THRESHOLD = 50; // px
+    const MAX_TIME = 1000; // ms
+
+    function onTouchStart(e) {
+      if (!e.touches || e.touches.length === 0) return;
+      const t = e.touches[0];
+      // Only start tracking if the touch began inside the main-app container
+      if (mainAppRef && mainAppRef.current && !mainAppRef.current.contains(t.target)) {
+        ignore = true;
+        return;
+      }
+      ignore = false;
+      startX = t.clientX;
+      startY = t.clientY;
+      startTime = Date.now();
+    }
+
+    function onTouchEnd(e) {
+      if (ignore) return;
+      const t = (e.changedTouches && e.changedTouches[0]) || null;
+      if (!t) return;
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      const dt = Date.now() - startTime;
+      if (dt > MAX_TIME) return;
+      if (Math.abs(dx) < THRESHOLD) return;
+      if (Math.abs(dx) < Math.abs(dy)) return; // primarily vertical gesture
+
+      const idx = PAGES.findIndex(p => p.key === page);
+      if (idx === -1) return;
+      // Move one page left/right but do NOT wrap around — clamp at ends
+      let newIdx = idx + (dx < 0 ? 1 : -1);
+      newIdx = Math.max(0, Math.min(PAGES.length - 1, newIdx));
+      if (newIdx !== idx) setPage(PAGES[newIdx].key);
+    }
+
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    return () => {
+      document.removeEventListener('touchstart', onTouchStart);
+      document.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [isMobileView, page]);
   // Store guesses per page
   const [guessesByPage, setGuessesByPage] = useState({
     classic: [],
@@ -396,6 +466,7 @@ function App() {
       {/* Page Content - separate scrollable container so header stays fixed */}
         <div
           className="main-app"
+          ref={mainAppRef}
           style={{
             maxWidth: 900,
             margin: '0 auto',
@@ -407,6 +478,7 @@ function App() {
             alignItems: 'stretch',
             justifyContent: 'flex-start',
             minHeight: 'calc(100vh - 96px)',
+            touchAction: 'pan-y',
           }}
         >
           <style>{`
