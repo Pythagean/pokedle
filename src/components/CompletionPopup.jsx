@@ -42,9 +42,25 @@ export default function CompletionPopup({ open, onClose, results, guessesByPage 
                     <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(60%)', pointerEvents: 'none', margin: '25px' }} />
 
                 <div style={{ position: 'relative', zIndex: 2 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8, position: 'relative' }}>
                     <h3 style={{ margin: 0, fontSize: 18 }}>Results</h3>
-                    <button onClick={onClose} aria-label="Close" style={{ background: 'transparent', border: 'none', fontSize: 20, cursor: 'pointer' }}>×</button>
+                    <button onClick={onClose} aria-label="Close" title="Close" style={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 0,
+                        transform: 'translateY(-2px)',
+                        width: 40,
+                        height: 36,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 8,
+                        background: 'transparent',
+                        border: 'none',
+                        fontSize: 20,
+                        cursor: 'pointer',
+                        zIndex: 3
+                    }}>×</button>
                 </div>
 
                 <div style={{ marginBottom: 8, color: '#333', fontSize: 13, whiteSpace: 'pre-wrap', fontFamily: 'Inter, Arial, sans-serif', textAlign: 'left' }}>
