@@ -3,6 +3,7 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
+import { POKEDEX_HINT_THRESHOLDS, PokedexHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -62,9 +63,11 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
     } while ((idx === excludeIdx || usedIdxs.includes(idx)) && attempts < 10);
     return idx;
   };
-  // After 4 guesses, show a second clue; after 8, a third
-  const showSecondHint = guesses.length >= 4;
-  const showThirdHint = guesses.length >= 8;
+  // thresholds: [secondEntryThreshold, thirdEntryThreshold, typesThreshold]
+  const [secondT, thirdT, typesT] = POKEDEX_HINT_THRESHOLDS;
+  // After secondT guesses, show a second clue; after thirdT, a third
+  const showSecondHint = guesses.length >= secondT;
+  const showThirdHint = guesses.length >= thirdT;
   const secondFlavorIdx = useMemo(() => getOtherRandomIdx(mainFlavorIdx), [mainFlavorIdx, flavorEntries.length, rng]);
   const thirdFlavorIdx = useMemo(() => getOtherRandomIdx(mainFlavorIdx, [secondFlavorIdx]), [mainFlavorIdx, secondFlavorIdx, flavorEntries.length, rng]);
 
@@ -154,7 +157,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (
           <div style={{ fontWeight: 600, marginBottom: 8 }}>
-            {guesses.length >= 4 ? 'What Pokémon has these Pokédex entries?' : 'What Pokémon has this Pokédex entry?'}
+            {guesses.length >= secondT ? 'What Pokémon has these Pokédex entries?' : 'What Pokémon has this Pokédex entry?'}
           </div>
         )}
         {isCorrect && (
@@ -163,15 +166,15 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
             <ResetCountdown active={isCorrect} resetHourUtc={23} />
           </>
         )}
-        <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length > 0 && guesses.length < 4)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
+        <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length > 0 && guesses.length < secondT)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
         {/* Second hint or placeholder */}
         {showSecondHint && flavorEntries.length > 1 ? (
-          <div style={{ color: '#333', marginBottom: (showThirdHint || (guesses.length >= 4 && guesses.length < 8)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10 }}>
+          <div style={{ color: '#333', marginBottom: (showThirdHint || (guesses.length >= secondT && guesses.length < thirdT)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             {flavorEntries[secondFlavorIdx]}
           </div>
-        ) : (!isCorrect && guesses.length > 0 && guesses.length < 4 && flavorEntries.length > 1 && (
-          <div style={{ color: '#aaa', marginBottom: guesses.length + 1 < 4 ? 12 : 0, borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Second Pokedex entry in {4 - guesses.length} guess{4 - guesses.length === 1 ? '' : 'es'}
+        ) : (!isCorrect && guesses.length > 0 && guesses.length < secondT && flavorEntries.length > 1 && (
+          <div style={{ color: '#aaa', marginBottom: guesses.length + 1 < secondT ? 12 : 0, borderTop: '1px dashed #eee', paddingTop: 10 }}>
+            Second Pokedex entry in {secondT - guesses.length} guess{secondT - guesses.length === 1 ? '' : 'es'}
           </div>
         ))}
         {/* Third hint or placeholder */}
@@ -179,19 +182,19 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
           <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             {flavorEntries[thirdFlavorIdx]}
           </div>
-        ) : (!isCorrect && guesses.length >= 4 && guesses.length < 8 && flavorEntries.length > 2 && (
+        ) : (!isCorrect && guesses.length >= secondT && guesses.length < thirdT && flavorEntries.length > 2 && (
           <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Third Pokedex entry in {8 - guesses.length} guess{8 - guesses.length === 1 ? '' : 'es'}
+            Third Pokedex entry in {thirdT - guesses.length} guess{thirdT - guesses.length === 1 ? '' : 'es'}
           </div>
         ))}
         {/* Types hint or placeholder */}
-        {guesses.length >= 12 ? (
+        {guesses.length >= typesT ? (
           <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             <span style={{ fontWeight: 700 }}>Types:</span> {dailyPokemon.types && dailyPokemon.types.length > 0 ? dailyPokemon.types.join(', ') : 'Unknown'}
           </div>
-        ) : (!isCorrect && guesses.length >= 8 && guesses.length < 12 && (
+        ) : (!isCorrect && guesses.length >= thirdT && guesses.length < typesT && (
           <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Types revealed in {12 - guesses.length} guess{12 - guesses.length === 1 ? '' : 'es'}
+            Types revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}
           </div>
         ))}
       </div>
