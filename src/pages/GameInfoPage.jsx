@@ -3,6 +3,7 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
+import { GAMEINFO_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
@@ -67,8 +68,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
         return clues;
     }, [seed, dailyPokemon, rng]);
 
-    // Determine which clues to show based on guesses
-    const clueCount = guesses.length >= 16 ? 5 : guesses.length >= 12 ? 4 : guesses.length >= 8 ? 3 : guesses.length >= 4 ? 2 : 1;
+    // Determine which clues to show based on guesses (use page-specific config)
+    const clueCount = getClueCount(guesses.length, GAMEINFO_HINT_THRESHOLDS);
     const shownClues = cluesForDay.slice(0, clueCount);
 
     // Guessing state (controlled input for GuessInput)
@@ -242,10 +243,9 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                                 {shownClues.map(type => renderClue(type))}
                                 {/* Hint placeholder text for next clue, specifying clue type */}
                                 {!isCorrect && (() => {
-                                    const thresholds = [4, 8, 12, 16];
-                                    const nextIdx = thresholds.findIndex(t => guesses.length < t);
+                                    const nextIdx = getNextThresholdIndex(guesses.length);
                                     if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
-                                        const nextThreshold = thresholds[nextIdx];
+                                        const nextThreshold = GAMEINFO_HINT_THRESHOLDS[nextIdx];
                                         const cluesLeft = nextThreshold - guesses.length;
                                         const nextClueType = cluesForDay[shownClues.length];
                                         // Human-friendly clue type names
