@@ -124,13 +124,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                         title={p.label}
                                         aria-pressed={isSelected}
                                         style={{
-                                            padding: '10px 12px',
+                                            padding: '7px 9px',
                                             borderRadius: 12,
                                             background: isSelected ? '#1976d2' : '#f4f4f4ff',
                                             color: isSelected ? '#fff' : '#1976d2',
                                             border: isSelected ? 'none' : '2px solid #1976d2',
                                             fontWeight: 700,
-                                            fontSize: 18,
+                                            fontSize: 15,
                                             cursor: 'pointer',
                                             boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                             transition: 'background 0.2s, color 0.2s',
@@ -143,8 +143,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                             justifyContent: 'center',
                                         }}
                                     >
-                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
-                                        <span className="nav-label">{p.label}</span>
+                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain' }} />
+                                        <span className="nav-label" style={{fontSize: 15}}>{p.label}</span>
                                     </button>
                                 );
                             })}
@@ -155,13 +155,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 title="Results"
                                 className={highlightCompletion ? 'completion-highlight' : undefined}
                                 style={{
-                                    padding: '10px 12px',
+                                    padding: '7px 9px',
                                     borderRadius: 12,
                                     background: completionActive ? '#1976d2' : '#f4f4f4ff',
                                     color: completionActive ? '#fff' : '#1976d2',
                                     border: completionActive ? 'none' : '2px solid #1976d2',
                                     fontWeight: 700,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     cursor: 'pointer',
                                     boxShadow: completionActive ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
@@ -174,8 +174,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     justifyContent: 'center',
                                 }}
                             >
-                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 30, height: 30, marginRight: 8, objectFit: 'contain' }} />
-                                <span className="nav-label">Results</span>
+                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain' }} />
+                                <span className="nav-label" style={{fontSize: 15}}>Results</span>
                                 {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
                             </button>
                         </nav>
