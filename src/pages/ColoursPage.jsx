@@ -3,6 +3,7 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import InfoButton from '../components/InfoButton';
+import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -133,11 +134,14 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
   let typeHintPlaceholder = null;
   let spriteColourHint = null;
   let spriteColourHintPlaceholder = null;
-  if (guesses.length >= 12) {
+  // thresholds: [spriteColoursThreshold, typesThreshold, generationThreshold]
+  const [spriteT, typesT, genT] = COLOURS_HINT_THRESHOLDS;
+
+  if (guesses.length >= genT) {
     // Show generation
       generationHint = <span><span style={{ fontWeight: 700 }}>Generation:</span> <span>{generation}</span></span>;
   }
-  if (guesses.length >= 8) {
+  if (guesses.length >= typesT) {
     // Show all types
     if (types.length === 1) {
       typeHint = <span><span style={{ fontWeight: 700 }}>Type:</span> <span>{types[0]}</span></span>;
@@ -145,8 +149,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
       typeHint = <span><span style={{ fontWeight: 700 }}>Types:</span> <span>{types[0]}, {types[1]}</span></span>;
     }
   }
-  if (guesses.length >= 4) {
-    // Always show sprite colour blocks after 4 guesses
+  if (guesses.length >= spriteT) {
+    // Always show sprite colour blocks after the sprite threshold
     spriteColourHint = (
       <div style={{ margin: '16px auto 0', maxWidth: 350, textAlign: 'center' }}>
         <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 8 }}>In-game sprite colours:</div>
@@ -167,16 +171,16 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
         />
       </div>
     );
-    if (guesses.length < 12) {
-      generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {12 - guesses.length} guess{12 - guesses.length === 1 ? '' : 'es'}!</span>;
+    if (guesses.length < genT && guesses.length >= typesT) {
+      generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {genT - guesses.length} guess{genT - guesses.length === 1 ? '' : 'es'}!</span>;
     }
-    if (guesses.length < 8 && types.length > 0 && guesses.length >= 4) {
-      typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {8 - guesses.length} guess{8 - guesses.length === 1 ? '' : 'es'}!</span>;
+    if (guesses.length < typesT && types.length > 0 && guesses.length >= spriteT) {
+      typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!</span>;
     }
   }
-  if (guesses.length > 0 && guesses.length < 4) {
+  if (guesses.length > 0 && guesses.length < spriteT) {
     // Placeholder for sprite colours
-    spriteColourHintPlaceholder = <span style={{ color: '#888' }}>The in-game sprite colours will be revealed in {4 - guesses.length} guess{4 - guesses.length === 1 ? '' : 'es'}!</span>;
+    spriteColourHintPlaceholder = <span style={{ color: '#888' }}>The in-game sprite colours will be revealed in {spriteT - guesses.length} guess{spriteT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
 
   // If the puzzle has been solved, remove any placeholders for hints that haven't been shown.

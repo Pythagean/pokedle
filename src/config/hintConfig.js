@@ -67,7 +67,7 @@ export function makeHintConfig(thresholds = HINT_THRESHOLDS) {
 
 // Per-page threshold constants and convenience configs
 // Adjust these arrays to change unlocking behavior per page/mode.
-export const GAMEINFO_HINT_THRESHOLDS = [4, 8, 12, 16];
+export const GAMEINFO_HINT_THRESHOLDS = [3, 6, 9, 12];
 export const CLASSIC_HINT_THRESHOLDS = [3, 6, 9, 12];
 export const POKEDEX_HINT_THRESHOLDS = [2, 4, 6];
 
@@ -75,3 +75,7 @@ export const POKEDEX_HINT_THRESHOLDS = [2, 4, 6];
 export const GameInfoHints = makeHintConfig(GAMEINFO_HINT_THRESHOLDS);
 export const ClassicHints = makeHintConfig(CLASSIC_HINT_THRESHOLDS);
 export const PokedexHints = makeHintConfig(POKEDEX_HINT_THRESHOLDS);
+
+// Colours page thresholds (sprite colours, types, generation)
+export const COLOURS_HINT_THRESHOLDS = [3, 6, 9];
+export const ColourHints = makeHintConfig(COLOURS_HINT_THRESHOLDS);
