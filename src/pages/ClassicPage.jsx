@@ -499,24 +499,14 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                 try {
                   if (dailyPokemon && typeof poke.height === 'number' && typeof dailyPokemon.height === 'number') {
                     const hDiff = Math.abs((poke.height || 0) - (dailyPokemon.height || 0));
-                    console.log('hDiff', hDiff);
                     const norm = Math.max(1, dailyPokemon.height || 1);
-                    console.log('norm', norm);
-                    console.log('hDiff / norm', hDiff / norm);
-                    console.log('1 + (hDiff / norm) * 0.2', (1 + (hDiff / norm)) * 0.2);
-                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.45, 1.05);
-                    console.log('heightScale', heightScale);
-                    console.log("");
+                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.55, 1.05);
                   }
                   if (dailyPokemon && typeof poke.weight === 'number' && typeof dailyPokemon.weight === 'number') {
                     const wDiff = Math.abs((poke.weight || 0) - (dailyPokemon.weight || 0));
-                    console.log('wDiff', wDiff);
                     const normW = Math.max(1, dailyPokemon.weight || 1);
-                    console.log('normW', normW);
-                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.45, 1.05);
-                    console.log('weightScale', weightScale);
+                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.55, 1.05);
                   }
-                  console.log("---");
                 } catch (e) {
                   // fallback to defaults
                   heightScale = 1;
@@ -666,7 +656,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           padding-bottom: 100%;
           position: relative;
           border: 2px solid #b2dfdb;
-          border-radius: 8px;
+          border-radius: 12px;
           background: #c8e6c9;
           display: flex;
           align-items: center;
@@ -766,11 +756,11 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
              scrolling via the wrapper '.classic-feedback-scroll'. */
           .feedback-grid {
             grid-template-columns: repeat(7, minmax(43px, 1fr)) !important;
-            gap: 4px !important;
+            gap: 3px !important;
           }
           .feedback-box {
             font-size: 9px !important;
-            border-radius: 8px !important;
+            border-radius: 12px !important;
             /* aspect-ratio keeps boxes square */
           }
             .feedback-box-large-text {

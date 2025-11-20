@@ -57,3 +57,9 @@ body::before {
   opacity: 0.05;
   will-change: opacity;
 }
+
+@media (max-width: 520px) {
+  #root {
+    padding: 1.0rem;
+  }
+}
