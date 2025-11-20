@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 're
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 
 function usePokemonData() {
@@ -24,7 +25,6 @@ function mulberry32(a) {
 }
 
 function getSeedFromUTCDate(date) {
-  const RESET_HOUR_UTC = 23;
   let d = date;
   if (date.getUTCHours() >= RESET_HOUR_UTC) {
     d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
@@ -434,7 +434,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         {congratsVisible ? (
           <>
             <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
-            <ResetCountdown active={true} resetHourUtc={23} />
+            <ResetCountdown active={true} resetHourUtc={RESET_HOUR_UTC} />
           </>
         ) : (
           <form

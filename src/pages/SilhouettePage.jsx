@@ -3,12 +3,12 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import InfoButton from '../components/InfoButton';
 import ResetCountdown from '../components/ResetCountdown';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
-  const RESET_HOUR_UTC = 23; // 11 PM UTC
   let d = date;
   if (date.getUTCHours() >= RESET_HOUR_UTC) {
     d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
@@ -348,7 +348,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
         {isCorrect && (
             <>
             <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />
-            <ResetCountdown active={isCorrect} resetHourUtc={23} />
+            <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>

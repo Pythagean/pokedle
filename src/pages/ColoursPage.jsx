@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
@@ -9,7 +10,6 @@ import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
-  const RESET_HOUR_UTC = 23;
   let d = date;
   if (date.getUTCHours() >= RESET_HOUR_UTC) {
     d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
@@ -225,8 +225,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
         )}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />
-            <ResetCountdown active={isCorrect} resetHourUtc={23} />
+          <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />
+          <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
         <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>

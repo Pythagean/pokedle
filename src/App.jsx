@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { RESET_HOUR_UTC } from './config/resetConfig';
 // import pokemonData from '../data/pokemon_data.json';
 // import titleImg from '../data/title.png';
 
@@ -87,8 +88,7 @@ function mulberry32(a) {
 }
 
 function getSeedFromDate(date) {
-  // YYYYMMDD as integer, using a UTC reset hour (23 = 11PM UTC)
-  const RESET_HOUR_UTC = 23;
+  // YYYYMMDD as integer, using the app-wide UTC reset hour
   // If current UTC hour is on/after the reset hour, use the next UTC day
   let effective = date;
   if (date.getUTCHours() >= RESET_HOUR_UTC) {
@@ -253,7 +253,6 @@ function App() {
         // Try card types in the same way CardPage does (weekday vs weekend)
         // We can't know user debugDay, so use today's UTC day
         const now = new Date();
-        const RESET_HOUR_UTC = 23;
         let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
         if (now.getUTCHours() >= RESET_HOUR_UTC) {
           dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));

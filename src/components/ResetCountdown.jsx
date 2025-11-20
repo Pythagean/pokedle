@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 
-export default function ResetCountdown({ active = false, resetHourUtc = 23 }) {
+export default function ResetCountdown({ active = false, resetHourUtc = RESET_HOUR_UTC }) {
   const [msUntilReset, setMsUntilReset] = useState(null);
   const [nextResetLocalTime, setNextResetLocalTime] = useState('');
   const [nextResetLocalDate, setNextResetLocalDate] = useState('');

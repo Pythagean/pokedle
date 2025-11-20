@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import { GAMEINFO_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
@@ -18,7 +19,6 @@ function mulberry32(a) {
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
-    const RESET_HOUR_UTC = 23;
     let d = date;
     if (date.getUTCHours() >= RESET_HOUR_UTC) {
         d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
@@ -237,7 +237,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                                 {isCorrect && (
                                     <>
                                         <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />
-                                        <ResetCountdown active={isCorrect} resetHourUtc={23} />
+                                        <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                                     </>
                                 )}
                                 {shownClues.map(type => renderClue(type))}
