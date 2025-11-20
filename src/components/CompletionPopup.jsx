@@ -17,8 +17,9 @@ export default function CompletionPopup({ open, onClose, results, guessesByPage 
     results.forEach(r => {
         const guesses = (guessesByPage && guessesByPage[r.key]) || [];
         const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
-        const displayNames = names.length > 0 ? ` (${names.join(', ')})` : '';
-        detailedLines.push(`${r.label}: ${guesses.length}${displayNames}`);
+        const displayNames = (r.solved && names.length > 0) ? ` (${names.join(', ')})` : '';
+        const countDisplay = r.solved ? guesses.length : '-';
+        detailedLines.push(`${r.label}: ${countDisplay}${displayNames}`);
     });
     detailedLines.push(`Total: ${total}`);
     const detailedText = detailedLines.join('\n');
@@ -60,12 +61,12 @@ export default function CompletionPopup({ open, onClose, results, guessesByPage 
                                 const guesses = (guessesByPage && guessesByPage[r.key]) || [];
                                 // Reverse guesses order for display
                                 const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
-                                const displayNames = names.length > 0 ? ` (${names.join(', ')})` : '';
                                 const count = guesses.length;
+                                const countDisplay = r.solved ? count : '-';
                                 return (
                                     <div key={i} style={{ padding: '4px 0' }}>
-                                        <span style={{ fontWeight: 400 }}>{r.label}:</span> <strong>{count}</strong>
-                                        {names.length > 0 ? (
+                                        <span style={{ fontWeight: 400 }}>{r.label}:</span> <strong>{countDisplay}</strong>
+                                        {r.solved && names.length > 0 ? (
                                             <span>{' ('}
                                                 {names.map((n, idx) => {
                                                     const sep = idx === 0 ? '' : ', ';
