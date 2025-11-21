@@ -49,17 +49,17 @@ export default function CompletionPopup({ open, onClose, results, guessesByPage 
                         right: 8,
                         top: 0,
                         transform: 'translateY(-2px)',
-                        width: 40,
-                        height: 36,
+                        width: 44,
+                        height: 40,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        borderRadius: 8,
-                        background: 'transparent',
-                        border: 'none',
+                        borderRadius: 10,
+                        background: 'rgba(255,255,255,0.92)',
+                        color: '#111',
                         fontSize: 20,
                         cursor: 'pointer',
-                        zIndex: 3
+                        zIndex: 3,
                     }}>×</button>
                 </div>
 
