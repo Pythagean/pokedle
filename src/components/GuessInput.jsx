@@ -207,14 +207,14 @@ export default function GuessInput({
             <li
               key={opt.name}
               style={{
-                padding: '8px 12px',
+                padding: '12px 16px',
                 cursor: 'pointer',
                 background: i === highlightedIdx ? '#e3f2fd' : undefined,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 10,
-                fontSize: 15,
-              }}
+                gap: 12,
+                fontSize: 17,
+                    }}
               onMouseDown={() => {
                 handleGuessSubmit(null, opt.name);
                 setDropdownOpen(false);
@@ -224,12 +224,12 @@ export default function GuessInput({
               }}
               onMouseEnter={() => setHighlightedIdx(i)}
             >
-              <div style={{ width: 32, height: 32, marginRight: 6, position: 'relative', flex: '0 0 32px' }}>
+              <div style={{ width: 44, height: 44, marginRight: 8, position: 'relative', flex: '0 0 44px' }}>
                 {/* Placeholder box shown while sprite loads (or on error) */}
                 <div style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 4,
+                  width: 44,
+                  height: 44,
+                  borderRadius: 6,
                   background: '#f2f2f2',
                   display: 'flex',
                   alignItems: 'center',
@@ -241,8 +241,8 @@ export default function GuessInput({
                   src={`data/pokeball.ico`}
                   alt="pokeball"
                   style={{
-                    width: 20,
-                    height: 20,
+                    width: 28,
+                    height: 28,
                     objectFit: 'contain',
                     position: 'absolute',
                     left: '50%',
@@ -262,8 +262,8 @@ export default function GuessInput({
                   onLoad={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: true }))}
                   onError={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: 'error' }))}
                   style={{
-                    width: 32,
-                    height: 32,
+                    width: 40,
+                    height: 40,
                     objectFit: 'contain',
                     position: 'absolute',
                     left: '50%',
