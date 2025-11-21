@@ -116,7 +116,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto', minWidth: 0 }}>
                                 <nav style={{ display: 'flex', gap: 6, flexWrap: 'nowrap', width: '100%', paddingRight: 8, overflowX: 'auto', whiteSpace: 'nowrap' }}>
                                 {pages.map(p => {
-                                const isSelected = !completionActive && page === p.key;
+                                const isSelected = page === p.key;
                                 const isCompleted = !!completedPages[p.key];
                                 const isDisabled = !isSelected && isCompleted;
                                 const baseBtnStyle = {
@@ -130,7 +130,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     cursor: isDisabled ? 'pointer' : 'pointer',
                                     boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
-                                    marginLeft: 0,
+                                    marginLeft: p.key === 'results' ? 8 : 0,
                                     marginRight: 0,
                                     minWidth: compactNav ? 44 : 90,
                                     whiteSpace: 'nowrap',
@@ -155,7 +155,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     </button>
                                 );
                             })}
-                            <button
+                            {/* <button
                                 key="completion-summary"
                                 onClick={() => onCompletionClick && onCompletionClick()}
                                 aria-label="Results"
@@ -185,7 +185,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: 0, objectFit: 'contain' }} />
                                 {!compactNav ? <span className="nav-label" style={{fontSize: 15}}></span> : null}
                                 {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
-                            </button>
+                            </button> */}
                         </nav>
                     </div>
                 </div>

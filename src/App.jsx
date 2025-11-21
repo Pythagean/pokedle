@@ -92,7 +92,7 @@ import ColoursPage from './pages/ColoursPage';
 import CardPage from './pages/CardPage';
 import GameInfoPage from './pages/GameInfoPage';
 import Header from './components/Header';
-import CompletionPopup from './components/CompletionPopup';
+import ResultsPage from './pages/ResultsPage';
 
 
 // Simple deterministic PRNG using a seed
@@ -122,6 +122,7 @@ const PAGES = [
   { key: 'zoom', label: 'Zoom' },
   { key: 'colours', label: 'Colours' },
   { key: 'gameinfo', label: 'Game Data' },
+  { key: 'results', label: 'Results' },
 ];
 
 function App() {
@@ -374,7 +375,7 @@ function App() {
       return null;
     }
 
-    return PAGES.map(p => {
+    return PAGES.filter(p => p.key !== 'results').map(p => {
       const meta = SEED_OFFSETS[p.key] || { offset: p.key.length * 1000, letter: p.key.charAt(0) };
       let seedFor;
         if (p.key === 'card') {
@@ -481,7 +482,6 @@ function App() {
   }, [perPageResults]);
 
   const allCompleted = perPageResults.length > 0 && perPageResults.every(r => r.solved);
-  const [completionOpen, setCompletionOpen] = useState(false);
 
   // Transient highlight flag: becomes true briefly when allCompleted transitions false->true
   const [completionJustCompleted, setCompletionJustCompleted] = useState(false);
@@ -545,6 +545,7 @@ function App() {
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />;
     if (key === 'gameinfo') return <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />;
+    if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} />;
     return null;
   }
 
@@ -576,7 +577,7 @@ function App() {
       {
         (() => {
           const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} completedPages={completedPages} compactNav={compactNav} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}
@@ -619,7 +620,7 @@ function App() {
             </div>
           )}
       </div>
-      <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} guessesByPage={guessesByPage} />
+      {/* Results page is reachable via the main navigation (PAGES). */}
     </>
   );
 }
