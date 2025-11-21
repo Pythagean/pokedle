@@ -130,6 +130,7 @@ function App() {
     };
   }, []);
   const [page, setPage] = useState('classic');
+  const [compactNav, setCompactNav] = useState(() => (typeof window !== 'undefined') ? window.innerWidth <= 1080 : false);
   // Mobile swipe navigation: track small viewport and attach touch handlers
   const mainAppRef = useRef(null);
   const [isMobileView, setIsMobileView] = useState(() => (typeof window !== 'undefined' && window.matchMedia) ? window.matchMedia('(max-width:700px)').matches : false);
@@ -204,6 +205,19 @@ function App() {
       document.removeEventListener('touchend', onTouchEnd);
     };
   }, [isMobileView, page]);
+
+  // Compact header mode: compute at app level and pass to Header
+  useEffect(() => {
+    function updateCompact() {
+      try {
+        const isNarrow = (typeof window !== 'undefined') && window.innerWidth <= 1080;
+        setCompactNav(isNarrow);
+      } catch (e) {}
+    }
+    updateCompact();
+    window.addEventListener('resize', updateCompact);
+    return () => window.removeEventListener('resize', updateCompact);
+  }, []);
   // Store guesses per page
   const [guessesByPage, setGuessesByPage] = useState({
     classic: [],
@@ -498,7 +512,7 @@ function App() {
       {
         (() => {
           const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} completedPages={completedPages} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} completedPages={completedPages} compactNav={compactNav} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}

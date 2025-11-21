@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {} }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false }) {
+
     return ReactDOM.createPortal(
         <>
                         <style>{`
@@ -112,42 +113,45 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             }}
                         />
                     </div>
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'hidden'}}>
-                        <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', paddingRight: 8 }}>
-                            {pages.map(p => {
+                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto', minWidth: 0 }}>
+                                <nav style={{ display: 'flex', gap: 6, flexWrap: 'nowrap', width: '100%', paddingRight: 8, overflowX: 'auto', whiteSpace: 'nowrap' }}>
+                                {pages.map(p => {
                                 const isSelected = !completionActive && page === p.key;
                                 const isCompleted = !!completedPages[p.key];
                                 const isDisabled = !isSelected && isCompleted;
+                                const baseBtnStyle = {
+                                    padding: compactNav ? '6px' : '7px 9px',
+                                    borderRadius: 12,
+                                    background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
+                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
+                                    border: isSelected ? 'none' : (isDisabled ? '1px solid #ddd' : '2px solid #1976d2'),
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                    cursor: isDisabled ? 'default' : 'pointer',
+                                    boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
+                                    transition: 'background 0.2s, color 0.2s',
+                                    marginLeft: 0,
+                                    marginRight: 0,
+                                    minWidth: compactNav ? 44 : 90,
+                                    whiteSpace: 'nowrap',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    opacity: isDisabled ? 0.65 : 1,
+                                    flex: '0 0 auto',
+                                };
+                                const imgStyle = { display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: compactNav ? 0 : 8, objectFit: 'contain', opacity: isDisabled ? 0.6 : 1 };
                                 return (
                                     <button
                                         key={p.key}
                                         onClick={() => setPage(p.key)}
                                         aria-label={p.label}
-                                        title={p.label}
+                                        title={compactNav ? undefined : p.label}
                                         aria-pressed={isSelected}
-                                        style={{
-                                            padding: '7px 9px',
-                                            borderRadius: 12,
-                                            background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
-                                            color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
-                                            border: isSelected ? 'none' : (isDisabled ? '1px solid #ddd' : '2px solid #1976d2'),
-                                            fontWeight: 700,
-                                            fontSize: 15,
-                                            cursor: isDisabled ? 'default' : 'pointer',
-                                            boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
-                                            transition: 'background 0.2s, color 0.2s',
-                                            marginLeft: 0,
-                                            marginRight: 0,
-                                            minWidth: 90,
-                                            whiteSpace: 'nowrap',
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            opacity: isDisabled ? 0.65 : 1,
-                                        }}
+                                        style={baseBtnStyle}
                                     >
-                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain', opacity: isDisabled ? 0.6 : 1 }} />
-                                        <span className="nav-label" style={{fontSize: 15}}>{p.label}</span>
+                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={imgStyle} />
+                                        {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>{p.label}</span> : null}
                                     </button>
                                 );
                             })}
@@ -155,10 +159,10 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 key="completion-summary"
                                 onClick={() => onCompletionClick && onCompletionClick()}
                                 aria-label="Results"
-                                title="Results"
+                                title={compactNav ? undefined : 'Results'}
                                 className={highlightCompletion ? 'completion-highlight' : undefined}
                                 style={{
-                                    padding: '7px 9px',
+                                    padding: compactNav ? '6px' : '7px 9px',
                                     borderRadius: 12,
                                     background: completionActive ? '#1976d2' : '#f4f4f4ff',
                                     color: completionActive ? '#fff' : '#1976d2',
@@ -170,15 +174,16 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     transition: 'background 0.2s, color 0.2s',
                                     marginLeft: 0,
                                     marginRight: 0,
-                                    minWidth: 90,
+                                    minWidth: compactNav ? 44 : 90,
                                     whiteSpace: 'nowrap',
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    flex: '0 0 auto',
                                 }}
                             >
-                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain' }} />
-                                <span className="nav-label" style={{fontSize: 15}}>Results</span>
+                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: compactNav ? 0 : 8, objectFit: 'contain' }} />
+                                {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>Results</span> : null}
                                 {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
                             </button>
                         </nav>
