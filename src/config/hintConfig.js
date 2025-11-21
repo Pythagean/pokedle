@@ -72,7 +72,7 @@ export const POKEDEX_HINT_THRESHOLDS = [4, 8, 12];
 export const PokedexHints = makeHintConfig(POKEDEX_HINT_THRESHOLDS);
 
 // Colours page thresholds (sprite colours, types, generation)
-export const COLOURS_HINT_THRESHOLDS = [3, 6, 9];
+export const COLOURS_HINT_THRESHOLDS = [4, 8, 12];
 export const ColourHints = makeHintConfig(COLOURS_HINT_THRESHOLDS);
 
 // Card page thresholds:
