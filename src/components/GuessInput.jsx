@@ -111,6 +111,37 @@ export default function GuessInput({
       try { if (ro) ro.disconnect(); } catch (e) {}
     };
   }, [inputRef, dropdownOpen, sortedOptions.length]);
+
+  // On mobile, when the dropdown opens, ensure the dropdown (preferred) or input is visible above the keyboard.
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    if (typeof window === 'undefined') return;
+    // Only run this logic on narrow viewports (mobile)
+    if (window.innerWidth > 700) return;
+
+    // Delay so the OS keyboard can open and the dropdown can render
+    const handle = setTimeout(() => {
+      try {
+        const dropdownEl = dropdownRef && dropdownRef.current;
+        const targetEl = dropdownEl || (inputRef && inputRef.current);
+        if (!targetEl) return;
+        const rect = targetEl.getBoundingClientRect();
+        const cushion = 160; // pixels to keep above keyboard
+        // If bottom is obscured by keyboard area, scroll down so dropdown bottom sits cushion px above viewport bottom
+        if (rect.bottom > (window.innerHeight - cushion)) {
+          const scrollBy = rect.bottom - (window.innerHeight - cushion);
+          window.scrollBy({ top: scrollBy + 12, left: 0, behavior: 'smooth' });
+        } else if (rect.top < 0) {
+          // If element is above viewport, bring it into view
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (e) {
+        // ignore measurement errors
+      }
+    }, 350);
+
+    return () => clearTimeout(handle);
+  }, [dropdownOpen, inputRef, dropdownRef]);
   return (
     <div ref={wrapperRef} style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
       <input

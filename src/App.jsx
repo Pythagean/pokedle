@@ -190,7 +190,11 @@ function App() {
       // Move one page left/right but do NOT wrap around — clamp at ends
       let newIdx = idx + (dx < 0 ? 1 : -1);
       newIdx = Math.max(0, Math.min(PAGES.length - 1, newIdx));
-      if (newIdx !== idx) setPage(PAGES[newIdx].key);
+      if (newIdx !== idx) {
+        // start animated transition between pages on mobile
+        const direction = dx < 0 ? 'left' : 'right';
+        startPageTransition(PAGES[newIdx].key, direction);
+      }
     }
 
     document.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -218,6 +222,19 @@ function App() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
+  // Page transition state for animated mobile swipes
+  const [pageTransition, setPageTransition] = useState(null);
+
+  function startPageTransition(toKey, direction) {
+    if (!toKey || toKey === page) return;
+    if (pageTransition) return; // already animating
+    // direction: 'left' means go to next (from left->right), 'right' means previous
+    setPageTransition({ from: page, to: toKey, direction, animate: false });
+    // Trigger animation on next frame
+    requestAnimationFrame(() => {
+      setPageTransition(prev => prev ? { ...prev, animate: true } : prev);
+    });
+  }
 
   // Get today's date as seed, use page key for deterministic daily selection per page
   const today = new Date();
@@ -449,6 +466,23 @@ function App() {
     };
   }
 
+  // Render a page component by key (keeps JSX mapping in one place)
+  function renderPageByKey(key) {
+    if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />;
+    if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={dailyByPage.pokedex} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />;
+    if (key === 'stats') return <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />;
+    if (key === 'ability') return <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />;
+    if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />;
+    if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />;
+    if (key === 'silhouette') return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />;
+    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />;
+    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />;
+    if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />;
+    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />;
+    if (key === 'gameinfo') return <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />;
+    return null;
+  }
+
   return (
     <>
       {/* Fixed header at top-level so it never scrolls with content */}
@@ -488,18 +522,39 @@ function App() {
             }
           `}</style>
           {/* Page Content */}
-          {page === 'classic' && <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />}
-        {page === 'pokedex' && <PokedexPage pokemonData={pokemonData} daily={dailyByPage.pokedex} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />}
-  {page === 'stats' && <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />}
-  {page === 'ability' && <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />}
-  {page === 'moves' && <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />}
-  {page === 'category' && <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />}
-  {page === 'silhouette' && <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />}
-  {page === 'zoom' && <ZoomPage pokemonData={pokemonData} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />}
-  {page === 'colours' && <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />}
-  {page === 'locations' && <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />}
-  {page === 'card' && <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />}
-  {page === 'gameinfo' && <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />}
+          {!pageTransition && renderPageByKey(page)}
+          {pageTransition && (
+            <div style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '200%',
+                  transition: 'transform 360ms cubic-bezier(.2,.8,.2,1)',
+                  transform: pageTransition.animate
+                    ? (pageTransition.direction === 'left' ? 'translateX(-50%)' : 'translateX(0%)')
+                    : (pageTransition.direction === 'left' ? 'translateX(0%)' : 'translateX(-50%)')
+                }}
+                onTransitionEnd={() => {
+                  // commit the page change and clear transition state
+                  setPage(pageTransition.to);
+                  setPageTransition(null);
+                }}
+              >
+                {/* Order the slides so animation direction matches visual motion */}
+                {pageTransition.direction === 'left' ? (
+                  <>
+                    <div style={{ width: '50%' }}>{renderPageByKey(pageTransition.from)}</div>
+                    <div style={{ width: '50%' }}>{renderPageByKey(pageTransition.to)}</div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ width: '50%' }}>{renderPageByKey(pageTransition.to)}</div>
+                    <div style={{ width: '50%' }}>{renderPageByKey(pageTransition.from)}</div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
       </div>
       <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} guessesByPage={guessesByPage} />
       <style>{`
