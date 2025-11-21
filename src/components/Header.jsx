@@ -142,17 +142,38 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 };
                                 const imgStyle = { display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: compactNav ? 0 : 8, objectFit: 'contain', opacity: isDisabled ? 0.6 : 1 };
                                 return (
-                                    <button
-                                        key={p.key}
-                                        onClick={() => setPage(p.key)}
-                                        aria-label={p.label}
-                                        title={compactNav ? undefined : p.label}
-                                        aria-pressed={isSelected}
-                                        style={baseBtnStyle}
-                                    >
-                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={imgStyle} />
-                                        {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>{p.label}</span> : null}
-                                    </button>
+                                    <div key={p.key} style={{ position: 'relative', display: 'inline-block', marginLeft: p.key === 'results' ? 8 : 0 }}>
+                                        <button
+                                            onClick={() => setPage(p.key)}
+                                            aria-label={p.label}
+                                            title={compactNav ? undefined : p.label}
+                                            aria-pressed={isSelected}
+                                            style={baseBtnStyle}
+                                        >
+                                            <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={imgStyle} />
+                                            {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>{p.label}</span> : null}
+                                        </button>
+                                        {isCompleted ? (
+                                            <span aria-hidden="true" style={{
+                                                position: 'absolute',
+                                                top: 6,
+                                                right: 6,
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                width: 21,
+                                                height: 21,
+                                                borderRadius: 9,
+                                                background: 'rgba(255,255,255,0.85)',
+                                                color: '#2e7d32',
+                                                fontSize: 12,
+                                                fontWeight: 800,
+                                                border: '1px solid rgba(46,125,50,0.15)',
+                                                boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                                                pointerEvents: 'none',
+                                            }}>✓</span>
+                                        ) : null}
+                                    </div>
                                 );
                             })}
                             {/* <button
