@@ -133,16 +133,26 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
             const statLabels = {
                 hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
             };
+            // Determine a reasonable max for normalization (use 255 as an absolute cap)
+            const values = statOrder.map(s => Number(stats[s] || 0));
+            const maxVal = Math.max(255, ...values);
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, marginBottom: 4 }}>Base Stats:</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 8, color: '#333', fontSize: 15 }}>
-                        {statOrder.map(s => (
-                            <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <span style={{ fontWeight: 600 }}>{statLabels[s]}</span>
-                                <span>{stats[s]}</span>
-                            </div>
-                        ))}
+                    <div style={{ fontWeight: 600, marginBottom: 8 }}>Base Stats:</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {statOrder.map(s => {
+                            const v = Number(stats[s] || 0);
+                            const pct = Math.round((v / maxVal) * 100);
+                            return (
+                                <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
+                                    <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
+                                    <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
+                                        <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
+                                    </div>
+                                    <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             );
