@@ -51,6 +51,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const [silhouetteLoaded, setSilhouetteLoaded] = useState(false);
   const [realLoaded, setRealLoaded] = useState(false);
   const [debugOverlay, setDebugOverlay] = useState(false);
+  const containerRef = useRef(null);
+  const [imgNatural, setImgNatural] = useState({ w: null, h: null });
+  const [containerSize, setContainerSize] = useState({ w: null, h: null });
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
     const map = new Map();
@@ -143,13 +146,15 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Countdown moved to `ResetCountdown` component
 
-  // Zoom logic: start at 2.8, go to 0.9 over 10 steps (guesses), quadratic ease-out
+  // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
+  // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
   const maxZoom = 2.8;
   const minZoom = 1.0;
-  const maxSteps = 10;
-  // Quadratic ease-in: t = guesses.length / (maxSteps - 1), zoom = maxZoom - (maxZoom - minZoom) * (1 - (1-t)^2)
-  let t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  let zoom = maxZoom - (maxZoom - minZoom) * (1 - Math.pow(1 - t, 2));
+  const maxSteps = 15;
+  const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
+  const easePower = 1.2;
+  const eased = Math.pow(t, easePower);
+  let zoom = maxZoom - (maxZoom - minZoom) * eased;
 
 
   // Pan logic: at max zoom, center on edge; at min zoom, center (0.5,0.5)
@@ -274,6 +279,21 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // account for `shouldMirror`. Keeping `targetX` as logical image coords
   // avoids double-flipping in the overlay.
 
+  // Measure container size so we can map logical image coords -> rendered pixels
+  useEffect(() => {
+    function measure() {
+      try {
+        if (containerRef && containerRef.current) {
+          const r = containerRef.current.getBoundingClientRect();
+          setContainerSize({ w: r.width, h: r.height });
+        }
+      } catch (e) {}
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [silhouetteLoaded, imgNatural]);
+
   // centerX/centerY interpolate between the 'zoomed-in' target (targetX/targetY)
   // and the neutral center (0.5, 0.5) as zoom decreases
   const centerX = targetX * (1 - interp) + 0.5 * interp;
@@ -287,15 +307,46 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     zoom = 1.0;
 
   }
-  // Combine mirroring and zoom — use transform-origin only (no translate)
-  // Using translate after scale causes double-scaling and mispositioning; relying on
-  // transform-origin to focus the zoom is simpler and more reliable.
+  // Combine mirroring and zoom — use scale with transformOrigin anchored at the
+  // interpolated focal center so the silhouette zooms out from the chosen point.
   let scaleX = shouldMirror ? -1 : 1;
-  imgStyle.transition = 'transform 0.12s cubic-bezier(.4,2,.6,1)';
-  // transform-origin should track the interpolated center. If mirrored, flip the X origin.
-  const originX = shouldMirror ? (1 - centerX) : centerX;
-  const originY = typeof centerY === 'number' ? centerY : 0.5; // fallback safety
-  imgStyle.transformOrigin = `${originX * 100}% ${originY * 100}%`;
+  imgStyle.transition = 'transform 200ms cubic-bezier(.2,.8,.2,1)';
+  // Compute a transformOrigin that maps the logical target (targetX/targetY)
+  // into the rendered image coordinates inside the container. This keeps the
+  // chosen focus point visually stationary during scaling even with letterboxing.
+  let originPercentX = null;
+  let originPercentY = null;
+  if (imgNatural.w && imgNatural.h && containerSize.w && containerSize.h) {
+    const imgAspect = imgNatural.w / imgNatural.h;
+    const containerAspect = containerSize.w / containerSize.h;
+    let renderW, renderH;
+    if (containerAspect > imgAspect) {
+      // container is wider: image height fills container
+      renderH = containerSize.h;
+      renderW = imgAspect * renderH;
+    } else {
+      // container is taller: image width fills container
+      renderW = containerSize.w;
+      renderH = renderW / imgAspect;
+    }
+    const offsetLeft = Math.max(0, (containerSize.w - renderW) / 2);
+    const offsetTop = Math.max(0, (containerSize.h - renderH) / 2);
+    const focalXLogical = (typeof targetX === 'number') ? targetX : 0.5;
+    const focalYLogical = (typeof targetY === 'number') ? targetY : 0.5;
+    const focalX = shouldMirror ? (1 - focalXLogical) : focalXLogical;
+    const focalY = focalYLogical;
+    const focalPixelX = offsetLeft + focalX * renderW;
+    const focalPixelY = offsetTop + focalY * renderH;
+    originPercentX = Math.max(0, Math.min(1, focalPixelX / containerSize.w));
+    originPercentY = Math.max(0, Math.min(1, focalPixelY / containerSize.h));
+  }
+  if (originPercentX === null || originPercentY === null) {
+    const fallbackX = shouldMirror ? (1 - centerX) : centerX;
+    const fallbackY = centerY;
+    imgStyle.transformOrigin = `${fallbackX * 100}% ${fallbackY * 100}%`;
+  } else {
+    imgStyle.transformOrigin = `${originPercentX * 100}% ${originPercentY * 100}%`;
+  }
   imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
 
   if (zoom === 1.0) {
@@ -320,27 +371,14 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           }
         />
         
-          {/* <button
-            style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 20 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
-            onClick={() => {
-              if (resetCount >= 20) return;
-              setGuesses([]);
-              // Use Date.now() + Math.random() for a more unique seed
-              setResetSeed(Date.now() + Math.floor(Math.random() * 1000000000));
-              setResetCount(resetCount + 1);
-            }}
-            disabled={resetCount >= 20}
-          >
-            Reset
-          </button>
-          <button
-            style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
-            onClick={() => setDebugOverlay(d => !d)}
-            aria-pressed={debugOverlay}
-            aria-label="Toggle silhouette debug overlay"
-          >
-            {debugOverlay ? 'Debug: ON' : 'Debug'}
-          </button> */}
+            {/* <button
+              style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
+              onClick={() => setDebugOverlay(d => !d)}
+              aria-pressed={debugOverlay}
+              aria-label="Toggle silhouette debug overlay"
+            >
+              {debugOverlay ? 'Debug: ON' : 'Debug'}
+            </button> */}
         
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
@@ -352,14 +390,17 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           </>
         )}
         <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* Always render both images and cross-fade between them when the real image is loaded */}
             <img
               src={silhouettePath}
               alt="Silhouette"
               className="silhouette-img"
               style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect || !realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
-              onLoad={() => setSilhouetteLoaded(true)}
+              onLoad={e => {
+                setSilhouetteLoaded(true);
+                try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) {}
+              }}
               onError={e => { setSilhouetteLoaded(false); }}
             />
             <img
@@ -367,7 +408,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               alt={dailyPokemon.name}
               className="silhouette-img"
               style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
-              onLoad={() => setRealLoaded(true)}
+              onLoad={e => { setRealLoaded(true); }}
               onError={e => { setRealLoaded(false); }}
             />
 
@@ -408,8 +449,13 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                   const del = el ? display(el.x, el.y) : null;
                   const dt = display(targetX, targetY);
 
+                  const overlayStyle = {
+                    position: 'absolute', inset: 0, pointerEvents: 'none',
+                    transform: imgStyle.transform,
+                    transformOrigin: imgStyle.transformOrigin,
+                  };
                   return (
-                    <>
+                    <div style={overlayStyle}>
                       <div style={{ position: 'absolute', left: `${bboxLeft * 100}%`, top: `${bboxTop * 100}%`, width: `${bboxWidth * 100}%`, height: `${bboxHeight * 100}%`, border: '2px solid rgba(255,0,0,0.95)', background: 'rgba(255,0,0,0.04)' }} />
                       <div style={{ position: 'absolute', left: `${dc.x * 100}%`, top: `${dc.y * 100}%`, transform: 'translate(-50%,-50%)', width: 12, height: 12, borderRadius: 6, background: 'yellow', border: '2px solid #333' }} title="bbox center" />
                       {et && <div style={{ position: 'absolute', left: `${det.x * 100}%`, top: `${det.y * 100}%`, transform: 'translate(-50%,-50%)', width: 10, height: 10, borderRadius: 5, background: 'magenta', border: '2px solid #333' }} title="edge top" />}
@@ -422,7 +468,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                       })}
                       <div style={{ position: 'absolute', left: `${dt.x * 100}%`, top: `${dt.y * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#00bcd4', border: '2px solid #003' }} title="chosen target" />
                       <div style={{ position: 'absolute', left: `${dt.x * 100 + 2}%`, top: `${dt.y * 100 + 2}%`, color: '#000', background: '#fff', fontSize: 11, padding: '2px 4px', borderRadius: 4 }}>{`t:${dt.x.toFixed(2)},${dt.y.toFixed(2)}`}</div>
-                    </>
+                    </div>
                   );
                 })()}
               </div>

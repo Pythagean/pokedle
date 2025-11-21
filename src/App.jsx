@@ -59,6 +59,24 @@ function useSilhouetteMeta() {
   return silhouetteMeta;
 }
 
+// Load zoom metadata once at app level (similar to silhouette_meta.json)
+function useZoomMeta() {
+  const [zoomMeta, setZoomMeta] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('data/zoom_meta.json')
+      .then(res => res.json())
+      .then(data => {
+        if (!cancelled) setZoomMeta(data);
+      })
+      .catch(() => {
+        if (!cancelled) setZoomMeta(null);
+      });
+    return () => { cancelled = true; };
+  }, []);
+  return zoomMeta;
+}
+
 function useTitleImg() {
   // Just return the public path
   return 'data/title.png';
@@ -110,6 +128,7 @@ function App() {
   const pokemonData = usePokemonData();
   const cardManifest = useCardManifest();
   const silhouetteMeta = useSilhouetteMeta();
+  const zoomMeta = useZoomMeta();
   const titleImg = useTitleImg();
   // Preload navigation icons (including the Results icon) so they appear immediately when header renders
   useEffect(() => {
@@ -489,7 +508,7 @@ function App() {
     if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />;
     if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />;
     if (key === 'silhouette') return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />;
-    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />;
+    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />;
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />;

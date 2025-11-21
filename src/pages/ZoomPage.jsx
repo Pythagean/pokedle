@@ -27,7 +27,7 @@ function mulberry32(a) {
   }
 }
 
-export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
+export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta }) {
   const inputRef = useRef(null);
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
@@ -46,6 +46,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [imgLoaded, setImgLoaded] = useState(true);
+  const [imgNatural, setImgNatural] = useState({ w: null, h: null });
+  const [debugOverlay, setDebugOverlay] = useState(false);
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
     const map = new Map();
@@ -90,6 +92,25 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
   // Pick edge: 0=top, 1=right, 2=bottom, 3=left
   const edge = useMemo(() => Math.floor(edgeSeed * 4), [edgeSeed]);
 
+  // Determine zoom focal point from zoomMeta if available. zoomMeta is expected
+  // to map image keys (id or zero-padded id) to arrays of [x,y] pixel coordinates.
+  const idKey = dailyPokemon ? String(dailyPokemon.id) : null;
+  const zeroPadKey = dailyPokemon ? String(dailyPokemon.id).padStart(3, '0') : null;
+  const zoomPoints = useMemo(() => {
+    if (!zoomMeta || !idKey) return null;
+    return zoomMeta[idKey] || zoomMeta[zeroPadKey] || null;
+  }, [zoomMeta, idKey, zeroPadKey]);
+
+  // Choose a deterministic index from the available points using the seed
+  const chosenZoomPoint = useMemo(() => {
+    if (!zoomPoints || !Array.isArray(zoomPoints) || zoomPoints.length === 0) return null;
+    const pickRng = mulberry32(seed + 22222);
+    const idx = Math.floor(pickRng() * zoomPoints.length);
+    const p = zoomPoints[idx];
+    if (!p || p.length < 2) return null;
+    return { x: Number(p[0]), y: Number(p[1]) };
+  }, [zoomPoints, seed]);
+
   if (!pokemonData) return <div>Loading Pokémon artwork...</div>;
 
   function handleGuessSubmit(e, overrideGuess) {
@@ -111,12 +132,15 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
   // Real image path
   const realImagePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
 
-  // Zoom logic: start at 4.0, go to 0.9 over 10 steps (guesses), quadratic ease-in
+  // Zoom logic: start at `maxZoom` and progress toward `minZoom` over `maxSteps` guesses.
+  // Use a cubic ease-in so the first zoom-outs are small and the reveal increases gradually.
   const maxZoom = 15.0;
   const minZoom = 0.9;
-  const maxSteps = 10;
-  let t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  let zoom = maxZoom - (maxZoom - minZoom) * (1 - Math.pow(1 - t, 2));
+  const maxSteps = 15;
+  const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
+  const easePower = 2; // cubic easing; increase to make initial steps even gentler
+  const eased = Math.pow(t, easePower);
+  const zoom = maxZoom - (maxZoom - minZoom) * eased;
   if (isCorrect) {
     zoom = 0.9;
   }
@@ -144,16 +168,27 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
   }
   // Interpolation factor: 0 at max zoom, 1 at min zoom
   const interp = (maxZoom - zoom) / (maxZoom - minZoom);
-  const centerX = edgeX * (1 - interp) + 0.5 * interp;
-  const centerY = edgeY * (1 - interp) + 0.5 * interp;
-  const translateX = (0.5 - centerX) * 100 * zoom;
-  const translateY = (0.5 - centerY) * 100 * zoom;
-  transformOrigin = '50% 50%';
-  // Mirroring logic: flip horizontally if shouldMirror
+
+  // Compute target from chosen zoom point if available and we have image natural size;
+  // otherwise fall back to the previous edge-based target behavior.
+  let targetX = edgeX;
+  let targetY = edgeY;
+  if (chosenZoomPoint && imgNatural.w && imgNatural.h) {
+    // Normalize pixel coordinates to 0..1 image-space
+    targetX = chosenZoomPoint.x / imgNatural.w;
+    targetY = chosenZoomPoint.y / imgNatural.h;
+  }
+
+  const centerX = targetX * (1 - interp) + 0.5 * interp;
+  const centerY = targetY * (1 - interp) + 0.5 * interp;
+  // Use scale-only transforms anchored at the interpolated focal center so the
+  // image zooms out from the chosen point without translating the view.
+  const originX = shouldMirror ? (1 - centerX) : centerX;
+  const originY = centerY;
   let scaleX = shouldMirror ? -1 : 1;
-  imgStyle.transform = `scale(${scaleX * zoom},${zoom})`;
-  imgStyle.transition = 'transform 0.1s cubic-bezier(.4,2,.6,1)';
-  imgStyle.transformOrigin = transformOrigin;
+  imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
+  imgStyle.transition = 'transform 200ms cubic-bezier(.2,.8,.2,1)';
+  imgStyle.transformOrigin = `${originX * 100}% ${originY * 100}%`;
   if (zoom === 0.9) {
     imgStyle.width = '100%';
     imgStyle.height = '100%';
@@ -224,6 +259,14 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
           }
         />
         {/* <button
+          style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
+          onClick={() => setDebugOverlay(d => !d)}
+          aria-pressed={debugOverlay}
+          aria-label="Toggle zoom debug overlay"
+        >
+          {debugOverlay ? 'Debug: ON' : 'Debug'}
+        </button> */}
+        {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
             if (resetCount >= 2) return;
@@ -245,15 +288,51 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily }) {
           </>
         )}
          <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
-           {imgLoaded && (
-             <img
-               src={realImagePath}
-               alt={dailyPokemon.name}
-               style={imgStyle}
-               onLoad={() => setImgLoaded(true)}
-               onError={e => { setImgLoaded(false); }}
-             />
-           )}
+           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+             {imgLoaded && (
+               <img
+                 src={realImagePath}
+                 alt={dailyPokemon.name}
+                 style={{ ...imgStyle, position: 'absolute', inset: 0 }}
+                 onLoad={e => {
+                   setImgLoaded(true);
+                   try {
+                     setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight });
+                   } catch (err) {}
+                 }}
+                 onError={e => { setImgLoaded(false); }}
+               />
+             )}
+
+             {debugOverlay && (
+               (() => {
+                 // Determine the display coordinates (in 0..1 space) for the target point.
+                 // Use the normalized targetX/targetY computed earlier (falls back to edge if no zoom point).
+                 let dispX = typeof targetX === 'number' ? targetX : 0.5;
+                 let dispY = typeof targetY === 'number' ? targetY : 0.5;
+                 if (shouldMirror) dispX = 1 - dispX;
+                 const px = Math.max(0, Math.min(100, dispX * 100));
+                 const py = Math.max(0, Math.min(100, dispY * 100));
+                 const overlayStyle = {
+                   position: 'absolute', inset: 0, pointerEvents: 'none',
+                   // Apply the same transform as the image so the overlay marker aligns visually
+                   transform: imgStyle.transform,
+                   transformOrigin: imgStyle.transformOrigin,
+                 };
+                 const markerSize = 14;
+                 const marker = {
+                   position: 'absolute', left: `${px}%`, top: `${py}%`, transform: 'translate(-50%, -50%)',
+                   width: markerSize, height: markerSize, borderRadius: markerSize / 2,
+                   background: 'rgba(255,0,0,0.9)', border: '2px solid white', boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
+                 };
+                 return (
+                   <div style={overlayStyle}>
+                     <div style={marker} />
+                   </div>
+                 );
+               })()
+             )}
+           </div>
          </div>
       </div>
       {!isCorrect && (
