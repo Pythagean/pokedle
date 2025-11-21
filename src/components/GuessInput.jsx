@@ -13,6 +13,8 @@ export default function GuessInput({
   handleGuessSubmit
 }) {
   const [loadedSprites, setLoadedSprites] = useState({});
+  const wrapperRef = React.useRef(null);
+  const [dropdownRect, setDropdownRect] = useState({ left: 0, width: null });
 
   // Prefetch sprite images for visible filtered options so they show up quicker
   useEffect(() => {
@@ -64,8 +66,53 @@ export default function GuessInput({
       // ignore
     }
   }, [highlightedIdx, dropdownOpen, dropdownRef]);
+  
+  // Keep dropdown aligned to the input element (fix mobile misalignment)
+  // Use ResizeObserver + RAF to avoid heavy MutationObserver work and reflow storms
+  useEffect(() => {
+    let rafId = null;
+    function scheduleUpdate() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        try {
+          const inputEl = inputRef && inputRef.current;
+          const wrapperEl = wrapperRef && wrapperRef.current;
+          if (inputEl && wrapperEl) {
+            const inRect = inputEl.getBoundingClientRect();
+            const wrapRect = wrapperEl.getBoundingClientRect();
+            const left = Math.max(0, Math.round(inRect.left - wrapRect.left));
+            const width = Math.round(inRect.width) || wrapperEl.clientWidth;
+            setDropdownRect(prev => (prev.left === left && prev.width === width) ? prev : { left, width });
+          } else {
+            setDropdownRect(prev => (prev.left === 0 && prev.width === null) ? prev : { left: 0, width: null });
+          }
+        } catch (e) {
+          // ignore measurement errors
+        }
+      });
+    }
+
+    if (dropdownOpen) scheduleUpdate();
+    window.addEventListener('resize', scheduleUpdate);
+
+    let ro = null;
+    try {
+      if (typeof ResizeObserver !== 'undefined' && inputRef && inputRef.current) {
+        ro = new ResizeObserver(scheduleUpdate);
+        ro.observe(inputRef.current);
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    return () => {
+      window.removeEventListener('resize', scheduleUpdate);
+      if (rafId) cancelAnimationFrame(rafId);
+      try { if (ro) ro.disconnect(); } catch (e) {}
+    };
+  }, [inputRef, dropdownOpen, sortedOptions.length]);
   return (
-    <div style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
+    <div ref={wrapperRef} style={{ position: 'relative', minWidth: 120, flex: 1, maxWidth: '100%' }}>
       <input
         className="guess-input"
         ref={inputRef}
@@ -104,9 +151,8 @@ export default function GuessInput({
           ref={dropdownRef}
           style={{
             position: 'absolute',
-            left: 0,
-            right: 0,
             top: '100%',
+            left: dropdownRect.left || 0,
             background: '#fff',
             border: '1px solid #bbb',
             borderTop: 'none',
@@ -116,7 +162,7 @@ export default function GuessInput({
             margin: 0,
             padding: 0,
             listStyle: 'none',
-            width: '100%',
+            width: dropdownRect.width ? dropdownRect.width : '100%',
             minWidth: 120,
           }}
         >
