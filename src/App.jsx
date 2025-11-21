@@ -552,11 +552,24 @@ function App() {
     <>
       {/* Fixed header at top-level so it never scrolls with content */}
       <style>{`
+        .main-app {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 80px 20px 24px 20px;
+          font-family: 'Inter', Arial, sans-serif;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          justify-content: flex-start;
+          min-height: calc(100vh - 80px);
+          touch-action: pan-y;
+        }
+        
         @media (max-width: 600px) {
           .main-app {
-            padding: 30px 4px 4px 4px !important;
-            min-height: calc(100vh - 60px) !important;
-            height: auto !important;
+            padding: 60px 8px 24px 8px;
+            min-height: calc(100vh - 80px);
           }
         }
       `}</style>
@@ -570,27 +583,7 @@ function App() {
         <div
           className="main-app"
           ref={mainAppRef}
-          style={{
-            maxWidth: 900,
-            margin: '0 auto',
-            padding: '60px 0px 24px 0px',
-            fontFamily: 'Inter, Arial, sans-serif',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            justifyContent: 'flex-start',
-            minHeight: 'calc(100vh - 96px)',
-            touchAction: 'pan-y',
-          }}
         >
-          <style>{`
-            @media (max-width: 600px) {
-          .main-app {
-            padding: '30px 0px 24px 0px !important;',
-          }
-            }
-          `}</style>
           {/* Page Content */}
           {!pageTransition && renderPageByKey(page)}
           {pageTransition && (
@@ -627,14 +620,6 @@ function App() {
           )}
       </div>
       <CompletionPopup open={completionOpen} onClose={() => setCompletionOpen(false)} results={perPageResults} guessesByPage={guessesByPage} />
-      <style>{`
-        @media (max-width: 600px) {
-          .main-app {
-            min-height: calc(100vh - 80px) !important;
-            height: auto !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
