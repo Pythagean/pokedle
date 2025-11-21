@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {} }) {
     return ReactDOM.createPortal(
         <>
                         <style>{`
@@ -116,6 +116,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', paddingRight: 8 }}>
                             {pages.map(p => {
                                 const isSelected = !completionActive && page === p.key;
+                                const isCompleted = !!completedPages[p.key];
+                                const isDisabled = !isSelected && isCompleted;
                                 return (
                                     <button
                                         key={p.key}
@@ -126,12 +128,12 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                         style={{
                                             padding: '7px 9px',
                                             borderRadius: 12,
-                                            background: isSelected ? '#1976d2' : '#f4f4f4ff',
-                                            color: isSelected ? '#fff' : '#1976d2',
-                                            border: isSelected ? 'none' : '2px solid #1976d2',
+                                            background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
+                                            color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
+                                            border: isSelected ? 'none' : (isDisabled ? '1px solid #ddd' : '2px solid #1976d2'),
                                             fontWeight: 700,
                                             fontSize: 15,
-                                            cursor: 'pointer',
+                                            cursor: isDisabled ? 'default' : 'pointer',
                                             boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                             transition: 'background 0.2s, color 0.2s',
                                             marginLeft: 0,
@@ -141,9 +143,10 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                             display: 'inline-flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
+                                            opacity: isDisabled ? 0.65 : 1,
                                         }}
                                     >
-                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain' }} />
+                                        <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: 32, height: 32, marginRight: 8, objectFit: 'contain', opacity: isDisabled ? 0.6 : 1 }} />
                                         <span className="nav-label" style={{fontSize: 15}}>{p.label}</span>
                                     </button>
                                 );

@@ -495,7 +495,12 @@ function App() {
           }
         }
       `}</style>
-      <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} />
+      {
+        (() => {
+          const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setCompletionOpen(true)} highlightCompletion={completionJustCompleted} completionActive={completionOpen} completedPages={completedPages} />;
+        })()
+      }
       {/* Page Content - separate scrollable container so header stays fixed */}
         <div
           className="main-app"
