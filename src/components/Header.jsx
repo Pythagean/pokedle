@@ -124,10 +124,10 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     borderRadius: 12,
                                     background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
                                     color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
-                                    border: isSelected ? 'none' : (isDisabled ? '1px solid #ddd' : '2px solid #1976d2'),
+                                    border: isSelected ? 'none' : (isDisabled ? '2px solid #929292ff' : '2px solid #1976d2'),
                                     fontWeight: 700,
                                     fontSize: 15,
-                                    cursor: isDisabled ? 'default' : 'pointer',
+                                    cursor: isDisabled ? 'pointer' : 'pointer',
                                     boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
                                     marginLeft: 0,
@@ -166,15 +166,15 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     borderRadius: 12,
                                     background: completionActive ? '#1976d2' : '#f4f4f4ff',
                                     color: completionActive ? '#fff' : '#1976d2',
-                                    border: completionActive ? 'none' : '2px solid #1976d2',
+                                    border: completionActive ? 'none' : '2px solid #3573b1ff',
                                     fontWeight: 700,
                                     fontSize: 20,
                                     cursor: 'pointer',
                                     boxShadow: completionActive ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
-                                    marginLeft: 0,
+                                    marginLeft: 8,
                                     marginRight: 0,
-                                    minWidth: compactNav ? 44 : 90,
+                                    minWidth: compactNav ? 44 : 55,
                                     whiteSpace: 'nowrap',
                                     display: 'inline-flex',
                                     alignItems: 'center',
@@ -182,8 +182,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     flex: '0 0 auto',
                                 }}
                             >
-                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: compactNav ? 0 : 8, objectFit: 'contain' }} />
-                                {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>Results</span> : null}
+                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: 0, objectFit: 'contain' }} />
+                                {!compactNav ? <span className="nav-label" style={{fontSize: 15}}></span> : null}
                                 {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
                             </button>
                         </nav>
