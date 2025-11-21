@@ -243,7 +243,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                                 {shownClues.map(type => renderClue(type))}
                                 {/* Hint placeholder text for next clue, specifying clue type */}
                                 {!isCorrect && (() => {
-                                    const nextIdx = getNextThresholdIndex(guesses.length);
+                                    const nextIdx = getNextThresholdIndex(guesses.length, GAMEINFO_HINT_THRESHOLDS);
                                     if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
                                         const nextThreshold = GAMEINFO_HINT_THRESHOLDS[nextIdx];
                                         const cluesLeft = nextThreshold - guesses.length;

@@ -126,11 +126,12 @@ export default function GuessInput({
         const targetEl = dropdownEl || (inputRef && inputRef.current);
         if (!targetEl) return;
         const rect = targetEl.getBoundingClientRect();
-        const cushion = 160; // pixels to keep above keyboard
+        const cushion = 320; // pixels to keep above keyboard
         // If bottom is obscured by keyboard area, scroll down so dropdown bottom sits cushion px above viewport bottom
         if (rect.bottom > (window.innerHeight - cushion)) {
           const scrollBy = rect.bottom - (window.innerHeight - cushion);
-          window.scrollBy({ top: scrollBy + 12, left: 0, behavior: 'smooth' });
+          console.log('Scrolling by', scrollBy);
+          window.scrollBy({ top: scrollBy + 36, left: 0, behavior: 'smooth' });
         } else if (rect.top < 0) {
           // If element is above viewport, bring it into view
           targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });

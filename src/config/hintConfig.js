@@ -7,8 +7,6 @@
 // - >=12 => 4 clues
 // - >=16 => 5 clues
 
-export const HINT_THRESHOLDS = [4, 8, 12, 16];
-
 // Internal helper used by the exported functions. Accepts an explicit
 // thresholds array so callers (pages/components) can pass custom rules.
 function _getClueCountForThresholds(numGuesses, thresholds) {
