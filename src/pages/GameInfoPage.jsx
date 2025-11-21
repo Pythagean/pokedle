@@ -221,6 +221,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                 <InfoButton
                     ariaLabel="How to Play"
                     placement="right"
+                    marginTop={130}
                     content={
                         <div style={{ textAlign: 'left' }}>
                             Guess the Pokémon from a random set of clues based on in-game information!<br /><br />

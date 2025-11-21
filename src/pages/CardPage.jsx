@@ -244,7 +244,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
-          marginTop={230}
+          marginTop={255}
           content={
             <div style={{ textAlign: 'left' }}>
               <div style={{ marginBottom: 8 }}>Guess the Pokémon from its TCG (or TCG Pocket) card art!</div>

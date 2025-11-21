@@ -362,6 +362,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
+          marginTop={110}
           content={
             <div style={{ textAlign: 'left' }}>
               Guess the Pokémon from its silhouette!<br /><br />

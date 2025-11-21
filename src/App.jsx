@@ -569,7 +569,7 @@ function App() {
         
         @media (max-width: 600px) {
           .main-app {
-            padding: 60px 8px 24px 8px;
+            padding: 50px 8px 24px 8px;
             min-height: calc(100vh - 80px);
           }
         }

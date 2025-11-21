@@ -410,7 +410,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           <h2 style={{ margin: 0 }}>Classic Mode</h2>
           <InfoButton
             ariaLabel="How to Play"
-            marginTop={200}
+            marginTop={310}
             placement="right"
             content={
               <div style={{ textAlign: 'left' }}>

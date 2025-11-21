@@ -128,6 +128,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
         <InfoButton
           ariaLabel="How to Play"
+          marginTop={120}
           content={
             <div>
               Guess the Pokémon from its Pokédex entries.

@@ -248,6 +248,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
+          marginTop={110}
           content={
             <div style={{ textAlign: 'left' }}>
               Guess the Pokémon from a zoomed-in image!<br /><br />
