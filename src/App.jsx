@@ -237,20 +237,52 @@ function App() {
     window.addEventListener('resize', updateCompact);
     return () => window.removeEventListener('resize', updateCompact);
   }, []);
-  // Store guesses per page
-  const [guessesByPage, setGuessesByPage] = useState({
-    classic: [],
-    pokedex: [],
-    stats: [],
-    ability: [],
-    moves: [],
-    category: [],
-    silhouette: [],
-    zoom: [],
-    colours: [],
-    locations: [],
-    card: []
+  // Store guesses per page with localStorage persistence
+  const [guessesByPage, setGuessesByPage] = useState(() => {
+    // Load from localStorage on mount
+    try {
+      const stored = localStorage.getItem('pokedle_guesses');
+      if (stored) {
+        const data = JSON.parse(stored);
+        // Check if the stored data is for today
+        const storedDate = data.date;
+        const todaySeed = getSeedFromDate(new Date());
+        if (storedDate === todaySeed) {
+          return data.guesses || {};
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load guesses from localStorage:', e);
+    }
+    // Return default empty guesses if nothing stored or data is old
+    return {
+      classic: [],
+      pokedex: [],
+      stats: [],
+      ability: [],
+      moves: [],
+      category: [],
+      silhouette: [],
+      zoom: [],
+      colours: [],
+      locations: [],
+      card: []
+    };
   });
+
+  // Persist guesses to localStorage whenever they change
+  useEffect(() => {
+    try {
+      const todaySeed = getSeedFromDate(new Date());
+      const data = {
+        date: todaySeed,
+        guesses: guessesByPage
+      };
+      localStorage.setItem('pokedle_guesses', JSON.stringify(data));
+    } catch (e) {
+      console.error('Failed to save guesses to localStorage:', e);
+    }
+  }, [guessesByPage]);
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
