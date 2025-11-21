@@ -476,7 +476,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
             marginBottom: guesses.length > 1 ? 16 : 0,
           }}>
             <img
-              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${guesses[0].id}-front.png`}
+              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${guesses[0].id}-front.png`}
               alt={guesses[0].name}
               style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 8, transform: 'scale(2.0)' }}
               onError={e => { e.target.style.display = 'none'; }}
@@ -501,7 +501,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                   fontWeight: 600,
                 }}>
                   <img
-                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${g.id}-front.png`}
+                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.id}-front.png`}
                     alt={g.name}
                     style={{ width: 24, height: 24, objectFit: 'contain', marginBottom: 4, transform: 'scale(1.5)' }}
                     onError={e => { e.target.style.display = 'none'; }}

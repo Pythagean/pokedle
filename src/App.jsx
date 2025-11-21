@@ -445,7 +445,7 @@ function App() {
         if (pokemonObj && pokemonObj.id) {
           const id = pokemonObj.id;
           const candidates = [
-            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${id}-front.png`,
+            `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${id}-front.png`,
             `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${id}.png`,
             `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${id}.png`,
             `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${id}.png`

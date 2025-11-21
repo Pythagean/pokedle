@@ -368,7 +368,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
             marginBottom: guesses.length > 1 ? 16 : 0,
           }}>
             <img
-              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${lastGuess.id}-front.png`}
+              src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${lastGuess.id}-front.png`}
               alt={lastGuess.name}
               style={{ width: 40, height: 40, objectFit: 'contain', marginBottom: 8, transform: 'scale(2.0)' }}
               onError={e => { e.target.style.display = 'none'; }}
@@ -393,7 +393,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
                   fontWeight: 600,
                 }}>
                   <img
-                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${g.id}-front.png`}
+                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.id}-front.png`}
                     alt={g.name}
                     style={{ width: 24, height: 24, objectFit: 'contain', marginBottom: 4, transform: 'scale(1.5)' }}
                     onError={e => { e.target.style.display = 'none'; }}

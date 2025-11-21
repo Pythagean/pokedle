@@ -22,7 +22,7 @@ export default function GuessInput({
     const images = [];
     filteredOptions.forEach(opt => {
       if (!opt || !opt.id) return;
-      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${opt.id}-front.png`;
+      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}-front.png`;
       // If we already know the state, skip creating a new Image
       if (loadedSprites[opt.id]) return;
       const img = new Image();
@@ -257,7 +257,7 @@ export default function GuessInput({
                   )}
                 </div>
                 <img
-                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${opt.id}-front.png`}
+                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}-front.png`}
                   alt={opt.name}
                   onLoad={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: true }))}
                   onError={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: 'error' }))}

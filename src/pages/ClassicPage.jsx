@@ -524,7 +524,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                     <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
                       <div className="feedback-pokemon-img">
                         <img
-                          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites/${poke.id}-front.png`}
+                          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${poke.id}-front.png`}
                           alt={poke.name}
                           onError={e => { e.target.style.display = 'none'; }}
                         />
@@ -709,8 +709,8 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 90%;
-          height: 90%;
+          width: 70%;
+          height: 70%;
           display: flex;
           align-items: center;
           justify-content: center;
