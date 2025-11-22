@@ -130,7 +130,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     cursor: isDisabled ? 'pointer' : 'pointer',
                                     boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
-                                    marginLeft: p.key === 'results' ? 8 : 0,
+                                    marginLeft: p.key === 'results' ? 2 : 0,
                                     marginRight: 0,
                                     minWidth: compactNav ? 44 : 90,
                                     whiteSpace: 'nowrap',
