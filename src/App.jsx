@@ -431,6 +431,33 @@ function App() {
     }
   }, [perPageResults, dailyByPage]);
 
+  // Persist a simple daily summary (scores per mode) into localStorage so previous
+  // days' results can be inspected later. We store an array of { date, results }
+  // where `date` is the YYYYMMDD integer seed and `results` is an array of
+  // { key, label, solved, guessCount } for that day.
+  useEffect(() => {
+    try {
+      if (!perPageResults || perPageResults.length === 0) return;
+      const key = 'pokedle_results_history';
+      const todaySeed = getSeedFromDate(new Date());
+      const entry = {
+        date: todaySeed,
+        results: perPageResults.map(r => ({ key: r.key, label: r.label, solved: !!r.solved, guessCount: r.solved ? r.guessCount : null }))
+      };
+      const raw = localStorage.getItem(key);
+      const history = raw ? JSON.parse(raw) : [];
+      // If last entry is for today, update it; otherwise append a new entry
+      if (history.length > 0 && history[history.length - 1].date === todaySeed) {
+        history[history.length - 1] = entry;
+      } else {
+        history.push(entry);
+      }
+      localStorage.setItem(key, JSON.stringify(history));
+    } catch (e) {
+      // ignore storage errors
+    }
+  }, [perPageResults]);
+
   // Preload common images (sprites, full image, silhouette) for each selected daily pokemon
   useEffect(() => {
     if (!perPageResults || perPageResults.length === 0) return;

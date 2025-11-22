@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack }) {
     const [copied, setCopied] = useState(false);
@@ -38,15 +38,31 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
         }
     };
 
+    // Load history of simple daily summaries from localStorage (written by App)
+    const [history, setHistory] = useState([]);
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem('pokedle_results_history');
+            if (!raw) return;
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return;
+            // Show the most recent 10 entries (reverse chronological)
+            const recent = parsed.slice(-10).reverse();
+            setHistory(recent);
+        } catch (e) {
+            // ignore
+        }
+    }, []);
+
     return (
-        <div style={{ padding: 0, maxWidth: 580, margin: '0px auto', fontFamily: 'Inter, Arial, sans-serif', width: 'calc(100% - 48px)' }}>
+        <div style={{ padding: 0, maxWidth: 780, margin: '0px auto', fontFamily: 'Inter, Arial, sans-serif', width: 'calc(100% - 48px)' }}>
             <div style={{ textAlign: 'center', marginTop: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                     <h2 style={{ marginBottom: 10 }}>Results</h2>
                 </div>
             </div>
 
-            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden',  maxWidth: 580, alignContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
                 <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '55px' }} />
                 {!showDetails ? (
                     entries.map((e, i) => (
@@ -106,6 +122,52 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                 </div>
                 
             </div>
+            {/* Previous days history (last 10) - moved to its own container */}
+            {history && history.length > 0 ? (
+                <div style={{ marginTop: 14, maxWidth: 780, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                    <div style={{ alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <div style={{ fontWeight: 700, alignContent: 'center' }}>Previous Results</div>
+                    </div>
+                    <div style={{ overflowX: 'auto' }}>
+                        {(() => {
+                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
+                            const gridCols = `120px repeat(${modes.length}, 1fr) 64px`;
+                            return (
+                                <div>
+                                    {/* header row */}
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: 13 }}>
+                                        <div style={{ fontWeight: 700 }}>Date</div>
+                                        {modes.map(m => (
+                                            <div key={m} style={{ fontWeight: 700, textAlign: 'center' }}>{m}</div>
+                                        ))}
+                                        <div style={{ fontWeight: 700, textAlign: 'right' }}>Total</div>
+                                    </div>
+
+                                    {/* rows */}
+                                    {history.map((h, idx) => {
+                                        const y = String(h.date).slice(0,4);
+                                        const mth = String(h.date).slice(4,6);
+                                        const dnum = String(h.date).slice(6,8);
+                                        const dateLabel = `${dnum}/${mth}/${y}`;
+                                        const totalForDay = (h.results || []).reduce((acc, r) => acc + (r.solved && typeof r.guessCount === 'number' ? r.guessCount : 0), 0);
+                                        return (
+                                            <div key={idx} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: idx !== history.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
+                                                <div style={{ fontWeight: 700 }}>{dateLabel}</div>
+                                                {modes.map(modeLabel => {
+                                                    const found = (h.results || []).find(r => String((r.label || '')).toLowerCase() === String(modeLabel).toLowerCase());
+                                                    const val = found ? (found.solved ? found.guessCount : '-') : '-';
+                                                    return <div key={modeLabel} style={{ textAlign: 'center' }}>{val}</div>;
+                                                })}
+                                                <div style={{ textAlign: 'right', fontWeight: 800 }}>{totalForDay}</div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        })()}
+                    </div>
+                </div>
+            ) : null}
         </div>
     );
 }
