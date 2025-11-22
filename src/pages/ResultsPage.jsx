@@ -39,14 +39,15 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
     };
 
     return (
-        <div style={{ padding: 0, maxWidth: 680, margin: '0px auto', fontFamily: 'Inter, Arial, sans-serif', width: 'calc(100% - 48px)' }}>
+        <div style={{ padding: 0, maxWidth: 580, margin: '0px auto', fontFamily: 'Inter, Arial, sans-serif', width: 'calc(100% - 48px)' }}>
             <div style={{ textAlign: 'center', marginTop: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                     <h2 style={{ marginBottom: 10 }}>Results</h2>
                 </div>
             </div>
 
-            <div style={{ borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0' }}>
+            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden' }}>
+                <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '55px' }} />
                 {!showDetails ? (
                     entries.map((e, i) => (
                         <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '10px 0', lineHeight: '1.1', borderBottom: i !== entries.length - 1 ? '1px solid #fafafa' : 'none' }}>
