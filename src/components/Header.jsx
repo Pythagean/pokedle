@@ -156,7 +156,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                         {isCompleted ? (
                                             <span aria-hidden="true" style={{
                                                 position: 'absolute',
-                                                top: 6,
+                                                top: 10,
                                                 right: 6,
                                                 display: 'inline-flex',
                                                 alignItems: 'center',
@@ -164,9 +164,9 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                                 width: 21,
                                                 height: 21,
                                                 borderRadius: 9,
-                                                background: 'rgba(255,255,255,0.85)',
-                                                color: '#2e7d32',
-                                                fontSize: 12,
+                                                background: 'rgba(255,255,255,0.95)',
+                                                color: '#38ab3eff',
+                                                fontSize: 16,
                                                 fontWeight: 800,
                                                 border: '1px solid rgba(46,125,50,0.15)',
                                                 boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
