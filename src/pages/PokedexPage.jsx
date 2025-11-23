@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 import { POKEDEX_HINT_THRESHOLDS, PokedexHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -29,6 +30,7 @@ function mulberry32(a) {
 }
 export default function PokedexPage({ pokemonData, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
+  const lastGuessRef = useRef(null);
   
   const today = new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 7 * 1000 + 'p'.charCodeAt(0)); // UTC-based
@@ -43,6 +45,28 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
   // Determine whether the daily Pokemon has been guessed correctly
   const lastGuess = guesses && guesses.length > 0 ? guesses[0] : null;
   const isCorrect = !!(lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name);
+
+  // Confetti: trigger a short explosion once when the user first guesses correctly
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
+  useEffect(() => {
+    const key = `pokedle_confetti_pokedex_${seed}`;
+    let alreadyShown = false;
+    try {
+      alreadyShown = !!sessionStorage.getItem(key);
+    } catch (e) {
+      alreadyShown = false;
+    }
+
+    if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = isCorrect;
+  }, [isCorrect, seed]);
 
   // Pick random flavor text entries for the clues/hints. If the Pokemon has been
   // correctly guessed, show the preserved original entries instead.
@@ -124,6 +148,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
+      <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
         <InfoButton
@@ -233,7 +258,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{
+          <div ref={lastGuessRef} style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
