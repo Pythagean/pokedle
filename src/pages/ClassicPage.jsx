@@ -538,15 +538,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                 const secondaryStatus = cmp.secondary_colours === 'match' ? 'match' : (cmp.secondary_colours === 'partial' ? 'partial' : 'miss');
                 const generationStatus = cmp.generation === 'match' ? 'match' : 'miss';
                 const evolutionStatus = cmp.evolution === 'match' ? 'match' : 'miss';
-                // Positioning for height/weight text: if guess is higher than answer (cmp === 'down'),
-                // move text to top of the box so arrow (pointing down) sits below it. If guess is lower (cmp === 'up'),
-                // move text to bottom so arrow (pointing up) sits above it. Otherwise keep centered.
-                const heightTextStyle = cmp.height === 'down'
-                  ? { top: '30%', left: '50%', transform: 'translateX(-50%)' }
-                  : (cmp.height === 'up' ? { bottom: '30%', left: '50%', transform: 'translateX(-50%)' } : undefined);
-                const weightTextStyle = cmp.weight === 'down'
-                  ? { top: '30%', left: '50%', transform: 'translateX(-50%)' }
-                  : (cmp.weight === 'up' ? { bottom: '30%', left: '50%', transform: 'translateX(-50%)' } : undefined);
+                // Keep height/weight text centered; no positional adjustments.
                 return (
                   <div key={poke.name + rowIdx} ref={el => { if (rowIdx === revealRow) revealRowRef.current = el; if (rowIdx === 0) lastGuessRef.current = el; }} data-poke={poke.name} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
                     <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
@@ -612,7 +604,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                           />
                         </div>
                       )}
-                      <div className="feedback-box-content" style={heightTextStyle}>
+                      <div className="feedback-box-content">
                         <span style={{ position: 'relative', zIndex: 2 }}>{poke.height}m</span>
                       </div>
                     </div>
@@ -627,7 +619,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                           />
                         </div>
                       )}
-                      <div className="feedback-box-content" style={weightTextStyle}>
+                      <div className="feedback-box-content">
                         <span style={{ position: 'relative', zIndex: 2 }}>{poke.weight}kg</span>
                       </div>
                     </div>
@@ -694,7 +686,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           align-items: center;
           justify-content: center;
           font-size: 14px;
-          font-weight: 500;
+          font-weight: 700;
           box-sizing: border-box;
           margin-bottom: 0;
           text-align: center;
@@ -703,11 +695,11 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         }
         .feedback-box-large-text {
           font-size: 20px;
-          font-weight: 500;
+          font-weight: 700;
         }
         .feedback-box-medium-text {
           font-size: 16px;
-          font-weight: 500;
+          font-weight: 700;
         }
         .feedback-box > * {
           position: absolute;
@@ -759,6 +751,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         }
         .feedback-box-content {
           z-index: 2;
+          font-weight: 700;
         }
         .feedback-pokemon-box {
           background: #fff !important;
