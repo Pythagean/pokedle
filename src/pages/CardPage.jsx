@@ -302,7 +302,58 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         */}
       </div>
         <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-          {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is on this card?</div>}
+          {!isCorrect && (
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ fontWeight: 600 }}>Which Pokémon is on this card?</div>
+              {(() => {
+                // Show weekend/event label when Saturday or Sunday selection changes the card type
+                try {
+                  const todaysType = getCardTypeByDay(effectiveDay, rng);
+                  let eventLabel = null;
+                  if (todaysType === 'full_art') eventLabel = 'Full-Art Saturday';
+                  else if (todaysType === 'shiny') eventLabel = 'Shiny Saturday';
+                  else if (todaysType === 'special') eventLabel = 'Illustration Sunday';
+                  if (eventLabel) {
+                    // Build a single-example content based on today's type
+                    let example = null;
+                    if (todaysType === 'full_art') {
+                      example = (
+                        <div style={{ textAlign: 'center' }}>
+                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Full-Art Saturday</div>
+                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full-art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                        </div>
+                      );
+                    } else if (todaysType === 'shiny') {
+                      example = (
+                        <div style={{ textAlign: 'center' }}>
+                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Shiny Saturday</div>
+                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/shiny/resized/1-99.jpg" alt="Shiny example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                        </div>
+                      );
+                    } else if (todaysType === 'special') {
+                      example = (
+                        <div style={{ textAlign: 'center' }}>
+                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Illustration Sunday</div>
+                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                        </div>
+                      );
+                    }
+                    return (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
+                        <div style={{ color: '#666', fontSize: 13 }}>Today is <strong>{eventLabel}</strong>!</div>
+                        {example && (
+                          <InfoButton ariaLabel="Card examples" placement="right" marginTop={130} content={example} />
+                        )}
+                      </div>
+                    );
+                  }
+                } catch (e) {
+                  // ignore
+                }
+                return null;
+              })()}
+            </div>
+          )}
           {isCorrect && (
             <>
               <CongratsMessage guessCount={guesses.length} mode="Card Mode" />
