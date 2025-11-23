@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack }) {
     const [copied, setCopied] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Fallback: if no results provided, attempt to read a global exported value
     if ((!results || results.length === 0) && typeof window !== 'undefined' && window.__pokedle_results__) {
@@ -40,7 +41,6 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
 
     // Load history of simple daily summaries from localStorage (written by App)
     const [history, setHistory] = useState([]);
-    const [showDays, setShowDays] = useState(10); // temporary runtime control for number of days to show
     useEffect(() => {
         try {
             const raw = localStorage.getItem('pokedle_results_history');
@@ -55,16 +55,50 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
         }
     }, []);
 
+    // detect mobile (match CSS breakpoint) so we can widen content on small screens
+    useEffect(() => {
+        if (typeof window === 'undefined' || !window.matchMedia) return;
+        const mq = window.matchMedia('(max-width: 600px)');
+        const set = () => setIsMobile(mq.matches);
+        set();
+        try {
+            mq.addEventListener('change', set);
+        } catch (e) {
+            // Safari fallback
+            mq.addListener(set);
+        }
+        return () => {
+            try { mq.removeEventListener('change', set); } catch (e) { mq.removeListener(set); }
+        };
+    }, []);
+
+    const outerStyle = {
+        padding: 0,
+        maxWidth: isMobile ? '100%' : 780,
+        margin: '0px auto',
+        alignItems: 'center',
+        fontFamily: 'Inter, Arial, sans-serif',
+        width: isMobile ? 'calc(100% - 20px)' : 'calc(100% - 48px)'
+    };
+
+    const summaryMax = isMobile ? '100%' : 580;
+    const historyMax = isMobile ? '100%' : 780;
+
     return (
-        <div style={{ padding: 0, maxWidth: 780, margin: '0px auto', fontFamily: 'Inter, Arial, sans-serif', width: 'calc(100% - 48px)' }}>
+        <div style={outerStyle}>
             <div style={{ textAlign: 'center', marginTop: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                     <h2 style={{ marginBottom: 10 }}>Results</h2>
                 </div>
             </div>
 
-            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden',  maxWidth: 580, alignContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-                <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '55px' }} />
+            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden', maxWidth: summaryMax, alignContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
+                <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '65px' }} />
+                {/* Small section header for today's summary */}
+                <div style={{ textAlign: 'center', marginBottom: 8 }}>
+                    <div style={{ fontWeight: 700, textAlign: 'center' }}>Today</div>
+                </div>
+
                 {!showDetails ? (
                     entries.map((e, i) => (
                         <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '10px 0', lineHeight: '1.1', borderBottom: i !== entries.length - 1 ? '1px solid #fafafa' : 'none' }}>
@@ -124,57 +158,31 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                 
             </div>
             {/* Previous days history (last 10) - moved to its own container */}
-            {history && history.length > 0 ? (
-                <div style={{ marginTop: 14, maxWidth: 780, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, gap: 12 }}>
-                        <div style={{ fontWeight: 700, alignContent: 'center' }}>Previous Results</div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <label style={{ fontSize: 13, color: '#444', marginRight: 8 }}>Show last</label>
-                            <select value={showDays} onChange={e => setShowDays(Number(e.target.value))} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #e6e6e6' }}>
-                                <option value={5}>5</option>
-                                <option value={7}>7</option>
-                                <option value={10}>10</option>
-                                <option value={14}>14</option>
-                                <option value={21}>21</option>
-                                <option value={30}>30</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button onClick={() => {
-                                // Add demo days equal to showDays
-                                const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
-                                const today = new Date();
-                                const demo = [];
-                                for (let i = 0; i < showDays; i++) {
-                                    const dt = new Date(today);
-                                    dt.setDate(today.getDate() - i);
-                                    const y = dt.getFullYear();
-                                    const m = String(dt.getMonth() + 1).padStart(2, '0');
-                                    const d = String(dt.getDate()).padStart(2, '0');
-                                    const dateKey = `${y}${m}${d}`;
-                                    const results = modes.map(mn => {
-                                        const solved = Math.random() > 0.25;
-                                        return {
-                                            key: mn.toLowerCase().replace(/\s+/g, '_'),
-                                            label: mn,
-                                            solved,
-                                            guessCount: solved ? Math.floor(Math.random() * 6) + 1 : undefined
-                                        };
-                                    });
-                                    demo.push({ date: dateKey, results });
-                                }
-                                setHistory(prev => {
-                                    // prepend demo entries so they appear as the newest
-                                    return [...demo, ...prev];
-                                });
-                            }} style={{ marginLeft: 10, padding: '6px 10px', borderRadius: 6, border: '1px solid #e6e6e6', background: '#fafafa', cursor: 'pointer' }}>Add Demo Days</button>
-                        </div>
+                {history && history.length > 0 ? (
+                <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
+                        <div style={{ fontWeight: 700, textAlign: 'center' }}>Last 7 Days</div>
                     </div>
                     <div style={{ overflowX: 'auto' }}>
                         {(() => {
                             // Modes down the left, dates across the top
                             const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
-                            const displayedHistory = history.slice(0, showDays);
+                            // Always show the most recent 7 days. If data is missing for a date, show an empty row.
+                            const DAYS = 7;
+                            const today = new Date();
+                            const last7 = [];
+                            for (let i = 0; i < DAYS; i++) {
+                                const dt = new Date(today);
+                                dt.setDate(today.getDate() - i);
+                                const y = dt.getFullYear();
+                                const m = String(dt.getMonth() + 1).padStart(2, '0');
+                                const d = String(dt.getDate()).padStart(2, '0');
+                                last7.push(`${y}${m}${d}`);
+                            }
+                            const displayedHistory = last7.map(dateKey => {
+                                const found = history.find(h => String(h.date) === dateKey);
+                                return found || { date: dateKey, results: [] };
+                            });
                             const dates = displayedHistory.map(h => {
                                 // h.date is YYYYMMDD
                                 const y = parseInt(String(h.date).slice(0,4), 10);
