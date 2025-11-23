@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -30,6 +31,10 @@ function mulberry32(a) {
 
 export default function ColoursPage({ pokemonData, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
+  const lastGuessRef = useRef(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
+  
   const today = new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 9 * 1000 + 'c'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
@@ -121,6 +126,20 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
   const lastGuess = guesses[0];
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
 
+  useEffect(() => {
+    const key = `pokedle_confetti_colours_${seed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = isCorrect;
+  }, [isCorrect, seed]);
+
   // Colour block image paths (updated for new structure)
   const colourPath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/artwork/${dailyPokemon.id}.png`;
   const spriteColourPath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${dailyPokemon.id}.png`;
@@ -204,6 +223,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
+      <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Colours Mode</h2>
         <InfoButton
@@ -351,7 +371,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{
+          <div ref={lastGuessRef} style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,

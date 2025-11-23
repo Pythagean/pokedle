@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 
 function usePokemonData() {
   const [pokemonData, setPokemonData] = useState(null);
@@ -42,6 +43,9 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
+  const lastGuessRef = useRef(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
 
   // Get today's date as seed, use page key for deterministic daily selection
   const today = new Date();
@@ -189,6 +193,20 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
 
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
+
+  useEffect(() => {
+    const key = `pokedle_confetti_classic_${seed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (solved && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = solved;
+  }, [solved, seed]);
 
   // Delay showing the CongratsMessage until after the revealRow animation completes
   const [congratsVisible, setCongratsVisible] = useState(false);
@@ -435,6 +453,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         </div>
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
+        <Confetti active={showConfetti} centerRef={solved ? lastGuessRef : null} />
         {congratsVisible ? (
           <>
             <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
@@ -529,7 +548,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                   ? { top: '30%', left: '50%', transform: 'translateX(-50%)' }
                   : (cmp.weight === 'up' ? { bottom: '30%', left: '50%', transform: 'translateX(-50%)' } : undefined);
                 return (
-                  <div key={poke.name + rowIdx} ref={rowIdx === revealRow ? revealRowRef : null} data-poke={poke.name} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
+                  <div key={poke.name + rowIdx} ref={el => { if (rowIdx === revealRow) revealRowRef.current = el; if (rowIdx === 0) lastGuessRef.current = el; }} data-poke={poke.name} className={`feedback-grid ${revealRow === rowIdx ? 'reveal-row' : ''}`} style={{ gridTemplateColumns: 'repeat(7, 1fr)', width: '100%' }}>
                     <div className="feedback-box feedback-pokemon-box" style={revealRow === rowIdx ? { animationDelay: `${0 * BOX_DELAY_STEP}s` } : undefined}>
                       <div className="feedback-pokemon-img">
                         <img

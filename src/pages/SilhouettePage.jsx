@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 // import pokemonData from '../../data/pokemon_data.json';
@@ -29,6 +30,10 @@ function mulberry32(a) {
 
 export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily }) {
   const inputRef = useRef(null);
+  const lastGuessRef = useRef(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
+
 
   // Countdown state moved to reusable ResetCountdown component
 
@@ -116,6 +121,20 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Only show the most recent guess
   const lastGuess = guesses[0];
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+
+  useEffect(() => {
+    const key = `pokedle_confetti_silhouette_${seed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = isCorrect;
+  }, [isCorrect, seed]);
 
   // Silhouette and real image paths (external repo for both)
   const silhouettePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/silhouettes/${dailyPokemon.id}.png`;
@@ -357,6 +376,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
+      <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Silhouette Mode</h2>
         <InfoButton
@@ -511,7 +531,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{
+          <div ref={lastGuessRef} style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,

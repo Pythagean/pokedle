@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -29,6 +30,10 @@ function mulberry32(a) {
 
 export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta }) {
   const inputRef = useRef(null);
+  const lastGuessRef = useRef(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
+ 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
   const today = new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 8 * 1000 + 'z'.charCodeAt(0)); // UTC-based
@@ -193,8 +198,23 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     imgStyle.objectFit = 'contain';
   }
 
+  useEffect(() => {
+    const key = `pokedle_confetti_zoom_${seed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = isCorrect;
+  }, [isCorrect, seed]);
+
   return (
     <div style={{ textAlign: 'center', marginTop: 10, width: '100%' }}>
+      <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <style>{`
         /* Make the zoom image container always square and responsive */
         .zoom-img-container {
@@ -369,7 +389,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{
+          <div ref={lastGuessRef} style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,

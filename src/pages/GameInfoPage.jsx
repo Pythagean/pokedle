@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 import { GAMEINFO_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -35,6 +36,10 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const inputRef = useRef(null);
+    const lastGuessRef = useRef(null);
+    const [showConfetti, setShowConfetti] = useState(false);
+    const prevCorrectRef = useRef(false);
+    
     const today = new Date();
     const defaultSeed = (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
     const [resetSeed, setResetSeed] = useState(null);
@@ -124,6 +129,20 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
     // Only show the most recent guess
     const lastGuess = guesses[0];
     const isCorrect = lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name;
+
+    useEffect(() => {
+        const key = `pokedle_confetti_gameinfo_${seed}`;
+        let alreadyShown = false;
+        try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+        if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+            setShowConfetti(true);
+            try { sessionStorage.setItem(key, '1'); } catch (e) {}
+            const t = setTimeout(() => setShowConfetti(false), 2500);
+            prevCorrectRef.current = true;
+            return () => clearTimeout(t);
+        }
+        prevCorrectRef.current = isCorrect;
+    }, [isCorrect, seed]);
 
     // Clue renderers
     function renderClue(type) {
@@ -216,6 +235,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
 
     return (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                 <h2 style={{ margin: 0 }}>Game Info Mode</h2>
                 <InfoButton
@@ -312,7 +332,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
             )}
             {lastGuess && (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{
+                    <div ref={lastGuessRef} style={{
                         background: isCorrect ? '#a5d6a7' : '#ef9a9a',
                         border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
                         borderRadius: 12,

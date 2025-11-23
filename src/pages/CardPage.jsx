@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
+import Confetti from '../components/Confetti';
 import { CARD_HINT_THRESHOLDS, CardHints } from '../config/hintConfig';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
@@ -56,6 +57,10 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
+  const lastGuessRef = useRef(null);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prevCorrectRef = useRef(false);
+
 
   // Autocomplete options
   const pokemonNameMap = useMemo(() => {
@@ -225,6 +230,19 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   }
   // If correct, always show resized image
   const forceReveal = isCorrect;
+  useEffect(() => {
+    const key = `pokedle_confetti_card_${baseSeed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
+      setShowConfetti(true);
+      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      const t = setTimeout(() => setShowConfetti(false), 2500);
+      prevCorrectRef.current = true;
+      return () => clearTimeout(t);
+    }
+    prevCorrectRef.current = isCorrect;
+  }, [isCorrect, baseSeed]);
   // thresholds: [fullArtTypesThreshold, revealFullCardThreshold, normalTypesThreshold]
   const [fullArtTypesT, revealFullCardT, normalTypesT] = CARD_HINT_THRESHOLDS;
   // Reveal full card after revealFullCardT guesses
@@ -239,6 +257,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
+      <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
         <h2 style={{ margin: 0 }}>Card Mode</h2>
         <InfoButton
@@ -510,7 +529,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       {/* Guess boxes like AbilityPage */}
       {guesses.length > 0 && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{
+          <div ref={lastGuessRef} style={{
             background: guesses[0].name === (answer && answer.name) ? '#a5d6a7' : '#ef9a9a',
             border: `2px solid ${guesses[0].name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
