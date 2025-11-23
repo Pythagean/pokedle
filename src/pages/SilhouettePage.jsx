@@ -125,10 +125,10 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   useEffect(() => {
     const key = `pokedle_confetti_silhouette_${seed}`;
     let alreadyShown = false;
-    try { alreadyShown = !!sessionStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
     if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
       setShowConfetti(true);
-      try { sessionStorage.setItem(key, '1'); } catch (e) {}
+      try { localStorage.setItem(key, '1'); } catch (e) {}
       const t = setTimeout(() => setShowConfetti(false), 2500);
       prevCorrectRef.current = true;
       return () => clearTimeout(t);
