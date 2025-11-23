@@ -40,15 +40,16 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
 
     // Load history of simple daily summaries from localStorage (written by App)
     const [history, setHistory] = useState([]);
+    const [showDays, setShowDays] = useState(10); // temporary runtime control for number of days to show
     useEffect(() => {
         try {
             const raw = localStorage.getItem('pokedle_results_history');
             if (!raw) return;
             const parsed = JSON.parse(raw);
             if (!Array.isArray(parsed)) return;
-            // Show the most recent 10 entries (reverse chronological)
-            const recent = parsed.slice(-10).reverse();
-            setHistory(recent);
+            // Keep the full parsed history in reverse-chronological order (newest first)
+            const full = parsed.slice().reverse();
+            setHistory(full);
         } catch (e) {
             // ignore
         }
@@ -116,7 +117,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                         
                         <button onClick={() => setShowDetails(s => !s)} style={{ height: 40, padding: '8px 12px', borderRadius: 8, background: showDetails ? '#1976d2' : '#efefef', color: showDetails ? '#fff' : '#111', border: '1px solid #e0e0e0', cursor: 'pointer', fontSize: 14 }}>{showDetails ? 'Hide Guesses' : 'Show Guesses'}</button>
-                        <button onClick={handleCopy} title="Copy" style={{ height: 40, minWidth: 64, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14 }}>Copy</button>
+                        <button onClick={handleCopy} title="Copy" style={{ height: 40, minWidth: 64, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111', WebkitTextFillColor: '#111', forcedColorAdjust: 'none' }}>Copy</button>
                     </div>
                     <div style={{ fontWeight: 700, fontSize: 16, textAlign: 'right' }}>{`Total: ${total}`}</div>
                 </div>
@@ -125,43 +126,134 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
             {/* Previous days history (last 10) - moved to its own container */}
             {history && history.length > 0 ? (
                 <div style={{ marginTop: 14, maxWidth: 780, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
-                    <div style={{ alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, gap: 12 }}>
                         <div style={{ fontWeight: 700, alignContent: 'center' }}>Previous Results</div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <label style={{ fontSize: 13, color: '#444', marginRight: 8 }}>Show last</label>
+                            <select value={showDays} onChange={e => setShowDays(Number(e.target.value))} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid #e6e6e6' }}>
+                                <option value={5}>5</option>
+                                <option value={7}>7</option>
+                                <option value={10}>10</option>
+                                <option value={14}>14</option>
+                                <option value={21}>21</option>
+                                <option value={30}>30</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button onClick={() => {
+                                // Add demo days equal to showDays
+                                const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
+                                const today = new Date();
+                                const demo = [];
+                                for (let i = 0; i < showDays; i++) {
+                                    const dt = new Date(today);
+                                    dt.setDate(today.getDate() - i);
+                                    const y = dt.getFullYear();
+                                    const m = String(dt.getMonth() + 1).padStart(2, '0');
+                                    const d = String(dt.getDate()).padStart(2, '0');
+                                    const dateKey = `${y}${m}${d}`;
+                                    const results = modes.map(mn => {
+                                        const solved = Math.random() > 0.25;
+                                        return {
+                                            key: mn.toLowerCase().replace(/\s+/g, '_'),
+                                            label: mn,
+                                            solved,
+                                            guessCount: solved ? Math.floor(Math.random() * 6) + 1 : undefined
+                                        };
+                                    });
+                                    demo.push({ date: dateKey, results });
+                                }
+                                setHistory(prev => {
+                                    // prepend demo entries so they appear as the newest
+                                    return [...demo, ...prev];
+                                });
+                            }} style={{ marginLeft: 10, padding: '6px 10px', borderRadius: 6, border: '1px solid #e6e6e6', background: '#fafafa', cursor: 'pointer' }}>Add Demo Days</button>
+                        </div>
                     </div>
                     <div style={{ overflowX: 'auto' }}>
                         {(() => {
+                            // Modes down the left, dates across the top
                             const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
-                            const gridCols = `120px repeat(${modes.length}, 1fr) 64px`;
+                            const displayedHistory = history.slice(0, showDays);
+                            const dates = displayedHistory.map(h => {
+                                // h.date is YYYYMMDD
+                                const y = parseInt(String(h.date).slice(0,4), 10);
+                                const mth = parseInt(String(h.date).slice(4,6), 10) - 1;
+                                const dnum = parseInt(String(h.date).slice(6,8), 10);
+                                const weekdayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                                const dt = new Date(y, mth, dnum);
+                                const wd = dt.getDay();
+                                return weekdayNames[wd] || '';
+                            });
+
+                            // First column for mode labels (narrower), then one column per date, then a Total column
+                            // Use a reasonable min width for date columns so they remain readable on mobile
+                            const gridCols = `70px repeat(${dates.length}, minmax(24px, 1fr)) 72px`;
+
+                            // Precompute lookup map for quick access: dateIndex -> label -> value
+                            const lookup = {};
+                            displayedHistory.forEach((h, idx) => {
+                                const map = {};
+                                (h.results || []).forEach(r => {
+                                    if (!r || !r.label) return;
+                                    map[String(r.label).toLowerCase()] = (r.solved && typeof r.guessCount === 'number') ? r.guessCount : '-';
+                                });
+                                lookup[idx] = map;
+                            });
+
+                            // compute totals per date (column) and overall total
+                            const dateTotals = displayedHistory.map(h => {
+                                return (h.results || []).reduce((acc, r) => acc + ((r.solved && typeof r.guessCount === 'number') ? r.guessCount : 0), 0);
+                            });
+                            const overallTotal = dateTotals.reduce((a, b) => a + b, 0);
+
                             return (
                                 <div>
-                                    {/* header row */}
+                                    {/* header row: empty cell then date columns then Total */}
                                     <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: 13 }}>
-                                        <div style={{ fontWeight: 700 }}>Date</div>
-                                        {modes.map(m => (
-                                            <div key={m} style={{ fontWeight: 700, textAlign: 'center' }}>{m}</div>
+                                        <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 6 }}>Mode</div>
+                                        {dates.map((dLabel, i) => (
+                                            <div key={i} style={{ fontWeight: 700, textAlign: 'center' }}>{dLabel}</div>
                                         ))}
                                         <div style={{ fontWeight: 700, textAlign: 'right' }}>Total</div>
                                     </div>
 
-                                    {/* rows */}
-                                    {history.map((h, idx) => {
-                                        const y = String(h.date).slice(0,4);
-                                        const mth = String(h.date).slice(4,6);
-                                        const dnum = String(h.date).slice(6,8);
-                                        const dateLabel = `${dnum}/${mth}/${y}`;
-                                        const totalForDay = (h.results || []).reduce((acc, r) => acc + (r.solved && typeof r.guessCount === 'number' ? r.guessCount : 0), 0);
+
+                                    {/* mode rows */}
+                                    {modes.map((mode, mi) => {
+                                        // sum across dates for this mode
+                                        let modeTotal = 0;
+                                        let anyNumber = false;
+                                        const cells = displayedHistory.map((h, hi) => {
+                                            const map = lookup[hi] || {};
+                                            const val = map[String(mode).toLowerCase()];
+                                            if (typeof val === 'number') {
+                                                modeTotal += val;
+                                                anyNumber = true;
+                                                return val;
+                                            }
+                                            return '-';
+                                        });
+
                                         return (
-                                            <div key={idx} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: idx !== history.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
-                                                <div style={{ fontWeight: 700 }}>{dateLabel}</div>
-                                                {modes.map(modeLabel => {
-                                                    const found = (h.results || []).find(r => String((r.label || '')).toLowerCase() === String(modeLabel).toLowerCase());
-                                                    const val = found ? (found.solved ? found.guessCount : '-') : '-';
-                                                    return <div key={modeLabel} style={{ textAlign: 'center' }}>{val}</div>;
-                                                })}
-                                                <div style={{ textAlign: 'right', fontWeight: 800 }}>{totalForDay}</div>
+                                            <div key={mi} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: mi !== modes.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
+                                                <div style={{ fontWeight: 500, textAlign: 'left', paddingLeft: 3 }}>{mode}</div>
+                                                {cells.map((v, i) => (
+                                                    <div key={i} style={{ textAlign: 'center' }}>{v}</div>
+                                                ))}
+                                                <div style={{ textAlign: 'right', fontWeight: 800 }}>{anyNumber ? modeTotal : '-'}</div>
                                             </div>
                                         );
                                     })}
+
+                                    {/* totals row per date (moved to bottom) */}
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderTop: '1px solid #eee', fontSize: 13, background: '#fbfbfb', marginTop: 6 }}>
+                                        <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 6 }}>Total</div>
+                                        {dateTotals.map((dt, i) => (
+                                            <div key={i} style={{ fontWeight: 800, textAlign: 'center' }}>{dt}</div>
+                                        ))}
+                                        <div style={{ fontWeight: 800, textAlign: 'right' }}>{overallTotal}</div>
+                                    </div>
                                 </div>
                             );
                         })()}
