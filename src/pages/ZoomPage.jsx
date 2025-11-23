@@ -138,7 +138,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const minZoom = 0.9;
   const maxSteps = 15;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  const easePower = 2; // cubic easing; increase to make initial steps even gentler
+  const easePower = 1.5; // cubic easing; increase to make initial steps even gentler
   const eased = Math.pow(t, easePower);
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
   const zoom = isCorrect ? 0.9 : computedZoom;

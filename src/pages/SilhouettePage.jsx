@@ -152,7 +152,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const minZoom = 1.0;
   const maxSteps = 15;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  const easePower = 1.2;
+  const easePower = 1.1;
   const eased = Math.pow(t, easePower);
   let zoom = maxZoom - (maxZoom - minZoom) * eased;
 
