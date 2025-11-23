@@ -176,7 +176,23 @@ export default function GuessInput({
             setHighlightedIdx(idx => (idx + sortedOptions.length - 1) % sortedOptions.length);
             setDropdownOpen(true);
           }
-          // Do not handle Enter here; let form onSubmit handle it
+          // If Enter is pressed while an item is highlighted, submit the
+          // highlighted item from the sorted (visual) list so keyboard
+          // selection matches what the user sees. Prevent the default
+          // form submit so we don't fall back to using the unsorted
+          // `filteredOptions` in parent form handlers.
+          else if (e.key === 'Enter') {
+            if (typeof highlightedIdx === 'number' && highlightedIdx >= 0 && sortedOptions.length > 0) {
+              e.preventDefault();
+              const opt = sortedOptions[Math.min(highlightedIdx, sortedOptions.length - 1)];
+              if (opt && opt.name) {
+                handleGuessSubmit(null, opt.name);
+                setDropdownOpen(false);
+                setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 0);
+              }
+            }
+            // otherwise, let the form handle the Enter (e.g., when no highlight)
+          }
         }}
         placeholder="Enter a Pokémon name..."
         style={{ width: '100%', minWidth: 120, maxWidth: 500, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
