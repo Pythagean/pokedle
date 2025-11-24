@@ -139,11 +139,11 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
 
   // Zoom logic: start at `maxZoom` and progress toward `minZoom` over `maxSteps` guesses.
   // Use a cubic ease-in so the first zoom-outs are small and the reveal increases gradually.
-  const maxZoom = 15.0;
+  const maxZoom = 13.0;
   const minZoom = 0.9;
-  const maxSteps = 13;
+  const maxSteps = 10;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  const easePower = 1.5; // cubic easing; increase to make initial steps even gentler
+  const easePower = 1.15; // cubic easing; increase to make initial steps even gentler
   const eased = Math.pow(t, easePower);
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
   const zoom = isCorrect ? 0.9 : computedZoom;
