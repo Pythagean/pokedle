@@ -267,7 +267,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
                                 {isCorrect && (
                                     <>
-                                        <CongratsMessage guessCount={guesses.length} mode="Game Info Mode" />
+                                        <CongratsMessage guessCount={guesses.length} mode="Game Data" />
                                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                                     </>
                                 )}

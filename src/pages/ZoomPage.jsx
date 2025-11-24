@@ -302,7 +302,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Zoom Mode" />
+            <CongratsMessage guessCount={guesses.length} mode="Zoom" />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}

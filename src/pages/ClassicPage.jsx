@@ -456,7 +456,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         <Confetti active={showConfetti} centerRef={solved ? lastGuessRef : null} />
         {congratsVisible ? (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Classic Mode" classic={true} guesses={guesses} answer={dailyPokemon} />
+            <CongratsMessage guessCount={guesses.length} mode="Classic" classic={true} guesses={guesses} answer={dailyPokemon} />
             <ResetCountdown active={true} resetHourUtc={RESET_HOUR_UTC} />
           </>
         ) : (

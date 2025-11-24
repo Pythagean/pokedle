@@ -257,7 +257,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
         )}
         {isCorrect && (
           <>
-          <CongratsMessage guessCount={guesses.length} mode="Colours Mode" />
+          <CongratsMessage guessCount={guesses.length} mode="Colours" />
           <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}

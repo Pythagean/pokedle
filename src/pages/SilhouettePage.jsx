@@ -406,7 +406,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
             <>
-            <CongratsMessage guessCount={guesses.length} mode="Silhouette Mode" />
+            <CongratsMessage guessCount={guesses.length} mode="Silhouette" />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}

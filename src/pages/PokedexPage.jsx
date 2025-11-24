@@ -188,7 +188,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
         )}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Pokedex Mode" />
+            <CongratsMessage guessCount={guesses.length} mode="Pokédex" />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}

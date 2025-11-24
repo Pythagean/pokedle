@@ -386,7 +386,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
           )}
           {isCorrect && (
             <>
-              <CongratsMessage guessCount={guesses.length} mode="Card Mode" />
+              <CongratsMessage guessCount={guesses.length} mode="Card" />
               <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
             </>
           )}
