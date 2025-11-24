@@ -41,12 +41,23 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
 
-  // Use UTC date and day for consistency
+  // Use UTC date for seed, and determine card-type based on the UTC-based "day" used after the
+  // 18:00 UTC reset. If current UTC hour >= RESET_HOUR_UTC, the card type should be based on
+  // the following UTC date (i.e. the same day used for the seed/answer).
   const today = new Date();
-  const utcDay = today.getUTCDay();
+  const seedDateForType = (() => {
+    const y = today.getUTCFullYear();
+    const m = today.getUTCMonth();
+    const d = today.getUTCDate();
+    if (today.getUTCHours() >= RESET_HOUR_UTC) {
+      return new Date(Date.UTC(y, m, d + 1, 0, 0, 0));
+    }
+    return new Date(Date.UTC(y, m, d, 0, 0, 0));
+  })();
+  const utcDayForType = seedDateForType.getUTCDay();
   // Debug: allow toggling day mode
   const [debugDay, setDebugDay] = useState(null); // null = real day, 0 = Sunday, 6 = Saturday, 1-5 = Weekday
-  const effectiveDay = debugDay !== null ? debugDay : utcDay;
+  const effectiveDay = debugDay !== null ? debugDay : utcDayForType;
   
   const baseSeed = getSeedFromUTCDate(today) + 9999; // unique for card page, UTC-based
   const rng = useMemo(() => mulberry32(baseSeed + reloadSeed), [baseSeed, reloadSeed]);
