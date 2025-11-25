@@ -317,10 +317,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // and the neutral center (0.5, 0.5) as zoom decreases
   const centerX = targetX * (1 - interp) + 0.5 * interp;
   const centerY = targetY * (1 - interp) + 0.5 * interp;
-  // Translate so that (centerX, centerY) is at the center of the view
-  // For scale s, translation in percent: (0.5 - center) * 100 * s
-  const translateX = (0.5 - centerX) * 100 * zoom;
-  const translateY = (0.5 - centerY) * 100 * zoom;
+  // (No explicit translate) The image is scaled around a computed transform-origin
 
   if (isCorrect) {
     zoom = 1.0;
@@ -329,12 +326,16 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Combine mirroring and zoom — use scale with transformOrigin anchored at the
   // interpolated focal center so the silhouette zooms out from the chosen point.
   let scaleX = shouldMirror ? -1 : 1;
-  imgStyle.transition = 'transform 200ms cubic-bezier(.2,.8,.2,1)';
+  imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
   // Compute a transformOrigin that maps the logical target (targetX/targetY)
   // into the rendered image coordinates inside the container. This keeps the
   // chosen focus point visually stationary during scaling even with letterboxing.
   let originPercentX = null;
   let originPercentY = null;
+  let adjustedOriginX = null;
+  let adjustedOriginY = null;
+  const ORIGIN_HOLD_GUESSES = 3;
+  const ORIGIN_END_GUESSES = 13;
   if (imgNatural.w && imgNatural.h && containerSize.w && containerSize.h) {
     const imgAspect = imgNatural.w / imgNatural.h;
     const containerAspect = containerSize.w / containerSize.h;
@@ -358,13 +359,49 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     const focalPixelY = offsetTop + focalY * renderH;
     originPercentX = Math.max(0, Math.min(1, focalPixelX / containerSize.w));
     originPercentY = Math.max(0, Math.min(1, focalPixelY / containerSize.h));
+    // originScale: hold at 1.0 for the first ORIGIN_HOLD_GUESSES guesses,
+    // then linearly fade to 0.0 by ORIGIN_END_GUESSES (clamped).
+    let originScale;
+    if (guesses.length <= ORIGIN_HOLD_GUESSES) {
+      originScale = 1.0;
+    } else {
+      const span = ORIGIN_END_GUESSES - ORIGIN_HOLD_GUESSES;
+      originScale = 1 - Math.min(Math.max(0, Math.min(guesses.length, ORIGIN_END_GUESSES) - ORIGIN_HOLD_GUESSES) / span, 1);
+    }
+    adjustedOriginX = 0.5 + (originPercentX - 0.5) * originScale;
+    adjustedOriginY = 0.5 + (originPercentY - 0.5) * originScale;
+    console.log('Silhouette origin debug', {
+      imgNatural, containerSize,
+      imgAspect, containerAspect,
+      renderW, renderH,
+      offsetLeft, offsetTop,
+      focalXLogical, focalYLogical,
+      focalX, focalY,
+      focalPixelX, focalPixelY,
+      originPercentX, originPercentY,
+      adjustedOriginX, adjustedOriginY,
+      originScale,
+      shouldMirror,
+      targetX, targetY,
+      centerX, centerY,
+    });
   }
   if (originPercentX === null || originPercentY === null) {
     const fallbackX = shouldMirror ? (1 - centerX) : centerX;
     const fallbackY = centerY;
-    imgStyle.transformOrigin = `${fallbackX * 100}% ${fallbackY * 100}%`;
+    let originScale;
+    if (guesses.length <= ORIGIN_HOLD_GUESSES) {
+      originScale = 1.0;
+    } else {
+      const span = ORIGIN_END_GUESSES - ORIGIN_HOLD_GUESSES;
+      originScale = 1 - Math.min(Math.max(0, Math.min(guesses.length, ORIGIN_END_GUESSES) - ORIGIN_HOLD_GUESSES) / span, 1);
+    }
+    const adjustedFallbackX = 0.5 + (fallbackX - 0.5) * originScale;
+    const adjustedFallbackY = 0.5 + (fallbackY - 0.5) * originScale;
+    imgStyle.transformOrigin = `${adjustedFallbackX * 100}% ${adjustedFallbackY * 100}%`;
   } else {
-    imgStyle.transformOrigin = `${originPercentX * 100}% ${originPercentY * 100}%`;
+    // use adjusted origin computed above
+    imgStyle.transformOrigin = `${adjustedOriginX * 100}% ${adjustedOriginY * 100}%`;
   }
   imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
 
@@ -392,14 +429,14 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           }
         />
         
-            {/* <button
+            <button
               style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
               onClick={() => setDebugOverlay(d => !d)}
               aria-pressed={debugOverlay}
               aria-label="Toggle silhouette debug overlay"
             >
               {debugOverlay ? 'Debug: ON' : 'Debug'}
-            </button> */}
+            </button>
         
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
