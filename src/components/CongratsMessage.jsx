@@ -318,7 +318,7 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
       <div className="silhouette-congrats" style={{ marginTop: 6, display: 'flex', flexDirection: classic ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
             <div className="congrats-text" style={{ fontSize: 16, flex: '1 1 auto', minWidth: 0, display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ whiteSpace: 'normal' }}>
-                {phrasePrefix}- You found the Pokédle #{dayNumber} <strong style={{ fontWeight: 700 }}>{mode}</strong> Pokémon in {guessCount} {guessCount === 1 ? 'guess' : 'guesses'}! {celebrationEmoji}
+                {phrasePrefix}- You found the Pokédle #{dayNumber} <strong style={{ fontWeight: 700 }}>{mode}</strong> Pokémon in <strong>{guessCount}</strong> {guessCount === 1 ? 'guess' : 'guesses'}! {celebrationEmoji}
               </span>
             </div>
         
@@ -364,7 +364,7 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
             justifyContent: 'center'
           }}
             onClick={() => {
-            const text = `${phrasePrefix}I found the Pokedle #${dayNumber} ${mode} Pokémon in ${guessCount} ${guessCount === 1 ? 'guess' : 'guesses'}! ${celebrationEmoji}`;
+            const text = `${phrasePrefix}- I found the Pokedle #${dayNumber} ${mode} Pokémon in ${guessCount} ${guessCount === 1 ? 'guess' : 'guesses'}! ${celebrationEmoji}`;
             let toCopy = text;
             if (classic && Array.isArray(guesses) && answer) {
               const partialMatch = (arr1, arr2) => {
