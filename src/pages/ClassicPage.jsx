@@ -542,12 +542,12 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
                   if (dailyPokemon && typeof poke.height === 'number' && typeof dailyPokemon.height === 'number') {
                     const hDiff = Math.abs((poke.height || 0) - (dailyPokemon.height || 0));
                     const norm = Math.max(1, dailyPokemon.height || 1);
-                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.55, 1.05);
+                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.65, 1.1);
                   }
                   if (dailyPokemon && typeof poke.weight === 'number' && typeof dailyPokemon.weight === 'number') {
                     const wDiff = Math.abs((poke.weight || 0) - (dailyPokemon.weight || 0));
                     const normW = Math.max(1, dailyPokemon.weight || 1);
-                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.55, 1.05);
+                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.65, 1.1);
                   }
                 } catch (e) {
                   // fallback to defaults
@@ -787,16 +787,16 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
           font-size: 12px;
         }
         .match {
-          background: #a5d6a7 !important;
-          border-color: #388e3c !important;
+          background: #c1e4c2ff !important;
+          border-color: #4ba34fff !important;
         }
         .partial {
-          background: #fff59d !important;
-          border-color: #fbc02d !important;
+          background: #f9f1a8ff !important;
+          border-color: #faca4eff !important;
         }
         .miss {
-          background: #ef9a9a !important;
-          border-color: #b71c1c !important;
+          background: #f2acacff !important;
+          border-color: #c03636ff !important;
         }
         @media (max-width: 700px) {
           .feedback-grid, .classic-grid-fit > div {
@@ -831,7 +831,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
             height: 100% !important;
           }
           .bg-icon img {
-            opacity: 0.28 !important;
+            opacity: 0.34 !important;
             width: 100% !important;
             height: 100% !important;
           }
