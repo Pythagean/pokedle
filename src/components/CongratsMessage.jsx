@@ -76,8 +76,8 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
 
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const todayEffective = effectiveUTCDate(new Date());
-  // Epoch: first day is today
-  const epoch = todayEffective;
+  // Epoch: first day is 2025-11-24 (use effective UTC date so RESET_HOUR_UTC applies)
+  const epoch = effectiveUTCDate(new Date('2025-11-24T00:00:00Z'));
   const dayNumber = Math.floor((todayEffective.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
 
   // Phrase dictionary: each entry has text, mode ('all' allowed), and inclusive guess range (min..max)
