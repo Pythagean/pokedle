@@ -13,16 +13,56 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
     }
   }, []);
 
-  // Pick a small celebratory emoji based on how many guesses it took
-  const getEmojiForGuesses = (n) => {
-    if (n === 1) return '🎯';
-    if (n >= 2 && n <= 3) return '🔥';
-    if (n >= 4 && n <= 5) return '⚡️';
-    if (n >= 6 && n <= 8) return '👍';
-    if (n >= 9 && n <= 12) return '🫢';
-    return '💀';
+  // Emoji pools by guess-count ranges. Pick a random emoji from the
+  // appropriate pool when the component mounts or when `guessCount`
+  // changes so the celebration feels lively.
+  const EMOJI_POOLS = {
+    excellent: ['🎯', '🏆', '✨', '🌟'],
+    veryGood: ['🔥', '💥', '⚡️', '🎉'],
+    good: ['⚡️', '👍', '👏', '😄'],
+    meh: ['👍', '🙂', '🙂', '😌'],
+    poor: ['🫢', '😅', '🙃', '🤏'],
+    awful: ['💀', '😬', '😵', '😵‍💫']
   };
-  const celebrationEmoji = getEmojiForGuesses(guessCount);
+
+  function pickPool(n) {
+    if (n === 1) return EMOJI_POOLS.excellent;
+    if (n >= 2 && n <= 3) return EMOJI_POOLS.veryGood;
+    if (n >= 4 && n <= 5) return EMOJI_POOLS.good;
+    if (n >= 6 && n <= 8) return EMOJI_POOLS.meh;
+    if (n >= 9 && n <= 12) return EMOJI_POOLS.poor;
+    return EMOJI_POOLS.awful;
+  }
+
+  const [celebrationEmoji, setCelebrationEmoji] = useState(null);
+
+  useEffect(() => {
+    // Persist one emoji per player per day/mode/guessCount so it remains
+    // stable across reloads for that player. Use effective UTC day.
+    try {
+      const now = new Date();
+      let effDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+      if (now.getUTCHours() >= RESET_HOUR_UTC) {
+        effDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+      }
+      const dayStr = effDay.toISOString().slice(0, 10).replace(/-/g, '');
+      const storageKey = `pokedle_emoji_${dayStr}_${(mode || '').replace(/\s+/g, '_')}_${guessCount}_${phraseResetSeed || 0}`;
+      let stored = null;
+      try { stored = localStorage.getItem(storageKey); } catch (e) { stored = null; }
+      if (stored) {
+        setCelebrationEmoji(stored);
+        return;
+      }
+      const pool = pickPool(guessCount || 0);
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      setCelebrationEmoji(pick);
+      try { localStorage.setItem(storageKey, pick); } catch (e) {}
+    } catch (e) {
+      // Fallback: non-persistent random pick
+      const pool = pickPool(guessCount || 0);
+      setCelebrationEmoji(pool[Math.floor(Math.random() * pool.length)]);
+    }
+  }, [guessCount, mode, phraseResetSeed]);
 
   // Compute Pokedle day number. The first day is today (day 1).
   const effectiveUTCDate = (d) => {
@@ -243,18 +283,33 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
     return modeMatch && guessCount >= p.min && guessCount <= p.max;
   });
 
-  // Pick a phrase deterministically and substitute any {token} placeholders from POKEMON
+  // Pick a phrase per-player (non-deterministic across players) but keep it
+  // stable for that player for the same day/mode/guessCount by persisting
+  // the final text in localStorage. This gives different players different
+  // messages while ensuring the same player sees the same message on reload.
   let phrasePrefix = '';
   if (candidates.length) {
-    const chosen = candidates[Math.floor(rng() * candidates.length)];
-    let text = chosen.text || '';
-    text = text.replace(/\{(\w+)\}/g, (full, key) => {
-      const list = POKEMON[key];
-      if (!Array.isArray(list) || list.length === 0) return full;
-      const idx = Math.floor(rng() * list.length);
-      return list[idx];
-    });
-    if (text) phrasePrefix = text + ' ';
+    const dayKey = getYYYYMMDD(new Date());
+    const storageKey = `pokedle_phrase_${dayKey}_${(mode||'').replace(/\s+/g,'_')}_${guessCount}_${phraseResetSeed||0}`;
+    let stored = null;
+    try { stored = localStorage.getItem(storageKey); } catch (e) { stored = null; }
+    if (stored) {
+      phrasePrefix = stored + ' ';
+    } else {
+      // Pick a random candidate and substitute tokens randomly, then persist
+      const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+      let text = chosen.text || '';
+      text = text.replace(/\{(\w+)\}/g, (full, key) => {
+        const list = POKEMON[key];
+        if (!Array.isArray(list) || list.length === 0) return full;
+        const idx = Math.floor(Math.random() * list.length);
+        return list[idx];
+      });
+      if (text) {
+        phrasePrefix = text + ' ';
+        try { localStorage.setItem(storageKey, text); } catch (e) {}
+      }
+    }
   }
 
   return (
