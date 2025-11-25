@@ -175,6 +175,9 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
       <img
         src={spriteColourPath}
         alt="Sprite colours"
+        draggable={false}
+        onDragStart={e => e.preventDefault()}
+        onContextMenu={e => e.preventDefault()}
         style={{
           width: 'auto',
           maxWidth: '100%',
@@ -194,6 +197,9 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
           <img
             src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/top_30/${dailyPokemon.id}.png`}
             alt="Top 30 colours"
+            draggable={false}
+            onDragStart={e => e.preventDefault()}
+            onContextMenu={e => e.preventDefault()}
             style={{ width: 'auto', maxWidth: '100%', height: 100, display: 'block', margin: '0 auto', objectFit: 'contain', borderRadius: 6, border: '1px solid #bbb', background: '#fff' }}
           />
         </div>
@@ -267,6 +273,9 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
             <img
               src={colourPath}
               alt=""
+              draggable={false}
+              onDragStart={e => e.preventDefault()}
+              onContextMenu={e => e.preventDefault()}
               style={{
                 display: 'block',
                 width: isCorrect ? '60%' : '100%',

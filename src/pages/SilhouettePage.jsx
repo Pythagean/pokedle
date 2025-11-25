@@ -417,6 +417,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               src={silhouettePath}
               alt="Silhouette"
               className="silhouette-img"
+              draggable={false}
+              onDragStart={e => e.preventDefault()}
+              onContextMenu={e => e.preventDefault()}
               style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect || !realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
@@ -428,6 +431,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               src={realImagePath}
               alt={dailyPokemon.name}
               className="silhouette-img"
+              draggable={false}
+              onDragStart={e => e.preventDefault()}
+              onContextMenu={e => e.preventDefault()}
               style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
               onLoad={e => { setRealLoaded(true); }}
               onError={e => { setRealLoaded(false); }}

@@ -309,9 +309,12 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
          <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
              {imgLoaded && (
-               <img
+              <img
                  src={realImagePath}
                  alt={dailyPokemon.name}
+                 draggable={false}
+                 onDragStart={e => e.preventDefault()}
+                 onContextMenu={e => e.preventDefault()}
                  style={{ ...imgStyle, position: 'absolute', inset: 0 }}
                  onLoad={e => {
                    setImgLoaded(true);

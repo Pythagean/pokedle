@@ -399,6 +399,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                     src={cardPath.resized}
                     alt={answer ? answer.name : 'Pokemon Card'}
                     className="card-img card-img-resized"
+                    draggable={false}
+                    onDragStart={e => e.preventDefault()}
+                    onContextMenu={e => e.preventDefault()}
                     style={{
                       borderRadius: 8,
                       filter: `blur(${blurLevel}px)`,
@@ -414,6 +417,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                         src={cardPath.resized}
                         alt={answer ? answer.name : 'Pokemon Card'}
                         className="card-img card-img-resized overlay"
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        onContextMenu={e => e.preventDefault()}
                         style={{
                           zIndex: 1,
                           borderRadius: 8,
@@ -428,6 +434,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                         src={cardPath.cropped}
                         alt={answer ? answer.name : 'Pokemon Card'}
                         className="card-img card-img-cropped overlay"
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        onContextMenu={e => e.preventDefault()}
                         style={{
                           zIndex: 2,
                           borderRadius: 8,
