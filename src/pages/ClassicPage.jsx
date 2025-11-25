@@ -45,6 +45,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
   const dropdownRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPending, setConfettiPending] = useState(false);
   const prevCorrectRef = useRef(false);
 
   // Get today's date as seed, use page key for deterministic daily selection
@@ -193,22 +194,10 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
 
   // Check if the daily Pokemon has been guessed
   const solved = dailyPokemon && guesses.some(g => g.name === dailyPokemon.name);
-
-  useEffect(() => {
-    const key = `pokedle_confetti_classic_${seed}`;
-    let alreadyShown = false;
-    try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
-    if (solved && !prevCorrectRef.current && !alreadyShown) {
-      setShowConfetti(true);
-      try { localStorage.setItem(key, '1'); } catch (e) {}
-      const t = setTimeout(() => setShowConfetti(false), 2500);
-      prevCorrectRef.current = true;
-      return () => clearTimeout(t);
-    }
-    prevCorrectRef.current = solved;
-  }, [solved, seed]);
+  
 
   // Delay showing the CongratsMessage until after the revealRow animation completes
+  // (declare this first so other effects can reference it without TDZ issues)
   const [congratsVisible, setCongratsVisible] = useState(false);
   useEffect(() => {
     if (solved) {
@@ -219,6 +208,36 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
       setCongratsVisible(false);
     }
   }, [solved, revealRow]);
+
+  // When the puzzle is solved, mark confetti as pending unless it was
+  // already shown for this seed. We only actually start the confetti when
+  // the congrats message becomes visible so the animation runs for the
+  // full duration (avoids cutting it off when reveal animations delay it).
+  useEffect(() => {
+    const key = `pokedle_confetti_classic_${seed}`;
+    let alreadyShown = false;
+    try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
+    if (solved && !prevCorrectRef.current && !alreadyShown) {
+      setConfettiPending(true);
+    } else if (!solved) {
+      setConfettiPending(false);
+    }
+    prevCorrectRef.current = solved;
+  }, [solved, seed]);
+
+  // Start the confetti when the congrats UI is visible and we have a pending
+  // request. Persist the "shown" flag to localStorage and clear the pending
+  // state. Keep the confetti visible for the same duration as before.
+  useEffect(() => {
+    if (!congratsVisible || !confettiPending) return;
+    const key = `pokedle_confetti_classic_${seed}`;
+    setShowConfetti(true);
+    try { localStorage.setItem(key, '1'); } catch (e) {}
+    const t = setTimeout(() => setShowConfetti(false), 2500);
+    setConfettiPending(false);
+    prevCorrectRef.current = true;
+    return () => clearTimeout(t);
+  }, [congratsVisible, confettiPending, seed]);
 
   if (!pokemonData) return <div>Loading Pokémon...</div>;
 
@@ -453,7 +472,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
         </div>
       </div>
       <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
-        <Confetti active={showConfetti} centerRef={solved ? lastGuessRef : null} />
+        <Confetti active={showConfetti && congratsVisible} centerRef={solved ? lastGuessRef : null} />
         {congratsVisible ? (
           <>
             <CongratsMessage guessCount={guesses.length} mode="Classic" classic={true} guesses={guesses} answer={dailyPokemon} />
