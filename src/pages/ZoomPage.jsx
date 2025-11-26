@@ -342,10 +342,9 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                        if (!point || point.length < 2) return null;
                        const ptX = Number(point[0]);
                        const ptY = Number(point[1]);
-                       // Normalize to 0..1 space
-                       let normX = ptX / imgNatural.w;
-                       let normY = ptY / imgNatural.h;
-                       if (shouldMirror) normX = 1 - normX;
+                       // Normalize to 0..1 space (no manual mirroring - the overlay transform handles it)
+                       const normX = ptX / imgNatural.w;
+                       const normY = ptY / imgNatural.h;
                        const px = Math.max(0, Math.min(100, normX * 100));
                        const py = Math.max(0, Math.min(100, normY * 100));
                        
