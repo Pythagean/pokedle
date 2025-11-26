@@ -274,6 +274,11 @@ def main():
         files = [f for f in os.listdir(src_dir) if f.lower().endswith('.png')]
     if args.partial:
         files = files[:10]
+    if args.verbose:
+        if args.sprites:
+            print(f"Selected sprite files only (-front). {len(files)} file(s) will be processed.")
+        else:
+            print(f"Selected all PNG files. {len(files)} file(s) will be processed.")
 
     import json
     # Load id->name mapping from JSON
