@@ -289,14 +289,14 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             </div>
           }
         />
-        <button
+        {/* <button
           style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
           onClick={() => setDebugOverlay(d => !d)}
           aria-pressed={debugOverlay}
           aria-label="Toggle zoom debug overlay"
         >
           {debugOverlay ? 'Debug: ON' : 'Debug'}
-        </button>
+        </button> */}
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
