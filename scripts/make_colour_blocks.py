@@ -50,6 +50,7 @@ def parse_args():
     parser.add_argument('--partial', action='store_true', help='Only process 10 files')
     parser.add_argument('--sprites', action='store_true', help='Only process sprite files with "-front" in the filename')
     parser.add_argument('--num-colors', type=int, default=10, help='Number of colors to extract via KMeans (default: 10)')
+    parser.add_argument('--num-blocks', type=int, default=None, help='Number of color blocks to produce in the output image (defaults to --num-colors)')
     parser.add_argument('--threshold', type=float, default=3.0, help='Lab distance threshold for considering colors similar (default: 3.0)')
     parser.add_argument('--jpg', action='store_true', help='Save color block images as JPEG instead of PNG')
     return parser.parse_args()
@@ -101,6 +102,83 @@ def get_most_common_colors(image_path, num_colors=10):
         result = [ (tuple(centers[i]), int(counts[i])) for i in order ]
         return result
 
+
+def merge_similar_clusters(colors, threshold=3.0):
+    """Merge clusters whose Lab distance is below `threshold`.
+    colors: list of (rgb_tuple, count) ordered by frequency.
+    Returns a new list of (rgb_tuple, count) ordered by frequency.
+    """
+    merged = []  # each item: {'rgb': (r,g,b), 'count': n, 'lab': lab}
+    for rgb, count in colors:
+        try:
+            rgb_int = tuple(int(c) for c in rgb)
+        except Exception:
+            # fallback if rgb is already ints
+            rgb_int = tuple(rgb)
+        lab = rgb_to_lab(rgb_int)
+        placed = False
+        for m in merged:
+            d = lab_distance(lab, m['lab'])
+            if d < threshold:
+                # merge into this cluster (weighted average)
+                total = m['count'] + count
+                m['rgb'] = tuple(int((m['rgb'][i] * m['count'] + rgb_int[i] * count) / total) for i in range(3))
+                m['count'] = total
+                m['lab'] = rgb_to_lab(m['rgb'])
+                placed = True
+                break
+        if not placed:
+            merged.append({'rgb': rgb_int, 'count': count, 'lab': lab})
+    # Convert back to list of tuples and sort by count desc
+    merged_list = [ (m['rgb'], m['count']) for m in merged ]
+    merged_list.sort(key=lambda x: -x[1])
+    return merged_list
+
+
+def reduce_clusters_to_n(colors, n):
+    """Agglomeratively merge the closest pair of clusters until `n` clusters remain.
+    colors: list of (rgb_tuple, count) ordered by frequency
+    Returns list of (rgb_tuple, count) ordered by frequency.
+    """
+    if n is None or n <= 0:
+        return colors
+    if len(colors) <= n:
+        return colors
+    # build mutable items with Lab precomputed
+    items = []
+    for rgb, count in colors:
+        try:
+            rgb_int = tuple(int(c) for c in rgb)
+        except Exception:
+            rgb_int = tuple(rgb)
+        items.append({'rgb': rgb_int, 'count': count, 'lab': rgb_to_lab(rgb_int)})
+
+    # Agglomerative merge: repeatedly merge the closest pair
+    while len(items) > n:
+        min_d = None
+        pair = (0, 1)
+        L = len(items)
+        for i in range(L):
+            for j in range(i + 1, L):
+                d = lab_distance(items[i]['lab'], items[j]['lab'])
+                if min_d is None or d < min_d:
+                    min_d = d
+                    pair = (i, j)
+        i, j = pair
+        a = items[i]
+        b = items[j]
+        total = a['count'] + b['count']
+        new_rgb = tuple(int((a['rgb'][k] * a['count'] + b['rgb'][k] * b['count']) / total) for k in range(3))
+        new_lab = rgb_to_lab(new_rgb)
+        new_item = {'rgb': new_rgb, 'count': total, 'lab': new_lab}
+        # remove higher index first
+        for idx in sorted((i, j), reverse=True):
+            items.pop(idx)
+        items.append(new_item)
+
+    items.sort(key=lambda x: -x['count'])
+    return [(it['rgb'], it['count']) for it in items]
+
 def is_similar(c1, c2, threshold=6):
     # Compare in Lab color space
     lab1 = rgb_to_lab(c1)
@@ -120,11 +198,36 @@ def create_color_blocks(colors, out_path):
     total_pixels = sum(count for color, count in colors)
     img_height = 500
     img_width = 1000  # total width of the output image
-    # Calculate block widths proportional to color frequency
-    block_widths = [max(1, int((count / total_pixels) * img_width)) for color, count in colors]
-    # Adjust last block to fill any rounding error
-    if block_widths:
-        block_widths[-1] = img_width - sum(block_widths[:-1])
+    # Calculate block widths proportional to color frequency.
+    # To avoid the last-block remainder looking disproportionately large due
+    # to integer truncation, compute float widths then distribute the
+    # leftover pixels according to the largest fractional remainders.
+    block_widths = []
+    if total_pixels <= 0:
+        # fallback: equal widths
+        n = len(colors)
+        base = img_width // n if n > 0 else img_width
+        block_widths = [base] * n
+        # adjust last to fill exactly
+        if block_widths:
+            block_widths[-1] = img_width - sum(block_widths[:-1])
+    else:
+        float_widths = [ (count / total_pixels) * img_width for color, count in colors ]
+        floors = [ int(w) for w in float_widths ]
+        frac = [ w - f for w, f in zip(float_widths, floors) ]
+        remaining = img_width - sum(floors)
+        # Ensure every block is at least 1 pixel: if any floor is 0, give it 1 and reduce remaining
+        for i in range(len(floors)):
+            if floors[i] < 1:
+                floors[i] = 1
+        remaining = img_width - sum(floors)
+        # Distribute remaining pixels to blocks with largest fractional parts
+        if remaining > 0:
+            # get indices sorted by fractional part descending
+            indices = sorted(range(len(frac)), key=lambda i: frac[i], reverse=True)
+            for i in range(remaining):
+                floors[indices[i % len(indices)]] += 1
+        block_widths = floors
     img = Image.new('RGB', (img_width, img_height), (255, 255, 255))
     x_start = 0
     for (color, count), width in zip(colors, block_widths):
@@ -140,6 +243,16 @@ def main():
     # Expose verbose to other helper functions for diagnostic printing
     global VERBOSE
     VERBOSE = bool(args.verbose)
+    # If num_blocks not provided, default to num_colors
+    if args.num_blocks is None:
+        args.num_blocks = args.num_colors
+
+    # When verbose, print the configured numbers the user requested
+    if VERBOSE:
+        try:
+            print(f"Verbose mode: extracting {args.num_colors} colors per image; producing {args.num_blocks} blocks")
+        except Exception:
+            print("Verbose mode: extracting <num_colors> colors per image; producing <num_blocks> blocks")
     src_dir = os.path.abspath(args.src_dir)
     if not os.path.isdir(src_dir):
         print(f"Source directory does not exist: {src_dir}", file=sys.stderr)
@@ -187,9 +300,21 @@ def main():
             print(f"[{idx+1}/{len(files)}] Processing {fname} -> {out_fname} ...")
         try:
             colors = get_most_common_colors(in_path, args.num_colors)
-            create_color_blocks(colors, out_path)
-            # Only consider top 5 colors, and select up to 3 visually distinct names with special rules
-            top_colors = colors[:5]
+            # Optionally merge visually-similar clusters before drawing blocks
+            merged_colors = merge_similar_clusters(colors, threshold=args.threshold)
+            # Reduce to requested number of blocks if necessary
+            reduced_colors = reduce_clusters_to_n(merged_colors, args.num_blocks)
+            if args.verbose:
+                print("    After merging/reducing clusters:")
+                for i, (c, cnt) in enumerate(reduced_colors, start=1):
+                    try:
+                        rgb = tuple(int(v) for v in c)
+                    except Exception:
+                        rgb = c
+                    print(f"      {i}: {rgb} - {cnt} px")
+            create_color_blocks(reduced_colors, out_path)
+            # Only consider top 5 colors (after merging/reducing), and select up to 3 visually distinct names with special rules
+            top_colors = reduced_colors[:5]
             csv_colors = []  # (rgb, name) for csv
             csv_names = []   # just names for csv
             seen = set()
@@ -234,10 +359,25 @@ def main():
             results.append(row)
             if args.verbose:
                 total_pixels = sum(count for color, count in colors)
-                print("    Colors (%):")
-                for i, (color, count) in enumerate(top_colors):
+                # Print full cluster list (all requested colors) for verbose mode
+                print("    All clusters (ordered by frequency):")
+                for i, (color, count) in enumerate(colors, start=1):
+                    # convert numpy ints to plain ints for nicer display
+                    try:
+                        rgb = tuple(int(c) for c in color)
+                    except Exception:
+                        rgb = color
                     percent = (count / total_pixels * 100) if total_pixels > 0 else 0
-                    print(f"      {i+1}: {color} - {percent:.1f}% - {rgb_to_name(color)}")
+                    print(f"      {i}: {rgb} - {percent:.1f}% - {rgb_to_name(rgb)}")
+                # Also print the top-5 summary for quick glance
+                print("    Top 5 (summary):")
+                for i, (color, count) in enumerate(top_colors, start=1):
+                    try:
+                        rgb = tuple(int(c) for c in color)
+                    except Exception:
+                        rgb = color
+                    percent = (count / total_pixels * 100) if total_pixels > 0 else 0
+                    print(f"      {i}: {rgb} - {percent:.1f}% - {rgb_to_name(rgb)}")
                 print(f"    Saved to {out_path}")
         except Exception as e:
             print(f"Error processing {fname}: {e}", file=sys.stderr)
