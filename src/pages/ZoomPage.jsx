@@ -139,14 +139,15 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
 
   // Zoom logic: start at `maxZoom` and progress toward `minZoom` over `maxSteps` guesses.
   // Use a cubic ease-in so the first zoom-outs are small and the reveal increases gradually.
-  const maxZoom = 13.0;
+  const maxZoom = 12.0;
   const minZoom = 0.9;
-  const maxSteps = 10;
+  const maxSteps = 13;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.15; // cubic easing; increase to make initial steps even gentler
   const eased = Math.pow(t, easePower);
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
   const zoom = isCorrect ? 0.9 : computedZoom;
+  // console.log('ZoomPage: zoom=', zoom, 't=', t, 'eased=', eased, 'guesses=', guesses.length);
   let edgeX = 0.5, edgeY = 0.5;
   let transformOrigin = '50% 50%';
   let imgStyle = {
@@ -182,16 +183,27 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     targetY = chosenZoomPoint.y / imgNatural.h;
   }
 
-  const centerX = targetX * (1 - interp) + 0.5 * interp;
-  const centerY = targetY * (1 - interp) + 0.5 * interp;
-  // Use scale-only transforms anchored at the interpolated focal center so the
-  // image zooms out from the chosen point without translating the view.
-  const originX = shouldMirror ? (1 - centerX) : centerX;
-  const originY = centerY;
+  // Center the focal point in the container
+  // We translate so the focal point moves to 50%, then scale from center
   let scaleX = shouldMirror ? -1 : 1;
-  imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
-  imgStyle.transition = 'transform 200ms cubic-bezier(.2,.8,.2,1)';
-  imgStyle.transformOrigin = `${originX * 100}% ${originY * 100}%`;
+  
+  if (isCorrect) {
+    // When correct, remove all transformations to show the image naturally
+    imgStyle.transform = 'none';
+    //imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
+    imgStyle.transformOrigin = '50% 50%';
+  } else {
+    // Calculate translation: move focal point to center (50%, 50%)
+    // The focal point is at targetX, targetY in image space (0..1)
+    // We want it at 0.5, 0.5 after translation
+    const translateX = -(0.5 - targetX) * 100;
+    const translateY = (0.5 - targetY) * 100;
+    
+    // Apply translate first, then scale from center
+    imgStyle.transform = `translate(${translateX}%, ${translateY}%) scale(${scaleX * zoom}, ${zoom})`;
+    //imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
+    imgStyle.transformOrigin = `50% 50%`;
+  }
   if (zoom === 0.9) {
     imgStyle.width = '100%';
     imgStyle.height = '100%';

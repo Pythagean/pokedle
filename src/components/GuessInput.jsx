@@ -54,14 +54,14 @@ export default function GuessInput({
     const list = dropdownRef && dropdownRef.current;
     if (!list) return;
     try {
-      console.log('GuessInput: ensure highlighted visible', { highlightedIdx });
+      // console.log('GuessInput: ensure highlighted visible', { highlightedIdx });
       const items = list.querySelectorAll('li');
       if (!items || items.length === 0) return;
       const idx = Math.min(highlightedIdx, items.length - 1);
       const el = items[idx];
       if (el && typeof el.scrollIntoView === 'function') {
         // Use nearest so it doesn't always jump; keep behavior instant for accessibility
-        console.log('GuessInput: scrolling highlighted item into view', { idx, total: items.length });
+        // console.log('GuessInput: scrolling highlighted item into view', { idx, total: items.length });
         el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
     } catch (e) {
@@ -77,7 +77,7 @@ export default function GuessInput({
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         try {
-          console.log('GuessInput: scheduleUpdate');
+          // console.log('GuessInput: scheduleUpdate');
           const inputEl = inputRef && inputRef.current;
           const wrapperEl = wrapperRef && wrapperRef.current;
           if (inputEl && wrapperEl) {
@@ -85,10 +85,10 @@ export default function GuessInput({
             const wrapRect = wrapperEl.getBoundingClientRect();
             const left = Math.max(0, Math.round(inRect.left - wrapRect.left));
             const width = Math.round(inRect.width) || wrapperEl.clientWidth;
-            console.log('GuessInput: measured rects', { inRect, wrapRect, left, width });
+            // console.log('GuessInput: measured rects', { inRect, wrapRect, left, width });
             setDropdownRect(prev => (prev.left === left && prev.width === width) ? prev : { left, width });
           } else {
-            console.log('GuessInput: inputEl or wrapperEl missing', { inputEl, wrapperEl });
+            // console.log('GuessInput: inputEl or wrapperEl missing', { inputEl, wrapperEl });
             setDropdownRect(prev => (prev.left === 0 && prev.width === null) ? prev : { left: 0, width: null });
           }
         } catch (e) {
@@ -123,7 +123,7 @@ export default function GuessInput({
     if (typeof window === 'undefined') return;
     // Only run this logic on narrow viewports (mobile)
     if (window.innerWidth > 700) return;
-    console.log('GuessInput: mobile scroll adjustment running', { innerWidth: window.innerWidth, dropdownOpen, sortedCount: sortedOptions.length });
+    // console.log('GuessInput: mobile scroll adjustment running', { innerWidth: window.innerWidth, dropdownOpen, sortedCount: sortedOptions.length });
 
     // Delay so the OS keyboard can open and the dropdown can render
     const handle = setTimeout(() => {
