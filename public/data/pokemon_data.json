@@ -4263,7 +4263,6 @@
       "Dark Cave Blackthorn City Entrance",
       "Dark Cave Violet City Entrance",
       "Granite Cave",
-      "Hoenn Altering Cave A",
       "Hoenn Victory Road",
       "Ice Path",
       "Ilex Forest",
@@ -19291,7 +19290,6 @@
     "held_items": [],
     "id": 179,
     "location_area_encounters": [
-      "Hoenn Altering Cave B",
       "Hoenn Safari Zone",
       "Johto Route 32",
       "Johto Route 42",
@@ -20317,7 +20315,6 @@
     "id": 190,
     "location_area_encounters": [
       "Azalea Town",
-      "Hoenn Altering Cave F",
       "Hoenn Safari Zone",
       "Johto Route 29",
       "Johto Route 30",
@@ -21635,7 +21632,6 @@
     "id": 204,
     "location_area_encounters": [
       "Azalea Town",
-      "Hoenn Altering Cave C",
       "Hoenn Safari Zone",
       "Ilex Forest",
       "Johto Route 29",
@@ -22535,7 +22531,6 @@
       "Cianwood City",
       "Cianwood City Manias House",
       "Dark Cave Violet City Entrance",
-      "Hoenn Altering Cave G",
       "Hoenn Safari Zone",
       "Johto Sea Route 40"
     ],
@@ -22857,7 +22852,6 @@
     "location_area_encounters": [
       "Dark Cave Blackthorn City Entrance",
       "Dark Cave Violet City Entrance",
-      "Hoenn Altering Cave E",
       "Hoenn Safari Zone",
       "Johto Route 45"
     ],
@@ -24030,7 +24024,6 @@
     "held_items": [],
     "id": 228,
     "location_area_encounters": [
-      "Hoenn Altering Cave D",
       "Hoenn Safari Zone",
       "Kanto Route 7"
     ],
@@ -24610,7 +24603,6 @@
     "held_items": [],
     "id": 234,
     "location_area_encounters": [
-      "Hoenn Altering Cave H",
       "Hoenn Safari Zone",
       "Johto Route 36",
       "Johto Route 37"
@@ -24701,7 +24693,6 @@
     "id": 235,
     "location_area_encounters": [
       "Artisan Cave",
-      "Hoenn Altering Cave I",
       "Ruins Of Alph Outside"
     ],
     "moves": [
