@@ -13,6 +13,7 @@
 - **Better Confetti Timing** — Confetti triggers are timed to the visible congrats message to reduce jarring or mistimed celebrations.
 - **Celebration Text** — Fixed day/number calculations and added per-user persistent emoji and prefix choices for consistent celebrations.
 - **Game Reset Time** — Game reset time standardized to **6:00 PM UTC** (equivalent local times: 5:00 AM AET/Melbourne, 7:00 AM NZT, 7:00 PM GMT).
+- **Colours Mode Tweaks** — Changed grouping threshold for colour mode and re-generated images
 
 ## Commits included (newest first)
 
