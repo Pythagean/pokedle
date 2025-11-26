@@ -409,6 +409,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     imgStyle.width = '100%';
     imgStyle.height = '100%';
     imgStyle.objectFit = 'contain';
+    imgStyle.transform = `scale(1.0, 1.0)`;
   }
 
   return (
@@ -429,14 +430,14 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           }
         />
         
-            <button
+            {/* <button
               style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
               onClick={() => setDebugOverlay(d => !d)}
               aria-pressed={debugOverlay}
               aria-label="Toggle silhouette debug overlay"
             >
               {debugOverlay ? 'Debug: ON' : 'Debug'}
-            </button>
+            </button> */}
         
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
@@ -457,7 +458,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               draggable={false}
               onDragStart={e => e.preventDefault()}
               onContextMenu={e => e.preventDefault()}
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect || !realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
+              // When the puzzle is already correct, hide the silhouette immediately
+              // to avoid briefly flashing the silhouette image when switching pages.
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
                 try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) {}
@@ -653,7 +656,7 @@ const _silhouetteStyles = `
 }
 
 @media (max-width: 520px) {
-  .silhouette-viewport { width: min(90vw, 320px); }
+  .silhouette-viewport { width: min(70vw, 320px); }
 }
 
 @media (max-width: 360px) {
