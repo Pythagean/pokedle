@@ -14,13 +14,6 @@
 - **Celebration Text** — Fixed day/number calculations and added per-user persistent emoji and prefix choices for consistent celebrations.
 - **Game Reset Time** — Game reset time standardized to **6:00 PM UTC** (equivalent local times: 5:00 AM AET/Melbourne, 7:00 AM NZT, 7:00 PM GMT).
 
-## Quick Try Checklist
-
-- Open **Silhouette Mode** and make a few guesses (0 → 5): observe how the reveal focuses and then relaxes toward center.
-- Try to drag or right-click images on Silhouette/Zoom/Colours/Card pages — nothing should happen.
-- Win a round and verify the congrats message emphasizes your guess count and confetti appears at the right moment.
-- Open **Classic Mode** and check height/weight visuals and match/partial/miss styling for clarity.
-
 ## Commits included (newest first)
 
 ```
@@ -34,8 +27,3 @@ c9ca6eb | #70 - Refactor blur level logic in CardPage
 ca912ea | #69 - Enhance confetti display logic and pending state handling
 ```
 
----
-
-*Saved to `PATCH_NOTES.md`.*
-
-If you want, I can add commit links, screenshots, or a short testing script to this file.
