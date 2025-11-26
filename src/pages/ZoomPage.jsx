@@ -277,14 +277,14 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             </div>
           }
         />
-        {/* <button
+        <button
           style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
           onClick={() => setDebugOverlay(d => !d)}
           aria-pressed={debugOverlay}
           aria-label="Toggle zoom debug overlay"
         >
           {debugOverlay ? 'Debug: ON' : 'Debug'}
-        </button> */}
+        </button>
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
@@ -326,30 +326,42 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                />
              )}
 
-             {debugOverlay && (
+             {debugOverlay && zoomPoints && Array.isArray(zoomPoints) && imgNatural.w && imgNatural.h && (
                (() => {
-                 // Determine the display coordinates (in 0..1 space) for the target point.
-                 // Use the normalized targetX/targetY computed earlier (falls back to edge if no zoom point).
-                 let dispX = typeof targetX === 'number' ? targetX : 0.5;
-                 let dispY = typeof targetY === 'number' ? targetY : 0.5;
-                 if (shouldMirror) dispX = 1 - dispX;
-                 const px = Math.max(0, Math.min(100, dispX * 100));
-                 const py = Math.max(0, Math.min(100, dispY * 100));
                  const overlayStyle = {
                    position: 'absolute', inset: 0, pointerEvents: 'none',
                    // Apply the same transform as the image so the overlay marker aligns visually
                    transform: imgStyle.transform,
                    transformOrigin: imgStyle.transformOrigin,
                  };
-                 const markerSize = 14;
-                 const marker = {
-                   position: 'absolute', left: `${px}%`, top: `${py}%`, transform: 'translate(-50%, -50%)',
-                   width: markerSize, height: markerSize, borderRadius: markerSize / 2,
-                   background: 'rgba(255,0,0,0.9)', border: '2px solid white', boxShadow: '0 2px 6px rgba(0,0,0,0.3)'
-                 };
+                 
+                 // Render all zoom points
                  return (
                    <div style={overlayStyle}>
-                     <div style={marker} />
+                     {zoomPoints.map((point, idx) => {
+                       if (!point || point.length < 2) return null;
+                       const ptX = Number(point[0]);
+                       const ptY = Number(point[1]);
+                       // Normalize to 0..1 space
+                       let normX = ptX / imgNatural.w;
+                       let normY = ptY / imgNatural.h;
+                       if (shouldMirror) normX = 1 - normX;
+                       const px = Math.max(0, Math.min(100, normX * 100));
+                       const py = Math.max(0, Math.min(100, normY * 100));
+                       
+                       // Check if this is the chosen point
+                       const isChosen = chosenZoomPoint && ptX === chosenZoomPoint.x && ptY === chosenZoomPoint.y;
+                       const markerSize = isChosen ? 18 : 10;
+                       const marker = {
+                         position: 'absolute', left: `${px}%`, top: `${py}%`, transform: 'translate(-50%, -50%)',
+                         width: markerSize, height: markerSize, borderRadius: markerSize / 2,
+                         background: isChosen ? 'rgba(255,0,0,0.95)' : 'rgba(255,165,0,0.7)',
+                         border: isChosen ? '3px solid white' : '2px solid white',
+                         boxShadow: isChosen ? '0 2px 8px rgba(0,0,0,0.4)' : '0 1px 4px rgba(0,0,0,0.3)',
+                         zIndex: isChosen ? 10 : 5
+                       };
+                       return <div key={idx} style={marker} />;
+                     })}
                    </div>
                  );
                })()
