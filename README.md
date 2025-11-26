@@ -77,9 +77,3 @@ Contributing
 License
 - This project contains third-party Pokémon artwork and assets; check `public/` and `scripts/` for asset provenance. Add your preferred license text here if you plan to distribute the repository.
 
----
-
-If you'd like, I can also:
-- Add screenshots for each mode to this README,
-- Include a short testing checklist and sample dev workflow, or
-- Commit and push this README for you.
