@@ -10,7 +10,7 @@ import { CARD_HINT_THRESHOLDS, CardHints } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
-  return function() {
+  return function () {
     var t = a += 0x6D2B79F5;
     t = Math.imul(t ^ t >>> 15, t | 1);
     t ^= t + Math.imul(t ^ t >>> 7, t | 61);
@@ -37,7 +37,7 @@ function getCardTypeByDay(day, rng) {
 }
 
 function CardPage({ pokemonData, guesses, setGuesses, daily }) {
-  
+
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
 
@@ -58,7 +58,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   // Debug: allow toggling day mode
   const [debugDay, setDebugDay] = useState(null); // null = real day, 0 = Sunday, 6 = Saturday, 1-5 = Weekday
   const effectiveDay = debugDay !== null ? debugDay : utcDayForType;
-  
+
   const baseSeed = getSeedFromUTCDate(today) + 9999; // unique for card page, UTC-based
   const rng = useMemo(() => mulberry32(baseSeed + reloadSeed), [baseSeed, reloadSeed]);
 
@@ -86,10 +86,10 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const guessedNames = new Set(guesses.map(g => g.name));
   const filteredOptions = guess.length > 0
     ? pokemonNames
-        .filter(name => name.toLowerCase().startsWith(guess.toLowerCase()))
-        .filter(name => !guessedNames.has(name))
-        .slice(0, 10)
-        .map(name => pokemonNameMap.get(name))
+      .filter(name => name.toLowerCase().startsWith(guess.toLowerCase()))
+      .filter(name => !guessedNames.has(name))
+      .slice(0, 10)
+      .map(name => pokemonNameMap.get(name))
     : [];
 
   // Collapse dropdown on outside click
@@ -152,7 +152,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
   }, [daily, pokemonData]);
 
-  
+
 
   if (!pokemonData) return <div>Shuffling Pokémon cards...</div>;
 
@@ -213,8 +213,18 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         blurLevel = 10; break;
       case guesses.length === 7:
         blurLevel = 8; break;
-      default:
+      case guesses.length === 8:
         blurLevel = 7; break;
+      case guesses.length === 9:
+        blurLevel = 6; break;
+      case guesses.length === 10:
+        blurLevel = 5; break;
+      case guesses.length === 11:
+        blurLevel = 4; break;
+      case guesses.length === 12:
+        blurLevel = 3; break;
+      default:
+        blurLevel = 3; break;
     }
   } else {
     // Blur logic for normal and shiny cards
@@ -235,8 +245,18 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         blurLevel = 8; break;
       case guesses.length === 7:
         blurLevel = 7; break;
+      case guesses.length === 8:
+        blurLevel = 6; break;
+      case guesses.length === 9:
+        blurLevel = 5; break;
+      case guesses.length === 10:
+        blurLevel = 4; break;
+      case guesses.length === 11:
+        blurLevel = 3; break;
+      case guesses.length === 12:
+        blurLevel = 2; break;
       default:
-        blurLevel = 7; break;
+        blurLevel = 2; break;
     }
   }
   // If correct, always show resized image
@@ -247,7 +267,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
     if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
       setShowConfetti(true);
-      try { localStorage.setItem(key, '1'); } catch (e) {}
+      try { localStorage.setItem(key, '1'); } catch (e) { }
       const t = setTimeout(() => setShowConfetti(false), 2500);
       prevCorrectRef.current = true;
       return () => clearTimeout(t);
@@ -258,7 +278,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const [fullArtTypesT, revealFullCardT, normalTypesT] = CARD_HINT_THRESHOLDS;
   // Reveal full card after revealFullCardT guesses
   const revealFullCard = guesses.length >= revealFullCardT;
-  
+
   function handleReset() {
     if (resetCount >= 2) return;
     setGuesses([]);
@@ -331,188 +351,188 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         </select>
         */}
       </div>
-        <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-          {!isCorrect && (
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ fontWeight: 600 }}>Which Pokémon is on this card?</div>
-              {(() => {
-                // Show weekend/event label when Saturday or Sunday selection changes the card type
-                try {
-                  const todaysType = getCardTypeByDay(effectiveDay, rng);
-                  let eventLabel = null;
-                  if (todaysType === 'full_art') eventLabel = 'Full-Art Saturday';
-                  else if (todaysType === 'shiny') eventLabel = 'Shiny Saturday';
-                  else if (todaysType === 'special') eventLabel = 'Illustration Sunday';
-                  if (eventLabel) {
-                    // Build a single-example content based on today's type
-                    let example = null;
-                    if (todaysType === 'full_art') {
-                      example = (
-                        <div style={{ textAlign: 'center' }}>
-                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Full-Art Saturday</div>
-                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full-art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                        </div>
-                      );
-                    } else if (todaysType === 'shiny') {
-                      example = (
-                        <div style={{ textAlign: 'center' }}>
-                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Shiny Saturday</div>
-                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/shiny/resized/1-99.jpg" alt="Shiny example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                        </div>
-                      );
-                    } else if (todaysType === 'special') {
-                      example = (
-                        <div style={{ textAlign: 'center' }}>
-                          <div style={{ fontWeight: 700, marginBottom: 8 }}>Illustration Sunday</div>
-                          <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                        </div>
-                      );
-                    }
-                    return (
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
-                        <div style={{ color: '#666', fontSize: 13 }}>Today is <strong>{eventLabel}</strong>!</div>
-                        {example && (
-                          <InfoButton ariaLabel="Card examples" placement="right" marginTop={130} content={example} />
-                        )}
+      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+        {!isCorrect && (
+          <div style={{ marginBottom: 8 }}>
+            <div style={{ fontWeight: 600 }}>Which Pokémon is on this card?</div>
+            {(() => {
+              // Show weekend/event label when Saturday or Sunday selection changes the card type
+              try {
+                const todaysType = getCardTypeByDay(effectiveDay, rng);
+                let eventLabel = null;
+                if (todaysType === 'full_art') eventLabel = 'Full-Art Saturday';
+                else if (todaysType === 'shiny') eventLabel = 'Shiny Saturday';
+                else if (todaysType === 'special') eventLabel = 'Illustration Sunday';
+                if (eventLabel) {
+                  // Build a single-example content based on today's type
+                  let example = null;
+                  if (todaysType === 'full_art') {
+                    example = (
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Full-Art Saturday</div>
+                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full-art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                      </div>
+                    );
+                  } else if (todaysType === 'shiny') {
+                    example = (
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Shiny Saturday</div>
+                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/shiny/resized/1-99.jpg" alt="Shiny example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                      </div>
+                    );
+                  } else if (todaysType === 'special') {
+                    example = (
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Illustration Sunday</div>
+                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
                       </div>
                     );
                   }
-                } catch (e) {
-                  // ignore
+                  return (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
+                      <div style={{ color: '#666', fontSize: 13 }}>Today is <strong>{eventLabel}</strong>!</div>
+                      {example && (
+                        <InfoButton ariaLabel="Card examples" placement="right" marginTop={130} content={example} />
+                      )}
+                    </div>
+                  );
                 }
-                return null;
-              })()}
-            </div>
-          )}
-          {isCorrect && (
-            <>
-              <CongratsMessage guessCount={guesses.length} mode="Card" />
-              <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
-            </>
-          )}
-          <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
-            {cardFile ? (
-              <>
-                {/* For full_art or special: always show resized image */}
-                {(cardType === 'full_art' || cardType === 'special') ? (
-                  <img
-                    src={cardPath.resized}
-                    alt={answer ? answer.name : 'Pokemon Card'}
-                    className="card-img card-img-resized"
-                    draggable={false}
-                    onDragStart={e => e.preventDefault()}
-                    onContextMenu={e => e.preventDefault()}
-                    style={{
-                      borderRadius: 8,
-                      filter: `blur(${blurLevel}px)`,
-                      transition: 'filter 0.4s',
-                    }}
-                  />
-                ) : (
-                  <>
-                    {/* For normal or shiny: use current switching logic */}
-                    {/* Resized image as base, only visible when revealed or correct */}
-                    {(revealFullCard || forceReveal) && (
-                      <img
-                        src={cardPath.resized}
-                        alt={answer ? answer.name : 'Pokemon Card'}
-                        className="card-img card-img-resized overlay"
-                        draggable={false}
-                        onDragStart={e => e.preventDefault()}
-                        onContextMenu={e => e.preventDefault()}
-                        style={{
-                          zIndex: 1,
-                          borderRadius: 8,
-                          filter: `blur(${blurLevel}px)`,
-                          transition: 'filter 0.4s',
-                        }}
-                      />
-                    )}
-                    {/* Cropped image overlay, blurred until reveal or correct */}
-                    {!(revealFullCard || forceReveal) && (
-                      <img
-                        src={cardPath.cropped}
-                        alt={answer ? answer.name : 'Pokemon Card'}
-                        className="card-img card-img-cropped overlay"
-                        draggable={false}
-                        onDragStart={e => e.preventDefault()}
-                        onContextMenu={e => e.preventDefault()}
-                        style={{
-                          zIndex: 2,
-                          borderRadius: 8,
-                          background: 'transparent',
-                          filter: `blur(${blurLevel}px)`,
-                          transition: 'filter 0.4s',
-                          /* Display the cropped image smaller and inset within the viewport
-                             so only a portion is visible (like a magnified crop). */
-                          left: '8%',
-                          top: '-10%',
-                          width: '84%',
-                          height: '84%',
-                          objectFit: 'contain',
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-              </>
-            ) : (
-              <span style={{ color: '#888' }}>No card found.</span>
-            )}
+              } catch (e) {
+                // ignore
+              }
+              return null;
+            })()}
           </div>
-          {/* Blur debug line removed */}
-          {/* Only show hint text if not guessed correctly */}
-          {!isCorrect && (
+        )}
+        {isCorrect && (
+          <>
+            <CongratsMessage guessCount={guesses.length} mode="Card" />
+            <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
+          </>
+        )}
+        <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
+          {cardFile ? (
             <>
+              {/* For full_art or special: always show resized image */}
               {(cardType === 'full_art' || cardType === 'special') ? (
-                <>
-                  {/* For full_art/special: Types revealed at fullArtTypesT guesses */}
-                  {guesses.length < fullArtTypesT && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                      Pokémon Types will be revealed in {Math.max(0, fullArtTypesT - guesses.length)} guess{fullArtTypesT - guesses.length === 1 ? '' : 'es'}!
-                    </div>
-                  )}
-                  {guesses.length >= fullArtTypesT && answer && answer.types && (
-                    <div style={{
-                      color: '#333',
-                      borderTop: '1px dashed #bbb',
-                      paddingTop: 10,
-                      marginTop: 16,
-                      fontSize: 16
-                    }}>
-                      <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
-                    </div>
-                  )}
-                </>
+                <img
+                  src={cardPath.resized}
+                  alt={answer ? answer.name : 'Pokemon Card'}
+                  className="card-img card-img-resized"
+                  draggable={false}
+                  onDragStart={e => e.preventDefault()}
+                  onContextMenu={e => e.preventDefault()}
+                  style={{
+                    borderRadius: 8,
+                    filter: `blur(${blurLevel}px)`,
+                    transition: 'filter 0.4s',
+                  }}
+                />
               ) : (
                 <>
-                  {/* For normal/shiny: Full card at 4 guesses, Types at 8 guesses */}
-                  {!revealFullCard && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                      The full card will be revealed in {Math.max(0, revealFullCardT - guesses.length)} guess{revealFullCardT - guesses.length === 1 ? '' : 'es'}!
-                    </div>
+                  {/* For normal or shiny: use current switching logic */}
+                  {/* Resized image as base, only visible when revealed or correct */}
+                  {(revealFullCard || forceReveal) && (
+                    <img
+                      src={cardPath.resized}
+                      alt={answer ? answer.name : 'Pokemon Card'}
+                      className="card-img card-img-resized overlay"
+                      draggable={false}
+                      onDragStart={e => e.preventDefault()}
+                      onContextMenu={e => e.preventDefault()}
+                      style={{
+                        zIndex: 1,
+                        borderRadius: 8,
+                        filter: `blur(${blurLevel}px)`,
+                        transition: 'filter 0.4s',
+                      }}
+                    />
                   )}
-                  {revealFullCard && guesses.length < normalTypesT && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                      Pokémon Types will be revealed in {normalTypesT - guesses.length} guess{normalTypesT - guesses.length === 1 ? '' : 'es'}!
-                    </div>
-                  )}
-                  {guesses.length >= normalTypesT && answer && answer.types && (
-                    <div style={{
-                      color: '#333',
-                      borderTop: '1px dashed #bbb',
-                      paddingTop: 10,
-                      marginTop: 16,
-                      fontSize: 16
-                    }}>
-                      <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
-                    </div>
+                  {/* Cropped image overlay, blurred until reveal or correct */}
+                  {!(revealFullCard || forceReveal) && (
+                    <img
+                      src={cardPath.cropped}
+                      alt={answer ? answer.name : 'Pokemon Card'}
+                      className="card-img card-img-cropped overlay"
+                      draggable={false}
+                      onDragStart={e => e.preventDefault()}
+                      onContextMenu={e => e.preventDefault()}
+                      style={{
+                        zIndex: 2,
+                        borderRadius: 8,
+                        background: 'transparent',
+                        filter: `blur(${blurLevel}px)`,
+                        transition: 'filter 0.4s',
+                        /* Display the cropped image smaller and inset within the viewport
+                           so only a portion is visible (like a magnified crop). */
+                        left: '8%',
+                        top: '-10%',
+                        width: '84%',
+                        height: '84%',
+                        objectFit: 'contain',
+                      }}
+                    />
                   )}
                 </>
               )}
             </>
+          ) : (
+            <span style={{ color: '#888' }}>No card found.</span>
           )}
         </div>
+        {/* Blur debug line removed */}
+        {/* Only show hint text if not guessed correctly */}
+        {!isCorrect && (
+          <>
+            {(cardType === 'full_art' || cardType === 'special') ? (
+              <>
+                {/* For full_art/special: Types revealed at fullArtTypesT guesses */}
+                {guesses.length < fullArtTypesT && (
+                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    Pokémon Types will be revealed in {Math.max(0, fullArtTypesT - guesses.length)} guess{fullArtTypesT - guesses.length === 1 ? '' : 'es'}!
+                  </div>
+                )}
+                {guesses.length >= fullArtTypesT && answer && answer.types && (
+                  <div style={{
+                    color: '#333',
+                    borderTop: '1px dashed #bbb',
+                    paddingTop: 10,
+                    marginTop: 16,
+                    fontSize: 16
+                  }}>
+                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {/* For normal/shiny: Full card at 4 guesses, Types at 8 guesses */}
+                {!revealFullCard && (
+                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    The full card will be revealed in {Math.max(0, revealFullCardT - guesses.length)} guess{revealFullCardT - guesses.length === 1 ? '' : 'es'}!
+                  </div>
+                )}
+                {revealFullCard && guesses.length < normalTypesT && (
+                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    Pokémon Types will be revealed in {normalTypesT - guesses.length} guess{normalTypesT - guesses.length === 1 ? '' : 'es'}!
+                  </div>
+                )}
+                {guesses.length >= normalTypesT && answer && answer.types && (
+                  <div style={{
+                    color: '#333',
+                    borderTop: '1px dashed #bbb',
+                    paddingTop: 10,
+                    marginTop: 16,
+                    fontSize: 16
+                  }}>
+                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
+                  </div>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
       {/* Hide guess input and button if correct guess */}
       {!isCorrect && (
         <form
