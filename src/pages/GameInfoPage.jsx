@@ -35,6 +35,8 @@ const BASE_CLUE_TYPES = ['stats', 'ability', 'moves', 'category', 'locations', '
 function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
+    const [locationFileMap, setLocationFileMap] = useState(null);
+    const [mapPopup, setMapPopup] = useState({ visible: false, title: null, url: null });
     const inputRef = useRef(null);
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -72,6 +74,39 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
         }
         return clues;
     }, [seed, dailyPokemon, rng]);
+
+    // Load mapping of location -> filename (produced by scripts/match_location_maps.py)
+    useEffect(() => {
+        let cancelled = false;
+        async function loadMap() {
+            const tryUrls = [
+                '/data/location_to_file_map.json',
+                '/scripts/location_to_file_map.json',
+                '/location_to_file_map.json'
+            ];
+            for (const url of tryUrls) {
+                try {
+                    const resp = await fetch(url);
+                    if (!resp.ok) {
+                        console.debug('[GameInfoPage] mapping not found at', url, 'status', resp.status);
+                        continue;
+                    }
+                    const j = await resp.json();
+                    if (!cancelled) {
+                        setLocationFileMap(j);
+                        console.debug('[GameInfoPage] loaded location map from', url);
+                    }
+                    return;
+                } catch (e) {
+                    console.debug('[GameInfoPage] error fetching mapping from', url, e);
+                    continue;
+                }
+            }
+            console.debug('[GameInfoPage] no location mapping file found in any known location');
+        }
+        loadMap();
+        return () => { cancelled = true; };
+    }, []);
 
     // Determine which clues to show based on guesses (use page-specific config)
     const clueCount = getClueCount(guesses.length, GAMEINFO_HINT_THRESHOLDS);
@@ -205,10 +240,50 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
         }
         if (type === 'locations') {
             const locations = dailyPokemon.location_area_encounters || [];
+            const formatDisplay = (raw) => {
+                if (!raw) return raw;
+                // if slug-like (viridian-city) convert to readable
+                if (/^[a-z0-9\-_]+$/.test(raw)) {
+                    const pretty = raw.replace(/[-_]+/g, ' ');
+                    return pretty.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                }
+                return raw;
+            };
+
+            const onOpenMap = (loc) => (e) => {
+                e.preventDefault();
+                const key = loc;
+                const filename = locationFileMap && locationFileMap[key];
+                if (!filename) {
+                    // try fallback by normalizing slug/display
+                    const altKey = formatDisplay(key);
+                    const alt = locationFileMap && locationFileMap[altKey];
+                    if (alt) {
+                        setMapPopup({ visible: true, title: altKey, url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${alt}` });
+                        return;
+                    }
+                    // no mapping available
+                    setMapPopup({ visible: true, title: formatDisplay(key), url: null });
+                    return;
+                }
+                console.log('Opening map for', key, '->', filename);
+                console.log(`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}`);
+                setMapPopup({ visible: true, title: formatDisplay(key), url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` });
+            };
+
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ fontWeight: 600 }}>Wild Encounter Locations:</div>
-                    <div style={{ color: '#333' }}>{locations.length > 0 ? locations.join(', ') : 'No locations (only obtainable by evolution)'}</div>
+                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                        {locations.length > 0 ? locations.map((loc, i) => (
+                            <div key={String(loc) + i}>
+                                <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer' }}>
+                                    {formatDisplay(loc)}
+                                </a>
+                                {i < locations.length - 1 ? <span style={{ marginLeft: 6, color: '#666' }}>,</span> : null}
+                            </div>
+                        )) : 'No locations (only obtainable by evolution)'}
+                    </div>
                 </div>
             );
         }
@@ -235,6 +310,26 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
 
     return (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
+            {/* Map popup overlay */}
+            {mapPopup.visible && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    onClick={() => setMapPopup({ visible: false, title: null, url: null })}
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
+                    <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '90%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                            <div style={{ fontWeight: 700 }}>{mapPopup.title || 'Map'}</div>
+                            <button onClick={() => setMapPopup({ visible: false, title: null, url: null })} style={{ marginLeft: 12 }}>Close</button>
+                        </div>
+                        {mapPopup.url ? (
+                            <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '80vh', display: 'block' }} onError={(e)=>{e.target.style.display='none';}} />
+                        ) : (
+                            <div style={{ padding: 24, color: '#666' }}>No map available for this location.</div>
+                        )}
+                    </div>
+                </div>
+            )}
             <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                 <h2 style={{ margin: 0 }}>Game Info Mode</h2>
