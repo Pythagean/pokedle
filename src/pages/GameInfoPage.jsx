@@ -80,9 +80,9 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
         let cancelled = false;
         async function loadMap() {
             const tryUrls = [
-                '/data/location_to_file_map.json',
-                '/scripts/location_to_file_map.json',
-                '/location_to_file_map.json'
+                'data/location_to_file_map.json',
+                'scripts/location_to_file_map.json',
+                'location_to_file_map.json'
             ];
             for (const url of tryUrls) {
                 try {
