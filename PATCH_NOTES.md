@@ -1,4 +1,3 @@
-````markdown
 # Release Notes — November 27, 2025
 
 ## Overview
@@ -7,14 +6,16 @@
 
 ## What’s New (user-facing)
 
-- **Game Info: Clickable Location Maps** — Location names in Game Info are now links that open a popup showing the corresponding map image (when available) from the assets repo.
-- **Zoom Mode: Centered Focal Point & Improved Debug Overlay** — The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly
-- **Silhouette: Smoother Reveal Behavior** — Transform-origin behavior now holds for early guesses and then eases toward the center over subsequent guesses to produce more intuitive reveals.
+- **Game Info Mode** — Location names in Game Info are now links that open a popup showing the corresponding map image (when available) from the assets repo.
+- **Zoom Mode** — The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly.
+- **Silhouette Mode** — Transform-origin behavior now holds for early guesses and then eases toward the center over subsequent guesses to produce more intuitive reveals.
+- **Card Mode** - Continue to un-blur card beyond 8 guesses
+- **Pokemon Data Cleanup** - Removed Altering Cave from pokemon_data.json
 - **Map Tooling (developer)** — New scripts to download Bulbapedia maps, generate a todo/overrides file for unmapped locations, and fuzzy-match existing map files to in-game location names. The downloader skips existing files by default and records missing/failed items for easy follow-up.
 
 ## Commits included (newest first)
 
-```
+```text
 46725e8 | Add location mapping and map popup functionality in GameInfoPage
 2a956ab | Map Images and scripts
 546eb70 | Keep un-blurring card beyond 8 guesses
@@ -27,7 +28,6 @@ e5f6a7b | scripts: add make_region_map_overrides.py (generate editable overrides
 f6a7b8c | scripts: add match_location_maps.py (fuzzy-match locations to existing map files)
 g7b8c9d | download script: skip existing files by default, add --overwrite flag
 ```
-
 
 ## Release Notes — November 26, 2025
 
@@ -48,7 +48,7 @@ g7b8c9d | download script: skip existing files by default, add --overwrite flag
 
 ## Commits included (newest first)
 
-```
+```text
 e70c759 | Adjust height and weight scaling factors in ClassicPage; update match/partial/miss styles
 c713d0e | Refactor image scaling logic in SilhouettePage: adjust transform-origin based on guess count
 29974ad | #75 - Prevent image dragging and context menu on multiple pages: set draggable to false and add event handlers
@@ -58,6 +58,3 @@ fc6d1bc | #72 - Refactor emoji selection and phrase generation in CongratsMessag
 c9ca6eb | #70 - Refactor blur level logic in CardPage: adjust values for improved visual feedback based on guesses
 ca912ea | #69 - Enhance confetti display logic: manage pending state and trigger based on CongratsMessage visibility
 ```
-
-````
-
