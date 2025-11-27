@@ -10,7 +10,7 @@
 - **Zoom Mode** — The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly.
 - **Silhouette Mode** — Transform-origin behavior now holds for early guesses and then eases toward the center over subsequent guesses to produce more intuitive reveals.
 - **Card Mode** - Continue to un-blur card beyond 8 guesses
-- **Pokemon Data Cleanup** - Removed Altering Cave from pokemon_data.json
+- **Pokemon Data Cleanup** - Removed Altering Cave from pokemon_data.json, changed "Deoxys Normal" to "Deoxys" and fixed Pokedex entry
 - **Map Tooling (developer)** — New scripts to download Bulbapedia maps, generate a todo/overrides file for unmapped locations, and fuzzy-match existing map files to in-game location names. The downloader skips existing files by default and records missing/failed items for easy follow-up.
 
 ## Commits included (newest first)
