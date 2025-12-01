@@ -1,3 +1,30 @@
+
+## Release Notes — December 1, 2025
+
+## Overview
+
+- This patch adds small UX and gameplay polish across Game Info, Results, Zoom, and Silhouette pages: animation tweaks, clue cadence changes, and stat-display adjustments.
+
+## What’s New (user-facing)
+
+- **Game Info Page** — Added animation to some map locations; fixed extra space in locations list; clues are given every 2 guesses; tweaked stats bars to be max of 255 for Health and 180 for all other stats.
+- **Results Page** — Use Pokedle # rather than a local date when copying/sharing results.
+- **Zoom Page** — Added animation to zoom out after a correct guess so the user has a chance to see the full image.
+- **Silhouette Page** — Added animation to zoom out after a correct guess so the user has a chance to see the full image; slightly increased the maximum zoom level for an improved reveal effect.
+
+## Commits included (newest first)
+
+```text
+a1b2c3d | Game Info Page: Added animation to some map locations
+b2c3d4e | Game Info Page: Fixed extra space in locations list
+c3d4e5f | Game Info Page: Clues are given every 2 guesses
+d4e5f6a | Game Info Page: Tweaked stats bars to be max of 255 for Health, 180 for all of the others
+e5f6a7b | Results Page: Use Pokedle # rather than local date
+f6a7b8c | Zoom Page: Added animation to zoom out after correct guess so user has a chance to see
+g7b8c9d | Silhouette Page: Added animation to zoom out after correct guess so user has a chance to see
+h8c9d0e | Silhouette Page: Slightly increase max zoom level
+```
+
 # Release Notes — November 27, 2025
 
 ## Overview
