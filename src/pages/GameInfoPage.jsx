@@ -280,7 +280,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                                 <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer' }}>
                                     {formatDisplay(loc)}
                                 </a>
-                                {i < locations.length - 1 ? <span style={{ marginLeft: 6, color: '#666' }}>,</span> : null}
+                                {i < locations.length - 1 ? <span style={{ color: '#666' }}>,</span> : null}
                             </div>
                         )) : 'No locations (only obtainable by evolution)'}
                     </div>
