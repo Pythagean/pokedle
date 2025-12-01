@@ -181,36 +181,44 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
 
     // Clue renderers
     function renderClue(type) {
-        if (type === 'stats') {
-            const stats = dailyPokemon.stats || {};
-            const statOrder = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
-            const statLabels = {
-                hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
-            };
-            // Determine a reasonable max for normalization (use 255 as an absolute cap)
-            const values = statOrder.map(s => Number(stats[s] || 0));
-            const maxVal = Math.max(255, ...values);
-            return (
-                <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, marginBottom: 8 }}>Base Stats:</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {statOrder.map(s => {
-                            const v = Number(stats[s] || 0);
-                            const pct = Math.round((v / maxVal) * 100);
-                            return (
-                                <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
-                                    <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
-                                    <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
-                                        <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
+            if (type === 'stats') {
+                const stats = dailyPokemon.stats || {};
+                const statOrder = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
+                const statLabels = {
+                    hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
+                };
+                // Per-stat maximums for normalization
+                const statMax = {
+                    hp: 255,
+                    attack: 180,
+                    defense: 180,
+                    'special-attack': 180,
+                    'special-defense': 180,
+                    speed: 180,
+                };
+
+                return (
+                    <div style={{ marginBottom: 10 }}>
+                        <div style={{ fontWeight: 600, marginBottom: 8 }}>Base Stats:</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                            {statOrder.map(s => {
+                                const v = Number(stats[s] || 0);
+                                const maxFor = statMax[s] || 255;
+                                const pct = Math.round((v / maxFor) * 100);
+                                return (
+                                    <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
+                                        <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
+                                        <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
+                                            <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
+                                        </div>
+                                        <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
                                     </div>
-                                    <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            );
-        }
+                );
+            }
         if (type === 'ability') {
             const abilities = dailyPokemon.abilities || [];
             return (
@@ -224,7 +232,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
             const moves = dailyPokemon.moves || [];
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Moves:</div>
+                    <div style={{ fontWeight: 600 }}>Moves Learnt by Level Up:</div>
                     <div style={{ color: '#333' }}>{moves.length > 0 ? moves.join(', ') : 'No moves'}</div>
                 </div>
             );
@@ -340,8 +348,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                     content={
                         <div style={{ textAlign: 'left' }}>
                             Guess the Pokémon from a random set of clues based on in-game information!<br /><br />
-                            One random clue (Base Stats, Abilities, Moves Learnt by Level Up, Category, Shape or In-Game Locations) is shown first.<br /><br />
-                            After 4, 8, 12 and 16 guesses, you will receive additional clues.
+                            One random clue (Base Stats, Abilities, Moves Learnt by Level Up, Category, Shape, Wild Encounter Locations: or Held Items) is shown first.<br /><br />
+                            After 2, 4, 6, 8, 10 and 12 guesses, you will receive additional clues.
                         </div>
                     }
                 />
