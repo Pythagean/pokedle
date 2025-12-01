@@ -885,23 +885,11 @@
     "held_items": [],
     "id": 10,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Lake Of Rage",
-      "National Park",
       "Viridian Forest"
     ],
     "moves": [
@@ -991,23 +979,11 @@
     "held_items": [],
     "id": 11,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Lake Of Rage",
-      "National Park",
       "Viridian Forest"
     ],
     "moves": [
@@ -1096,20 +1072,11 @@
     ],
     "id": 12,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 26",
-      "Kanto Route 27",
-      "Lake Of Rage"
+      "Kanto Route 27"
     ],
     "moves": [
       "Gust",
@@ -1205,23 +1172,11 @@
     "held_items": [],
     "id": 13,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Lake Of Rage",
-      "National Park",
       "Viridian Forest"
     ],
     "moves": [
@@ -1300,23 +1255,11 @@
     "held_items": [],
     "id": 14,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Lake Of Rage",
-      "National Park",
       "Viridian Forest"
     ],
     "moves": [
@@ -1397,18 +1340,9 @@
     ],
     "id": 15,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 26",
-      "Kanto Route 27",
-      "Lake Of Rage"
+      "Kanto Route 27"
     ],
     "moves": [
       "Fury Attack",
@@ -1499,22 +1433,13 @@
     "held_items": [],
     "id": 16,
     "location_area_encounters": [
-      "Ilex Forest",
-      "Johto Route 29",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
       "Kanto Route 1",
       "Kanto Route 11",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
       "Kanto Route 15",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 3",
@@ -1523,7 +1448,6 @@
       "Kanto Route 7",
       "Kanto Route 8",
       "Kanto Route 21",
-      "National Park",
       "Viridian Forest"
     ],
     "moves": [
@@ -1616,16 +1540,12 @@
     "held_items": [],
     "id": 17,
     "location_area_encounters": [
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Johto Route 43",
       "Kanto Route 11",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
       "Kanto Route 15",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 5",
@@ -1827,24 +1747,13 @@
     ],
     "id": 19,
     "location_area_encounters": [
-      "Bell Tower",
       "Burned Tower",
-      "Johto Route 29",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 33",
-      "Johto Route 34",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Johto Route 42",
-      "Johto Route 46",
       "Kanto Route 1",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 16",
       "Kanto Route 18",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 22",
       "Kanto Route 3",
       "Kanto Route 4",
@@ -1854,12 +1763,7 @@
       "Kanto Route 8",
       "Kanto Route 9",
       "Kanto Route 21",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Pokemon Mansion",
-      "Sprout Tower",
-      "Tohjo Falls",
-      "Union Cave"
+      "Pokemon Mansion"
     ],
     "moves": [
       "Tackle",
@@ -1962,10 +1866,6 @@
     "id": 20,
     "location_area_encounters": [
       "Burned Tower",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Johto Route 42",
-      "Johto Route 43",
       "Kanto Route 1",
       "Kanto Route 10",
       "Kanto Route 11",
@@ -1980,12 +1880,7 @@
       "Kanto Route 7",
       "Kanto Route 9",
       "Kanto Route 21",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Mt Mortar Upper Cave",
-      "Pokemon Mansion",
-      "Tohjo Falls",
-      "Union Cave"
+      "Pokemon Mansion"
     ],
     "moves": [
       "Swords Dance",
@@ -2083,18 +1978,6 @@
     ],
     "id": 21,
     "location_area_encounters": [
-      "Azalea Town",
-      "Goldenrod City North Gate",
-      "Johto Route 29",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 33",
-      "Johto Route 42",
-      "Johto Route 43",
-      "Johto Route 44",
-      "Johto Route 45",
-      "Johto Route 46",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 16",
@@ -2202,7 +2085,6 @@
     ],
     "id": 22,
     "location_area_encounters": [
-      "Johto Route 42",
       "Kanto Route 10",
       "Kanto Route 16",
       "Kanto Route 17",
@@ -2307,10 +2189,6 @@
     "held_items": [],
     "id": 23,
     "location_area_encounters": [
-      "Azalea Town",
-      "Johto Route 32",
-      "Johto Route 33",
-      "Johto Route 42",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 23",
@@ -2417,14 +2295,12 @@
     "id": 24,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Johto Route 42",
       "Kanto Route 23",
       "Kanto Route 26",
       "Kanto Route 27",
       "Kanto Route 28",
       "Kanto Route 3",
-      "Kanto Route 4",
-      "Mt Silver Outside"
+      "Kanto Route 4"
     ],
     "moves": [
       "Wrap",
@@ -2538,8 +2414,7 @@
     ],
     "id": 25,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Pallet Town",
       "Power Plant",
       "Viridian Forest"
@@ -2766,8 +2641,6 @@
     ],
     "id": 27,
     "location_area_encounters": [
-      "Hoenn Route 111",
-      "Hoenn Route 113",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 23",
@@ -2775,9 +2648,7 @@
       "Kanto Route 4",
       "Kanto Route 8",
       "Kanto Route 9",
-      "Mirage Tower",
-      "Mt Moon",
-      "Union Cave"
+      "Mt Moon"
     ],
     "moves": [
       "Scratch",
@@ -2993,14 +2864,11 @@
     "held_items": [],
     "id": 29,
     "location_area_encounters": [
-      "Johto Route 35",
-      "Johto Route 36",
       "Kanto Route 10",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 22",
       "Kanto Route 9",
-      "Kanto Safari Zone",
-      "National Park"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Scratch",
@@ -3292,14 +3160,11 @@
     "held_items": [],
     "id": 32,
     "location_area_encounters": [
-      "Johto Route 35",
-      "Johto Route 36",
       "Kanto Route 10",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 22",
       "Kanto Route 9",
-      "Kanto Safari Zone",
-      "National Park"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Double Kick",
@@ -3809,11 +3674,8 @@
     ],
     "id": 37,
     "location_area_encounters": [
-      "Johto Route 36",
-      "Johto Route 37",
       "Kanto Route 7",
       "Kanto Route 8",
-      "Mt Pyre Outside",
       "Pokemon Mansion"
     ],
     "moves": [
@@ -4033,10 +3895,6 @@
     ],
     "id": 39,
     "location_area_encounters": [
-      "Hoenn Route 115",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 46",
       "Kanto Route 3",
       "Kanto Route 4",
       "Kanto Route 5",
@@ -4258,36 +4116,15 @@
     "id": 41,
     "location_area_encounters": [
       "Burned Tower",
-      "Cave Of Origin",
-      "Cave Of Origin Entrance",
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
-      "Granite Cave",
-      "Hoenn Victory Road",
-      "Ice Path",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 33",
-      "Johto Route 42",
       "Kanto Route 10",
       "Kanto Route 3",
       "Kanto Route 4",
       "Kanto Route 9",
       "Kanto Victory Road",
-      "Meteor Falls",
       "Mt Moon",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
       "Rock Tunnel",
-      "Seafloor Cavern",
       "Seafoam Islands",
-      "Shoal Cave",
-      "Slowpoke Well",
-      "Tohjo Falls",
-      "Union Cave",
-      "Whirl Islands"
+      "Slowpoke Well"
     ],
     "moves": [
       "Wing Attack",
@@ -4399,33 +4236,12 @@
     "held_items": [],
     "id": 42,
     "location_area_encounters": [
-      "Cave Of Origin",
-      "Cave Of Origin Entrance",
       "Cerulean Cave",
-      "Dark Cave Blackthorn City Entrance",
-      "Hoenn Victory Road",
-      "Ice Path",
-      "Johto Route 42",
       "Kanto Route 28",
       "Kanto Victory Road",
-      "Meteor Falls",
-      "Meteor Falls Back",
-      "Meteor Falls Backsmall Room",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
-      "Mt Silver Outside",
-      "Mt Silver Top",
       "Rock Tunnel",
-      "Seafloor Cavern",
       "Seafoam Islands",
-      "Shoal Cave",
-      "Sky Pillar",
-      "Slowpoke Well",
-      "Tohjo Falls",
-      "Union Cave",
-      "Whirl Islands"
+      "Slowpoke Well"
     ],
     "moves": [
       "Wing Attack",
@@ -4531,14 +4347,6 @@
     ],
     "id": 43,
     "location_area_encounters": [
-      "Hoenn Route 110",
-      "Hoenn Route 117",
-      "Hoenn Route 119",
-      "Hoenn Route 120",
-      "Hoenn Route 121",
-      "Hoenn Route 123",
-      "Hoenn Safari Zone",
-      "Ilex Forest",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
@@ -4644,9 +4452,6 @@
     "id": 44,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Hoenn Route 121",
-      "Hoenn Route 123",
-      "Hoenn Safari Zone",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
@@ -4843,7 +4648,6 @@
     ],
     "id": 46,
     "location_area_encounters": [
-      "Ilex Forest",
       "Kanto Safari Zone",
       "Mt Moon"
     ],
@@ -4952,8 +4756,7 @@
     "id": 47,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Kanto Safari Zone",
-      "Mt Silver"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Scratch",
@@ -5050,8 +4853,6 @@
     "held_items": [],
     "id": 48,
     "location_area_encounters": [
-      "Ilex Forest",
-      "Johto Route 43",
       "Kanto Route 10",
       "Kanto Route 12",
       "Kanto Route 13",
@@ -5060,9 +4861,7 @@
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 9",
-      "Kanto Safari Zone",
-      "Lake Of Rage",
-      "National Park"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Tackle",
@@ -5161,7 +4960,6 @@
     "id": 49,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Johto Route 43",
       "Kanto Route 10",
       "Kanto Route 13",
       "Kanto Route 14",
@@ -5486,9 +5284,6 @@
     ],
     "id": 52,
     "location_area_encounters": [
-      "Johto Route 35",
-      "Johto Route 38",
-      "Johto Route 39",
       "Kanto Route 11",
       "Kanto Route 5",
       "Kanto Route 6",
@@ -5711,14 +5506,10 @@
     "id": 54,
     "location_area_encounters": [
       "Cerulean City",
-      "Hoenn Safari Zone",
-      "Ilex Forest",
-      "Johto Route 35",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 6",
       "Kanto Safari Zone",
-      "National Park",
       "Seafoam Islands"
     ],
     "moves": [
@@ -5833,12 +5624,7 @@
     "held_items": [],
     "id": 55,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
-      "Ilex Forest",
-      "Johto Route 35",
       "Kanto Route 6",
-      "Mt Silver",
-      "Mt Silver Top",
       "Seafoam Islands"
     ],
     "moves": [
@@ -5950,7 +5736,6 @@
     ],
     "id": 56,
     "location_area_encounters": [
-      "Johto Route 42",
       "Kanto Route 22",
       "Kanto Route 23",
       "Kanto Route 3",
@@ -6168,9 +5953,6 @@
     ],
     "id": 58,
     "location_area_encounters": [
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
       "Kanto Route 7",
       "Kanto Route 8",
       "Pokemon Mansion"
@@ -6387,19 +6169,11 @@
     "held_items": [],
     "id": 60,
     "location_area_encounters": [
-      "Blackthorn City",
       "Celadon City",
       "Cerulean Cave",
       "Cerulean City",
       "Cinnabar Island",
-      "Ecruteak City",
       "Fuchsia City",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 35",
-      "Johto Route 43",
-      "Johto Route 44",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 12",
@@ -6416,13 +6190,10 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "Mt Silver Outside",
       "Pallet Town",
-      "Ruins Of Alph Outside",
       "Seafoam Islands",
       "Vermilion City",
       "Vermilion City Ss Anne Dock",
-      "Violet City",
       "Viridian City"
     ],
     "moves": [
@@ -6531,16 +6302,10 @@
     "id": 61,
     "location_area_encounters": [
       "Celadon City",
-      "Ecruteak City",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 44",
       "Kanto Route 10",
       "Kanto Route 22",
       "Kanto Route 23",
       "Kanto Route 28",
-      "Mt Silver Outside",
-      "Violet City",
       "Viridian City"
     ],
     "moves": [
@@ -6756,10 +6521,6 @@
     ],
     "id": 63,
     "location_area_encounters": [
-      "Granite Cave",
-      "Hoenn Route 116",
-      "Johto Route 34",
-      "Johto Route 35",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 5",
@@ -7101,14 +6862,8 @@
     ],
     "id": 66,
     "location_area_encounters": [
-      "Fiery Path",
-      "Hoenn Route 112",
-      "Jagged Pass",
       "Kanto Route 10",
       "Kanto Victory Road",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Mt Mortar Upper Cave",
       "Rock Tunnel"
     ],
     "moves": [
@@ -7221,8 +6976,6 @@
     "id": 67,
     "location_area_encounters": [
       "Kanto Victory Road",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
       "Rock Tunnel"
     ],
     "moves": [
@@ -7435,10 +7188,6 @@
     "held_items": [],
     "id": 69,
     "location_area_encounters": [
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 36",
-      "Johto Route 44",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
@@ -7543,7 +7292,6 @@
     "id": 70,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Johto Route 44",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 14",
@@ -7751,40 +7499,7 @@
     ],
     "id": 72,
     "location_area_encounters": [
-      "Abandoned Ship",
-      "Cherrygrove City",
-      "Cianwood City",
       "Cinnabar Island",
-      "Dewford Town",
-      "Ever Grande City",
-      "Hoenn Route 103",
-      "Hoenn Route 105",
-      "Hoenn Route 106",
-      "Hoenn Route 107",
-      "Hoenn Route 108",
-      "Hoenn Route 109",
-      "Hoenn Route 110",
-      "Hoenn Route 115",
-      "Hoenn Route 118",
-      "Hoenn Route 119",
-      "Hoenn Route 121",
-      "Hoenn Route 122",
-      "Hoenn Route 123",
-      "Hoenn Route 124",
-      "Hoenn Route 125",
-      "Hoenn Route 126",
-      "Hoenn Route 127",
-      "Hoenn Route 128",
-      "Hoenn Route 129",
-      "Hoenn Route 130",
-      "Hoenn Route 131",
-      "Hoenn Route 132",
-      "Hoenn Route 133",
-      "Hoenn Route 134",
-      "Johto Route 32",
-      "Johto Route 34",
-      "Johto Route 40",
-      "Johto Route 41",
       "Kanto Route 11",
       "Kanto Route 12",
       "Kanto Route 13",
@@ -7795,22 +7510,11 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "Lilycove City",
-      "Mossdeep City",
-      "New Bark Town",
-      "Olivine City",
-      "Pacifidlog Town",
       "Pallet Town",
-      "Seafloor Cavern",
       "Seafoam Islands",
-      "Shoal Cave",
-      "Slateport City",
-      "Sootopolis City",
-      "Union Cave",
       "Vermilion City",
       "Vermilion City Ss Anne Dock",
-      "Viridian City",
-      "Whirl Islands"
+      "Viridian City"
     ],
     "moves": [
       "Wrap",
@@ -7926,14 +7630,7 @@
     ],
     "id": 73,
     "location_area_encounters": [
-      "Abandoned Ship",
-      "Cherrygrove City",
-      "Cianwood City",
       "Cinnabar Island",
-      "Johto Route 32",
-      "Johto Route 34",
-      "Johto Route 40",
-      "Johto Route 41",
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 26",
@@ -7941,13 +7638,9 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "New Bark Town",
-      "Olivine City",
       "Pallet Town",
-      "Union Cave",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
-      "Whirl Islands"
+      "Vermilion City Ss Anne Dock"
     ],
     "moves": [
       "Wrap",
@@ -8061,25 +7754,10 @@
     ],
     "id": 74,
     "location_area_encounters": [
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
-      "Granite Cave",
-      "Hoenn Route 111",
-      "Hoenn Route 114",
-      "Hoenn Safari Zone",
-      "Hoenn Victory Road",
-      "Johto Route 33",
-      "Johto Route 45",
-      "Johto Route 46",
       "Kanto Victory Road",
-      "Magma Hideout",
       "Mt Moon",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Mt Mortar Upper Cave",
       "Rock Tunnel",
-      "Team Rocket Hq",
-      "Union Cave"
+      "Team Rocket Hq"
     ],
     "moves": [
       "Tackle",
@@ -8190,14 +7868,7 @@
     "id": 75,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Dark Cave Blackthorn City Entrance",
-      "Hoenn Victory Road",
-      "Johto Route 45",
-      "Kanto Victory Road",
-      "Magma Hideout",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
-      "Mt Silver Top"
+      "Kanto Victory Road"
     ],
     "moves": [
       "Tackle",
@@ -8421,7 +8092,6 @@
       "Kanto Route 26",
       "Kanto Route 27",
       "Kanto Route 28",
-      "Mt Silver Outside",
       "Pokemon Mansion"
     ],
     "moves": [
@@ -8526,8 +8196,7 @@
     ],
     "id": 78,
     "location_area_encounters": [
-      "Kanto Route 28",
-      "Mt Silver Outside"
+      "Kanto Route 28"
     ],
     "moves": [
       "Stomp",
@@ -8642,8 +8311,7 @@
       "Kanto Route 13",
       "Kanto Safari Zone",
       "Seafoam Islands",
-      "Slowpoke Well",
-      "Tohjo Falls"
+      "Slowpoke Well"
     ],
     "moves": [
       "Headbutt",
@@ -8880,13 +8548,9 @@
     ],
     "id": 81,
     "location_area_encounters": [
-      "Johto Route 38",
-      "Johto Route 39",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 6",
-      "New Mauville",
-      "New Mauville Entrance",
       "Power Plant"
     ],
     "moves": [
@@ -9012,7 +8676,6 @@
     "id": 82,
     "location_area_encounters": [
       "Cerulean Cave",
-      "New Mauville",
       "Power Plant"
     ],
     "moves": [
@@ -9128,9 +8791,6 @@
     ],
     "id": 83,
     "location_area_encounters": [
-      "Johto Route 38",
-      "Johto Route 39",
-      "Johto Route 43",
       "Kanto Route 12",
       "Kanto Route 13"
     ],
@@ -9235,7 +8895,6 @@
     ],
     "id": 84,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Kanto Route 16",
       "Kanto Route 17",
       "Kanto Route 18",
@@ -9243,8 +8902,7 @@
       "Kanto Route 26",
       "Kanto Route 27",
       "Kanto Route 28",
-      "Kanto Safari Zone",
-      "Mt Silver Outside"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Fury Attack",
@@ -9342,12 +9000,10 @@
     "id": 85,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Hoenn Safari Zone",
       "Kanto Route 17",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Kanto Route 28",
-      "Mt Silver Outside"
+      "Kanto Route 28"
     ],
     "moves": [
       "Fury Attack",
@@ -9449,8 +9105,7 @@
     ],
     "id": 86,
     "location_area_encounters": [
-      "Seafoam Islands",
-      "Whirl Islands"
+      "Seafoam Islands"
     ],
     "moves": [
       "Headbutt",
@@ -9664,7 +9319,6 @@
     "id": 88,
     "location_area_encounters": [
       "Celadon City",
-      "Fiery Path",
       "Kanto Route 16",
       "Kanto Route 17",
       "Kanto Route 18",
@@ -9889,7 +9543,6 @@
     "id": 90,
     "location_area_encounters": [
       "Cinnabar Island",
-      "Johto Route 41",
       "Kanto Route 11",
       "Kanto Route 17",
       "Kanto Route 18",
@@ -9899,7 +9552,6 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "New Bark Town",
       "Pallet Town",
       "Seafoam Islands",
       "Vermilion City",
@@ -10097,12 +9749,7 @@
     "held_items": [],
     "id": 92,
     "location_area_encounters": [
-      "Bell Tower",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 36",
-      "Pokemon Tower",
-      "Sprout Tower"
+      "Pokemon Tower"
     ],
     "moves": [
       "Hypnosis",
@@ -10419,10 +10066,7 @@
     "id": 95,
     "location_area_encounters": [
       "Kanto Victory Road",
-      "Mt Silver",
-      "Mt Silver Top",
-      "Rock Tunnel",
-      "Union Cave"
+      "Rock Tunnel"
     ],
     "moves": [
       "Bind",
@@ -10527,8 +10171,6 @@
     "held_items": [],
     "id": 96,
     "location_area_encounters": [
-      "Johto Route 34",
-      "Johto Route 35",
       "Kanto Route 11",
       "Kanto Route 6"
     ],
@@ -10731,12 +10373,7 @@
     "id": 98,
     "location_area_encounters": [
       "Cerulean City",
-      "Cherrygrove City",
-      "Cianwood City",
-      "Dark Cave Violet City Entrance",
       "Fuchsia City",
-      "Johto Route 34",
-      "Johto Route 40",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 12",
@@ -10748,12 +10385,9 @@
       "Kanto Route 6",
       "Kanto Safari Zone",
       "Kanto Route 19",
-      "Olivine City",
       "Seafoam Islands",
-      "Union Cave",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
-      "Whirl Islands"
+      "Vermilion City Ss Anne Dock"
     ],
     "moves": [
       "Vice Grip",
@@ -10847,18 +10481,11 @@
     "id": 99,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Cherrygrove City",
-      "Cianwood City",
-      "Johto Route 34",
-      "Johto Route 40",
       "Kanto Route 10",
       "Kanto Route 23",
       "Kanto Route 25",
       "Kanto Route 19",
-      "Olivine City",
-      "Seafoam Islands",
-      "Union Cave",
-      "Whirl Islands"
+      "Seafoam Islands"
     ],
     "moves": [
       "Vice Grip",
@@ -10960,8 +10587,6 @@
     "id": 100,
     "location_area_encounters": [
       "Kanto Route 10",
-      "New Mauville",
-      "New Mauville Entrance",
       "Power Plant",
       "Team Rocket Hq"
     ],
@@ -11064,10 +10689,7 @@
     "id": 101,
     "location_area_encounters": [
       "Cerulean Cave",
-      "New Mauville",
       "Power Plant",
-      "Team Aqua Hideout",
-      "Team Magma Hideout",
       "Team Rocket Hq"
     ],
     "moves": [
@@ -11172,23 +10794,9 @@
     ],
     "id": 102,
     "location_area_encounters": [
-      "Azalea Town",
-      "Ilex Forest",
-      "Johto Route 29",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 36",
-      "Johto Route 37",
-      "Johto Route 38",
-      "Johto Route 39",
-      "Johto Route 43",
       "Kanto Route 26",
       "Kanto Route 27",
-      "Kanto Safari Zone",
-      "Lake Of Rage"
+      "Kanto Safari Zone"
     ],
     "moves": [
       "Leech Seed",
@@ -11806,8 +11414,7 @@
     ],
     "id": 108,
     "location_area_encounters": [
-      "Cerulean Cave",
-      "Johto Route 44"
+      "Cerulean Cave"
     ],
     "moves": [
       "Slam",
@@ -11911,7 +11518,6 @@
     "id": 109,
     "location_area_encounters": [
       "Burned Tower",
-      "Fiery Path",
       "Pokemon Mansion",
       "Team Rocket Hq"
     ],
@@ -12120,7 +11726,6 @@
     "id": 111,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Hoenn Safari Zone",
       "Kanto Safari Zone",
       "Kanto Victory Road"
     ],
@@ -12443,11 +12048,9 @@
     "held_items": [],
     "id": 114,
     "location_area_encounters": [
-      "Johto Route 44",
       "Kanto Route 28",
       "Kanto Safari Zone",
-      "Kanto Route 21",
-      "Mt Silver Outside"
+      "Kanto Route 21"
     ],
     "moves": [
       "Bind",
@@ -12658,9 +12261,6 @@
     "id": 116,
     "location_area_encounters": [
       "Cinnabar Island",
-      "Hoenn Route 132",
-      "Hoenn Route 133",
-      "Hoenn Route 134",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 12",
@@ -12669,8 +12269,7 @@
       "Kanto Route 20",
       "Kanto Route 21",
       "Seafoam Islands",
-      "Vermilion City",
-      "Whirl Islands"
+      "Vermilion City"
     ],
     "moves": [
       "Leer",
@@ -12775,8 +12374,7 @@
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 23",
-      "Seafoam Islands",
-      "Whirl Islands"
+      "Seafoam Islands"
     ],
     "moves": [
       "Leer",
@@ -12887,17 +12485,7 @@
       "Cerulean Cave",
       "Cerulean City",
       "Cinnabar Island",
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
       "Fuchsia City",
-      "Hoenn Route 102",
-      "Hoenn Route 111",
-      "Hoenn Route 114",
-      "Hoenn Route 117",
-      "Hoenn Route 120",
-      "Hoenn Safari Zone",
-      "Hoenn Victory Road",
-      "Johto Route 42",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 12",
@@ -12915,18 +12503,9 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "Meteor Falls",
-      "Meteor Falls Back",
-      "Meteor Falls Backsmall Room",
-      "Mt Mortar",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
       "Pallet Town",
-      "Petalburg City",
       "Seafoam Islands",
       "Slowpoke Well",
-      "Tohjo Falls",
-      "Union Cave",
       "Vermilion City",
       "Vermilion City Ss Anne Dock",
       "Viridian City"
@@ -13042,23 +12621,14 @@
     "location_area_encounters": [
       "Cerulean Cave",
       "Cerulean City",
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
       "Fuchsia City",
-      "Hoenn Safari Zone",
-      "Johto Route 42",
       "Kanto Route 10",
       "Kanto Route 23",
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 4",
       "Kanto Route 9",
-      "Mt Mortar",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
-      "Slowpoke Well",
-      "Tohjo Falls",
-      "Union Cave"
+      "Slowpoke Well"
     ],
     "moves": [
       "Horn Attack",
@@ -13171,19 +12741,12 @@
     ],
     "id": 120,
     "location_area_encounters": [
-      "Cherrygrove City",
-      "Cianwood City",
       "Cinnabar Island",
-      "Johto Route 34",
-      "Johto Route 40",
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "Lilycove City",
-      "Olivine City",
       "Pallet Town",
       "Seafoam Islands",
-      "Union Cave",
       "Vermilion City Ss Anne Dock"
     ],
     "moves": [
@@ -13629,9 +13192,7 @@
       "Aspear Berry"
     ],
     "id": 124,
-    "location_area_encounters": [
-      "Ice Path"
-    ],
+    "location_area_encounters": [],
     "moves": [
       "Pound",
       "Double Slap",
@@ -13852,7 +13413,6 @@
     "id": 126,
     "location_area_encounters": [
       "Burned Tower",
-      "Mt Silver",
       "Pokemon Mansion"
     ],
     "moves": [
@@ -13963,7 +13523,6 @@
     "held_items": [],
     "id": 127,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Kanto Safari Zone"
     ],
     "moves": [
@@ -14075,8 +13634,6 @@
     "held_items": [],
     "id": 128,
     "location_area_encounters": [
-      "Johto Route 38",
-      "Johto Route 39",
       "Kanto Safari Zone"
     ],
     "moves": [
@@ -14186,65 +13743,11 @@
     "held_items": [],
     "id": 129,
     "location_area_encounters": [
-      "Abandoned Ship",
-      "Blackthorn City",
       "Celadon City",
       "Cerulean Cave",
       "Cerulean City",
-      "Cherrygrove City",
-      "Cianwood City",
       "Cinnabar Island",
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
-      "Dewford Town",
-      "Dragons Den",
-      "Ecruteak City",
-      "Ever Grande City",
       "Fuchsia City",
-      "Hoenn Route 102",
-      "Hoenn Route 103",
-      "Hoenn Route 104",
-      "Hoenn Route 105",
-      "Hoenn Route 106",
-      "Hoenn Route 107",
-      "Hoenn Route 108",
-      "Hoenn Route 109",
-      "Hoenn Route 110",
-      "Hoenn Route 111",
-      "Hoenn Route 114",
-      "Hoenn Route 115",
-      "Hoenn Route 117",
-      "Hoenn Route 118",
-      "Hoenn Route 119",
-      "Hoenn Route 120",
-      "Hoenn Route 121",
-      "Hoenn Route 122",
-      "Hoenn Route 123",
-      "Hoenn Route 124",
-      "Hoenn Route 125",
-      "Hoenn Route 126",
-      "Hoenn Route 127",
-      "Hoenn Route 128",
-      "Hoenn Route 129",
-      "Hoenn Route 130",
-      "Hoenn Route 131",
-      "Hoenn Route 132",
-      "Hoenn Route 133",
-      "Hoenn Route 134",
-      "Hoenn Safari Zone",
-      "Hoenn Victory Road",
-      "Ilex Forest",
-      "Johto Route 30",
-      "Johto Route 31",
-      "Johto Route 32",
-      "Johto Route 34",
-      "Johto Route 35",
-      "Johto Route 42",
-      "Johto Route 43",
-      "Johto Route 44",
-      "Johto Route 45",
-      "Johto Route 40",
-      "Johto Route 41",
       "Kanto Route 10",
       "Kanto Route 11",
       "Kanto Route 12",
@@ -14266,35 +13769,12 @@
       "Kanto Route 19",
       "Kanto Route 20",
       "Kanto Route 21",
-      "Lake Of Rage",
-      "Lilycove City",
-      "Meteor Falls",
-      "Meteor Falls Back",
-      "Meteor Falls Backsmall Room",
-      "Mossdeep City",
-      "Mt Mortar",
-      "Mt Mortar Upper Cave",
-      "Mt Silver",
-      "Mt Silver Outside",
-      "New Bark Town",
-      "Olivine City",
-      "Pacifidlog Town",
       "Pallet Town",
-      "Petalburg City",
-      "Ruins Of Alph Outside",
-      "Seafloor Cavern",
       "Seafoam Islands",
-      "Shoal Cave",
-      "Slateport City",
       "Slowpoke Well",
-      "Sootopolis City",
-      "Tohjo Falls",
-      "Union Cave",
       "Vermilion City",
       "Vermilion City Ss Anne Dock",
-      "Violet City",
-      "Viridian City",
-      "Whirl Islands"
+      "Viridian City"
     ],
     "moves": [
       "Tackle",
@@ -14397,9 +13877,7 @@
     "held_items": [],
     "id": 130,
     "location_area_encounters": [
-      "Fuchsia City",
-      "Lake Of Rage",
-      "Sootopolis City"
+      "Fuchsia City"
     ],
     "moves": [
       "Tackle",
@@ -14511,8 +13989,7 @@
     ],
     "id": 131,
     "location_area_encounters": [
-      "Saffron City Silph Co",
-      "Union Cave"
+      "Saffron City Silph Co"
     ],
     "moves": [
       "Body Slam",
@@ -14623,9 +14100,6 @@
     "id": 132,
     "location_area_encounters": [
       "Cerulean Cave",
-      "Desert Underpass",
-      "Johto Route 34",
-      "Johto Route 35",
       "Kanto Route 13",
       "Kanto Route 14",
       "Kanto Route 15",
@@ -14721,8 +14195,7 @@
     "held_items": [],
     "id": 133,
     "location_area_encounters": [
-      "Celadon City Celadon Mansion",
-      "Goldenrod City Bills House"
+      "Celadon City Celadon Mansion"
     ],
     "moves": [
       "Sand Attack",
@@ -16219,8 +15692,6 @@
     ],
     "id": 147,
     "location_area_encounters": [
-      "Dragons Den",
-      "Johto Route 45",
       "Kanto Safari Zone"
     ],
     "moves": [
@@ -16328,8 +15799,6 @@
     ],
     "id": 148,
     "location_area_encounters": [
-      "Dragons Den",
-      "Johto Route 45",
       "Kanto Safari Zone"
     ],
     "moves": [
@@ -16731,7 +16200,6 @@
     ],
     "id": 152,
     "location_area_encounters": [
-      "Littleroot Town",
       "New Bark Town"
     ],
     "moves": [
@@ -16978,7 +16446,6 @@
     "held_items": [],
     "id": 155,
     "location_area_encounters": [
-      "Littleroot Town",
       "New Bark Town"
     ],
     "moves": [
@@ -17238,7 +16705,6 @@
     "held_items": [],
     "id": 158,
     "location_area_encounters": [
-      "Littleroot Town",
       "New Bark Town"
     ],
     "moves": [
@@ -17681,7 +17147,6 @@
     "held_items": [],
     "id": 163,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Ilex Forest",
       "Johto Route 29",
       "Johto Route 30",
@@ -17695,7 +17160,7 @@
       "Johto Route 39",
       "Johto Route 43",
       "Kanto Route 1",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
@@ -17806,7 +17271,7 @@
       "Kanto Route 13",
       "Kanto Route 14",
       "Kanto Route 15",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "Kanto Route 25",
       "Kanto Route 26",
       "Kanto Route 27",
@@ -17905,7 +17370,6 @@
     "held_items": [],
     "id": 165,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 29",
       "Johto Route 30",
       "Johto Route 31",
@@ -17915,7 +17379,7 @@
       "Johto Route 37",
       "Johto Route 38",
       "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "National Park"
     ],
     "moves": [
@@ -18010,7 +17474,7 @@
     "held_items": [],
     "id": 166,
     "location_area_encounters": [
-      "Kanto Route 2 South Towards Viridian City"
+      "Kanto Route 2"
     ],
     "moves": [
       "Comet Punch",
@@ -18104,7 +17568,6 @@
     "held_items": [],
     "id": 167,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 29",
       "Johto Route 30",
       "Johto Route 31",
@@ -18114,7 +17577,7 @@
       "Johto Route 37",
       "Johto Route 38",
       "Johto Route 39",
-      "Kanto Route 2 South Towards Viridian City",
+      "Kanto Route 2",
       "National Park"
     ],
     "moves": [
@@ -18211,7 +17674,7 @@
     "id": 168,
     "location_area_encounters": [
       "Johto Route 37",
-      "Kanto Route 2 South Towards Viridian City"
+      "Kanto Route 2"
     ],
     "moves": [
       "Poison Sting",
@@ -18419,8 +17882,6 @@
     "id": 170,
     "location_area_encounters": [
       "Cinnabar Island",
-      "Hoenn Route 124 Underwater",
-      "Hoenn Route 126 Underwater",
       "Johto Route 41",
       "Kanto Route 26",
       "Kanto Route 27",
@@ -19099,7 +18560,6 @@
     "held_items": [],
     "id": 177,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Ruins Of Alph Outside"
     ],
     "moves": [
@@ -19193,9 +18653,7 @@
     "height": 1.5,
     "held_items": [],
     "id": 178,
-    "location_area_encounters": [
-      "Hoenn Safari Zone"
-    ],
+    "location_area_encounters": [],
     "moves": [
       "Leer",
       "Peck",
@@ -19289,7 +18747,6 @@
     "held_items": [],
     "id": 179,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 32",
       "Johto Route 42",
       "Johto Route 43"
@@ -19640,19 +19097,7 @@
     "held_items": [],
     "id": 183,
     "location_area_encounters": [
-      "Hoenn Route 102",
-      "Hoenn Route 104",
-      "Hoenn Route 111",
-      "Hoenn Route 112",
-      "Hoenn Route 114",
-      "Hoenn Route 117",
-      "Hoenn Route 120",
-      "Hoenn Safari Zone",
-      "Johto Route 42",
-      "Mt Mortar",
-      "Mt Mortar Lower Cave",
-      "Mt Mortar Upper Cave",
-      "Petalburg City"
+      "Johto Route 42"
     ],
     "moves": [
       "Tackle",
@@ -19849,7 +19294,6 @@
     "held_items": [],
     "id": 185,
     "location_area_encounters": [
-      "Hoenn Battle Frontier",
       "Johto Route 36"
     ],
     "moves": [
@@ -20314,7 +19758,6 @@
     "id": 190,
     "location_area_encounters": [
       "Azalea Town",
-      "Hoenn Safari Zone",
       "Johto Route 29",
       "Johto Route 30",
       "Johto Route 31",
@@ -20417,7 +19860,6 @@
     ],
     "id": 191,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Kanto Route 24",
       "National Park"
     ],
@@ -20686,7 +20128,6 @@
     "held_items": [],
     "id": 194,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 32",
       "Ruins Of Alph Outside",
       "Union Cave"
@@ -20778,7 +20219,6 @@
     "held_items": [],
     "id": 195,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 32",
       "Kanto Route 10",
       "Kanto Route 12",
@@ -21449,8 +20889,7 @@
     "held_items": [],
     "id": 202,
     "location_area_encounters": [
-      "Dark Cave Blackthorn City Entrance",
-      "Hoenn Safari Zone"
+      "Dark Cave Blackthorn City Entrance"
     ],
     "moves": [
       "Counter",
@@ -21533,7 +20972,6 @@
     ],
     "id": 203,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 43"
     ],
     "moves": [
@@ -21628,7 +21066,6 @@
     "id": 204,
     "location_area_encounters": [
       "Azalea Town",
-      "Hoenn Safari Zone",
       "Ilex Forest",
       "Johto Route 29",
       "Johto Route 30",
@@ -21924,7 +21361,6 @@
     "held_items": [],
     "id": 207,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 45"
     ],
     "moves": [
@@ -22119,11 +21555,9 @@
     "held_items": [],
     "id": 209,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 34",
       "Johto Route 35",
       "Johto Route 38",
-      "Kanto Route 5",
       "Kanto Route 6",
       "Kanto Route 7",
       "Kanto Route 8"
@@ -22527,7 +21961,6 @@
       "Cianwood City",
       "Cianwood City Manias House",
       "Dark Cave Violet City Entrance",
-      "Hoenn Safari Zone",
       "Johto Route 40"
     ],
     "moves": [
@@ -22627,7 +22060,6 @@
     "id": 214,
     "location_area_encounters": [
       "Azalea Town",
-      "Hoenn Safari Zone",
       "Johto Route 29",
       "Johto Route 30",
       "Johto Route 31",
@@ -22848,7 +22280,6 @@
     "location_area_encounters": [
       "Dark Cave Blackthorn City Entrance",
       "Dark Cave Violet City Entrance",
-      "Hoenn Safari Zone",
       "Johto Route 45"
     ],
     "moves": [
@@ -23037,8 +22468,6 @@
     "held_items": [],
     "id": 218,
     "location_area_encounters": [
-      "Fiery Path",
-      "Hoenn Route 113",
       "Kanto Route 16",
       "Kanto Route 17",
       "Kanto Route 18"
@@ -23418,8 +22847,6 @@
     "location_area_encounters": [
       "Cherrygrove City",
       "Cianwood City",
-      "Ever Grande City",
-      "Hoenn Route 128",
       "Johto Route 34",
       "Johto Route 40",
       "Kanto Route 19",
@@ -23530,7 +22957,6 @@
     "held_items": [],
     "id": 223,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 44"
     ],
     "moves": [
@@ -23626,9 +23052,7 @@
     "height": 0.9,
     "held_items": [],
     "id": 224,
-    "location_area_encounters": [
-      "Hoenn Safari Zone"
-    ],
+    "location_area_encounters": [],
     "moves": [
       "Water Gun",
       "Ice Beam",
@@ -23922,7 +23346,6 @@
     ],
     "id": 227,
     "location_area_encounters": [
-      "Hoenn Route 113",
       "Johto Route 45"
     ],
     "moves": [
@@ -24020,7 +23443,6 @@
     "held_items": [],
     "id": 228,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Kanto Route 7"
     ],
     "moves": [
@@ -24301,7 +23723,6 @@
     ],
     "id": 231,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 45",
       "Johto Route 46"
     ],
@@ -24599,7 +24020,6 @@
     "held_items": [],
     "id": 234,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 36",
       "Johto Route 37"
     ],
@@ -24688,7 +24108,6 @@
     "held_items": [],
     "id": 235,
     "location_area_encounters": [
-      "Artisan Cave",
       "Ruins Of Alph Outside"
     ],
     "moves": [
@@ -24764,8 +24183,7 @@
     "held_items": [],
     "id": 236,
     "location_area_encounters": [
-      "Johto Route 34",
-      "Mt Mortar"
+      "Johto Route 34"
     ],
     "moves": [
       "Tackle",
@@ -25244,7 +24662,6 @@
     ],
     "id": 241,
     "location_area_encounters": [
-      "Hoenn Safari Zone",
       "Johto Route 38",
       "Johto Route 39"
     ],
@@ -25976,7 +25393,6 @@
     "held_items": [],
     "id": 249,
     "location_area_encounters": [
-      "Navel Rock",
       "Whirl Islands"
     ],
     "moves": [
@@ -26068,8 +25484,7 @@
     ],
     "id": 250,
     "location_area_encounters": [
-      "Bell Tower Roof",
-      "Navel Rock"
+      "Bell Tower Roof"
     ],
     "moves": [
       "Gust",
@@ -28508,7 +27923,6 @@
     "id": 278,
     "location_area_encounters": [
       "Dewford Town",
-      "Ever Grande City",
       "Hoenn Route 103",
       "Hoenn Route 104",
       "Hoenn Route 105",
@@ -28641,7 +28055,6 @@
     "id": 279,
     "location_area_encounters": [
       "Dewford Town",
-      "Ever Grande City",
       "Hoenn Route 103",
       "Hoenn Route 104",
       "Hoenn Route 105",
@@ -32435,7 +31848,6 @@
     "id": 320,
     "location_area_encounters": [
       "Dewford Town",
-      "Ever Grande City",
       "Hoenn Route 103",
       "Hoenn Route 105",
       "Hoenn Route 106",
@@ -37136,7 +36548,6 @@
     ],
     "id": 370,
     "location_area_encounters": [
-      "Ever Grande City",
       "Hoenn Route 128"
     ],
     "moves": [
@@ -38577,9 +37988,7 @@
     "height": 1.7,
     "held_items": [],
     "id": 386,
-    "location_area_encounters": [
-      "Birth Island"
-    ],
+    "location_area_encounters": [],
     "moves": [
       "Wrap",
       "Leer",
