@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { RESET_HOUR_UTC } from '../config/resetConfig';
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack }) {
     const [copied, setCopied] = useState(false);
@@ -12,12 +13,26 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
 
     const d = new Date();
     const dateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+    // Compute the canonical Pokedle day number using the same method as `CongratsMessage`.
+    const effectiveUTCDate = (dt) => {
+        const dd = new Date(dt);
+        let day = new Date(Date.UTC(dd.getUTCFullYear(), dd.getUTCMonth(), dd.getUTCDate(), 0, 0, 0));
+        if (dd.getUTCHours() >= RESET_HOUR_UTC) {
+            day = new Date(Date.UTC(dd.getUTCFullYear(), dd.getUTCMonth(), dd.getUTCDate() + 1, 0, 0, 0));
+        }
+        return day;
+    };
+    const MS_PER_DAY = 24 * 60 * 60 * 1000;
+    const todayEffective = effectiveUTCDate(new Date());
+    const epoch = effectiveUTCDate(new Date('2025-11-24T00:00:00Z'));
+    const dayNumber = Math.floor((todayEffective.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
+    const pokedleLabel = `Pokédle #${dayNumber}`;
     const entries = (results || []).map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
-    const summaryLines = [`I've completed all the modes of Pokédle for ${dateStr}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
+    const summaryLines = [`I've completed all the modes of ${pokedleLabel}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
     const summaryText = summaryLines.join('\n');
 
-    const detailedLines = [ `I've completed all the modes of Pokédle for ${dateStr}! \n` ];
+    const detailedLines = [ `I've completed all the modes of ${pokedleLabel}! \n` ];
     (results || []).forEach(r => {
         const guesses = (guessesByPage && guessesByPage[r.key]) || [];
         const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
@@ -96,7 +111,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                 <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '65px' }} />
                 {/* Small section header for today's summary */}
                 <div style={{ textAlign: 'center', marginBottom: 8 }}>
-                    <div style={{ fontWeight: 700, textAlign: 'center' }}>Today</div>
+                    <div style={{ fontWeight: 700, textAlign: 'center' }}>Today ({pokedleLabel})</div>
                 </div>
 
                 {!showDetails ? (
