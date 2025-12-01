@@ -28,32 +28,61 @@ HEADERS = {
     'User-Agent': 'pokedle-downloader/1.0 (+https://github.com/Pythagean/pokedle)'
 }
 
-# Edit this list: put your 9 base URLs here. The script will append the Pokémon
-# slug to the end of each URL (with a '/' if needed). Examples:
-#   "https://example.com/sprites"
-#   "https://cdn.example.com/images/party/"
-BASE_URLS = [
-    # Replace these placeholders with your URLs
-    "https://img.pokemondb.net/sprites/red-blue/normal/",
-    "https://img.pokemondb.net/sprites/silver/normal/",
-    "https://img.pokemondb.net/sprites/ruby-sapphire/normal/",
-    "https://img.pokemondb.net/sprites/diamond-pearl/normal/",
-    "https://img.pokemondb.net/sprites/black-white/normal/",
-    "https://img.pokemondb.net/sprites/x-y/normal/",
-    "https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/",
-    "https://img.pokemondb.net/sprites/sword-shield/normal/",
-    "https://img.pokemondb.net/sprites/scarlet-violet/normal/"
-]
+# Edit this mapping: put your keys and base URLs here. The script will append the
+# Pokémon slug to the end of each URL (with a '/' if needed). Examples:
+#   "crystal": "https://img.pokemondb.net/sprites/crystal/normal/"
+#   "sword-shield": "https://img.pokemondb.net/sprites/sword-shield/normal/"
+BASE_URLS = {
+    # Replace these placeholders with your key: url pairs
+    "red-blue": "https://img.pokemondb.net/sprites/red-blue/normal/",
+    "crystal": "https://img.pokemondb.net/sprites/crystal/normal/",
+    "ruby-sapphire": "https://img.pokemondb.net/sprites/ruby-sapphire/normal/",
+    "diamond-pearl": "https://img.pokemondb.net/sprites/diamond-pearl/normal/",
+    "black-white": "https://img.pokemondb.net/sprites/black-white/normal/",
+    "x-y": "https://img.pokemondb.net/sprites/x-y/normal/",
+    # "lets-go-pikachu-eevee": "https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/",
+    "sword-shield": "https://img.pokemondb.net/sprites/sword-shield/normal/",
+    "brilliant-diamond": "https://img.pokemondb.net/sprites/brilliant-diamond-shining-pearl/normal/",
+    "scarlet-violet": "https://img.pokemondb.net/sprites/scarlet-violet/normal/",
+    "home": "https://img.pokemondb.net/sprites/home/normal/"
+}
 
 
 def parse_args():
     p = argparse.ArgumentParser(description='Download images by appending pokemon slugs to base URLs')
     p.add_argument('--input-json', required=True, help='Path to pokemon_data.json')
     p.add_argument('--partial', type=int, default=None, help='Only process the first X pokemon')
+    p.add_argument('--id-range', type=str, default=None, help="Comma-separated ids/ranges to process, e.g. '1-151,201,250'")
     p.add_argument('--output-dir', required=True, help='Directory to save downloaded images')
     p.add_argument('--delay', type=float, default=0.5, help='Seconds to wait between requests (default 0.5)')
     p.add_argument('--verbose', action='store_true', help='Print verbose progress')
     return p.parse_args()
+
+
+def parse_id_range(s: str):
+    """Parse a string like '1-151,201,250' into a set of ints."""
+    ids = set()
+    if not s:
+        return ids
+    parts = [p.strip() for p in s.split(',') if p.strip()]
+    for part in parts:
+        if '-' in part:
+            try:
+                a, b = part.split('-', 1)
+                a_i = int(a)
+                b_i = int(b)
+                if a_i <= b_i:
+                    ids.update(range(a_i, b_i + 1))
+                else:
+                    ids.update(range(b_i, a_i + 1))
+            except ValueError:
+                continue
+        else:
+            try:
+                ids.add(int(part))
+            except ValueError:
+                continue
+    return ids
 
 
 def slugify_name(name: str) -> str:
@@ -106,7 +135,12 @@ def main():
     count_images = 0
 
     # common extensions to try if the base URL doesn't include one
-    common_exts = ['.png', '.jpg', '.jpeg', '.gif', '.webp']
+    common_exts = ['.png']
+
+    # Optionally filter by id range
+    id_filter = set()
+    if getattr(args, 'id_range', None):
+        id_filter = parse_id_range(args.id_range)
 
     for i, p in enumerate(data):
         if args.partial and i >= args.partial:
@@ -115,11 +149,16 @@ def main():
         poke_name = p.get('name')
         if not poke_name:
             continue
+        if id_filter and (poke_id not in id_filter):
+            # skip IDs not in the requested set
+            if args.verbose:
+                print(f'[{i+1}/{total}] Skipping id {poke_id} (not in id-range)')
+            continue
         slug = slugify_name(poke_name)
         if args.verbose:
             print(f'[{i+1}/{total}] {poke_id} - {poke_name} -> slug: {slug}')
 
-        for idx, base in enumerate(BASE_URLS, start=1):
+        for idx, (key, base) in enumerate(BASE_URLS.items(), start=1):
             # build base + slug
             base_clean = base.rstrip('/')
             candidate_base = base_clean + '/' + slug
@@ -142,7 +181,9 @@ def main():
                     print(f'    Trying: {cand}')
                 parsed = urlparse(cand)
                 ext = os.path.splitext(parsed.path)[1]
-                out_fname = f"{poke_id}-{idx}{ext}"
+                # include key in filename so we know which source produced the image
+                safe_key = re.sub(r'[^a-z0-9_-]+', '', str(key))
+                out_fname = f"{poke_id}-{safe_key}{ext}"
                 out_path = os.path.join(args.output_dir, out_fname)
                 if os.path.exists(out_path):
                     if args.verbose:
