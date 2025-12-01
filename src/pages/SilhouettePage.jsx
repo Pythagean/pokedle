@@ -167,7 +167,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
   // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
-  const maxZoom = 2.6;
+  const maxZoom = 2.9;
   const minZoom = 1.0;
   const maxSteps = 10;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
@@ -326,7 +326,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Combine mirroring and zoom — use scale with transformOrigin anchored at the
   // interpolated focal center so the silhouette zooms out from the chosen point.
   let scaleX = shouldMirror ? -1 : 1;
-  imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
+  // Only animate transform when the puzzle is correct; otherwise keep transforms instantaneous
+  imgStyle.transition = isCorrect ? 'transform 3000ms cubic-bezier(.2,.8,.2,1)' : 'none';
   // Compute a transformOrigin that maps the logical target (targetX/targetY)
   // into the rendered image coordinates inside the container. This keeps the
   // chosen focus point visually stationary during scaling even with letterboxing.
@@ -370,21 +371,21 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     }
     adjustedOriginX = 0.5 + (originPercentX - 0.5) * originScale;
     adjustedOriginY = 0.5 + (originPercentY - 0.5) * originScale;
-    console.log('Silhouette origin debug', {
-      imgNatural, containerSize,
-      imgAspect, containerAspect,
-      renderW, renderH,
-      offsetLeft, offsetTop,
-      focalXLogical, focalYLogical,
-      focalX, focalY,
-      focalPixelX, focalPixelY,
-      originPercentX, originPercentY,
-      adjustedOriginX, adjustedOriginY,
-      originScale,
-      shouldMirror,
-      targetX, targetY,
-      centerX, centerY,
-    });
+    // console.log('Silhouette origin debug', {
+    //   imgNatural, containerSize,
+    //   imgAspect, containerAspect,
+    //   renderW, renderH,
+    //   offsetLeft, offsetTop,
+    //   focalXLogical, focalYLogical,
+    //   focalX, focalY,
+    //   focalPixelX, focalPixelY,
+    //   originPercentX, originPercentY,
+    //   adjustedOriginX, adjustedOriginY,
+    //   originScale,
+    //   shouldMirror,
+    //   targetX, targetY,
+    //   centerX, centerY,
+    // });
   }
   if (originPercentX === null || originPercentY === null) {
     const fallbackX = shouldMirror ? (1 - centerX) : centerX;
@@ -411,6 +412,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     imgStyle.objectFit = 'contain';
     imgStyle.transform = `scale(1.0, 1.0)`;
   }
+
+  // Combine opacity transition with the conditional transform transition
+  const combinedTransition = `opacity 300ms ease, ${imgStyle.transition}`;
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
@@ -460,7 +464,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               onContextMenu={e => e.preventDefault()}
               // When the puzzle is already correct, hide the silhouette immediately
               // to avoid briefly flashing the silhouette image when switching pages.
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)' }}
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect) ? 1 : 0, transition: combinedTransition }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
                 try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) {}
@@ -474,7 +478,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               draggable={false}
               onDragStart={e => e.preventDefault()}
               onContextMenu={e => e.preventDefault()}
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: 'opacity 300ms ease, transform 0.12s cubic-bezier(.4,2,.6,1)', filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: combinedTransition, filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
               onLoad={e => { setRealLoaded(true); }}
               onError={e => { setRealLoaded(false); }}
             />

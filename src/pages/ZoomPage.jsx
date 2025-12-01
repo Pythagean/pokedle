@@ -190,7 +190,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   if (isCorrect) {
     // When correct, remove all transformations to show the image naturally
     imgStyle.transform = 'none';
-    //imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
+    // Smoothly animate to the unzoomed state on correct guess
+    imgStyle.transition = 'transform 3000ms cubic-bezier(.2,.8,.2,1)';
     imgStyle.transformOrigin = '50% 50%';
   } else {
     // Calculate translation: move focal point to center (50%, 50%)
@@ -201,7 +202,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     
     // Apply translate first, then scale from center
     imgStyle.transform = `translate(${translateX}%, ${translateY}%) scale(${scaleX * zoom}, ${zoom})`;
-    //imgStyle.transition = 'transform 100ms cubic-bezier(.2,.8,.2,1)';
+    // No transition during normal zoom steps — snap instantly
+    imgStyle.transition = 'none';
     imgStyle.transformOrigin = `50% 50%`;
   }
   if (zoom === 0.9) {
