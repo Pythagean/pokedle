@@ -28,7 +28,7 @@ function mulberry32(a) {
   }
 }
 
-export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily }) {
+export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily, useShinySprites = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -576,6 +576,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             inputRef={inputRef}
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
+            useShinySprites={useShinySprites}
           />
         </form>
       )}

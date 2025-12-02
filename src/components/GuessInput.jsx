@@ -10,7 +10,8 @@ export default function GuessInput({
   setDropdownOpen,
   inputRef,
   dropdownRef,
-  handleGuessSubmit
+  handleGuessSubmit,
+  useShinySprites = false
 }) {
   const [loadedSprites, setLoadedSprites] = useState({});
   const wrapperRef = React.useRef(null);
@@ -22,7 +23,8 @@ export default function GuessInput({
     const images = [];
     filteredOptions.forEach(opt => {
       if (!opt || !opt.id) return;
-      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}-front.png`;
+      const suffix = useShinySprites ? '-shiny.png' : '-front.png';
+      const url = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}${suffix}`;
       // If we already know the state, skip creating a new Image
       if (loadedSprites[opt.id]) return;
       const img = new Image();
@@ -273,7 +275,7 @@ export default function GuessInput({
                   )}
                 </div>
                 <img
-                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}-front.png`}
+                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${opt.id}${useShinySprites ? '-shiny.png' : '-front.png'}`}
                   alt={opt.name}
                   onLoad={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: true }))}
                   onError={() => setLoadedSprites(prev => ({ ...prev, [opt.id]: 'error' }))}

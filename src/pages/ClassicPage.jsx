@@ -36,7 +36,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
+function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
   const MAX_PLACEHOLDER_ROWS = 1;
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
@@ -507,6 +507,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily }) {
               inputRef={inputRef}
               dropdownRef={dropdownRef}
               handleGuessSubmit={handleGuessSubmit}
+              useShinySprites={useShinySprites}
             />
           </form>
         )}

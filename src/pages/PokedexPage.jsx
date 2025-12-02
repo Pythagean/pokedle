@@ -28,7 +28,7 @@ function mulberry32(a) {
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   }
 }
-export default function PokedexPage({ pokemonData, guesses, setGuesses, daily }) {
+export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   
@@ -253,6 +253,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily })
             inputRef={inputRef}
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
+            useShinySprites={useShinySprites}
           />
         </form>
       )}

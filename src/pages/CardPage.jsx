@@ -30,11 +30,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function getCardTypeByDay(day, rng) {
-  if (day === 0) return 'special'; // Sunday
-  if (day === 6) return rng() < 0.5 ? 'full_art' : 'shiny'; // Saturday
-  return 'normal'; // Mon-Fri
-}
+import { getCardTypeByDay } from '../utils/cardType';
 
 function CardPage({ pokemonData, guesses, setGuesses, daily }) {
 

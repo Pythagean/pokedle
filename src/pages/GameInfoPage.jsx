@@ -32,7 +32,7 @@ function getSeedFromUTCDate(date) {
 
 const BASE_CLUE_TYPES = ['stats', 'ability', 'moves', 'category', 'locations', 'held_items', 'shape'];
 
-function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
+function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const [locationFileMap, setLocationFileMap] = useState(null);
@@ -456,6 +456,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
                         inputRef={inputRef}
                         dropdownRef={dropdownRef}
                         handleGuessSubmit={handleGuessSubmit}
+                        useShinySprites={useShinySprites}
                     />
                 </form>
             )}

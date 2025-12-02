@@ -91,6 +91,7 @@ import ZoomPage from './pages/ZoomPage';
 import ColoursPage from './pages/ColoursPage';
 import CardPage from './pages/CardPage';
 import GameInfoPage from './pages/GameInfoPage';
+import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
 
@@ -304,6 +305,20 @@ function App() {
 
   // Get today's date as seed, use page key for deterministic daily selection per page
   const today = new Date();
+  // Determine whether this UTC-based day is a 'shiny' Saturday using same seed as Card selection
+  const baseSeedForCardType = getSeedFromDate(today) + 9999;
+  const cardTypeRng = mulberry32(baseSeedForCardType);
+  const seedDateForCardType = (function () {
+    const y = today.getUTCFullYear();
+    const m = today.getUTCMonth();
+    const d = today.getUTCDate();
+    if (today.getUTCHours() >= RESET_HOUR_UTC) {
+      return new Date(Date.UTC(y, m, d + 1, 0, 0, 0));
+    }
+    return new Date(Date.UTC(y, m, d, 0, 0, 0));
+  })();
+  const utcDayForCardType = seedDateForCardType.getUTCDay();
+  const isShinyDay = getCardTypeByDay(utcDayForCardType, cardTypeRng) === 'shiny';
   const seed = getSeedFromDate(today) + page.length * 1000 + page.charCodeAt(0);
   const rng = useMemo(() => mulberry32(seed), [seed]);
   // Pick daily pokemon for the current page
@@ -341,9 +356,7 @@ function App() {
           dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
         }
         const utcDay = dayForCard.getUTCDay();
-        let cardType = 'normal';
-        if (utcDay === 0) cardType = 'special';
-        else if (utcDay === 6) cardType = (localRng() < 0.5 ? 'full_art' : 'shiny');
+        const cardType = getCardTypeByDay(utcDay, localRng);
 
         const manifestList = cardManifest[cardType]?.[chosen.id];
         if (manifestList && manifestList.length > 0) {
@@ -560,18 +573,18 @@ function App() {
 
   // Render a page component by key (keeps JSX mapping in one place)
   function renderPageByKey(key) {
-    if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} />;
+    if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={dailyByPage.pokedex} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />;
     if (key === 'stats') return <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />;
     if (key === 'ability') return <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />;
-    if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} />;
-    if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} />;
-    if (key === 'silhouette') return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} />;
-    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} />;
-    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} />;
-    if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} />;
-    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} />;
-    if (key === 'gameinfo') return <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} />;
+    if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'silhouette') return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'gameinfo') return <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} />;
     return null;
   }

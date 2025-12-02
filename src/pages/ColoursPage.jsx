@@ -29,7 +29,7 @@ function mulberry32(a) {
   }
 }
 
-export default function ColoursPage({ pokemonData, guesses, setGuesses, daily }) {
+export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -375,6 +375,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily })
             inputRef={inputRef}
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
+            useShinySprites={useShinySprites}
           />
         </form>
       )}

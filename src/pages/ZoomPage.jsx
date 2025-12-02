@@ -28,7 +28,7 @@ function mulberry32(a) {
   }
 }
 
-export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta }) {
+export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -412,6 +412,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             inputRef={inputRef}
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
+            useShinySprites={useShinySprites}
           />
         </form>
       )}
