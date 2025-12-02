@@ -232,7 +232,19 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
             const moves = dailyPokemon.moves || [];
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Moves Learnt by Level Up:</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                        <div style={{ fontWeight: 600 }}>Moves Learnt by Level Up:</div>
+                        <InfoButton
+                            ariaLabel="About moves clue"
+                            placement="right"
+                            marginTop={0}
+                            content={
+                                <div style={{ textAlign: 'left' }}>
+                                    Learned moves are from the latest gen the pokemon is in (eg. Ledian is in Gen 7, so moves are from Gen 7)
+                                </div>
+                            }
+                        />
+                    </div>
                     <div style={{ color: '#333' }}>{moves.length > 0 ? moves.join(', ') : 'No moves'}</div>
                 </div>
             );
@@ -281,7 +293,21 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily }) {
 
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Wild Encounter Locations:</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                        <div style={{ fontWeight: 600 }}>Wild Encounter Locations:</div>
+                        <InfoButton
+                            ariaLabel="About locations clue"
+                            placement="right"
+                            marginTop={0}
+                            content={
+                                <div style={{ textAlign: 'left' }}>
+                                    Locations are <strong>only for the generation where the Pokemon was first introduced</strong>
+                                    <br />Eg. Butterfree will show Kanto locations only. (Johto Pokemon will show Kanto+Johto)
+                                    <br /><br />Click a location to view a map when available.
+                                </div>
+                            }
+                        />
+                    </div>
                     <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                         {locations.length > 0 ? locations.map((loc, i) => (
                             <div key={String(loc) + i}>
