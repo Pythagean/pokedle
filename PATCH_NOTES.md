@@ -1,4 +1,31 @@
 
+## Release Notes — December 3, 2025
+
+## Overview
+
+- Small UX and developer tooling updates: group moves by level in Game Info and add a PokeAPI-backed moves extractor to augment local Pokemon data with level-up moves for selected version groups.
+
+## What’s New (user-facing)
+
+- **Game Info Page** — Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
+- **Results Page** — Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
+- **Zoom Page** — Zoom Page should now only select zoom-in point if it contains more than one colour
+- **Shiny Saturday** - Reduced 'Shiny Saturday' chance to be 10% (changed from 50%)
+- **Card Page** - Slightly reduce blur levels for Full Art / Illustration cards
+
+## Commits included (newest first)
+
+```text
+1a33651 | Update moves description in GameInfoPage to clarify that only level-up moves from Gen 3 are included.
+99c5292 | Changed moves in pokemon_data.json to be pulled from Gen 3 only. "Level learned at" is also now displayed alongside each move.
+cbe7432 | Results Page - Add touch and wheel event handlers to prevent horizontal scroll propagation in history scroller
+7c3daa9 | Tidied up scripts
+ceb597f | Add uniformity check for surrounding pixels in random point generation. Chosen Zoom Page points should now no longer contain just one colour
+32df62f | Refactor card type determination logic into a shared utility function.
+a798e58 | Add script to download shiny front sprites for Pokémon from PokeAPI
+cd0f4a5 | Slightly reduce blur levels for Full Art / Illustration cards
+```
+
 ## Release Notes — December 1, 2025
 
 ## Overview
