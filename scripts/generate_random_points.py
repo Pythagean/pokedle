@@ -3,18 +3,21 @@
 Generate random non-transparent 3x3 sample points for images in a directory.
 
 Usage:
-  python scripts/generate_random_points.py --images-dir PATH --output-json out.json [--points 10] [--seed 123]
+    python scripts/generate_random_points.py --images-dir PATH --output-json out.json [--points 10] [--seed 123]
 
 Output JSON format:
 {
-  "image_name_without_ext": [[x,y], [x,y], ...],
-  ...
+    "image_name_without_ext": [[x,y], [x,y], ...],
+    ...
 }
 
 Notes:
 - For each chosen point (x,y) the 3x3 neighborhood centered at (x,y) must be fully opaque.
 - Images without an alpha channel are treated as fully opaque.
 - Images smaller than 3x3 are skipped.
+- Optionally rejects points where the surrounding pixels (sampled) are all essentially the same
+    colour. Use `--area` to control how many surrounding pixels are sampled (default 20) and
+    `--threshold` to control the maximum colour distance considered "similar" (default 10).
 """
 
 import argparse
@@ -41,7 +44,69 @@ def has_full_alpha(img, x, y):
     return True
 
 
-def choose_points_for_image(img_path, points=10, max_attempts=20000):
+def color_dist_sq(c1, c2):
+    """Squared Euclidean distance between two RGB tuples."""
+    return (int(c1[0]) - int(c2[0])) ** 2 + (int(c1[1]) - int(c2[1])) ** 2 + (int(c1[2]) - int(c2[2])) ** 2
+
+
+def is_surrounding_uniform(img, x, y, sample_count=20, threshold=10, verbose=False):
+    """Return True if `sample_count` surrounding pixels are all within `threshold` colour distance
+    of the centre pixel. The function expands a square neighbourhood until it contains at least
+    `sample_count` candidates, then samples up to that many pixels (without replacement).
+    If `verbose` is True, prints a short summary of the sampled distances for debugging.
+    """
+    w, h = img.size
+    pixels = img.load()
+    # centre rgb
+    try:
+        centre_rgb = pixels[x, y][:3]
+    except Exception:
+        return False
+
+    # Build candidate neighbours by expanding square radius until we have enough
+    neighbours = []
+    max_radius = max(w, h)
+    r = 1
+    while r <= max_radius:
+        neighbours = []
+        for yy in range(max(0, y - r), min(h, y + r + 1)):
+            for xx in range(max(0, x - r), min(w, x + r + 1)):
+                if xx == x and yy == y:
+                    continue
+                neighbours.append((xx, yy))
+        if len(neighbours) >= sample_count or (r >= max_radius):
+            break
+        r += 1
+
+    if not neighbours:
+        return False
+
+    # sample up to sample_count neighbours
+    sample_n = min(sample_count, len(neighbours))
+    try:
+        sampled = random.sample(neighbours, sample_n)
+    except Exception:
+        sampled = neighbours[:sample_n]
+
+    # threshold compare (use squared distance for speed)
+    thresh_sq = int(threshold) * int(threshold)
+    centre_rgb = pixels[x, y][:3]
+    dists = []
+    for nx, ny in sampled:
+        nb_rgb = pixels[nx, ny][:3]
+        d = color_dist_sq(centre_rgb, nb_rgb)
+        dists.append(d)
+        if d > thresh_sq:
+            if verbose:
+                # show small debug snippet: centre rgb, sample count, first failing distance
+                print(f"uniform-check @({x},{y}): centre={centre_rgb} sampled={len(sampled)} max_dist={max(dists)} thresh={threshold}")
+            return False
+    if verbose:
+        print(f"uniform-check @({x},{y}): centre={centre_rgb} sampled={len(sampled)} max_dist={max(dists) if dists else 0} thresh={threshold}")
+    return True
+
+
+def choose_points_for_image(img_path, points=10, max_attempts=20000, sample_area=20, color_threshold=10, verbose=False):
     """Return a list of (x,y) points for one image path.
 
     Raises RuntimeError if not enough valid points found within max_attempts.
@@ -70,14 +135,34 @@ def choose_points_for_image(img_path, points=10, max_attempts=20000):
 
     # Randomly sample without replacement if there are enough candidates
     # but we still check alpha; continue until points found or attempts exhausted.
+    basename = os.path.basename(img_path)
     while len(chosen) < points and attempts < max_attempts:
         attempts += 1
         x, y = random.choice(candidates)
         if (x, y) in tried:
             continue
         tried.add((x, y))
-        if has_full_alpha(rgba, x, y):
-            chosen.append([int(x), int(y)])
+        if not has_full_alpha(rgba, x, y):
+            # point fails alpha check
+            if verbose:
+                print(f"{basename}: SKIP alpha fail at ({x},{y})")
+            continue
+        # Reject if surrounding sampled pixels are all the same (within threshold)
+        try:
+            if verbose:
+                print(f"{basename}: CHECK uniform at ({x},{y}) area={sample_area} thr={color_threshold}")
+            if is_surrounding_uniform(rgba, x, y, sample_count=sample_area, threshold=color_threshold, verbose=verbose):
+                # skip this point (surrounding area is uniform)
+                if verbose:
+                    print(f"{basename}: SKIP uniform area at ({x},{y}) area={sample_area} thr={color_threshold}")
+                continue
+        except Exception as e:
+            # On any error in the uniformity check, fall back to accepting the point
+            if verbose:
+                print(f"{basename}: uniform-check EXC at ({x},{y}): {e}")
+        chosen.append([int(x), int(y)])
+        if verbose:
+            print(f"{basename}: ACCEPT ({x},{y}) attempts={attempts} chosen={len(chosen)}")
         # If we've tried all candidates, break
         if len(tried) >= len(candidates) and len(chosen) < points:
             break
@@ -102,6 +187,9 @@ def main():
     p.add_argument('--annotate-dir', type=str, default=None, help='Optional directory to write annotated images with highlighted points')
     p.add_argument('--marker-size', type=int, default=4, help='Half-size in pixels of the marker to draw around each point (default 4)')
     p.add_argument('--max-attempts', type=int, default=20000, help='Maximum attempts per image')
+    p.add_argument('--area', type=int, default=20, help='Number of surrounding pixels to sample for uniformity check (default 20)')
+    p.add_argument('--threshold', type=int, default=10, help='Color distance threshold for uniformity (default 10)')
+    p.add_argument('--verbose', action='store_true', help='Enable verbose logging of selection decisions')
     args = p.parse_args()
 
     if args.seed is not None:
@@ -129,7 +217,14 @@ def main():
         path = os.path.join(images_dir, fname)
         key = os.path.splitext(fname)[0]
         try:
-            pts = choose_points_for_image(path, points=args.points, max_attempts=args.max_attempts)
+            pts = choose_points_for_image(
+                path,
+                points=args.points,
+                max_attempts=args.max_attempts,
+                sample_area=args.area,
+                color_threshold=args.threshold,
+                verbose=args.verbose,
+            )
             results[key] = pts
             print(f"OK: {fname} -> {len(pts)} points")
             # Write annotated image if requested
