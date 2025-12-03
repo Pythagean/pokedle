@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack }) {
@@ -86,6 +86,45 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
             try { mq.removeEventListener('change', set); } catch (e) { mq.removeListener(set); }
         };
     }, []);
+
+    // Prevent horizontal scroll gestures inside the history scroller from
+    // propagating to parent handlers (which may interpret them as page swipes).
+    const historyTouchStart = useRef(null);
+    const onHistoryTouchStart = (ev) => {
+        try {
+            if (ev.touches && ev.touches.length === 1) {
+                historyTouchStart.current = { x: ev.touches[0].clientX, y: ev.touches[0].clientY };
+            } else {
+                historyTouchStart.current = null;
+            }
+        } catch (e) {
+            historyTouchStart.current = null;
+        }
+    };
+    const onHistoryTouchMove = (ev) => {
+        try {
+            if (!historyTouchStart.current || !(ev.touches && ev.touches.length === 1)) return;
+            const dx = ev.touches[0].clientX - historyTouchStart.current.x;
+            const dy = ev.touches[0].clientY - historyTouchStart.current.y;
+            // If the gesture is primarily horizontal, stop propagation so parent
+            // doesn't treat it as a page-swipe. We don't preventDefault so scrolling still works.
+            if (Math.abs(dx) > Math.abs(dy)) {
+                ev.stopPropagation();
+            }
+        } catch (e) {
+            // ignore
+        }
+    };
+    const onHistoryWheel = (ev) => {
+        try {
+            // If wheel event indicates horizontal scroll (or shifted scroll), stop propagation
+            if (ev.shiftKey || Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) {
+                ev.stopPropagation();
+            }
+        } catch (e) {
+            // ignore
+        }
+    };
 
     const outerStyle = {
         padding: 0,
@@ -178,7 +217,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
                         <div style={{ fontWeight: 700, textAlign: 'center' }}>Last 7 Days</div>
                     </div>
-                    <div style={{ overflowX: 'auto' }}>
+                    <div style={{ overflowX: 'auto' }} onTouchStart={onHistoryTouchStart} onTouchMove={onHistoryTouchMove} onWheel={onHistoryWheel}>
                         {(() => {
                             // Modes down the left, dates across the top
                             const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
