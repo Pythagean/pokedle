@@ -3,7 +3,7 @@
 
 ## Overview
 
-- Small UX and developer tooling updates: group moves by level in Game Info and add a PokeAPI-backed moves extractor to augment local Pokemon data with level-up moves for selected version groups.
+Overview — Polished gameplay and tooling: Game Info now shows grouped Gen‑3 level‑up moves; Results and Zoom received UX fixes to prevent accidental swipes and avoid uniform zoom points; Shiny Saturday odds were lowered to 10% and Full‑Art/Illustration cards have slightly reduced blur.
 
 ## What’s New
 
