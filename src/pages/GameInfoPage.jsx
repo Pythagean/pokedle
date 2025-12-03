@@ -230,6 +230,27 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
         }
         if (type === 'moves') {
             const moves = dailyPokemon.moves || [];
+            // Support legacy string-array moves and new [{name, level_learned_at}] format
+            let movesByLevel = null;
+            if (moves.length > 0 && typeof moves[0] === 'string') {
+                // Legacy format: just show a single line
+                movesByLevel = { none: moves };
+            } else {
+                movesByLevel = moves.reduce((acc, m) => {
+                    if (!m) return acc;
+                    const name = m.name || (typeof m === 'string' ? m : null);
+                    const level = (m && (m.level_learned_at || m.level || 0)) ?? 0;
+                    if (!name) return acc;
+                    const key = String(level);
+                    if (!acc[key]) acc[key] = [];
+                    acc[key].push(name);
+                    return acc;
+                }, {});
+            }
+
+            const levelKeys = Object.keys(movesByLevel || {}).filter(k => k !== 'none').map(k => parseInt(k, 10));
+            levelKeys.sort((a, b) => a - b);
+
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
@@ -240,12 +261,22 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             marginTop={0}
                             content={
                                 <div style={{ textAlign: 'left' }}>
-                                    Learned moves are from the latest gen the pokemon is in (eg. Ledian is in Gen 7, so moves are from Gen 7)
+                                    Learned moves are from Gen 3
                                 </div>
                             }
                         />
                     </div>
-                    <div style={{ color: '#333' }}>{moves.length > 0 ? moves.join(', ') : 'No moves'}</div>
+                    <div style={{ color: '#333', textAlign: 'left' }}>
+                        {Object.prototype.hasOwnProperty.call(movesByLevel, 'none') ? (
+                            <div>{movesByLevel.none.join(', ')}</div>
+                        ) : (
+                            (levelKeys.length > 0 ? levelKeys.map(lvl => (
+                                <div key={lvl} style={{ marginBottom: 4 }}>
+                                    <strong>Lvl {lvl}</strong> - { (movesByLevel[String(lvl)] || []).slice().sort().join(', ') }
+                                </div>
+                            )) : 'No moves')
+                        )}
+                    </div>
                 </div>
             );
         }
