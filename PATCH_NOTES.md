@@ -5,7 +5,7 @@
 
 - Small UX and developer tooling updates: group moves by level in Game Info and add a PokeAPI-backed moves extractor to augment local Pokemon data with level-up moves for selected version groups.
 
-## What’s New (user-facing)
+## What’s New
 
 - **Game Info Page** — Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
 - **Results Page** — Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
@@ -32,7 +32,7 @@ cd0f4a5 | Slightly reduce blur levels for Full Art / Illustration cards
 
 - This patch adds small UX and gameplay polish across Game Info, Results, Zoom, and Silhouette pages: animation tweaks, clue cadence changes, and stat-display adjustments.
 
-## What’s New (user-facing)
+## What’s New
 
 - **Game Info Page** — Added animation to some map locations; fixed extra space in locations list; clues are given every 2 guesses; tweaked stats bars to be max of 255 for Health and 180 for all other stats.
 - **Results Page** — Use Pokedle # rather than a local date when copying/sharing results.
@@ -58,7 +58,7 @@ h8c9d0e | Silhouette Page: Slightly increase max zoom level
 
 - Today's update adds a clickable map viewer for Game Info, tightens up zoom/silhouette behavior (including better debug visuals), and adds tooling to fetch and match Bulbapedia map images so clues can link to actual maps.
 
-## What’s New (user-facing)
+## What’s New
 
 - **Game Info Mode** — Location names in Game Info are now links that open a popup showing the corresponding map image (when available) from the assets repo.
 - **Zoom Mode** — The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly.
@@ -89,7 +89,7 @@ g7b8c9d | download script: skip existing files by default, add --overwrite flag
 
 - This release polishes gameplay and feedback across several modes. Players will notice smoother silhouette zooming, fewer accidental image interactions, clearer celebration messaging, and improved visual accuracy in Classic and Card modes.
 
-## What’s New (user-facing)
+## What’s New
 
 - **Improved Card Reveal** — Reduced initial blur and tuned progressive reveal so card hints feel more informative and consistent as you guess.
 - **Smoother Silhouette Zooming** — The silhouette zoom focuses more intuitively as you guess: the focal area stays useful earlier and drifts toward center later in the guess sequence, producing less confusing reveals.
