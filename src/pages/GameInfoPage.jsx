@@ -254,14 +254,14 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                        <div style={{ fontWeight: 600 }}>Moves Learnt by Level Up:</div>
+                        <div style={{ fontWeight: 600 }}>Moves Learnt:</div>
                         <InfoButton
                             ariaLabel="About moves clue"
                             placement="right"
                             marginTop={0}
                             content={
                                 <div style={{ textAlign: 'left' }}>
-                                    Learned moves are from Gen 3
+                                    Moves Learnt are from Gen 3, and only include those learnt by leveling up (no TMs, HMs, breeding, tutoring, or move tutors).<br />
                                 </div>
                             }
                         />
