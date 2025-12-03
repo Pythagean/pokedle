@@ -1,0 +1,3 @@
+python .\make_colour_blocks.py .\images\ --input-json ..\public\data\pokemon_data.json --num-colors 15 --verbose --threshold 8.0 --num-blocks 10
+
+python .\make_colour_blocks.py .\images\ --input-json ..\public\data\pokemon_data.json --num-colors 10 --verbose --threshold 0.2 --num-blocks 10 --sprites

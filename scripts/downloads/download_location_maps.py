@@ -8,7 +8,7 @@ Usage:
 
 Notes:
 - Provide an optional `--region-map` JSON mapping of location-name -> RegionName
-  (e.g. {"Pewter City": "Kanto", "Cerulean City": "Kanto"}).
+  (e.g. {"Pewter City": "Kanto", "Cerulean City": "Kanto").
 - If a location contains the word "Route" we will NOT prepend a region.
 - The script fetches the Bulbapedia file page (e.g. /wiki/File:Kanto_Pewter_City_Map.png)
   and scrapes the actual image URL from the page, then downloads the PNG.
