@@ -3,13 +3,13 @@
 
 ## Overview
 
-Overview — Polished gameplay and tooling: Game Info now shows grouped Gen‑3 level‑up moves; Results and Zoom received UX fixes to prevent accidental swipes and avoid uniform zoom points; Shiny Saturday odds were lowered to 10% and Full‑Art/Illustration cards have slightly reduced blur.
+Polished gameplay and tooling: Game Info now shows grouped Gen‑3 level‑up moves; Results and Zoom received UX fixes to prevent accidental swipes and avoid uniform zoom points; Shiny Saturday odds were lowered to 10% and Full‑Art/Illustration cards have slightly reduced blur.
 
 ## What’s New
 
-- **Game Info Page** — Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
-- **Results Page** — Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
-- **Zoom Page** — Zoom Page should now only select zoom-in point if it contains more than one colour
+- **Game Info Page** - Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
+- **Results Page** - Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
+- **Zoom Page** - Zoom Page should now only select zoom-in point if it contains more than one colour
 - **Shiny Saturday** - Reduced 'Shiny Saturday' chance to be 10% (changed from 50%)
 - **Card Page** - Slightly reduce blur levels for Full Art / Illustration cards
 
