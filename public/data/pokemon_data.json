@@ -2275,7 +2275,6 @@
     ],
     "id": 19,
     "location_area_encounters": [
-      "Burned Tower",
       "Kanto Route 1",
       "Kanto Route 10",
       "Kanto Route 11",
@@ -2421,7 +2420,6 @@
     ],
     "id": 20,
     "location_area_encounters": [
-      "Burned Tower",
       "Kanto Route 1",
       "Kanto Route 10",
       "Kanto Route 11",
@@ -5299,7 +5297,6 @@
     "held_items": [],
     "id": 41,
     "location_area_encounters": [
-      "Burned Tower",
       "Kanto Route 10",
       "Kanto Route 3",
       "Kanto Route 4",
@@ -5307,8 +5304,7 @@
       "Kanto Victory Road",
       "Mt Moon",
       "Rock Tunnel",
-      "Seafoam Islands",
-      "Slowpoke Well"
+      "Seafoam Islands"
     ],
     "moves": [
       {
@@ -5459,8 +5455,7 @@
       "Kanto Route 28",
       "Kanto Victory Road",
       "Rock Tunnel",
-      "Seafoam Islands",
-      "Slowpoke Well"
+      "Seafoam Islands"
     ],
     "moves": [
       {
@@ -8005,7 +8000,6 @@
       "Pallet Town",
       "Seafoam Islands",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
       "Viridian City"
     ],
     "moves": [
@@ -9711,7 +9705,6 @@
       "Pallet Town",
       "Seafoam Islands",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
       "Viridian City"
     ],
     "moves": [
@@ -9868,8 +9861,7 @@
       "Kanto Route 20",
       "Kanto Route 21",
       "Pallet Town",
-      "Vermilion City",
-      "Vermilion City Ss Anne Dock"
+      "Vermilion City"
     ],
     "moves": [
       {
@@ -10768,8 +10760,7 @@
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Safari Zone",
-      "Seafoam Islands",
-      "Slowpoke Well"
+      "Seafoam Islands"
     ],
     "moves": [
       {
@@ -10921,8 +10912,7 @@
       "Kanto Route 12",
       "Kanto Route 13",
       "Kanto Route 23",
-      "Seafoam Islands",
-      "Slowpoke Well"
+      "Seafoam Islands"
     ],
     "moves": [
       {
@@ -12388,8 +12378,7 @@
       "Kanto Route 21",
       "Pallet Town",
       "Seafoam Islands",
-      "Vermilion City",
-      "Vermilion City Ss Anne Dock"
+      "Vermilion City"
     ],
     "moves": [
       {
@@ -13502,8 +13491,7 @@
       "Kanto Safari Zone",
       "Kanto Route 19",
       "Seafoam Islands",
-      "Vermilion City",
-      "Vermilion City Ss Anne Dock"
+      "Vermilion City"
     ],
     "moves": [
       {
@@ -15040,7 +15028,6 @@
     ],
     "id": 109,
     "location_area_encounters": [
-      "Burned Tower",
       "Pokemon Mansion",
       "Team Rocket Hq"
     ],
@@ -15180,7 +15167,6 @@
     ],
     "id": 110,
     "location_area_encounters": [
-      "Burned Tower",
       "Pokemon Mansion"
     ],
     "moves": [
@@ -16349,9 +16335,7 @@
       "Kanto Route 21",
       "Pallet Town",
       "Seafoam Islands",
-      "Slowpoke Well",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
       "Viridian City"
     ],
     "moves": [
@@ -16511,8 +16495,7 @@
       "Kanto Route 24",
       "Kanto Route 25",
       "Kanto Route 4",
-      "Kanto Route 9",
-      "Slowpoke Well"
+      "Kanto Route 9"
     ],
     "moves": [
       {
@@ -16669,8 +16652,7 @@
       "Kanto Route 20",
       "Kanto Route 21",
       "Pallet Town",
-      "Seafoam Islands",
-      "Vermilion City Ss Anne Dock"
+      "Seafoam Islands"
     ],
     "moves": [
       {
@@ -17547,7 +17529,6 @@
     ],
     "id": 126,
     "location_area_encounters": [
-      "Burned Tower",
       "Pokemon Mansion"
     ],
     "moves": [
@@ -18004,9 +17985,7 @@
       "Kanto Route 21",
       "Pallet Town",
       "Seafoam Islands",
-      "Slowpoke Well",
       "Vermilion City",
-      "Vermilion City Ss Anne Dock",
       "Viridian City"
     ],
     "moves": [
@@ -18527,7 +18506,7 @@
     "held_items": [],
     "id": 133,
     "location_area_encounters": [
-      "Celadon City Celadon Mansion"
+      "Celadon City"
     ],
     "moves": [
       {
@@ -19246,7 +19225,7 @@
     "held_items": [],
     "id": 138,
     "location_area_encounters": [
-      "Cinnabar Island Cinnabar Lab"
+      "Cinnabar Island"
     ],
     "moves": [
       {
@@ -19527,7 +19506,7 @@
     "held_items": [],
     "id": 140,
     "location_area_encounters": [
-      "Cinnabar Island Cinnabar Lab"
+      "Cinnabar Island"
     ],
     "moves": [
       {
@@ -19817,7 +19796,7 @@
     "held_items": [],
     "id": 142,
     "location_area_encounters": [
-      "Cinnabar Island Cinnabar Lab"
+      "Cinnabar Island"
     ],
     "moves": [
       {
@@ -24286,7 +24265,7 @@
     "held_items": [],
     "id": 177,
     "location_area_encounters": [
-      "Ruins Of Alph Outside"
+      "Ruins Of Alph"
     ],
     "moves": [
       {
@@ -26345,7 +26324,7 @@
     "id": 194,
     "location_area_encounters": [
       "Johto Route 32",
-      "Ruins Of Alph Outside",
+      "Ruins Of Alph",
       "Union Cave"
     ],
     "moves": [
@@ -26480,7 +26459,7 @@
       "Kanto Route 26",
       "Kanto Route 27",
       "Mt Silver",
-      "Ruins Of Alph Outside",
+      "Ruins Of Alph",
       "Union Cave"
     ],
     "moves": [
@@ -27348,7 +27327,7 @@
     "held_items": [],
     "id": 202,
     "location_area_encounters": [
-      "Dark Cave Blackthorn City Entrance"
+      "Blackthorn City"
     ],
     "moves": [
       {
@@ -27835,7 +27814,7 @@
     "held_items": [],
     "id": 206,
     "location_area_encounters": [
-      "Dark Cave Violet City Entrance"
+      "Violet City"
     ],
     "moves": [
       {
@@ -28773,8 +28752,7 @@
     "id": 213,
     "location_area_encounters": [
       "Cianwood City",
-      "Cianwood City Manias House",
-      "Dark Cave Violet City Entrance",
+      "Violet City",
       "Johto Route 40"
     ],
     "moves": [
@@ -29056,7 +29034,7 @@
     "location_area_encounters": [
       "Ice Path",
       "Kanto Route 28",
-      "Mt Silver Outside"
+      "Mt Silver"
     ],
     "moves": [
       {
@@ -29198,8 +29176,8 @@
     ],
     "id": 216,
     "location_area_encounters": [
-      "Dark Cave Blackthorn City Entrance",
-      "Dark Cave Violet City Entrance",
+      "Blackthorn City",
+      "Violet City",
       "Johto Route 45"
     ],
     "moves": [
@@ -29328,12 +29306,10 @@
     ],
     "id": 217,
     "location_area_encounters": [
-      "Dark Cave Blackthorn City Entrance",
+      "Blackthorn City",
       "Kanto Route 28",
       "Kanto Victory Road",
-      "Mt Silver",
-      "Mt Silver Outside",
-      "Mt Silver Top"
+      "Mt Silver"
     ],
     "moves": [
       {
@@ -31223,9 +31199,7 @@
       "Johto Route 45",
       "Kanto Route 28",
       "Kanto Victory Road",
-      "Mt Silver",
-      "Mt Silver Outside",
-      "Mt Silver Top"
+      "Mt Silver"
     ],
     "moves": [
       {
@@ -31612,7 +31586,7 @@
     "held_items": [],
     "id": 235,
     "location_area_encounters": [
-      "Ruins Of Alph Outside"
+      "Ruins Of Alph"
     ],
     "moves": [
       {
@@ -32957,8 +32931,7 @@
     "held_items": [],
     "id": 246,
     "location_area_encounters": [
-      "Mt Silver",
-      "Mt Silver Top"
+      "Mt Silver"
     ],
     "moves": [
       {
@@ -33077,7 +33050,7 @@
     "held_items": [],
     "id": 247,
     "location_area_encounters": [
-      "Mt Silver Top"
+      "Mt Silver"
     ],
     "moves": [
       {
