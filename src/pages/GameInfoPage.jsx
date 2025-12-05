@@ -66,11 +66,40 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const j = Math.floor(rng() * (i + 1));
             [clues[i], clues[j]] = [clues[j], clues[i]];
         }
-        // Ensure 'shape' is not the first clue
-        const shapeIdx = clues.indexOf('shape');
-        if (shapeIdx === 0 && clues.length > 1) {
-            // Swap with the second clue
-            [clues[0], clues[1]] = [clues[1], clues[0]];
+        // Ensure the first clue follows allowed-first rules:
+        // - 'shape' must never be first
+        // - 'stats' (Base Stats) must not be first
+        // - 'locations' can't be first if the locations array is empty
+        // - 'held_items' can't be first if there are no held items
+        const isAllowedFirst = (type) => {
+            if (type === 'shape') return false;
+            if (type === 'stats') return false; // do not show Base Stats as the very first clue
+            if (type === 'locations') {
+                return Array.isArray(dailyPokemon.location_area_encounters) && dailyPokemon.location_area_encounters.length > 0;
+            }
+            if (type === 'held_items') {
+                return Array.isArray(dailyPokemon.held_items) && dailyPokemon.held_items.length > 0;
+            }
+            return true;
+        };
+
+        if (clues.length > 1 && !isAllowedFirst(clues[0])) {
+            let swapIdx = -1;
+            for (let i = 1; i < clues.length; i++) {
+                if (isAllowedFirst(clues[i])) {
+                    swapIdx = i;
+                    break;
+                }
+            }
+            if (swapIdx !== -1) {
+                [clues[0], clues[swapIdx]] = [clues[swapIdx], clues[0]];
+            } else {
+                // Fallback: keep previous behavior of not letting 'shape' be first
+                const shapeIdx = clues.indexOf('shape');
+                if (shapeIdx === 0 && clues.length > 1) {
+                    [clues[0], clues[1]] = [clues[1], clues[0]];
+                }
+            }
         }
         return clues;
     }, [seed, dailyPokemon, rng]);
