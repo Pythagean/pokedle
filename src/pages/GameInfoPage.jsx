@@ -199,7 +199,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
                 return (
                     <div style={{ marginBottom: 10 }}>
-                        <div style={{ fontWeight: 600, marginBottom: 8 }}>Base Stats:</div>
+                        <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 16 }}>Base Stats:</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {statOrder.map(s => {
                                 const v = Number(stats[s] || 0);
@@ -221,10 +221,32 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             }
         if (type === 'ability') {
             const abilities = dailyPokemon.abilities || [];
+
+            const prettyName = (raw) => {
+                if (!raw) return raw;
+                return String(raw).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            };
+
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Abilities:</div>
-                    <div style={{ color: '#333' }}>{abilities.length > 0 ? abilities.join(', ') : 'No abilities'}</div>
+                    <div style={{ fontWeight: 600, fontSize: 20 }}>Abilities:</div>
+                    <div style={{ color: '#333', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                        {abilities.length > 0 ? (
+                            abilities.map((a, i) => {
+                                if (!a) return null;
+                                if (typeof a === 'string') {
+                                    return <div key={i}>{prettyName(a)}</div>;
+                                }
+                                const n = a.name || (a.ability && a.ability.name) || '';
+                                const eff = a.effect || a.short_effect || a.flavor_text || null;
+                                return (
+                                    <div key={n || i}>
+                                        <strong>{prettyName(n)}</strong>{eff ? ` (${eff})` : null}
+                                    </div>
+                                );
+                            })
+                        ) : 'No abilities'}
+                    </div>
                 </div>
             );
         }
@@ -253,8 +275,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                        <div style={{ fontWeight: 600 }}>Moves Learnt:</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
+                        <div style={{ fontWeight: 600, fontSize: 20 }}>Moves Learnt:</div>
                         <InfoButton
                             ariaLabel="About moves clue"
                             placement="right"
@@ -266,12 +288,12 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             }
                         />
                     </div>
-                    <div style={{ color: '#333', textAlign: 'left' }}>
+                    <div style={{ color: '#333', textAlign: 'center' }}>
                         {Object.prototype.hasOwnProperty.call(movesByLevel, 'none') ? (
                             <div>{movesByLevel.none.join(', ')}</div>
                         ) : (
                             (levelKeys.length > 0 ? levelKeys.map(lvl => (
-                                <div key={lvl} style={{ marginBottom: 4 }}>
+                                <div key={lvl} style={{ marginBottom: 4, textAlign: 'center' }}>
                                     <strong>Lvl {lvl}</strong> - { (movesByLevel[String(lvl)] || []).slice().sort().join(', ') }
                                 </div>
                             )) : 'No moves')
@@ -284,7 +306,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const genus = dailyPokemon.genus || '';
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Category:</div>
+                    <div style={{ fontWeight: 600, fontSize: 20 }}>Category:</div>
                     <div style={{ color: '#333' }}>{genus}</div>
                 </div>
             );
@@ -324,8 +346,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                        <div style={{ fontWeight: 600 }}>Wild Encounter Locations:</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
+                        <div style={{ fontWeight: 600, fontSize: 20 }}>Wild Encounter Locations:</div>
                         <InfoButton
                             ariaLabel="About locations clue"
                             placement="right"
@@ -339,10 +361,10 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             }
                         />
                     </div>
-                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
                         {locations.length > 0 ? locations.map((loc, i) => (
                             <div key={String(loc) + i}>
-                                <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer' }}>
+                                <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer', display: 'inline-block' }}>
                                     {formatDisplay(loc)}
                                 </a>
                                 {i < locations.length - 1 ? <span style={{ color: '#666' }}>,</span> : null}
@@ -356,7 +378,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const heldItems = dailyPokemon.held_items || [];
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Held Items:</div>
+                    <div style={{ fontWeight: 600, fontSize: 20 }}>Held Items:</div>
                     <div style={{ color: '#333' }}>{heldItems.length > 0 ? heldItems.join(', ') : 'No held items'}</div>
                 </div>
             );
@@ -365,7 +387,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const shape = dailyPokemon.shape || '';
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600 }}>Shape:</div>
+                    <div style={{ fontWeight: 600, fontSize: 20 }}>Shape:</div>
                     <div style={{ color: '#333' }}>{shape || 'Unknown'}</div>
                 </div>
             );
