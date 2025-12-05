@@ -199,7 +199,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
                 return (
                     <div style={{ marginBottom: 10 }}>
-                        <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 16 }}>Base Stats:</div>
+                        <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 18 }}>Base Stats:</div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {statOrder.map(s => {
                                 const v = Number(stats[s] || 0);
@@ -229,8 +229,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 20 }}>Abilities:</div>
-                    <div style={{ color: '#333', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Abilities:</div>
+                    <div style={{ color: '#333', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center', fontSize: 14 }}>
                         {abilities.length > 0 ? (
                             abilities.map((a, i) => {
                                 if (!a) return null;
@@ -276,7 +276,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
-                        <div style={{ fontWeight: 600, fontSize: 20 }}>Moves Learnt:</div>
+                        <div style={{ fontWeight: 600, fontSize: 18 }}>Moves Learnt:</div>
                         <InfoButton
                             ariaLabel="About moves clue"
                             placement="right"
@@ -288,7 +288,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             }
                         />
                     </div>
-                    <div style={{ color: '#333', textAlign: 'center' }}>
+                    <div style={{ color: '#333', textAlign: 'center', fontSize: 14 }}>
                         {Object.prototype.hasOwnProperty.call(movesByLevel, 'none') ? (
                             <div>{movesByLevel.none.join(', ')}</div>
                         ) : (
@@ -306,8 +306,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const genus = dailyPokemon.genus || '';
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 20 }}>Category:</div>
-                    <div style={{ color: '#333' }}>{genus}</div>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Category:</div>
+                    <div style={{ color: '#333', fontSize: 14 }}>{genus}</div>
                 </div>
             );
         }
@@ -347,7 +347,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
-                        <div style={{ fontWeight: 600, fontSize: 20 }}>Wild Encounter Locations:</div>
+                        <div style={{ fontWeight: 600, fontSize: 18 }}>Wild Encounter Locations:</div>
                         <InfoButton
                             ariaLabel="About locations clue"
                             placement="right"
@@ -361,7 +361,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             }
                         />
                     </div>
-                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
+                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', fontSize: 14 }}>
                         {locations.length > 0 ? locations.map((loc, i) => (
                             <div key={String(loc) + i}>
                                 <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer', display: 'inline-block' }}>
@@ -378,8 +378,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const heldItems = dailyPokemon.held_items || [];
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 20 }}>Held Items:</div>
-                    <div style={{ color: '#333' }}>{heldItems.length > 0 ? heldItems.join(', ') : 'No held items'}</div>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Held Items:</div>
+                    <div style={{ color: '#333', fontSize: 14 }}>{heldItems.length > 0 ? heldItems.join(', ') : 'No held items'}</div>
                 </div>
             );
         }
@@ -387,8 +387,8 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const shape = dailyPokemon.shape || '';
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 20 }}>Shape:</div>
-                    <div style={{ color: '#333' }}>{shape || 'Unknown'}</div>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Shape:</div>
+                    <div style={{ color: '#333', fontSize: 14 }}>{shape || 'Unknown'}</div>
                 </div>
             );
         }

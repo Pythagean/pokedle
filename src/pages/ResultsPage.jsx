@@ -220,7 +220,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                     <div style={{ overflowX: 'auto' }} onTouchStart={onHistoryTouchStart} onTouchMove={onHistoryTouchMove} onWheel={onHistoryWheel}>
                         {(() => {
                             // Modes down the left, dates across the top
-                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game Data'];
+                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game'];
                             // Always show the most recent 7 days. If data is missing for a date, show an empty row.
                             const DAYS = 7;
                             const today = new Date();
@@ -242,7 +242,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                                 const y = parseInt(String(h.date).slice(0,4), 10);
                                 const mth = parseInt(String(h.date).slice(4,6), 10) - 1;
                                 const dnum = parseInt(String(h.date).slice(6,8), 10);
-                                const weekdayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                                const weekdayNames = ['Su','M','Tu','W','Th','F','Sa'];
                                 const dt = new Date(y, mth, dnum);
                                 const wd = dt.getDay();
                                 return weekdayNames[wd] || '';
@@ -250,7 +250,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
 
                             // First column for mode labels (narrower), then one column per date, then a Total column
                             // Use a reasonable min width for date columns so they remain readable on mobile
-                            const gridCols = `70px repeat(${dates.length}, minmax(24px, 1fr)) 72px`;
+                            const gridCols = `61px repeat(${dates.length}, minmax(18px, 1fr)) 40px`;
 
                             // Precompute lookup map for quick access: dateIndex -> label -> value
                             const lookup = {};
