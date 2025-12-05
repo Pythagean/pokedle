@@ -1,3 +1,28 @@
+## Release Notes — December 5, 2025
+
+## Overview
+
+Small but focused polish across Game Data, UI, and repository metadata. Game Info received clarity and readability improvements (font sizing and ability descriptions), clue selection rules were tightened so less-useful clues are not shown first, and a few location tidy-ups were applied to the data set.
+
+## What’s New
+
+- **Game Data** — Abilities now include short effect descriptions so the Abilities clue is more informative.
+- **Game Data** — The first clue will never be `shape` or `Base Stats`; `locations` and `held_items` are now prevented from being chosen first when their arrays are empty.
+- **Game Data** — Location tidy-ups (removed incorrect/obsolete entries such as the burned tower mapping for some Kanto Pokémon).
+
+## Commits included (newest first)
+
+```text
+0c31aa4 | Location tidy ups - removed burned tower from kanto pokemon
+7a89c74 | Game Data - Shape & Base Stats clues can't be the first clues shown to the user. Locations and held items can't be first if they are blank
+94df9d3 | Update font sizes in GameInfoPage for better readability and adjust ResultsPage mode label
+def2b19 | Game Data - Added effect descriptions to abilities clue
+c4c9e20 | Fix formatting in PATCH_NOTES.md for consistency and clarity
+6e53ebe | Update overview in PATCH_NOTES.md to reflect gameplay and tooling improvements, including Gen-3 level-up moves and UX fixes.
+7a57a15 | Refactor PATCH_NOTES.md to remove redundant "(user-facing)" label from "What’s New" sections
+bcb7c00 | Updated patch notes
+```
+
 
 ## Release Notes — December 3, 2025
 
