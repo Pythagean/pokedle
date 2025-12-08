@@ -142,7 +142,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
     ? pokemonNames
       .filter(name => name.toLowerCase().startsWith(guess.toLowerCase()))
       .filter(name => !guessedNames.has(name))
-      .slice(0, 10)
+      .slice(0, 50)
       .map(name => pokemonNameMap.get(name))
     : [];
 

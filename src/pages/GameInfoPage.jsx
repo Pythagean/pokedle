@@ -157,7 +157,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     const pokemonNames = useMemo(() => pokemonData ? pokemonData.map(p => p.name) : [], [pokemonData]);
     const guessedNames = new Set(guesses.map(g => g.name));
     const filteredOptions = guess.length > 0
-        ? pokemonNames.filter(name => name.toLowerCase().startsWith(guess.toLowerCase())).filter(name => !guessedNames.has(name)).slice(0, 10).map(name => pokemonNameMap.get(name))
+        ? pokemonNames.filter(name => name.toLowerCase().startsWith(guess.toLowerCase())).filter(name => !guessedNames.has(name)).slice(0, 50).map(name => pokemonNameMap.get(name))
         : [];
 
 
