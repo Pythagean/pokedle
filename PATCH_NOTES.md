@@ -1,3 +1,30 @@
+
+## Release Notes — December 8, 2025
+
+## Overview
+
+Small maintenance and debugging polish focused on the Zoom and Silhouette modes, plus a number of developer-facing fixes to make debug overlays more helpful while diagnosing centering issues.
+
+## What’s New
+
+- **Silhouette Page** - Reworked the translate logic to use the new center-based approach
+- **Zoom Page** - Reworked the translate logic to use the new center-based approach
+- **Card Page** - Fixed issue where full art example image wasn't showing
+- **Results Page** - Fixed issue where Game Data score wasn't displaying in 'Last 7 Days' section
+- **Game Data** - Trim effects text to remove fullstop
+- **All Pages** - Removed restriction on number of pokemon displayed in GuessInput box
+
+## Commits included (newest first)
+
+```text
+26295d2 | Zoom Page / Silhouette Page - complete rework of how image positioning is done
+1425d59 | #99 - Remove restriction on number of pokemon displayed in GuessInput box
+77424b9 | #101 - Game Data - trim effects text to remove fullstop
+20906f6 | #100 Card Page - fixed issue where full art example image wasn't showing
+bf4487f | #102 Results Page - fixed issue where Game Data score wasn't displaying in 'Last 7 Days' section
+```
+
+
 ## Release Notes — December 5, 2025
 
 ## Overview
