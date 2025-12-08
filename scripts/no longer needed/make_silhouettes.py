@@ -216,7 +216,7 @@ def main():
         output_path = os.path.join(output_dir, img_name)
         if args.verbose:
             print(f"Processing {img_name}...")
-        bb = make_silhouette(input_path, output_path, verbose=args.verbose, alpha_threshold=args.alpha_threshold, debug_dots=args.debug_dots)
+        bb = make_silhouette(input_path, output_path, verbose=args.verbose, alpha_threshold=args.alpha_threshold, debug_dots=True)
         # store normalized focal info keyed by filename without extension
         name_no_ext = os.path.splitext(img_name)[0]
         if bb:

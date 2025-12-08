@@ -59,6 +59,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const containerRef = useRef(null);
   const [imgNatural, setImgNatural] = useState({ w: null, h: null });
   const [containerSize, setContainerSize] = useState({ w: null, h: null });
+  const [debugZoom, setDebugZoom] = useState(null);
+  const [manualTranslate, setManualTranslate] = useState({ x: 0, y: 0 });
+  const [debugPointOffset, setDebugPointOffset] = useState({ x: 0, y: 0 });
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
     const map = new Map();
@@ -167,13 +170,15 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
   // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
-  const maxZoom = 2.9;
+  const maxZoom = 4.2;
   const minZoom = 1.0;
   const maxSteps = 10;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.1;
   const eased = Math.pow(t, easePower);
   let zoom = maxZoom - (maxZoom - minZoom) * eased;
+  // Only use the debug override when the debug overlay is enabled
+  if (debugOverlay && debugZoom !== null) zoom = debugZoom;
 
 
   // Pan logic: at max zoom, center on edge; at min zoom, center (0.5,0.5)
@@ -360,33 +365,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     const focalPixelY = offsetTop + focalY * renderH;
     originPercentX = Math.max(0, Math.min(1, focalPixelX / containerSize.w));
     originPercentY = Math.max(0, Math.min(1, focalPixelY / containerSize.h));
-    // originScale: hold at 1.0 for the first ORIGIN_HOLD_GUESSES guesses,
-    // then linearly fade to 0.0 by ORIGIN_END_GUESSES (clamped).
-    let originScale;
-    if (guesses.length <= ORIGIN_HOLD_GUESSES) {
-      originScale = 1.0;
-    } else {
-      const span = ORIGIN_END_GUESSES - ORIGIN_HOLD_GUESSES;
-      originScale = 1 - Math.min(Math.max(0, Math.min(guesses.length, ORIGIN_END_GUESSES) - ORIGIN_HOLD_GUESSES) / span, 1);
-    }
-    adjustedOriginX = 0.5 + (originPercentX - 0.5) * originScale;
-    adjustedOriginY = 0.5 + (originPercentY - 0.5) * originScale;
-    // console.log('Silhouette origin debug', {
-    //   imgNatural, containerSize,
-    //   imgAspect, containerAspect,
-    //   renderW, renderH,
-    //   offsetLeft, offsetTop,
-    //   focalXLogical, focalYLogical,
-    //   focalX, focalY,
-    //   focalPixelX, focalPixelY,
-    //   originPercentX, originPercentY,
-    //   adjustedOriginX, adjustedOriginY,
-    //   originScale,
-    //   shouldMirror,
-    //   targetX, targetY,
-    //   centerX, centerY,
-    // });
   }
+    // originScale: hold at 1.0 for the first ORIGIN_HOLD_GUESSES guesses,
   if (originPercentX === null || originPercentY === null) {
     const fallbackX = shouldMirror ? (1 - centerX) : centerX;
     const fallbackY = centerY;
@@ -399,12 +379,33 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     }
     const adjustedFallbackX = 0.5 + (fallbackX - 0.5) * originScale;
     const adjustedFallbackY = 0.5 + (fallbackY - 0.5) * originScale;
-    imgStyle.transformOrigin = `${adjustedFallbackX * 100}% ${adjustedFallbackY * 100}%`;
+    //imgStyle.transformOrigin = `${adjustedFallbackX * 100}% ${adjustedFallbackY * 100}%`;
   } else {
     // use adjusted origin computed above
-    imgStyle.transformOrigin = `${adjustedOriginX * 100}% ${adjustedOriginY * 100}%`;
+    //imgStyle.transformOrigin = `${adjustedOriginX * 100}% ${adjustedOriginY * 100}%`;
   }
-  imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
+  // Compute translate so the chosen focal point (targetX/targetY logical coords)
+  // is centered. Convert logical coords to image pixel coords, compute
+  // difference from image center, convert to percent, multiply by zoom,
+  // and flip horizontal translate when mirrored to match visual flip.
+  if (imgNatural.w && imgNatural.h) {
+    const chosenXpix = (typeof targetX === 'number') ? (targetX * imgNatural.w) : (imgNatural.w / 2);
+    const chosenYpix = (typeof targetY === 'number') ? (targetY * imgNatural.h) : (imgNatural.h / 2);
+    const centerXpix = imgNatural.w / 2;
+    const centerYpix = imgNatural.h / 2;
+    const xDiff = centerXpix - chosenXpix; // center - chosen
+    const yDiff = centerYpix - chosenYpix; // center - chosen
+    const computedTx = (xDiff / imgNatural.w) * 100; // percent
+    const computedTy = (yDiff / imgNatural.h) * 100; // percent
+    const manualTx = (typeof manualTranslate.x === 'number') ? manualTranslate.x : 0;
+    const manualTy = (typeof manualTranslate.y === 'number') ? manualTranslate.y : 0;
+    let tx = (computedTx + manualTx) * zoom;
+    let ty = (computedTy + manualTy) * zoom;
+    if (shouldMirror) tx = -tx;
+    imgStyle.transform = `translate(${tx}%, ${ty}%) scale(${scaleX * zoom}, ${zoom})`;
+  } else {
+    imgStyle.transform = `scale(${scaleX * zoom}, ${zoom})`;
+  }
 
   if (zoom === 1.0) {
     imgStyle.width = '100%';
@@ -443,6 +444,59 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               {debugOverlay ? 'Debug: ON' : 'Debug'}
             </button> */}
         
+            {debugOverlay && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8 }}>
+                <label style={{ fontSize: 13, color: '#444' }}>Zoom</label>
+                <input
+                  type="range"
+                  min={minZoom}
+                  max={maxZoom}
+                  step={0.01}
+                  value={debugZoom !== null ? debugZoom : zoom}
+                  onChange={e => setDebugZoom(Number(e.target.value))}
+                  style={{ width: 160 }}
+                />
+                <div style={{ minWidth: 44, textAlign: 'right', fontSize: 13 }}>{((debugZoom !== null ? debugZoom : zoom) * 100).toFixed(0)}%</div>
+                <button onClick={() => setDebugZoom(null)} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid #bbb', background: '#efefef', cursor: 'pointer', fontSize: 13 }}>Auto</button>
+              </div>
+            )}
+
+            {debugOverlay && (
+              <div style={{ marginLeft: 12, fontSize: 12, color: '#333', fontFamily: 'monospace' }}>
+                <div>Chosen target: {typeof targetX === 'number' ? `${targetX.toFixed(3)}, ${targetY.toFixed(3)}` : 'none'}</div>
+                <div>Image natural: {imgNatural && imgNatural.w ? `${imgNatural.w}x${imgNatural.h}` : 'unknown'}</div>
+                <div>Container: {containerSize && containerSize.w ? `${containerSize.w}x${containerSize.h}` : 'unknown'}</div>
+                <div style={{ marginTop: 4 }}>Computed translate: {(() => {
+                  if (!imgNatural || !imgNatural.w || typeof targetX !== 'number') return 'n/a';
+                  const chosenXpix = targetX * imgNatural.w;
+                  const chosenYpix = targetY * imgNatural.h;
+                  const cx = imgNatural.w / 2;
+                  const cy = imgNatural.h / 2;
+                  const xd = cx - chosenXpix;
+                  const yd = cy - chosenYpix;
+                  const xPct = (xd / imgNatural.w) * 100;
+                  const yPct = (yd / imgNatural.h) * 100;
+                  // mirror and zoom applied when rendering; show base percent
+                  return `${xPct.toFixed(2)}%, ${yPct.toFixed(2)}%`;
+                })()}</div>
+                <div style={{ marginTop: 6 }}>Image Translate (percent):</div>
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+                  <label style={{ fontSize: 12 }}>X</label>
+                  <input type="number" value={manualTranslate.x} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+                  <label style={{ fontSize: 12 }}>Y</label>
+                  <input type="number" value={manualTranslate.y} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+                  <button onClick={() => setManualTranslate({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+                </div>
+                <div style={{ marginTop: 6 }}>Debug point offset (percent):</div>
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+                  <label style={{ fontSize: 12 }}>X</label>
+                  <input type="number" value={debugPointOffset.x} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+                  <label style={{ fontSize: 12 }}>Y</label>
+                  <input type="number" value={debugPointOffset.y} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+                  <button onClick={() => setDebugPointOffset({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+                </div>
+              </div>
+            )}
       </div>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
@@ -519,6 +573,10 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                   const deb = eb ? display(eb.x, eb.y) : null;
                   const del = el ? display(el.x, el.y) : null;
                   const dt = display(targetX, targetY);
+                  const dtAdj = {
+                    x: Math.max(0, Math.min(1, dt.x + ((debugPointOffset && debugPointOffset.x) ? debugPointOffset.x / 100 : 0))),
+                    y: Math.max(0, Math.min(1, dt.y + ((debugPointOffset && debugPointOffset.y) ? debugPointOffset.y / 100 : 0)))
+                  };
 
                   const overlayStyle = {
                     position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -537,8 +595,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                         const dp = display(p.x, p.y);
                         return <div key={i} style={{ position: 'absolute', left: `${dp.x * 100}%`, top: `${dp.y * 100}%`, transform: 'translate(-50%,-50%)', width: 6, height: 6, borderRadius: 3, background: 'rgba(128,0,128,0.9)', border: '1px solid #222' }} title={`edge point ${i}`} />;
                       })}
-                      <div style={{ position: 'absolute', left: `${dt.x * 100}%`, top: `${dt.y * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#00bcd4', border: '2px solid #003' }} title="chosen target" />
-                      <div style={{ position: 'absolute', left: `${dt.x * 100 + 2}%`, top: `${dt.y * 100 + 2}%`, color: '#000', background: '#fff', fontSize: 11, padding: '2px 4px', borderRadius: 4 }}>{`t:${dt.x.toFixed(2)},${dt.y.toFixed(2)}`}</div>
+                      <div style={{ position: 'absolute', left: `${dtAdj.x * 100}%`, top: `${dtAdj.y * 100}%`, transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: 7, background: '#00bcd4', border: '2px solid #003' }} title="chosen target" />
+                      <div style={{ position: 'absolute', left: `${dtAdj.x * 100 + 2}%`, top: `${dtAdj.y * 100 + 2}%`, color: '#000', background: '#fff', fontSize: 11, padding: '2px 4px', borderRadius: 4 }}>{`t:${dtAdj.x.toFixed(2)},${dtAdj.y.toFixed(2)}`}</div>
                     </div>
                   );
                 })()}
@@ -676,3 +734,4 @@ if (typeof document !== 'undefined' && !document.getElementById('pokedle-silhoue
   s.innerHTML = _silhouetteStyles;
   document.head.appendChild(s);
 }
+

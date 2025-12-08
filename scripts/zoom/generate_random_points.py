@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate random non-transparent 3x3 sample points for images in a directory.
+Generate random non-transparent sample points for images in a directory.
 
 Usage:
     python scripts/generate_random_points.py --images-dir PATH --output-json out.json [--points 10] [--seed 123]
@@ -12,7 +12,8 @@ Output JSON format:
 }
 
 Notes:
-- For each chosen point (x,y) the 3x3 neighborhood centered at (x,y) must be fully opaque.
+- For each chosen point (x,y) the surrounding neighborhood centered at (x,y) must be fully opaque.
+- The neighborhood size is controlled by `--alpha-area` (side-length in pixels, default 3 = 3x3).
 - Images without an alpha channel are treated as fully opaque.
 - Images smaller than 3x3 are skipped.
 - Optionally rejects points where the surrounding pixels (sampled) are all essentially the same
@@ -27,18 +28,37 @@ import random
 from PIL import Image, ImageDraw
 
 
-def has_full_alpha(img, x, y):
-    """Return True if the 3x3 neighborhood centered at (x,y) is fully opaque.
+def has_full_alpha(img, x, y, alpha_area=3):
+    """Return True if the square neighborhood centered at (x,y) is fully opaque.
+    `alpha_area` is the side-length in pixels (eg. 3 => 3x3 area). If an even
+    value is provided it is treated as the next lower odd number (eg. 4 -> 3).
     img is an RGBA PIL Image.
     """
-    w, h = img.size
-    # ensure neighborhood in bounds (caller should only pick x in [1,w-2])
-    if x <= 0 or x >= w-1 or y <= 0 or y >= h-1:
+    try:
+        w, h = img.size
+    except Exception:
+        return False
+    # sanitize area to odd integer >= 1
+    try:
+        area = int(alpha_area)
+    except Exception:
+        area = 3
+    if area < 1:
+        area = 1
+    if area % 2 == 0:
+        area -= 1
+        if area < 1:
+            area = 1
+    r = area // 2
+    # ensure neighbourhood is in bounds
+    if x < r or x > (w - 1 - r) or y < r or y > (h - 1 - r):
         return False
     pixels = img.load()
-    for yy in range(y - 1, y + 2):
-        for xx in range(x - 1, x + 2):
-            r, g, b, a = pixels[xx, yy]
+    for yy in range(y - r, y + r + 1):
+        for xx in range(x - r, x + r + 1):
+            rgba = pixels[xx, yy]
+            # Some image modes may return 3-tuples (no alpha) after convert('RGBA') should give 4
+            a = rgba[3] if len(rgba) > 3 else 255
             if a == 0:
                 return False
     return True
@@ -106,7 +126,7 @@ def is_surrounding_uniform(img, x, y, sample_count=20, threshold=10, verbose=Fal
     return True
 
 
-def choose_points_for_image(img_path, points=10, max_attempts=20000, sample_area=20, color_threshold=10, verbose=False):
+def choose_points_for_image(img_path, points=10, max_attempts=20000, sample_area=20, color_threshold=10, verbose=False, alpha_area=3):
     """Return a list of (x,y) points for one image path.
 
     Raises RuntimeError if not enough valid points found within max_attempts.
@@ -128,8 +148,20 @@ def choose_points_for_image(img_path, points=10, max_attempts=20000, sample_area
     attempts = 0
     tried = set()
 
-    # Precompute possible candidate coordinates (centers where 3x3 fits)
-    candidates = [(x, y) for x in range(1, w - 1) for y in range(1, h - 1)]
+    # Precompute possible candidate coordinates (centers where alpha-area fits)
+    # Determine radius from alpha_area (ensure odd side-length handled)
+    try:
+        aa = int(alpha_area)
+    except Exception:
+        aa = 3
+    if aa < 1:
+        aa = 1
+    if aa % 2 == 0:
+        aa -= 1
+        if aa < 1:
+            aa = 1
+    rad = aa // 2
+    candidates = [(x, y) for x in range(rad, w - rad) for y in range(rad, h - rad)]
     if not candidates:
         raise RuntimeError(f"No candidates in image {img_path}")
 
@@ -142,7 +174,7 @@ def choose_points_for_image(img_path, points=10, max_attempts=20000, sample_area
         if (x, y) in tried:
             continue
         tried.add((x, y))
-        if not has_full_alpha(rgba, x, y):
+        if not has_full_alpha(rgba, x, y, alpha_area=alpha_area):
             # point fails alpha check
             if verbose:
                 print(f"{basename}: SKIP alpha fail at ({x},{y})")
@@ -189,6 +221,7 @@ def main():
     p.add_argument('--max-attempts', type=int, default=20000, help='Maximum attempts per image')
     p.add_argument('--area', type=int, default=20, help='Number of surrounding pixels to sample for uniformity check (default 20)')
     p.add_argument('--threshold', type=int, default=10, help='Color distance threshold for uniformity (default 10)')
+    p.add_argument('--alpha-area', type=int, default=3, help='Side-length in pixels of alpha-check area (default 3 => 3x3)')
     p.add_argument('--verbose', action='store_true', help='Enable verbose logging of selection decisions')
     args = p.parse_args()
 
@@ -224,6 +257,7 @@ def main():
                 sample_area=args.area,
                 color_threshold=args.threshold,
                 verbose=args.verbose,
+                alpha_area=args.alpha_area,
             )
             results[key] = pts
             print(f"OK: {fname} -> {len(pts)} points")

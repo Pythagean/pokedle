@@ -31,6 +31,7 @@ function mulberry32(a) {
 export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
+  const imgContainerRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const prevCorrectRef = useRef(false);
  
@@ -53,6 +54,10 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const [imgLoaded, setImgLoaded] = useState(true);
   const [imgNatural, setImgNatural] = useState({ w: null, h: null });
   const [debugOverlay, setDebugOverlay] = useState(false);
+  const [containerSize, setContainerSize] = useState({ w: null, h: null });
+  const [debugZoom, setDebugZoom] = useState(null);
+  const [manualTranslate, setManualTranslate] = useState({ x: 0, y: 0 });
+  const [debugPointOffset, setDebugPointOffset] = useState({ x: 0, y: 0 });
   const pokemonNameMap = useMemo(() => {
     if (!pokemonData) return new Map();
     const map = new Map();
@@ -139,14 +144,14 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
 
   // Zoom logic: start at `maxZoom` and progress toward `minZoom` over `maxSteps` guesses.
   // Use a cubic ease-in so the first zoom-outs are small and the reveal increases gradually.
-  const maxZoom = 12.0;
+  const maxZoom = 11.0;
   const minZoom = 0.9;
-  const maxSteps = 13;
+  const maxSteps = 12;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.15; // cubic easing; increase to make initial steps even gentler
   const eased = Math.pow(t, easePower);
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
-  const zoom = isCorrect ? 0.9 : computedZoom;
+  const zoom = isCorrect ? 0.9 : (debugZoom !== null ? debugZoom : computedZoom);
   // console.log('ZoomPage: zoom=', zoom, 't=', t, 'eased=', eased, 'guesses=', guesses.length);
   let edgeX = 0.5, edgeY = 0.5;
   let transformOrigin = '50% 50%';
@@ -173,15 +178,9 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   // Interpolation factor: 0 at max zoom, 1 at min zoom
   const interp = (maxZoom - zoom) / (maxZoom - minZoom);
 
-  // Compute target from chosen zoom point if available and we have image natural size;
-  // otherwise fall back to the previous edge-based target behavior.
-  let targetX = edgeX;
-  let targetY = edgeY;
-  if (chosenZoomPoint && imgNatural.w && imgNatural.h) {
-    // Normalize pixel coordinates to 0..1 image-space
-    targetX = chosenZoomPoint.x / imgNatural.w;
-    targetY = chosenZoomPoint.y / imgNatural.h;
-  }
+  // (Translation removed) We no longer compute a translation target here;
+  // zoom is applied by scaling only. Previous translation code was removed
+  // so we can implement a new approach later without layered math.
 
   // Center the focal point in the container
   // We translate so the focal point moves to 50%, then scale from center
@@ -194,15 +193,26 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     imgStyle.transition = 'transform 3000ms cubic-bezier(.2,.8,.2,1)';
     imgStyle.transformOrigin = '50% 50%';
   } else {
-    // Calculate translation: move focal point to center (50%, 50%)
-    // The focal point is at targetX, targetY in image space (0..1)
-    // We want it at 0.5, 0.5 after translation
-    const translateX = -(0.5 - targetX) * 100;
-    const translateY = (0.5 - targetY) * 100;
-    
-    // Apply translate first, then scale from center
-    imgStyle.transform = `translate(${translateX}%, ${translateY}%) scale(${scaleX * zoom}, ${zoom})`;
-    // No transition during normal zoom steps — snap instantly
+    // Compute translate so the chosen zoom point is centered.
+    // centerX/centerY are the image center in natural pixels.
+    let computedTx = 0, computedTy = 0;
+    if (chosenZoomPoint && imgNatural && imgNatural.w && imgNatural.h) {
+      const centerX = imgNatural.w / 2;
+      const centerY = imgNatural.h / 2;
+      const xDiff = centerX - Number(chosenZoomPoint.x); // centerX - chosenX
+      const yDiff = centerY - Number(chosenZoomPoint.y); // centerY - chosenY
+      computedTx = (xDiff / imgNatural.w) * 100; // percent
+      computedTy = (yDiff / imgNatural.h) * 100; // percent
+    }
+    const manualTx = (typeof manualTranslate.x === 'number') ? manualTranslate.x : 0;
+    const manualTy = (typeof manualTranslate.y === 'number') ? manualTranslate.y : 0;
+    let tx = (computedTx + manualTx) * zoom;
+    let ty = (computedTy + manualTy) * zoom;
+
+    if (shouldMirror) {
+      tx = -tx;
+    }
+    imgStyle.transform = `translate(${tx}%, ${ty}%) scale(${scaleX * zoom}, ${zoom})`;
     imgStyle.transition = 'none';
     imgStyle.transformOrigin = `50% 50%`;
   }
@@ -225,6 +235,33 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     }
     prevCorrectRef.current = isCorrect;
   }, [isCorrect, seed]);
+
+  // Measure container size so we can map image pixel coords -> container percentages
+  useEffect(() => {
+    function update() {
+      try {
+        const el = imgContainerRef && imgContainerRef.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        setContainerSize(prev => (prev.w === Math.round(r.width) && prev.h === Math.round(r.height)) ? prev : { w: Math.round(r.width), h: Math.round(r.height) });
+      } catch (e) {
+        // ignore
+      }
+    }
+    update();
+    window.addEventListener('resize', update);
+    let ro = null;
+    try {
+      if (typeof ResizeObserver !== 'undefined' && imgContainerRef && imgContainerRef.current) {
+        ro = new ResizeObserver(update);
+        ro.observe(imgContainerRef.current);
+      }
+    } catch (e) {}
+    return () => {
+      window.removeEventListener('resize', update);
+      try { if (ro) ro.disconnect(); } catch (e) {}
+    };
+  }, [imgContainerRef]);
 
   return (
     <div style={{ textAlign: 'center', marginTop: 10, width: '100%' }}>
@@ -299,6 +336,56 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
         >
           {debugOverlay ? 'Debug: ON' : 'Debug'}
         </button> */}
+        {debugOverlay && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8 }}>
+            <label style={{ fontSize: 13, color: '#444' }}>Zoom</label>
+            <input
+              type="range"
+              min={0.9}
+              max={12.0}
+              step={0.01}
+              value={debugZoom !== null ? debugZoom : computedZoom}
+              onChange={e => setDebugZoom(Number(e.target.value))}
+              style={{ width: 160 }}
+            />
+            <div style={{ minWidth: 44, textAlign: 'right', fontSize: 13 }}>{((debugZoom !== null ? debugZoom : computedZoom) * 100).toFixed(0)}%</div>
+            <button onClick={() => setDebugZoom(1.0)} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid #bbb', background: '#efefef', cursor: 'pointer', fontSize: 13 }}>Auto</button>
+          </div>
+        )}
+        {debugOverlay && (
+          <div style={{ marginLeft: 12, fontSize: 12, color: '#333', fontFamily: 'monospace' }}>
+            <div>Chosen point: {chosenZoomPoint ? `${chosenZoomPoint.x}, ${chosenZoomPoint.y}` : 'none'}</div>
+            <div>Image natural: {imgNatural && imgNatural.w ? `${imgNatural.w}x${imgNatural.h}` : 'unknown'}</div>
+            <div>Container: {containerSize && containerSize.w ? `${containerSize.w}x${containerSize.h}` : 'unknown'}</div>
+            <div>Zoom points: {zoomPoints ? (Array.isArray(zoomPoints) ? zoomPoints.length : 'n/a') : 'none'}</div>
+            <div style={{ marginTop: 4 }}>Computed translate: {(() => {
+              if (!chosenZoomPoint || !imgNatural || !imgNatural.w) return 'n/a';
+              const cx = imgNatural.w / 2;
+              const cy = imgNatural.h / 2;
+              const xd = Number(chosenZoomPoint.x) - cx;
+              const yd = cy - Number(chosenZoomPoint.y);
+              const xPct = (xd / imgNatural.w) * 100;
+              const yPct = (yd / imgNatural.h) * 100;
+              return `${xPct.toFixed(2)}%, ${yPct.toFixed(2)}%`;
+            })()}</div>
+            <div style={{ marginTop: 6 }}>Image Translate (percent):</div>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+              <label style={{ fontSize: 12 }}>X</label>
+              <input type="number" value={manualTranslate.x} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+              <label style={{ fontSize: 12 }}>Y</label>
+              <input type="number" value={manualTranslate.y} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+              <button onClick={() => setManualTranslate({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+            </div>
+            <div style={{ marginTop: 6 }}>Debug point offset (percent):</div>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+              <label style={{ fontSize: 12 }}>X</label>
+              <input type="number" value={debugPointOffset.x} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+              <label style={{ fontSize: 12 }}>Y</label>
+              <input type="number" value={debugPointOffset.y} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+              <button onClick={() => setDebugPointOffset({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+            </div>
+          </div>
+        )}
         {/* <button
           style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
           onClick={() => {
@@ -321,7 +408,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           </>
         )}
          <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
-           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+           <div ref={imgContainerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
              {imgLoaded && (
               <img
                  src={realImagePath}
@@ -359,8 +446,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                        // Normalize to 0..1 space (no manual mirroring - the overlay transform handles it)
                        const normX = ptX / imgNatural.w;
                        const normY = ptY / imgNatural.h;
-                       const px = Math.max(0, Math.min(100, normX * 100));
-                       const py = Math.max(0, Math.min(100, normY * 100));
+                       const px = Math.max(0, Math.min(100, normX * 100 + (debugPointOffset.x || 0)));
+                       const py = Math.max(0, Math.min(100, normY * 100 + (debugPointOffset.y || 0)));
                        
                        // Check if this is the chosen point
                        const isChosen = chosenZoomPoint && ptX === chosenZoomPoint.x && ptY === chosenZoomPoint.y;
@@ -379,6 +466,9 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                  );
                })()
              )}
+            {debugOverlay && (
+              <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: 12, height: 12, borderRadius: 6, background: 'rgba(0,120,255,0.95)', border: '2px solid white', boxShadow: '0 2px 6px rgba(0,0,0,0.3)', zIndex: 60, pointerEvents: 'none' }} title="container center" />
+            )}
            </div>
          </div>
       </div>
