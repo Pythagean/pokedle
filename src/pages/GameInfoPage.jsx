@@ -267,7 +267,13 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                                     return <div key={i}>{prettyName(a)}</div>;
                                 }
                                 const n = a.name || (a.ability && a.ability.name) || '';
-                                const eff = a.effect || a.short_effect || a.flavor_text || null;
+                                const rawEff = a.effect || a.short_effect || a.flavor_text || null;
+                                let eff = null;
+                                if (rawEff) {
+                                    // Trim surrounding whitespace and remove trailing full-stops/whitespace
+                                    const cleaned = String(rawEff).trim().replace(/[.\s]+$/u, '');
+                                    eff = cleaned.length > 0 ? cleaned : null;
+                                }
                                 return (
                                     <div key={n || i}>
                                         <strong>{prettyName(n)}</strong>{eff ? ` (${eff})` : null}
