@@ -263,6 +263,20 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                                 lookup[idx] = map;
                             });
 
+                            // Helper: resolve a mode label against stored labels with flexible matching
+                            const resolveModeValue = (map, mode) => {
+                                if (!map) return '-';
+                                const key = String(mode).toLowerCase();
+                                if (Object.prototype.hasOwnProperty.call(map, key)) return map[key];
+                                // Try direct substring matches (e.g. 'game' -> 'game data' or 'game info')
+                                const keys = Object.keys(map);
+                                for (const k of keys) {
+                                    if (k.includes(key) || key.includes(k)) return map[k];
+                                }
+                                // No match found
+                                return map[key] !== undefined ? map[key] : '-';
+                            };
+
                             // compute totals per date (column) and overall total
                             const dateTotals = displayedHistory.map(h => {
                                 return (h.results || []).reduce((acc, r) => acc + ((r.solved && typeof r.guessCount === 'number') ? r.guessCount : 0), 0);
@@ -288,7 +302,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack }
                                         let anyNumber = false;
                                         const cells = displayedHistory.map((h, hi) => {
                                             const map = lookup[hi] || {};
-                                            const val = map[String(mode).toLowerCase()];
+                                            const val = resolveModeValue(map, mode);
                                             if (typeof val === 'number') {
                                                 modeTotal += val;
                                                 anyNumber = true;
