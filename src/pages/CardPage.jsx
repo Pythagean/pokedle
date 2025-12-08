@@ -366,7 +366,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                     example = (
                       <div style={{ textAlign: 'center' }}>
                         <div style={{ fontWeight: 700, marginBottom: 8 }}>Full-Art Saturday</div>
-                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full-art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full_art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
                       </div>
                     );
                   } else if (todaysType === 'shiny') {
