@@ -71,6 +71,206 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         img.src = src;
     });
 
+    // Generate a sprite grid showing guessed Pokémon for each mode
+    const generateSpriteGrid = async (userName) => {
+        try {
+            // Wait for fonts
+            try {
+                if (document && document.fonts && document.fonts.load) {
+                    await document.fonts.load('700 20px "Montserrat"');
+                    await document.fonts.ready;
+                }
+            } catch (e) {}
+
+            const dpi = window.devicePixelRatio || 1;
+            const spriteSize = 64;
+            const headerHeight = 40;
+            const rowGap = 16;
+            const leftMargin = 20;
+            const topMargin = 20;
+
+            // Build rows: each mode gets a header + row of sprites
+            // Reverse order so the correct guess (last in the guesses array)
+            // appears on the left (index 0). We'll also mark the leftmost
+            // sprite visually as the correct one.
+            const rows = [];
+            for (const r of results || []) {
+                const guesses = (guessesByPage && guessesByPage[r.key]) || [];
+                const pokemonIds = guesses.map(g => g.id).filter(Boolean);
+                const count = guesses.length;
+                if (pokemonIds.length > 0) {
+                    // reverse so last guess (correct) is first in the drawn row
+                    const ids = pokemonIds.slice().reverse();
+                    rows.push({ label: r.label, ids, count });
+                }
+            }
+
+            if (rows.length === 0) {
+                return { status: 'error', message: 'no_guesses' };
+            }
+
+            // Calculate canvas size
+            const maxSprites = Math.max(...rows.map(row => row.ids.length));
+            const canvasWidth = leftMargin * 2 + maxSprites * spriteSize + (maxSprites - 1) * 8;
+            const canvasHeight = topMargin * 2 + rows.length * (headerHeight + spriteSize + rowGap);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(canvasWidth * dpi);
+            canvas.height = Math.round(canvasHeight * dpi);
+            canvas.style.width = `${canvasWidth}px`;
+            canvas.style.height = `${canvasHeight}px`;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpi, dpi);
+
+            // Helper: draw a rounded rectangle path (does not stroke/fill itself)
+            const roundedRectPath = (ctx, x, y, w, h, r) => {
+                const radius = Math.min(r, w / 2, h / 2);
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.arcTo(x + w, y, x + w, y + h, radius);
+                ctx.arcTo(x + w, y + h, x, y + h, radius);
+                ctx.arcTo(x, y + h, x, y, radius);
+                ctx.arcTo(x, y, x + w, y, radius);
+                ctx.closePath();
+            };
+
+            // Try to preload a small marker icon to indicate the correct guess.
+            // This should be available in the `public/icons` folder as `classic.png`.
+            let markerIcon = null;
+            try {
+                markerIcon = await loadImage('icons/classic.png');
+            } catch (e) {
+                markerIcon = null;
+            }
+
+            // Fill background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            // Draw title
+            const titleSuffix = userName && String(userName).trim().length > 0 ? String(userName).trim() : 'Guesses';
+            ctx.font = '700 24px "Montserrat", Arial, sans-serif';
+            ctx.fillStyle = '#111';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText(`${pokedleLabel} - ${titleSuffix}`, leftMargin, topMargin - 8);
+
+            let y = topMargin + 32;
+
+            // Draw each mode row
+            for (const row of rows) {
+                // Draw mode label with guess count
+                ctx.font = '700 18px "Montserrat", Arial, sans-serif';
+                ctx.fillStyle = '#333';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                ctx.fillText(`${row.label} (${row.count})`, leftMargin, y);
+                y += headerHeight;
+
+                // Load and draw sprites (leftmost = index 0 = correct guess)
+                let x = leftMargin;
+                for (let i = 0; i < row.ids.length; i++) {
+                    const id = row.ids[i];
+                    const drawX = x;
+                    try {
+                        const spriteUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${id}-front.png`;
+                        const sprite = await loadImage(spriteUrl);
+                        ctx.drawImage(sprite, drawX, y, spriteSize, spriteSize);
+                    } catch (e) {
+                        // Draw placeholder box on error
+                        ctx.fillStyle = '#f0f0f0';
+                        ctx.fillRect(drawX, y, spriteSize, spriteSize);
+                        ctx.strokeStyle = '#ccc';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(drawX, y, spriteSize, spriteSize);
+                    }
+
+                    // If this is the leftmost/first sprite, mark it as the correct guess
+                    if (i === 0) {
+                        try {
+                            // Draw a green border around the sprite
+                            ctx.lineWidth = 3;
+                            ctx.strokeStyle = '#e13434ff';
+                            // Draw rounded border around the sprite
+                            try {
+                                roundedRectPath(ctx, drawX - 1.5, y - 1.5, spriteSize + 3, spriteSize + 3, 8);
+                                ctx.stroke();
+                            } catch (e) {
+                                // fallback to rectangular stroke if rounded path fails
+                                ctx.strokeRect(drawX - 1.5, y - 1.5, spriteSize + 3, spriteSize + 3);
+                            }
+
+                                    // Draw a small marker image if available; otherwise fall back to a green check.
+                                    const cx = drawX + 12;
+                                    const cy = y + 12;
+                                    const markerSize = 20;
+                                    if (markerIcon) {
+                                        try {
+                                            ctx.drawImage(markerIcon, cx - markerSize / 2, cy - markerSize / 2, markerSize, markerSize);
+                                        } catch (e) {
+                                            // if drawing fails, fall back to the old check
+                                            ctx.beginPath();
+                                            ctx.fillStyle = '#e13434ff';
+                                            ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+                                            ctx.fill();
+                                            ctx.fillStyle = '#fff';
+                                            ctx.font = '700 12px "Montserrat", Arial, sans-serif';
+                                            ctx.textAlign = 'center';
+                                            ctx.textBaseline = 'middle';
+                                            ctx.fillText('✓', cx, cy + 0.5);
+                                        }
+                                    } else {
+                                        ctx.beginPath();
+                                        ctx.fillStyle = '#e13434ff';
+                                        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+                                        ctx.fill();
+                                        ctx.fillStyle = '#fff';
+                                        ctx.font = '700 12px "Montserrat", Arial, sans-serif';
+                                        ctx.textAlign = 'center';
+                                        ctx.textBaseline = 'middle';
+                                        ctx.fillText('✓', cx, cy + 0.5);
+                                    }
+                        } catch (e) {
+                            // ignore overlay drawing errors
+                        }
+                    }
+
+                    x += spriteSize + 4;
+                }
+                y += spriteSize + rowGap;
+            }
+
+            // Export blob
+            return await new Promise((resolve) => {
+                canvas.toBlob(async (blob) => {
+                    if (!blob) { resolve({ status: 'error', message: 'no_blob' }); return; }
+                    const url = URL.createObjectURL(blob);
+                    // Try clipboard
+                    try {
+                        if (navigator.clipboard && window.ClipboardItem) {
+                            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                            resolve({ status: 'clipboard', url });
+                            return;
+                        }
+                    } catch (e) {}
+                    // Fallback download
+                    try {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${pokedleLabel.replace(/\s+/g, ' ')}-guesses.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    } catch (e) {}
+                    resolve({ status: 'downloaded', url });
+                }, 'image/png');
+            });
+        } catch (err) {
+            console.error('generateSpriteGrid failed', err);
+            return { status: 'error', message: err && err.message ? err.message : String(err) };
+        }
+    };
+
     const generateCardImage = async (useDetails, extraName) => {
         try {
             const dpi = window.devicePixelRatio || 1;
@@ -167,7 +367,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     const t = Number(total) && Number(total) >= 0 ? Number(total) : 0;
                     let category = 'Terrible';
                     if (t <= 10) category = 'Great';
-                    else if (t <= 18) category = 'Good';
+                    else if (t <= 17) category = 'Good';
                     else if (t <= 23) category = 'Okay';
                     else if (t <= 29) category = 'Bad';
                     else category = 'Terrible';
@@ -565,7 +765,48 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {copied && <div style={{ color: '#1976d2', fontSize: 14 }}>Copied to clipboard</div>}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 18 }}>
                     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                        <button onClick={() => setShowDetails(s => !s)} style={{ height: 40, padding: '8px 12px', borderRadius: 8, background: showDetails ? '#1976d2' : '#efefef', color: showDetails ? '#fff' : '#111', border: '1px solid #e0e0e0', cursor: 'pointer', fontSize: 14 }}>{showDetails ? 'Hide Guesses' : 'Show Guesses'}</button>
+                        <button onClick={async () => {
+                            // Toggle details and ensure Generate becomes enabled for edits
+                            const newShow = !showDetails;
+                            setGeneratedDisabled(false);
+                            setShowDetails(newShow);
+
+                            // If a preview already exists, automatically generate the other image
+                            try {
+                                if (cardPreviewUrl) {
+                                    setExportError(null);
+                                    setExportStatus('working');
+                                    let res = null;
+                                    if (newShow) {
+                                        // switched into details: generate sprite grid
+                                        res = await generateSpriteGrid(cardName && String(cardName).trim().slice(0,50));
+                                    } else {
+                                        // switched out of details: generate the card image
+                                        res = await generateCardImage(false, cardName && String(cardName).trim().slice(0,50));
+                                    }
+                                    if (res && typeof res === 'object' && res.url) {
+                                        try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
+                                        setCardPreviewUrl(res.url);
+                                        if (res.status === 'clipboard') setExportStatus('copied');
+                                        else if (res.status === 'downloaded') setExportStatus('downloaded');
+                                        else setExportStatus(null);
+                                        // mark as generated so further edits re-enable
+                                        setGeneratedDisabled(true);
+                                    } else if (res && res.status === 'error') {
+                                        setExportError(res.message || 'unknown');
+                                        setExportStatus('failed');
+                                    } else {
+                                        setExportError(null);
+                                        setExportStatus('failed');
+                                    }
+                                }
+                            } catch (e) {
+                                setExportError(e && e.message ? e.message : String(e));
+                                setExportStatus('failed');
+                            }
+                            setTimeout(() => setExportStatus(null), 1700);
+                            setTimeout(() => setExportError(null), 4000);
+                        }} style={{ height: 40, padding: '8px 12px', borderRadius: 8, background: showDetails ? '#1976d2' : '#efefef', color: showDetails ? '#fff' : '#111', border: '1px solid #e0e0e0', cursor: 'pointer', fontSize: 14 }}>{showDetails ? 'Hide Guesses' : 'Show Guesses'}</button>
                         <button onClick={handleCopy} title="Copy" style={{ height: 40, minWidth: 64, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111', WebkitTextFillColor: '#111', forcedColorAdjust: 'none' }}>Copy</button>
                     </div>
                     <div style={{ fontWeight: 700, fontSize: 16, textAlign: 'right' }}>{`Total: ${total}`}</div>
@@ -582,7 +823,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 try {
                                     setExportError(null);
                                     setExportStatus('working');
-                                    const res = await generateCardImage(showDetails, cardName && String(cardName).trim().slice(0,50));
+                                    const res = showDetails 
+                                        ? await generateSpriteGrid(cardName && String(cardName).trim().slice(0,50)) 
+                                        : await generateCardImage(showDetails, cardName && String(cardName).trim().slice(0,50));
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
@@ -609,7 +852,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             disabled={!allCompleted || generatedDisabled}
                             style={{ height: 40, minWidth: isMobile ? '100%' : 180, borderRadius: 8, border: '1px solid #e0e0e0', background: (!allCompleted || generatedDisabled) ? '#f5f5f5' : '#efefef', cursor: (!allCompleted || generatedDisabled) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 14, color: (!allCompleted || generatedDisabled) ? '#999' : '#111' }}
                         >
-                            Generate Results Card
+                            {showDetails ? 'Generate Guesses Image' : 'Generate Results TCG Card'}
                         </button>
                         <input
                             type="text"
@@ -659,7 +902,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {cardPreviewUrl ? (
                     <div style={{ marginTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start', justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
                         <div style={{ border: '1px solid #eee', padding: 8, borderRadius: 6, background: '#fff' }}>
-                            <img src={cardPreviewUrl} alt="Generated card preview" style={{ width: isMobile ? '100%' : 250, height: 'auto', display: 'block', borderRadius: 4 }} />
+                            <img src={cardPreviewUrl} alt="Generated card preview" style={{ width: isMobile ? '100%' : 450, height: 'auto', display: 'block', borderRadius: 4 }} />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {/* On mobile show Download button under the preview */}
