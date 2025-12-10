@@ -549,20 +549,48 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 // position to the right of the results text area (startX + maxWidth)
                 // so the total appears beside the results lines rather than beside the image.
                 // place it further right than the per-line values so they don't overlap.
-                const tentativeTotalX = startX + maxWidth + 85;
+                const tentativeTotalX = startX + maxWidth + 90; // TOTAL X VALUE
                 const totalX = tentativeTotalX;
                 // vertically center the total in the space occupied by the results lines
                 const contentBottom = Math.max(y, startY + lineHeight);
-                const totalY = startY + (contentBottom - startY) / 2 - 6;
+                const totalY = startY + (contentBottom - startY) / 2 + 5; // TOTAL Y VALUE
                 ctx.save();
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
                 ctx.font = '700 72px "Bebas Neue", "Montserrat", Arial, sans-serif';
                 // use white text for dark template, otherwise dark
                 ctx.fillStyle = isDarkTemplate ? '#fff' : '#111';
-                // subtle shadow for contrast
+                // subtle shadow for contrast on the text
                 ctx.shadowColor = isDarkTemplate ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.12)';
                 ctx.shadowBlur = 6;
+
+                // Measure text to compute a suitable circle radius and center
+                try {
+                    const metrics = ctx.measureText(totalStr || '0');
+                    const textWidth = metrics.width || 72;
+                    const centerX = totalX + textWidth / 2 + 2;
+                    const centerY = totalY - 7; // textBaseline is 'middle'
+                    // radius: ensure it's at least half the font size and comfortably contains the digits
+                    const radius = Math.max(36, Math.max(textWidth, 72) / 2 + 12);
+
+                    // Draw circle outline behind the text. Disable shadow for the ring so it's crisp.
+                    const prevShadowColor = ctx.shadowColor;
+                    const prevShadowBlur = ctx.shadowBlur;
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                    ctx.lineWidth = 4;
+                    ctx.strokeStyle = ctx.fillStyle; // same colour as the text
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    // restore shadow for the text
+                    ctx.shadowColor = prevShadowColor;
+                    ctx.shadowBlur = prevShadowBlur;
+                } catch (e) {
+                    // ignore measurement/drawing failures and continue to draw the text
+                }
+
+                // Draw the total number on top of the ring
                 ctx.fillText(totalStr, totalX, totalY);
                 ctx.restore();
             } catch (e) {
@@ -902,7 +930,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {cardPreviewUrl ? (
                     <div style={{ marginTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start', justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
                         <div style={{ border: '1px solid #eee', padding: 8, borderRadius: 6, background: '#fff' }}>
-                            <img src={cardPreviewUrl} alt="Generated card preview" style={{ width: isMobile ? '100%' : 450, height: 'auto', display: 'block', borderRadius: 4 }} />
+                            <img src={cardPreviewUrl} alt="Generated card preview" style={{ width: isMobile ? '100%' : 350, height: 'auto', display: 'block', borderRadius: 4 }} />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {/* On mobile show Download button under the preview */}
