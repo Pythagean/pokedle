@@ -9,12 +9,12 @@ import { GAMEINFO_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '.
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
-  return function() {
-    var t = a += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  }
+    return function () {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
 }
 
 
@@ -41,7 +41,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const prevCorrectRef = useRef(false);
-    
+
     const today = new Date();
     const defaultSeed = (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
     const [resetSeed, setResetSeed] = useState(null);
@@ -200,7 +200,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
         try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
         if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
             setShowConfetti(true);
-            try { localStorage.setItem(key, '1'); } catch (e) {}
+            try { localStorage.setItem(key, '1'); } catch (e) { }
             const t = setTimeout(() => setShowConfetti(false), 2500);
             prevCorrectRef.current = true;
             return () => clearTimeout(t);
@@ -210,44 +210,44 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
     // Clue renderers
     function renderClue(type) {
-            if (type === 'stats') {
-                const stats = dailyPokemon.stats || {};
-                const statOrder = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
-                const statLabels = {
-                    hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
-                };
-                // Per-stat maximums for normalization
-                const statMax = {
-                    hp: 255,
-                    attack: 180,
-                    defense: 180,
-                    'special-attack': 180,
-                    'special-defense': 180,
-                    speed: 180,
-                };
+        if (type === 'stats') {
+            const stats = dailyPokemon.stats || {};
+            const statOrder = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
+            const statLabels = {
+                hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
+            };
+            // Per-stat maximums for normalization
+            const statMax = {
+                hp: 255,
+                attack: 180,
+                defense: 180,
+                'special-attack': 180,
+                'special-defense': 180,
+                speed: 180,
+            };
 
-                return (
-                    <div style={{ marginBottom: 10 }}>
-                        <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 18 }}>Base Stats:</div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                            {statOrder.map(s => {
-                                const v = Number(stats[s] || 0);
-                                const maxFor = statMax[s] || 255;
-                                const pct = Math.round((v / maxFor) * 100);
-                                return (
-                                    <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
-                                        <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
-                                        <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
-                                            <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
-                                        </div>
-                                        <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
+            return (
+                <div style={{ marginBottom: 10 }}>
+                    <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 18 }}>Base Stats:</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {statOrder.map(s => {
+                            const v = Number(stats[s] || 0);
+                            const maxFor = statMax[s] || 255;
+                            const pct = Math.round((v / maxFor) * 100);
+                            return (
+                                <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
+                                    <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
+                                    <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
+                                        <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
                                     </div>
-                                );
-                            })}
-                        </div>
+                                    <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
+                                </div>
+                            );
+                        })}
                     </div>
-                );
-            }
+                </div>
+            );
+        }
         if (type === 'ability') {
             const abilities = dailyPokemon.abilities || [];
 
@@ -329,7 +329,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                         ) : (
                             (levelKeys.length > 0 ? levelKeys.map(lvl => (
                                 <div key={lvl} style={{ marginBottom: 4, textAlign: 'center' }}>
-                                    <strong>Lvl {lvl}</strong> - { (movesByLevel[String(lvl)] || []).slice().sort().join(', ') }
+                                    <strong>Lvl {lvl}</strong> - {(movesByLevel[String(lvl)] || []).slice().sort().join(', ')}
                                 </div>
                             )) : 'No moves')
                         )}
@@ -413,8 +413,40 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             const heldItems = dailyPokemon.held_items || [];
             return (
                 <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 18 }}>Held Items:</div>
-                    <div style={{ color: '#333', fontSize: 14 }}>{heldItems.length > 0 ? heldItems.join(', ') : 'No held items'}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
+                        <div style={{ fontWeight: 600, fontSize: 18 }}>Held Items:</div>
+                        <InfoButton
+                            ariaLabel="About held items"
+                            placement="right"
+                            marginTop={0}
+                            content={
+                                <div style={{ textAlign: 'left' }}>
+                                    Held Items are items this Pokémon may be found holding in the wild
+                                </div>
+                            }
+                        />
+                    </div>
+                    <div style={{ color: '#333', fontSize: 14 }}>
+                        {heldItems.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                                {heldItems.map((it, i) => {
+                                    const display = (typeof it === 'string') ? it : (it.display_name || it.name || '');
+                                    const effect = (it && typeof it === 'object') ? (it.effect || null) : null;
+                                    let cleanedEffect = null;
+                                    if (typeof effect === 'string') {
+                                        // Trim surrounding whitespace and remove trailing full-stops/whitespace
+                                        const c = String(effect).trim().replace(/[.\s]+$/u, '');
+                                        cleanedEffect = c.length > 0 ? c : null;
+                                    }
+                                    return (
+                                        <div key={(display || i) + i} title={cleanedEffect || ''} style={{ textAlign: 'center' }}>
+                                            <strong>{display}</strong>{cleanedEffect ? ` (${cleanedEffect})` : null}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ) : 'No held items'}
+                    </div>
                 </div>
             );
         }
@@ -445,7 +477,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                             <button onClick={() => setMapPopup({ visible: false, title: null, url: null })} style={{ marginLeft: 12 }}>Close</button>
                         </div>
                         {mapPopup.url ? (
-                            <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '80vh', display: 'block' }} onError={(e)=>{e.target.style.display='none';}} />
+                            <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '80vh', display: 'block' }} onError={(e) => { e.target.style.display = 'none'; }} />
                         ) : (
                             <div style={{ padding: 24, color: '#666' }}>No map available for this location.</div>
                         )}
@@ -454,7 +486,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             )}
             <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                <h2 style={{ margin: 0 }}>Game Info Mode</h2>
+                <h2 style={{ margin: 0 }}>Game Data Mode</h2>
                 <InfoButton
                     ariaLabel="How to Play"
                     placement="right"
@@ -467,54 +499,55 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                         </div>
                     }
                 />
+
                 {/* <button
-                    style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 2 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 2 ? 'not-allowed' : 'pointer', opacity: resetCount >= 2 ? 0.5 : 1 }}
+                    style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
                         setGuesses([]);
                         setResetSeed(Math.floor(Math.random() * 1000000000));
                         setResetCount(resetCount + 1);
                     }}
-                    disabled={resetCount >= 2}
+                    disabled={resetCount >= 200}
                 >
                     Reset
                 </button> */}
             </div>
-                        <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-                                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
-                                {isCorrect && (
-                                    <>
-                                        <CongratsMessage guessCount={guesses.length} mode="Game Data" />
-                                        <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
-                                    </>
-                                )}
-                                {shownClues.map(type => renderClue(type))}
-                                {/* Hint placeholder text for next clue, specifying clue type */}
-                                {!isCorrect && (() => {
-                                    const nextIdx = getNextThresholdIndex(guesses.length, GAMEINFO_HINT_THRESHOLDS);
-                                    if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
-                                        const nextThreshold = GAMEINFO_HINT_THRESHOLDS[nextIdx];
-                                        const cluesLeft = nextThreshold - guesses.length;
-                                        const nextClueType = cluesForDay[shownClues.length];
-                                        // Human-friendly clue type names
-                                        const clueTypeLabels = {
-                                            stats: 'Base Stats',
-                                            ability: 'Abilities',
-                                            moves: 'Moves Learned by Level Up',
-                                            category: 'Category',
-                                            locations: 'Wild Encounter Locations',
-                                            held_items: 'Held Items',
-                                            shape: 'Shape',
-                                        };
-                                        return (
-                                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                                <span>Next clue (<b>{clueTypeLabels[nextClueType] || nextClueType}</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
-                                            </div>
-                                        );
-                                    }
-                                    return null;
-                                })()}
-                        </div>
+            <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
+                {isCorrect && (
+                    <>
+                        <CongratsMessage guessCount={guesses.length} mode="Game Data" />
+                        <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
+                    </>
+                )}
+                {shownClues.map(type => renderClue(type))}
+                {/* Hint placeholder text for next clue, specifying clue type */}
+                {!isCorrect && (() => {
+                    const nextIdx = getNextThresholdIndex(guesses.length, GAMEINFO_HINT_THRESHOLDS);
+                    if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
+                        const nextThreshold = GAMEINFO_HINT_THRESHOLDS[nextIdx];
+                        const cluesLeft = nextThreshold - guesses.length;
+                        const nextClueType = cluesForDay[shownClues.length];
+                        // Human-friendly clue type names
+                        const clueTypeLabels = {
+                            stats: 'Base Stats',
+                            ability: 'Abilities',
+                            moves: 'Moves Learned by Level Up',
+                            category: 'Category',
+                            locations: 'Wild Encounter Locations',
+                            held_items: 'Held Items',
+                            shape: 'Shape',
+                        };
+                        return (
+                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                                <span>Next clue (<b>{clueTypeLabels[nextClueType] || nextClueType}</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                            </div>
+                        );
+                    }
+                    return null;
+                })()}
+            </div>
             {!isCorrect && (
                 <form
                     onSubmit={e => {

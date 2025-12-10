@@ -1420,7 +1420,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Silver Powder"
+      {
+        "name": "silver-powder",
+        "display_name": "Silver Powder",
+        "effect": "A hold item that raises the power of BUG-type moves."
+      }
     ],
     "id": 12,
     "location_area_encounters": [
@@ -1738,7 +1742,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Poison Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      }
     ],
     "id": 15,
     "location_area_encounters": [
@@ -2271,7 +2279,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Chilan Berry"
+      {
+        "name": "chilan-berry",
+        "display_name": "Chilan Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s Normal-type attack."
+      }
     ],
     "id": 19,
     "location_area_encounters": [
@@ -2414,9 +2426,21 @@
     },
     "height": 0.7,
     "held_items": [
-      "Oran Berry",
-      "Sitrus Berry",
-      "Chilan Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      },
+      {
+        "name": "chilan-berry",
+        "display_name": "Chilan Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s Normal-type attack."
+      }
     ],
     "id": 20,
     "location_area_encounters": [
@@ -2551,7 +2575,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Sharp Beak"
+      {
+        "name": "sharp-beak",
+        "display_name": "Sharp Beak",
+        "effect": "A hold item that raises the power of FLYING-type moves."
+      }
     ],
     "id": 21,
     "location_area_encounters": [
@@ -2689,7 +2717,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Sharp Beak"
+      {
+        "name": "sharp-beak",
+        "display_name": "Sharp Beak",
+        "effect": "A hold item that raises the power of FLYING-type moves."
+      }
     ],
     "id": 22,
     "location_area_encounters": [
@@ -2966,7 +2998,11 @@
     },
     "height": 3.5,
     "held_items": [
-      "Poison Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      }
     ],
     "id": 24,
     "location_area_encounters": [
@@ -3117,8 +3153,16 @@
     },
     "height": 0.4,
     "held_items": [
-      "Oran Berry",
-      "Light Ball"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "light-ball",
+        "display_name": "Light Ball",
+        "effect": "A hold item that raises the SP. ATK of PIKACHU."
+      }
     ],
     "id": 25,
     "location_area_encounters": [
@@ -3274,7 +3318,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Oran Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 26,
     "location_area_encounters": [
@@ -3396,8 +3444,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Quick Claw",
-      "Grip Claw"
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      },
+      {
+        "name": "grip-claw",
+        "display_name": "Grip Claw",
+        "effect": "A Pokémon hold item that extends the duration of multiturn attacks like Bind and Wrap."
+      }
     ],
     "id": 27,
     "location_area_encounters": [
@@ -3539,9 +3595,21 @@
     },
     "height": 1.0,
     "held_items": [
-      "Quick Claw",
-      "Soft Sand",
-      "Grip Claw"
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      },
+      {
+        "name": "soft-sand",
+        "display_name": "Soft Sand",
+        "effect": "A hold item that raises the power of GROUND-type moves."
+      },
+      {
+        "name": "grip-claw",
+        "display_name": "Grip Claw",
+        "effect": "A Pokémon hold item that extends the duration of multiturn attacks like Bind and Wrap."
+      }
     ],
     "id": 28,
     "location_area_encounters": [
@@ -4462,9 +4530,21 @@
     },
     "height": 0.6,
     "held_items": [
-      "Moon Stone",
-      "Leppa Berry",
-      "Comet Shard"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      },
+      {
+        "name": "comet-shard",
+        "display_name": "Comet Shard",
+        "effect": "A shard which fell to the ground when a comet approached. A maniac will buy it for a high price."
+      }
     ],
     "id": 35,
     "location_area_encounters": [
@@ -4622,9 +4702,21 @@
     },
     "height": 1.3,
     "held_items": [
-      "Moon Stone",
-      "Leppa Berry",
-      "Comet Shard"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      },
+      {
+        "name": "comet-shard",
+        "display_name": "Comet Shard",
+        "effect": "A shard which fell to the ground when a comet approached. A maniac will buy it for a high price."
+      }
     ],
     "id": 36,
     "location_area_encounters": [],
@@ -4739,8 +4831,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Rawst Berry",
-      "Charcoal"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      },
+      {
+        "name": "charcoal",
+        "display_name": "Charcoal",
+        "effect": "A hold item that raises the power of FIRE-type moves."
+      }
     ],
     "id": 37,
     "location_area_encounters": [
@@ -4889,8 +4989,16 @@
     },
     "height": 1.1,
     "held_items": [
-      "Rawst Berry",
-      "Charcoal"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      },
+      {
+        "name": "charcoal",
+        "display_name": "Charcoal",
+        "effect": "A hold item that raises the power of FIRE-type moves."
+      }
     ],
     "id": 38,
     "location_area_encounters": [],
@@ -5016,8 +5124,16 @@
     },
     "height": 0.5,
     "held_items": [
-      "Moon Stone",
-      "Oran Berry"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 39,
     "location_area_encounters": [
@@ -5173,8 +5289,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Moon Stone",
-      "Oran Berry"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 40,
     "location_area_encounters": [
@@ -5595,7 +5719,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Absorb Bulb"
+      {
+        "name": "absorb-bulb",
+        "display_name": "Absorb Bulb",
+        "effect": "A consumable bulb. If the holder is hit by a Water-type move, its Sp. Atk will rise."
+      }
     ],
     "id": 43,
     "location_area_encounters": [
@@ -5724,7 +5852,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Absorb Bulb"
+      {
+        "name": "absorb-bulb",
+        "display_name": "Absorb Bulb",
+        "effect": "A consumable bulb. If the holder is hit by a Water-type move, its Sp. Atk will rise."
+      }
     ],
     "id": 44,
     "location_area_encounters": [
@@ -5849,7 +5981,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Absorb Bulb"
+      {
+        "name": "absorb-bulb",
+        "display_name": "Absorb Bulb",
+        "effect": "A consumable bulb. If the holder is hit by a Water-type move, its Sp. Atk will rise."
+      }
     ],
     "id": 45,
     "location_area_encounters": [],
@@ -5963,9 +6099,21 @@
     },
     "height": 0.3,
     "held_items": [
-      "Tiny Mushroom",
-      "Big Mushroom",
-      "Balm Mushroom"
+      {
+        "name": "tiny-mushroom",
+        "display_name": "Tiny Mushroom",
+        "effect": "A plain, ordinary mushroom. Can be sold cheaply."
+      },
+      {
+        "name": "big-mushroom",
+        "display_name": "Big Mushroom",
+        "effect": "A rare mushroom that would sell at a high price."
+      },
+      {
+        "name": "balm-mushroom",
+        "display_name": "Balm Mushroom",
+        "effect": "A rare mushroom which gives off a nice fragrance. A maniac will buy it for a high price."
+      }
     ],
     "id": 46,
     "location_area_encounters": [
@@ -6105,9 +6253,21 @@
     },
     "height": 1.0,
     "held_items": [
-      "Tiny Mushroom",
-      "Big Mushroom",
-      "Balm Mushroom"
+      {
+        "name": "tiny-mushroom",
+        "display_name": "Tiny Mushroom",
+        "effect": "A plain, ordinary mushroom. Can be sold cheaply."
+      },
+      {
+        "name": "big-mushroom",
+        "display_name": "Big Mushroom",
+        "effect": "A rare mushroom that would sell at a high price."
+      },
+      {
+        "name": "balm-mushroom",
+        "display_name": "Balm Mushroom",
+        "effect": "A rare mushroom which gives off a nice fragrance. A maniac will buy it for a high price."
+      }
     ],
     "id": 47,
     "location_area_encounters": [
@@ -6383,8 +6543,16 @@
     },
     "height": 1.5,
     "held_items": [
-      "Silver Powder",
-      "Shed Shell"
+      {
+        "name": "silver-powder",
+        "display_name": "Silver Powder",
+        "effect": "A hold item that raises the power of BUG-type moves."
+      },
+      {
+        "name": "shed-shell",
+        "display_name": "Shed Shell",
+        "effect": "A tough, discarded carapace to be held by a Pokémon. It enables the holder to switch with a waiting Pokémon in battle."
+      }
     ],
     "id": 49,
     "location_area_encounters": [
@@ -6539,7 +6707,11 @@
     },
     "height": 0.2,
     "held_items": [
-      "Soft Sand"
+      {
+        "name": "soft-sand",
+        "display_name": "Soft Sand",
+        "effect": "A hold item that raises the power of GROUND-type moves."
+      }
     ],
     "id": 50,
     "location_area_encounters": [
@@ -6678,7 +6850,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Soft Sand"
+      {
+        "name": "soft-sand",
+        "display_name": "Soft Sand",
+        "effect": "A hold item that raises the power of GROUND-type moves."
+      }
     ],
     "id": 51,
     "location_area_encounters": [
@@ -6827,8 +7003,16 @@
     },
     "height": 0.4,
     "held_items": [
-      "Nugget",
-      "Quick Claw"
+      {
+        "name": "nugget",
+        "display_name": "Nugget",
+        "effect": "A nugget of pure gold. Can be sold at a high price."
+      },
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      }
     ],
     "id": 52,
     "location_area_encounters": [
@@ -6972,7 +7156,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Quick Claw"
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      }
     ],
     "id": 53,
     "location_area_encounters": [
@@ -7407,7 +7595,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Payapa Berry"
+      {
+        "name": "payapa-berry",
+        "display_name": "Payapa Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Psychic-type attack."
+      }
     ],
     "id": 56,
     "location_area_encounters": [
@@ -7554,7 +7746,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Payapa Berry"
+      {
+        "name": "payapa-berry",
+        "display_name": "Payapa Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Psychic-type attack."
+      }
     ],
     "id": 57,
     "location_area_encounters": [
@@ -7703,7 +7899,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Rawst Berry"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      }
     ],
     "id": 58,
     "location_area_encounters": [
@@ -7852,7 +8052,11 @@
     },
     "height": 1.9,
     "held_items": [
-      "Rawst Berry"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      }
     ],
     "id": 59,
     "location_area_encounters": [],
@@ -8130,7 +8334,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 61,
     "location_area_encounters": [
@@ -8270,7 +8478,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 62,
     "location_area_encounters": [],
@@ -8398,7 +8610,11 @@
     },
     "height": 0.9,
     "held_items": [
-      "Twisted Spoon"
+      {
+        "name": "twisted-spoon",
+        "display_name": "Twisted Spoon",
+        "effect": "A hold item that boosts PSYCHIC- type moves."
+      }
     ],
     "id": 63,
     "location_area_encounters": [
@@ -8521,7 +8737,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Twisted Spoon"
+      {
+        "name": "twisted-spoon",
+        "display_name": "Twisted Spoon",
+        "effect": "A hold item that boosts PSYCHIC- type moves."
+      }
     ],
     "id": 64,
     "location_area_encounters": [
@@ -8679,7 +8899,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Twisted Spoon"
+      {
+        "name": "twisted-spoon",
+        "display_name": "Twisted Spoon",
+        "effect": "A hold item that boosts PSYCHIC- type moves."
+      }
     ],
     "id": 65,
     "location_area_encounters": [],
@@ -8831,7 +9055,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Focus Band"
+      {
+        "name": "focus-band",
+        "display_name": "Focus Band",
+        "effect": "A hold item that occasionally prevents fainting."
+      }
     ],
     "id": 66,
     "location_area_encounters": [
@@ -8988,7 +9216,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Focus Band"
+      {
+        "name": "focus-band",
+        "display_name": "Focus Band",
+        "effect": "A hold item that occasionally prevents fainting."
+      }
     ],
     "id": 67,
     "location_area_encounters": [
@@ -9146,7 +9378,11 @@
     },
     "height": 1.6,
     "held_items": [
-      "Focus Band"
+      {
+        "name": "focus-band",
+        "display_name": "Focus Band",
+        "effect": "A hold item that occasionally prevents fainting."
+      }
     ],
     "id": 68,
     "location_area_encounters": [],
@@ -9687,7 +9923,11 @@
     },
     "height": 0.9,
     "held_items": [
-      "Poison Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      }
     ],
     "id": 72,
     "location_area_encounters": [
@@ -9848,7 +10088,11 @@
     },
     "height": 1.6,
     "held_items": [
-      "Poison Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      }
     ],
     "id": 73,
     "location_area_encounters": [
@@ -10002,7 +10246,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Everstone"
+      {
+        "name": "everstone",
+        "display_name": "Everstone",
+        "effect": "A wondrous stone & a hold item that prevents evolution."
+      }
     ],
     "id": 74,
     "location_area_encounters": [
@@ -10153,8 +10401,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Everstone",
-      "Hard Stone"
+      {
+        "name": "everstone",
+        "display_name": "Everstone",
+        "effect": "A wondrous stone & a hold item that prevents evolution."
+      },
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 75,
     "location_area_encounters": [
@@ -10304,8 +10560,16 @@
     },
     "height": 1.4,
     "held_items": [
-      "Everstone",
-      "Hard Stone"
+      {
+        "name": "everstone",
+        "display_name": "Everstone",
+        "effect": "A wondrous stone & a hold item that prevents evolution."
+      },
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 76,
     "location_area_encounters": [],
@@ -10452,7 +10716,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Shuca Berry"
+      {
+        "name": "shuca-berry",
+        "display_name": "Shuca Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Ground-type attack."
+      }
     ],
     "id": 77,
     "location_area_encounters": [
@@ -10601,7 +10869,11 @@
     },
     "height": 1.7,
     "held_items": [
-      "Shuca Berry"
+      {
+        "name": "shuca-berry",
+        "display_name": "Shuca Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Ground-type attack."
+      }
     ],
     "id": 78,
     "location_area_encounters": [
@@ -10750,8 +11022,16 @@
     },
     "height": 1.2,
     "held_items": [
-      "Kings Rock",
-      "Lagging Tail"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      },
+      {
+        "name": "lagging-tail",
+        "display_name": "Lagging Tail",
+        "effect": "An item to be held by a Pokémon. It is tremendously heavy and makes the holder move slower than usual."
+      }
     ],
     "id": 79,
     "location_area_encounters": [
@@ -10904,7 +11184,11 @@
     },
     "height": 1.6,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 80,
     "location_area_encounters": [
@@ -11071,7 +11355,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Metal Coat"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      }
     ],
     "id": 81,
     "location_area_encounters": [
@@ -11234,8 +11522,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Metal Coat",
-      "Magnet"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      },
+      {
+        "name": "magnet",
+        "display_name": "Magnet",
+        "effect": "A hold item that boosts ELECTRIC- type moves."
+      }
     ],
     "id": 82,
     "location_area_encounters": [
@@ -11387,7 +11683,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Stick"
+      {
+        "name": "stick",
+        "display_name": "Stick",
+        "effect": "A stick of leek. It can be sold cheaply."
+      }
     ],
     "id": 83,
     "location_area_encounters": [
@@ -11524,7 +11824,11 @@
     },
     "height": 1.4,
     "held_items": [
-      "Sharp Beak"
+      {
+        "name": "sharp-beak",
+        "display_name": "Sharp Beak",
+        "effect": "A hold item that raises the power of FLYING-type moves."
+      }
     ],
     "id": 84,
     "location_area_encounters": [
@@ -11660,7 +11964,11 @@
     },
     "height": 1.8,
     "held_items": [
-      "Sharp Beak"
+      {
+        "name": "sharp-beak",
+        "display_name": "Sharp Beak",
+        "effect": "A hold item that raises the power of FLYING-type moves."
+      }
     ],
     "id": 85,
     "location_area_encounters": [
@@ -11798,7 +12106,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Aspear Berry"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      }
     ],
     "id": 86,
     "location_area_encounters": [
@@ -11925,8 +12237,16 @@
     },
     "height": 1.7,
     "held_items": [
-      "Aspear Berry",
-      "Never Melt Ice"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      },
+      {
+        "name": "never-melt-ice",
+        "display_name": "Never Melt Ice",
+        "effect": "A hold item that raises the power of ICE-type moves."
+      }
     ],
     "id": 87,
     "location_area_encounters": [
@@ -12067,8 +12387,16 @@
     },
     "height": 0.9,
     "held_items": [
-      "Nugget",
-      "Black Sludge"
+      {
+        "name": "nugget",
+        "display_name": "Nugget",
+        "effect": "A nugget of pure gold. Can be sold at a high price."
+      },
+      {
+        "name": "black-sludge",
+        "display_name": "Black Sludge",
+        "effect": "A hold item that gradually restores the HP of Poison-type Pokémon. It inflicts damage on all other types."
+      }
     ],
     "id": 88,
     "location_area_encounters": [
@@ -12217,9 +12545,21 @@
     },
     "height": 1.2,
     "held_items": [
-      "Nugget",
-      "Toxic Orb",
-      "Black Sludge"
+      {
+        "name": "nugget",
+        "display_name": "Nugget",
+        "effect": "A nugget of pure gold. Can be sold at a high price."
+      },
+      {
+        "name": "toxic-orb",
+        "display_name": "Toxic Orb",
+        "effect": "An item to be held by a Pokémon. It is a bizarre orb that badly poisons the holder in battle."
+      },
+      {
+        "name": "black-sludge",
+        "display_name": "Black Sludge",
+        "effect": "A hold item that gradually restores the HP of Poison-type Pokémon. It inflicts damage on all other types."
+      }
     ],
     "id": 89,
     "location_area_encounters": [
@@ -12361,8 +12701,16 @@
     },
     "height": 0.3,
     "held_items": [
-      "Pearl",
-      "Big Pearl"
+      {
+        "name": "pearl",
+        "display_name": "Pearl",
+        "effect": "A pretty pearl. Can be sold cheaply."
+      },
+      {
+        "name": "big-pearl",
+        "display_name": "Big Pearl",
+        "effect": "A lovely large pearl that would sell at a high price."
+      }
     ],
     "id": 90,
     "location_area_encounters": [
@@ -12505,8 +12853,16 @@
     },
     "height": 1.5,
     "held_items": [
-      "Pearl",
-      "Big Pearl"
+      {
+        "name": "pearl",
+        "display_name": "Pearl",
+        "effect": "A pretty pearl. Can be sold cheaply."
+      },
+      {
+        "name": "big-pearl",
+        "display_name": "Big Pearl",
+        "effect": "A lovely large pearl that would sell at a high price."
+      }
     ],
     "id": 91,
     "location_area_encounters": [],
@@ -12758,7 +13114,11 @@
     },
     "height": 1.6,
     "held_items": [
-      "Spell Tag"
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 93,
     "location_area_encounters": [
@@ -12900,7 +13260,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Spell Tag"
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 94,
     "location_area_encounters": [],
@@ -13046,7 +13410,11 @@
     },
     "height": 8.8,
     "held_items": [
-      "Hard Stone"
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 95,
     "location_area_encounters": [
@@ -14041,7 +14409,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Psychic Seed"
+      {
+        "name": "psychic-seed",
+        "display_name": "Psychic Seed",
+        "effect": "An item to be held by a Pokémon. It boosts Sp. Def on Psychic Terrain. It can only be used once."
+      }
     ],
     "id": 102,
     "location_area_encounters": [
@@ -14304,7 +14676,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Thick Club"
+      {
+        "name": "thick-club",
+        "display_name": "Thick Club",
+        "effect": "A bone of some sort. It can be sold cheaply."
+      }
     ],
     "id": 104,
     "location_area_encounters": [
@@ -14456,7 +14832,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Thick Club"
+      {
+        "name": "thick-club",
+        "display_name": "Thick Club",
+        "effect": "A bone of some sort. It can be sold cheaply."
+      }
     ],
     "id": 105,
     "location_area_encounters": [
@@ -14886,7 +15266,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Lagging Tail"
+      {
+        "name": "lagging-tail",
+        "display_name": "Lagging Tail",
+        "effect": "An item to be held by a Pokémon. It is tremendously heavy and makes the holder move slower than usual."
+      }
     ],
     "id": 108,
     "location_area_encounters": [
@@ -15024,7 +15408,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Smoke Ball"
+      {
+        "name": "smoke-ball",
+        "display_name": "Smoke Ball",
+        "effect": "A hold item that can be used to flee from a wild POKéMON."
+      }
     ],
     "id": 109,
     "location_area_encounters": [
@@ -15163,7 +15551,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Smoke Ball"
+      {
+        "name": "smoke-ball",
+        "display_name": "Smoke Ball",
+        "effect": "A hold item that can be used to flee from a wild POKéMON."
+      }
     ],
     "id": 110,
     "location_area_encounters": [
@@ -15586,9 +15978,21 @@
     },
     "height": 1.1,
     "held_items": [
-      "Oval Stone",
-      "Lucky Egg",
-      "Lucky Punch"
+      {
+        "name": "oval-stone",
+        "display_name": "Oval Stone",
+        "effect": "A peculiar stone that makes certain species of Pokémon evolve. It is shaped like an egg."
+      },
+      {
+        "name": "lucky-egg",
+        "display_name": "Lucky Egg",
+        "effect": "A hold item that boosts EXP. points earned in battle."
+      },
+      {
+        "name": "lucky-punch",
+        "display_name": "Lucky Punch",
+        "effect": "A hold item that raises CHANSEY’s critical-hit rate."
+      }
     ],
     "id": 113,
     "location_area_encounters": [
@@ -16028,7 +16432,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Dragon Scale"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      }
     ],
     "id": 116,
     "location_area_encounters": [
@@ -16167,7 +16575,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Dragon Scale"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      }
     ],
     "id": 117,
     "location_area_encounters": [
@@ -16307,7 +16719,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Mystic Water"
+      {
+        "name": "mystic-water",
+        "display_name": "Mystic Water",
+        "effect": "A hold item that raises the power of WATER-type moves."
+      }
     ],
     "id": 118,
     "location_area_encounters": [
@@ -16483,7 +16899,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Mystic Water"
+      {
+        "name": "mystic-water",
+        "display_name": "Mystic Water",
+        "effect": "A hold item that raises the power of WATER-type moves."
+      }
     ],
     "id": 119,
     "location_area_encounters": [
@@ -16642,8 +17062,16 @@
     },
     "height": 0.8,
     "held_items": [
-      "Stardust",
-      "Star Piece"
+      {
+        "name": "stardust",
+        "display_name": "Stardust",
+        "effect": "Beautiful red sand. Can be sold at a high price."
+      },
+      {
+        "name": "star-piece",
+        "display_name": "Star Piece",
+        "effect": "A red gem shard. It would sell for a very high price."
+      }
     ],
     "id": 120,
     "location_area_encounters": [
@@ -16805,8 +17233,16 @@
     },
     "height": 1.1,
     "held_items": [
-      "Stardust",
-      "Star Piece"
+      {
+        "name": "stardust",
+        "display_name": "Stardust",
+        "effect": "Beautiful red sand. Can be sold at a high price."
+      },
+      {
+        "name": "star-piece",
+        "display_name": "Star Piece",
+        "effect": "A red gem shard. It would sell for a very high price."
+      }
     ],
     "id": 121,
     "location_area_encounters": [],
@@ -16932,7 +17368,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Leppa Berry"
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      }
     ],
     "id": 122,
     "location_area_encounters": [
@@ -17245,7 +17685,11 @@
     },
     "height": 1.4,
     "held_items": [
-      "Aspear Berry"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      }
     ],
     "id": 124,
     "location_area_encounters": [],
@@ -17387,7 +17831,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Electirizer"
+      {
+        "name": "electirizer",
+        "display_name": "Electirizer",
+        "effect": "A box packed with a tremendous amount of electric energy. It is loved by a certain Pokémon."
+      }
     ],
     "id": 125,
     "location_area_encounters": [
@@ -17524,8 +17972,16 @@
     },
     "height": 1.3,
     "held_items": [
-      "Rawst Berry",
-      "Magmarizer"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      },
+      {
+        "name": "magmarizer",
+        "display_name": "Magmarizer",
+        "effect": "A box packed with a tremendous amount of magma energy. It is loved by a certain Pokémon."
+      }
     ],
     "id": 126,
     "location_area_encounters": [
@@ -18245,7 +18701,11 @@
     },
     "height": 2.5,
     "held_items": [
-      "Mystic Water"
+      {
+        "name": "mystic-water",
+        "display_name": "Mystic Water",
+        "effect": "A hold item that raises the power of WATER-type moves."
+      }
     ],
     "id": 131,
     "location_area_encounters": [
@@ -18393,8 +18853,16 @@
     },
     "height": 0.3,
     "held_items": [
-      "Metal Powder",
-      "Quick Powder"
+      {
+        "name": "metal-powder",
+        "display_name": "Metal Powder",
+        "effect": "A hold item that raises DEFENSE."
+      },
+      {
+        "name": "quick-powder",
+        "display_name": "Quick Powder",
+        "effect": "An item to be held by DITTO. Extremely fine yet hard, this odd powder boosts the Speed stat."
+      }
     ],
     "id": 132,
     "location_area_encounters": [
@@ -19929,8 +20397,16 @@
     },
     "height": 2.1,
     "held_items": [
-      "Chesto Berry",
-      "Leftovers"
+      {
+        "name": "chesto-berry",
+        "display_name": "Chesto Berry",
+        "effect": "A hold item that awakens POKéMON in battle."
+      },
+      {
+        "name": "leftovers",
+        "display_name": "Leftovers",
+        "effect": "A hold item that gradually restores HP in battle."
+      }
     ],
     "id": 143,
     "location_area_encounters": [
@@ -20470,7 +20946,11 @@
     },
     "height": 1.8,
     "held_items": [
-      "Dragon Scale"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      }
     ],
     "id": 147,
     "location_area_encounters": [
@@ -20609,8 +21089,16 @@
     },
     "height": 4.0,
     "held_items": [
-      "Dragon Scale",
-      "Dragon Fang"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      },
+      {
+        "name": "dragon-fang",
+        "display_name": "Dragon Fang",
+        "effect": "A hold item that raises the power of DRAGON-type moves."
+      }
     ],
     "id": 148,
     "location_area_encounters": [
@@ -20751,8 +21239,16 @@
     },
     "height": 2.2,
     "held_items": [
-      "Dragon Scale",
-      "Dragon Fang"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      },
+      {
+        "name": "dragon-fang",
+        "display_name": "Dragon Fang",
+        "effect": "A hold item that raises the power of DRAGON-type moves."
+      }
     ],
     "id": 149,
     "location_area_encounters": [],
@@ -21018,7 +21514,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Lum Berry"
+      {
+        "name": "lum-berry",
+        "display_name": "Lum Berry",
+        "effect": "A hold item that heals status in battle."
+      }
     ],
     "id": 151,
     "location_area_encounters": [
@@ -21125,7 +21625,11 @@
     },
     "height": 0.9,
     "held_items": [
-      "Lum Berry"
+      {
+        "name": "lum-berry",
+        "display_name": "Lum Berry",
+        "effect": "A hold item that heals status in battle."
+      }
     ],
     "id": 152,
     "location_area_encounters": [
@@ -22141,7 +22645,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Oran Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 161,
     "location_area_encounters": [
@@ -22261,8 +22769,16 @@
     },
     "height": 1.8,
     "held_items": [
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 162,
     "location_area_encounters": [
@@ -23355,8 +23871,16 @@
     },
     "height": 0.5,
     "held_items": [
-      "Yellow Shard",
-      "Deep Sea Scale"
+      {
+        "name": "yellow-shard",
+        "display_name": "Yellow Shard",
+        "effect": "A shard from an ancient item. Can be sold cheaply."
+      },
+      {
+        "name": "deep-sea-scale",
+        "display_name": "Deep Sea Scale",
+        "effect": "A hold item that raises the SP. DEF of CLAMPERL."
+      }
     ],
     "id": 170,
     "location_area_encounters": [
@@ -23501,8 +24025,16 @@
     },
     "height": 1.2,
     "held_items": [
-      "Yellow Shard",
-      "Deep Sea Scale"
+      {
+        "name": "yellow-shard",
+        "display_name": "Yellow Shard",
+        "effect": "A shard from an ancient item. Can be sold cheaply."
+      },
+      {
+        "name": "deep-sea-scale",
+        "display_name": "Deep Sea Scale",
+        "effect": "A hold item that raises the SP. DEF of CLAMPERL."
+      }
     ],
     "id": 171,
     "location_area_encounters": [
@@ -23644,7 +24176,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Oran Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 172,
     "location_area_encounters": [
@@ -23762,9 +24298,21 @@
     },
     "height": 0.3,
     "held_items": [
-      "Moon Stone",
-      "Leppa Berry",
-      "Comet Shard"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      },
+      {
+        "name": "comet-shard",
+        "display_name": "Comet Shard",
+        "effect": "A shard which fell to the ground when a comet approached. A maniac will buy it for a high price."
+      }
     ],
     "id": 173,
     "location_area_encounters": [
@@ -23885,7 +24433,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Oran Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 174,
     "location_area_encounters": [
@@ -24828,7 +25380,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Absorb Bulb"
+      {
+        "name": "absorb-bulb",
+        "display_name": "Absorb Bulb",
+        "effect": "A consumable bulb. If the holder is hit by a Water-type move, its Sp. Atk will rise."
+      }
     ],
     "id": 182,
     "location_area_encounters": [],
@@ -25336,7 +25892,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 186,
     "location_area_encounters": [],
@@ -25955,7 +26515,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Coba Berry"
+      {
+        "name": "coba-berry",
+        "display_name": "Coba Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Flying-type attack."
+      }
     ],
     "id": 191,
     "location_area_encounters": [
@@ -26189,7 +26753,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Wide Lens"
+      {
+        "name": "wide-lens",
+        "display_name": "Wide Lens",
+        "effect": "An item to be held by a Pokémon. It is a magnifying lens that slightly boosts the accuracy of moves."
+      }
     ],
     "id": 193,
     "location_area_encounters": [
@@ -26982,7 +27550,11 @@
     },
     "height": 2.0,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 199,
     "location_area_encounters": [],
@@ -27114,7 +27686,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Spell Tag"
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 200,
     "location_area_encounters": [
@@ -27427,7 +28003,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Persim Berry"
+      {
+        "name": "persim-berry",
+        "display_name": "Persim Berry",
+        "effect": "A hold item that heals confusion in battle."
+      }
     ],
     "id": 203,
     "location_area_encounters": [
@@ -28068,7 +28648,11 @@
     },
     "height": 9.2,
     "held_items": [
-      "Metal Coat"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      }
     ],
     "id": 208,
     "location_area_encounters": [],
@@ -28468,7 +29052,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Poison Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      }
     ],
     "id": 211,
     "location_area_encounters": [
@@ -28746,8 +29334,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Berry Juice",
-      "Oran Berry"
+      {
+        "name": "berry-juice",
+        "display_name": "Berry Juice",
+        "effect": "A 100% pure juice that restores HP by 20 points."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 213,
     "location_area_encounters": [
@@ -29027,8 +29623,16 @@
     },
     "height": 0.9,
     "held_items": [
-      "Quick Claw",
-      "Grip Claw"
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      },
+      {
+        "name": "grip-claw",
+        "display_name": "Grip Claw",
+        "effect": "A Pokémon hold item that extends the duration of multiturn attacks like Bind and Wrap."
+      }
     ],
     "id": 215,
     "location_area_encounters": [
@@ -29171,8 +29775,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 216,
     "location_area_encounters": [
@@ -29301,8 +29913,16 @@
     },
     "height": 1.8,
     "held_items": [
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 217,
     "location_area_encounters": [
@@ -29671,7 +30291,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Aspear Berry"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      }
     ],
     "id": 220,
     "location_area_encounters": [
@@ -29791,8 +30415,16 @@
     },
     "height": 1.1,
     "held_items": [
-      "Aspear Berry",
-      "Never Melt Ice"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      },
+      {
+        "name": "never-melt-ice",
+        "display_name": "Never Melt Ice",
+        "effect": "A hold item that raises the power of ICE-type moves."
+      }
     ],
     "id": 221,
     "location_area_encounters": [],
@@ -29924,9 +30556,21 @@
     },
     "height": 0.6,
     "held_items": [
-      "Red Shard",
-      "Hard Stone",
-      "Luminous Moss"
+      {
+        "name": "red-shard",
+        "display_name": "Red Shard",
+        "effect": "A shard from an ancient item. Can be sold cheaply."
+      },
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      },
+      {
+        "name": "luminous-moss",
+        "display_name": "Luminous Moss",
+        "effect": "An item to be held by a Pokémon. It boosts Sp. Def if hit with a Water- type attack. It can only be used once."
+      }
     ],
     "id": 222,
     "location_area_encounters": [
@@ -30563,8 +31207,16 @@
     },
     "height": 1.7,
     "held_items": [
-      "Metal Coat",
-      "Sharp Beak"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      },
+      {
+        "name": "sharp-beak",
+        "display_name": "Sharp Beak",
+        "effect": "A hold item that raises the power of FLYING-type moves."
+      }
     ],
     "id": 227,
     "location_area_encounters": [
@@ -30954,7 +31606,11 @@
     },
     "height": 1.8,
     "held_items": [
-      "Dragon Scale"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      }
     ],
     "id": 230,
     "location_area_encounters": [],
@@ -31070,7 +31726,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Passho Berry"
+      {
+        "name": "passho-berry",
+        "display_name": "Passho Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Water-type attack."
+      }
     ],
     "id": 231,
     "location_area_encounters": [
@@ -31192,7 +31852,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Passho Berry"
+      {
+        "name": "passho-berry",
+        "display_name": "Passho Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Water-type attack."
+      }
     ],
     "id": 232,
     "location_area_encounters": [
@@ -31326,7 +31990,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Up Grade"
+      {
+        "name": "up-grade",
+        "display_name": "Up Grade",
+        "effect": "A peculiar box made by SILPH CO."
+      }
     ],
     "id": 233,
     "location_area_encounters": [],
@@ -31883,7 +32551,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Aspear Berry"
+      {
+        "name": "aspear-berry",
+        "display_name": "Aspear Berry",
+        "effect": "A hold item that defrosts POKéMON in battle."
+      }
     ],
     "id": 238,
     "location_area_encounters": [
@@ -32020,7 +32692,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Electirizer"
+      {
+        "name": "electirizer",
+        "display_name": "Electirizer",
+        "effect": "A box packed with a tremendous amount of electric energy. It is loved by a certain Pokémon."
+      }
     ],
     "id": 239,
     "location_area_encounters": [
@@ -32153,8 +32829,16 @@
     },
     "height": 0.7,
     "held_items": [
-      "Rawst Berry",
-      "Magmarizer"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      },
+      {
+        "name": "magmarizer",
+        "display_name": "Magmarizer",
+        "effect": "A box packed with a tremendous amount of magma energy. It is loved by a certain Pokémon."
+      }
     ],
     "id": 240,
     "location_area_encounters": [
@@ -32291,7 +32975,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Moomoo Milk"
+      {
+        "name": "moomoo-milk",
+        "display_name": "Moomoo Milk",
+        "effect": "A nutritious milk that restores HP by 100 points."
+      }
     ],
     "id": 241,
     "location_area_encounters": [
@@ -32428,8 +33116,16 @@
     },
     "height": 1.5,
     "held_items": [
-      "Oval Stone",
-      "Lucky Egg"
+      {
+        "name": "oval-stone",
+        "display_name": "Oval Stone",
+        "effect": "A peculiar stone that makes certain species of Pokémon evolve. It is shaped like an egg."
+      },
+      {
+        "name": "lucky-egg",
+        "display_name": "Lucky Egg",
+        "effect": "A hold item that boosts EXP. points earned in battle."
+      }
     ],
     "id": 242,
     "location_area_encounters": [],
@@ -33402,7 +34098,11 @@
     },
     "height": 3.8,
     "held_items": [
-      "Sacred Ash"
+      {
+        "name": "sacred-ash",
+        "display_name": "Sacred Ash",
+        "effect": "Fully revives and restores all fainted POKéMON."
+      }
     ],
     "id": 250,
     "location_area_encounters": [
@@ -33522,7 +34222,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Lum Berry"
+      {
+        "name": "lum-berry",
+        "display_name": "Lum Berry",
+        "effect": "A hold item that heals status in battle."
+      }
     ],
     "id": 251,
     "location_area_encounters": [
@@ -34767,7 +35471,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Pecha Berry"
+      {
+        "name": "pecha-berry",
+        "display_name": "Pecha Berry",
+        "effect": "A hold item that heals poisoning in battle."
+      }
     ],
     "id": 261,
     "location_area_encounters": [
@@ -34908,7 +35616,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Pecha Berry"
+      {
+        "name": "pecha-berry",
+        "display_name": "Pecha Berry",
+        "effect": "A hold item that heals poisoning in battle."
+      }
     ],
     "id": 262,
     "location_area_encounters": [
@@ -35045,9 +35757,21 @@
     },
     "height": 0.4,
     "held_items": [
-      "Potion",
-      "Revive",
-      "Oran Berry"
+      {
+        "name": "potion",
+        "display_name": "Potion",
+        "effect": "Restores the HP of a POKéMON by 20 points."
+      },
+      {
+        "name": "revive",
+        "display_name": "Revive",
+        "effect": "Revives a fainted POKéMON with half its HP."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      }
     ],
     "id": 263,
     "location_area_encounters": [
@@ -35195,10 +35919,26 @@
     },
     "height": 0.5,
     "held_items": [
-      "Potion",
-      "Max Revive",
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "potion",
+        "display_name": "Potion",
+        "effect": "Restores the HP of a POKéMON by 20 points."
+      },
+      {
+        "name": "max-revive",
+        "display_name": "Max Revive",
+        "effect": "Revives a fainted POKéMON with all its HP."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 264,
     "location_area_encounters": [
@@ -35335,8 +36075,16 @@
     },
     "height": 0.3,
     "held_items": [
-      "Pecha Berry",
-      "Bright Powder"
+      {
+        "name": "pecha-berry",
+        "display_name": "Pecha Berry",
+        "effect": "A hold item that heals poisoning in battle."
+      },
+      {
+        "name": "bright-powder",
+        "display_name": "Bright Powder",
+        "effect": "A hold item that casts a glare to reduce accuracy."
+      }
     ],
     "id": 265,
     "location_area_encounters": [
@@ -35517,8 +36265,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Silver Powder",
-      "Shed Shell"
+      {
+        "name": "silver-powder",
+        "display_name": "Silver Powder",
+        "effect": "A hold item that raises the power of BUG-type moves."
+      },
+      {
+        "name": "shed-shell",
+        "display_name": "Shed Shell",
+        "effect": "A tough, discarded carapace to be held by a Pokémon. It enables the holder to switch with a waiting Pokémon in battle."
+      }
     ],
     "id": 267,
     "location_area_encounters": [],
@@ -35719,8 +36475,16 @@
     },
     "height": 1.2,
     "held_items": [
-      "Silver Powder",
-      "Shed Shell"
+      {
+        "name": "silver-powder",
+        "display_name": "Silver Powder",
+        "effect": "A hold item that raises the power of BUG-type moves."
+      },
+      {
+        "name": "shed-shell",
+        "display_name": "Shed Shell",
+        "effect": "A tough, discarded carapace to be held by a Pokémon. It enables the holder to switch with a waiting Pokémon in battle."
+      }
     ],
     "id": 269,
     "location_area_encounters": [],
@@ -35842,7 +36606,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Mental Herb"
+      {
+        "name": "mental-herb",
+        "display_name": "Mental Herb",
+        "effect": "A hold item that snaps POKéMON out of infatuation."
+      }
     ],
     "id": 270,
     "location_area_encounters": [
@@ -35957,7 +36725,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Mental Herb"
+      {
+        "name": "mental-herb",
+        "display_name": "Mental Herb",
+        "effect": "A hold item that snaps POKéMON out of infatuation."
+      }
     ],
     "id": 271,
     "location_area_encounters": [
@@ -36080,7 +36852,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Mental Herb"
+      {
+        "name": "mental-herb",
+        "display_name": "Mental Herb",
+        "effect": "A hold item that snaps POKéMON out of infatuation."
+      }
     ],
     "id": 272,
     "location_area_encounters": [],
@@ -36179,7 +36955,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Power Herb"
+      {
+        "name": "power-herb",
+        "display_name": "Power Herb",
+        "effect": "A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges on the first turn."
+      }
     ],
     "id": 273,
     "location_area_encounters": [
@@ -36294,7 +37074,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Power Herb"
+      {
+        "name": "power-herb",
+        "display_name": "Power Herb",
+        "effect": "A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges on the first turn."
+      }
     ],
     "id": 274,
     "location_area_encounters": [
@@ -36420,7 +37204,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Power Herb"
+      {
+        "name": "power-herb",
+        "display_name": "Power Herb",
+        "effect": "A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges on the first turn."
+      }
     ],
     "id": 275,
     "location_area_encounters": [],
@@ -36516,7 +37304,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Charti Berry"
+      {
+        "name": "charti-berry",
+        "display_name": "Charti Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Rock-type attack."
+      }
     ],
     "id": 276,
     "location_area_encounters": [
@@ -36634,7 +37426,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Charti Berry"
+      {
+        "name": "charti-berry",
+        "display_name": "Charti Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Rock-type attack."
+      }
     ],
     "id": 277,
     "location_area_encounters": [
@@ -36761,7 +37557,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Pretty Wing"
+      {
+        "name": "pretty-wing",
+        "display_name": "Pretty Wing",
+        "effect": "Though this feather is beautiful, it’s just a regular feather and has no effect on Pokémon."
+      }
     ],
     "id": 278,
     "location_area_encounters": [
@@ -36921,8 +37721,16 @@
     },
     "height": 1.2,
     "held_items": [
-      "Lucky Egg",
-      "Pretty Wing"
+      {
+        "name": "lucky-egg",
+        "display_name": "Lucky Egg",
+        "effect": "A hold item that boosts EXP. points earned in battle."
+      },
+      {
+        "name": "pretty-wing",
+        "display_name": "Pretty Wing",
+        "effect": "Though this feather is beautiful, it’s just a regular feather and has no effect on Pokémon."
+      }
     ],
     "id": 279,
     "location_area_encounters": [
@@ -37471,7 +38279,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Honey"
+      {
+        "name": "honey",
+        "display_name": "Honey",
+        "effect": "A sweet honey with a lush aroma that attracts wild Pokémon when it is used in grass, caves, or on special trees."
+      }
     ],
     "id": 283,
     "location_area_encounters": [
@@ -37595,7 +38407,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Silver Powder"
+      {
+        "name": "silver-powder",
+        "display_name": "Silver Powder",
+        "effect": "A hold item that raises the power of BUG-type moves."
+      }
     ],
     "id": 284,
     "location_area_encounters": [],
@@ -37718,9 +38534,21 @@
     },
     "height": 0.4,
     "held_items": [
-      "Tiny Mushroom",
-      "Big Mushroom",
-      "Kebia Berry"
+      {
+        "name": "tiny-mushroom",
+        "display_name": "Tiny Mushroom",
+        "effect": "A plain, ordinary mushroom. Can be sold cheaply."
+      },
+      {
+        "name": "big-mushroom",
+        "display_name": "Big Mushroom",
+        "effect": "A rare mushroom that would sell at a high price."
+      },
+      {
+        "name": "kebia-berry",
+        "display_name": "Kebia Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Poison-type attack."
+      }
     ],
     "id": 285,
     "location_area_encounters": [
@@ -37843,9 +38671,21 @@
     },
     "height": 1.2,
     "held_items": [
-      "Tiny Mushroom",
-      "Big Mushroom",
-      "Kebia Berry"
+      {
+        "name": "tiny-mushroom",
+        "display_name": "Tiny Mushroom",
+        "effect": "A plain, ordinary mushroom. Can be sold cheaply."
+      },
+      {
+        "name": "big-mushroom",
+        "display_name": "Big Mushroom",
+        "effect": "A rare mushroom that would sell at a high price."
+      },
+      {
+        "name": "kebia-berry",
+        "display_name": "Kebia Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Poison-type attack."
+      }
     ],
     "id": 286,
     "location_area_encounters": [],
@@ -38301,7 +39141,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Soft Sand"
+      {
+        "name": "soft-sand",
+        "display_name": "Soft Sand",
+        "effect": "A hold item that raises the power of GROUND-type moves."
+      }
     ],
     "id": 290,
     "location_area_encounters": [
@@ -38667,7 +39511,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Chesto Berry"
+      {
+        "name": "chesto-berry",
+        "display_name": "Chesto Berry",
+        "effect": "A hold item that awakens POKéMON in battle."
+      }
     ],
     "id": 293,
     "location_area_encounters": [
@@ -38798,7 +39646,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Chesto Berry"
+      {
+        "name": "chesto-berry",
+        "display_name": "Chesto Berry",
+        "effect": "A hold item that awakens POKéMON in battle."
+      }
     ],
     "id": 294,
     "location_area_encounters": [
@@ -38926,7 +39778,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Chesto Berry"
+      {
+        "name": "chesto-berry",
+        "display_name": "Chesto Berry",
+        "effect": "A hold item that awakens POKéMON in battle."
+      }
     ],
     "id": 295,
     "location_area_encounters": [],
@@ -39061,7 +39917,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Black Belt"
+      {
+        "name": "black-belt",
+        "display_name": "Black Belt",
+        "effect": "A hold item that boosts FIGHTING- type moves."
+      }
     ],
     "id": 296,
     "location_area_encounters": [
@@ -39205,7 +40065,11 @@
     },
     "height": 2.3,
     "held_items": [
-      "Kings Rock"
+      {
+        "name": "kings-rock",
+        "display_name": "Kings Rock",
+        "effect": "A hold item that may cause flinching when the foe is hit."
+      }
     ],
     "id": 297,
     "location_area_encounters": [
@@ -39461,8 +40325,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Hard Stone",
-      "Magnet"
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      },
+      {
+        "name": "magnet",
+        "display_name": "Magnet",
+        "effect": "A hold item that boosts ELECTRIC- type moves."
+      }
     ],
     "id": 299,
     "location_area_encounters": [
@@ -39593,8 +40465,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Pecha Berry",
-      "Leppa Berry"
+      {
+        "name": "pecha-berry",
+        "display_name": "Pecha Berry",
+        "effect": "A hold item that heals poisoning in battle."
+      },
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      }
     ],
     "id": 300,
     "location_area_encounters": [
@@ -39727,8 +40607,16 @@
     },
     "height": 1.1,
     "held_items": [
-      "Pecha Berry",
-      "Leppa Berry"
+      {
+        "name": "pecha-berry",
+        "display_name": "Pecha Berry",
+        "effect": "A hold item that heals poisoning in battle."
+      },
+      {
+        "name": "leppa-berry",
+        "display_name": "Leppa Berry",
+        "effect": "A hold item that restores 10 PP in battle."
+      }
     ],
     "id": 301,
     "location_area_encounters": [],
@@ -39829,7 +40717,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Wide Lens"
+      {
+        "name": "wide-lens",
+        "display_name": "Wide Lens",
+        "effect": "An item to be held by a Pokémon. It is a magnifying lens that slightly boosts the accuracy of moves."
+      }
     ],
     "id": 302,
     "location_area_encounters": [
@@ -39972,8 +40864,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Occa Berry",
-      "Iron Ball"
+      {
+        "name": "occa-berry",
+        "display_name": "Occa Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Fire-type attack."
+      },
+      {
+        "name": "iron-ball",
+        "display_name": "Iron Ball",
+        "effect": "A Pokémon hold item that cuts Speed. It makes Flying-type and levitating holders susceptible to Ground moves."
+      }
     ],
     "id": 303,
     "location_area_encounters": [
@@ -40111,7 +41011,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Hard Stone"
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 304,
     "location_area_encounters": [
@@ -40249,7 +41153,11 @@
     },
     "height": 0.9,
     "held_items": [
-      "Hard Stone"
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 305,
     "location_area_encounters": [
@@ -40386,7 +41294,11 @@
     },
     "height": 2.1,
     "held_items": [
-      "Hard Stone"
+      {
+        "name": "hard-stone",
+        "display_name": "Hard Stone",
+        "effect": "A hold item that raises the power of ROCK-type moves."
+      }
     ],
     "id": 306,
     "location_area_encounters": [],
@@ -41044,7 +41956,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Cell Battery"
+      {
+        "name": "cell-battery",
+        "display_name": "Cell Battery",
+        "effect": "A consumable battery. If the holder is hit by an Electric-type move, its Attack will rise."
+      }
     ],
     "id": 311,
     "location_area_encounters": [
@@ -41166,7 +42082,11 @@
     },
     "height": 0.4,
     "held_items": [
-      "Cell Battery"
+      {
+        "name": "cell-battery",
+        "display_name": "Cell Battery",
+        "effect": "A consumable battery. If the holder is hit by an Electric-type move, its Attack will rise."
+      }
     ],
     "id": 312,
     "location_area_encounters": [
@@ -41294,7 +42214,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Bright Powder"
+      {
+        "name": "bright-powder",
+        "display_name": "Bright Powder",
+        "effect": "A hold item that casts a glare to reduce accuracy."
+      }
     ],
     "id": 313,
     "location_area_encounters": [
@@ -41422,7 +42346,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Bright Powder"
+      {
+        "name": "bright-powder",
+        "display_name": "Bright Powder",
+        "effect": "A hold item that casts a glare to reduce accuracy."
+      }
     ],
     "id": 314,
     "location_area_encounters": [
@@ -41552,8 +42480,16 @@
     },
     "height": 0.3,
     "held_items": [
-      "Poison Barb",
-      "Absorb Bulb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      },
+      {
+        "name": "absorb-bulb",
+        "display_name": "Absorb Bulb",
+        "effect": "A consumable bulb. If the holder is hit by a Water-type move, its Sp. Atk will rise."
+      }
     ],
     "id": 315,
     "location_area_encounters": [
@@ -41701,9 +42637,21 @@
     },
     "height": 0.4,
     "held_items": [
-      "Big Pearl",
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "big-pearl",
+        "display_name": "Big Pearl",
+        "effect": "A lovely large pearl that would sell at a high price."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 316,
     "location_area_encounters": [
@@ -41829,9 +42777,21 @@
     },
     "height": 1.7,
     "held_items": [
-      "Big Pearl",
-      "Oran Berry",
-      "Sitrus Berry"
+      {
+        "name": "big-pearl",
+        "display_name": "Big Pearl",
+        "effect": "A lovely large pearl that would sell at a high price."
+      },
+      {
+        "name": "oran-berry",
+        "display_name": "Oran Berry",
+        "effect": "A hold item that restores 10 HP in battle."
+      },
+      {
+        "name": "sitrus-berry",
+        "display_name": "Sitrus Berry",
+        "effect": "A hold item that restores 30 HP in battle."
+      }
     ],
     "id": 317,
     "location_area_encounters": [],
@@ -41961,7 +42921,11 @@
     },
     "height": 0.8,
     "held_items": [
-      "Deep Sea Tooth"
+      {
+        "name": "deep-sea-tooth",
+        "display_name": "Deep Sea Tooth",
+        "effect": "A hold item that raises the SP. ATK of CLAMPERL."
+      }
     ],
     "id": 318,
     "location_area_encounters": [
@@ -42094,7 +43058,11 @@
     },
     "height": 1.8,
     "held_items": [
-      "Deep Sea Tooth"
+      {
+        "name": "deep-sea-tooth",
+        "display_name": "Deep Sea Tooth",
+        "effect": "A hold item that raises the SP. ATK of CLAMPERL."
+      }
     ],
     "id": 319,
     "location_area_encounters": [
@@ -42553,7 +43521,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Rawst Berry"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      }
     ],
     "id": 322,
     "location_area_encounters": [
@@ -42681,7 +43653,11 @@
     },
     "height": 1.9,
     "held_items": [
-      "Rawst Berry"
+      {
+        "name": "rawst-berry",
+        "display_name": "Rawst Berry",
+        "effect": "A hold item that heals a burn in battle."
+      }
     ],
     "id": 323,
     "location_area_encounters": [],
@@ -42812,7 +43788,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Charcoal"
+      {
+        "name": "charcoal",
+        "display_name": "Charcoal",
+        "effect": "A hold item that raises the power of FIRE-type moves."
+      }
     ],
     "id": 324,
     "location_area_encounters": [
@@ -42949,8 +43929,16 @@
     },
     "height": 0.7,
     "held_items": [
-      "Persim Berry",
-      "Tanga Berry"
+      {
+        "name": "persim-berry",
+        "display_name": "Persim Berry",
+        "effect": "A hold item that heals confusion in battle."
+      },
+      {
+        "name": "tanga-berry",
+        "display_name": "Tanga Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Bug-type attack."
+      }
     ],
     "id": 325,
     "location_area_encounters": [
@@ -43080,8 +44068,16 @@
     },
     "height": 0.9,
     "held_items": [
-      "Persim Berry",
-      "Tanga Berry"
+      {
+        "name": "persim-berry",
+        "display_name": "Persim Berry",
+        "effect": "A hold item that heals confusion in battle."
+      },
+      {
+        "name": "tanga-berry",
+        "display_name": "Tanga Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Bug-type attack."
+      }
     ],
     "id": 326,
     "location_area_encounters": [],
@@ -43213,7 +44209,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Chesto Berry"
+      {
+        "name": "chesto-berry",
+        "display_name": "Chesto Berry",
+        "effect": "A hold item that awakens POKéMON in battle."
+      }
     ],
     "id": 327,
     "location_area_encounters": [
@@ -43349,7 +44349,11 @@
     },
     "height": 0.7,
     "held_items": [
-      "Soft Sand"
+      {
+        "name": "soft-sand",
+        "display_name": "Soft Sand",
+        "effect": "A hold item that raises the power of GROUND-type moves."
+      }
     ],
     "id": 328,
     "location_area_encounters": [
@@ -43698,8 +44702,16 @@
     },
     "height": 0.4,
     "held_items": [
-      "Poison Barb",
-      "Sticky Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      },
+      {
+        "name": "sticky-barb",
+        "display_name": "Sticky Barb",
+        "effect": "A hold item that damages the holder on every turn. It may latch on to foes that touch the holder."
+      }
     ],
     "id": 331,
     "location_area_encounters": [
@@ -43834,8 +44846,16 @@
     },
     "height": 1.3,
     "held_items": [
-      "Poison Barb",
-      "Sticky Barb"
+      {
+        "name": "poison-barb",
+        "display_name": "Poison Barb",
+        "effect": "A hold item that raises the power of POISON-type moves."
+      },
+      {
+        "name": "sticky-barb",
+        "display_name": "Sticky Barb",
+        "effect": "A hold item that damages the holder on every turn. It may latch on to foes that touch the holder."
+      }
     ],
     "id": 332,
     "location_area_encounters": [],
@@ -44242,7 +45262,11 @@
     },
     "height": 1.3,
     "held_items": [
-      "Quick Claw"
+      {
+        "name": "quick-claw",
+        "display_name": "Quick Claw",
+        "effect": "A hold item that occasionally allows the first strike."
+      }
     ],
     "id": 335,
     "location_area_encounters": [
@@ -44371,8 +45395,16 @@
     },
     "height": 2.7,
     "held_items": [
-      "Persim Berry",
-      "Shed Shell"
+      {
+        "name": "persim-berry",
+        "display_name": "Persim Berry",
+        "effect": "A hold item that heals confusion in battle."
+      },
+      {
+        "name": "shed-shell",
+        "display_name": "Shed Shell",
+        "effect": "A tough, discarded carapace to be held by a Pokémon. It enables the holder to switch with a waiting Pokémon in battle."
+      }
     ],
     "id": 336,
     "location_area_encounters": [
@@ -44491,9 +45523,21 @@
     },
     "height": 1.0,
     "held_items": [
-      "Moon Stone",
-      "Stardust",
-      "Comet Shard"
+      {
+        "name": "moon-stone",
+        "display_name": "Moon Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "stardust",
+        "display_name": "Stardust",
+        "effect": "Beautiful red sand. Can be sold at a high price."
+      },
+      {
+        "name": "comet-shard",
+        "display_name": "Comet Shard",
+        "effect": "A shard which fell to the ground when a comet approached. A maniac will buy it for a high price."
+      }
     ],
     "id": 337,
     "location_area_encounters": [
@@ -44610,9 +45654,21 @@
     },
     "height": 1.2,
     "held_items": [
-      "Sun Stone",
-      "Stardust",
-      "Comet Shard"
+      {
+        "name": "sun-stone",
+        "display_name": "Sun Stone",
+        "effect": "Makes certain species of POKéMON evolve."
+      },
+      {
+        "name": "stardust",
+        "display_name": "Stardust",
+        "effect": "Beautiful red sand. Can be sold at a high price."
+      },
+      {
+        "name": "comet-shard",
+        "display_name": "Comet Shard",
+        "effect": "A shard which fell to the ground when a comet approached. A maniac will buy it for a high price."
+      }
     ],
     "id": 338,
     "location_area_encounters": [
@@ -45300,7 +46356,11 @@
     },
     "height": 0.5,
     "held_items": [
-      "Light Clay"
+      {
+        "name": "light-clay",
+        "display_name": "Light Clay",
+        "effect": "A Pokémon hold item that extends the duration of barrier moves like Light Screen and Reflect used by the holder."
+      }
     ],
     "id": 343,
     "location_area_encounters": [
@@ -45425,7 +46485,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Light Clay"
+      {
+        "name": "light-clay",
+        "display_name": "Light Clay",
+        "effect": "A Pokémon hold item that extends the duration of barrier moves like Light Screen and Reflect used by the holder."
+      }
     ],
     "id": 344,
     "location_area_encounters": [
@@ -45564,7 +46628,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Big Root"
+      {
+        "name": "big-root",
+        "display_name": "Big Root",
+        "effect": "A Pokémon hold item that boosts the power of HP-stealing moves to let the holder recover more HP."
+      }
     ],
     "id": 345,
     "location_area_encounters": [
@@ -45692,7 +46760,11 @@
     },
     "height": 1.5,
     "held_items": [
-      "Big Root"
+      {
+        "name": "big-root",
+        "display_name": "Big Root",
+        "effect": "A Pokémon hold item that boosts the power of HP-stealing moves to let the holder recover more HP."
+      }
     ],
     "id": 346,
     "location_area_encounters": [],
@@ -46311,7 +47383,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Mystic Water"
+      {
+        "name": "mystic-water",
+        "display_name": "Mystic Water",
+        "effect": "A hold item that raises the power of WATER-type moves."
+      }
     ],
     "id": 351,
     "location_area_encounters": [
@@ -46426,7 +47502,11 @@
     },
     "height": 1.0,
     "held_items": [
-      "Persim Berry"
+      {
+        "name": "persim-berry",
+        "display_name": "Persim Berry",
+        "effect": "A hold item that heals confusion in battle."
+      }
     ],
     "id": 352,
     "location_area_encounters": [
@@ -46570,7 +47650,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Spell Tag"
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 353,
     "location_area_encounters": [
@@ -46702,7 +47786,11 @@
     },
     "height": 1.1,
     "held_items": [
-      "Spell Tag"
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 354,
     "location_area_encounters": [
@@ -46825,8 +47913,16 @@
     },
     "height": 0.8,
     "held_items": [
-      "Kasib Berry",
-      "Spell Tag"
+      {
+        "name": "kasib-berry",
+        "display_name": "Kasib Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Ghost-type attack."
+      },
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 355,
     "location_area_encounters": [
@@ -46955,8 +48051,16 @@
     },
     "height": 1.6,
     "held_items": [
-      "Kasib Berry",
-      "Spell Tag"
+      {
+        "name": "kasib-berry",
+        "display_name": "Kasib Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Ghost-type attack."
+      },
+      {
+        "name": "spell-tag",
+        "display_name": "Spell Tag",
+        "effect": "A hold item that raises the power of GHOST-type moves."
+      }
     ],
     "id": 356,
     "location_area_encounters": [
@@ -47219,8 +48323,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Colbur Berry",
-      "Cleanse Tag"
+      {
+        "name": "colbur-berry",
+        "display_name": "Colbur Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Dark-type attack."
+      },
+      {
+        "name": "cleanse-tag",
+        "display_name": "Cleanse Tag",
+        "effect": "A hold item that helps repel wild POKéMON."
+      }
     ],
     "id": 358,
     "location_area_encounters": [
@@ -47362,7 +48474,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Life Orb"
+      {
+        "name": "life-orb",
+        "display_name": "Life Orb",
+        "effect": "An item to be held by a Pokémon. It boosts the power of moves, but at the cost of some HP on each hit."
+      }
     ],
     "id": 359,
     "location_area_encounters": [
@@ -47610,8 +48726,16 @@
     },
     "height": 0.7,
     "held_items": [
-      "Babiri Berry",
-      "Snowball"
+      {
+        "name": "babiri-berry",
+        "display_name": "Babiri Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Steel-type attack."
+      },
+      {
+        "name": "snowball",
+        "display_name": "Snowball",
+        "effect": "An item to be held by a Pokémon. It boosts Attack if hit with an Ice-type attack. It can only be used once."
+      }
     ],
     "id": 361,
     "location_area_encounters": [
@@ -47752,8 +48876,16 @@
     },
     "height": 1.5,
     "held_items": [
-      "Babiri Berry",
-      "Never Melt Ice"
+      {
+        "name": "babiri-berry",
+        "display_name": "Babiri Berry",
+        "effect": "A Poffin ingredient. If held by a Pokémon, it weakens a foe’s supereffective Steel-type attack."
+      },
+      {
+        "name": "never-melt-ice",
+        "display_name": "Never Melt Ice",
+        "effect": "A hold item that raises the power of ICE-type moves."
+      }
     ],
     "id": 362,
     "location_area_encounters": [],
@@ -48306,9 +49438,21 @@
     },
     "height": 0.4,
     "held_items": [
-      "Blue Shard",
-      "Pearl",
-      "Big Pearl"
+      {
+        "name": "blue-shard",
+        "display_name": "Blue Shard",
+        "effect": "A shard from an ancient item. Can be sold cheaply."
+      },
+      {
+        "name": "pearl",
+        "display_name": "Pearl",
+        "effect": "A pretty pearl. Can be sold cheaply."
+      },
+      {
+        "name": "big-pearl",
+        "display_name": "Big Pearl",
+        "effect": "A lovely large pearl that would sell at a high price."
+      }
     ],
     "id": 366,
     "location_area_encounters": [
@@ -48407,7 +49551,11 @@
     },
     "height": 1.7,
     "held_items": [
-      "Deep Sea Tooth"
+      {
+        "name": "deep-sea-tooth",
+        "display_name": "Deep Sea Tooth",
+        "effect": "A hold item that raises the SP. ATK of CLAMPERL."
+      }
     ],
     "id": 367,
     "location_area_encounters": [],
@@ -48519,7 +49667,11 @@
     },
     "height": 1.8,
     "held_items": [
-      "Deep Sea Scale"
+      {
+        "name": "deep-sea-scale",
+        "display_name": "Deep Sea Scale",
+        "effect": "A hold item that raises the SP. DEF of CLAMPERL."
+      }
     ],
     "id": 368,
     "location_area_encounters": [],
@@ -48638,8 +49790,16 @@
     },
     "height": 1.0,
     "held_items": [
-      "Green Shard",
-      "Deep Sea Scale"
+      {
+        "name": "green-shard",
+        "display_name": "Green Shard",
+        "effect": "A shard from an ancient item. Can be sold cheaply."
+      },
+      {
+        "name": "deep-sea-scale",
+        "display_name": "Deep Sea Scale",
+        "effect": "A hold item that raises the SP. DEF of CLAMPERL."
+      }
     ],
     "id": 369,
     "location_area_encounters": [
@@ -48771,7 +49931,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Heart Scale"
+      {
+        "name": "heart-scale",
+        "display_name": "Heart Scale",
+        "effect": "A lovely scale. It is coveted by collectors."
+      }
     ],
     "id": 370,
     "location_area_encounters": [
@@ -48894,8 +50058,16 @@
     },
     "height": 0.6,
     "held_items": [
-      "Dragon Scale",
-      "Dragon Fang"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      },
+      {
+        "name": "dragon-fang",
+        "display_name": "Dragon Fang",
+        "effect": "A hold item that raises the power of DRAGON-type moves."
+      }
     ],
     "id": 371,
     "location_area_encounters": [
@@ -49030,8 +50202,16 @@
     },
     "height": 1.1,
     "held_items": [
-      "Dragon Scale",
-      "Dragon Fang"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      },
+      {
+        "name": "dragon-fang",
+        "display_name": "Dragon Fang",
+        "effect": "A hold item that raises the power of DRAGON-type moves."
+      }
     ],
     "id": 372,
     "location_area_encounters": [],
@@ -49167,8 +50347,16 @@
     },
     "height": 1.5,
     "held_items": [
-      "Dragon Scale",
-      "Dragon Fang"
+      {
+        "name": "dragon-scale",
+        "display_name": "Dragon Scale",
+        "effect": "A strange scale held by DRAGON- type POKéMON."
+      },
+      {
+        "name": "dragon-fang",
+        "display_name": "Dragon Fang",
+        "effect": "A hold item that raises the power of DRAGON-type moves."
+      }
     ],
     "id": 373,
     "location_area_encounters": [],
@@ -49310,7 +50498,11 @@
     },
     "height": 0.6,
     "held_items": [
-      "Metal Coat"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      }
     ],
     "id": 374,
     "location_area_encounters": [
@@ -49406,7 +50598,11 @@
     },
     "height": 1.2,
     "held_items": [
-      "Metal Coat"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      }
     ],
     "id": 375,
     "location_area_encounters": [],
@@ -49539,7 +50735,11 @@
     },
     "height": 1.6,
     "held_items": [
-      "Metal Coat"
+      {
+        "name": "metal-coat",
+        "display_name": "Metal Coat",
+        "effect": "A hold item that raises the power of STEEL-type moves."
+      }
     ],
     "id": 376,
     "location_area_encounters": [],
@@ -50600,7 +51800,11 @@
     },
     "height": 0.3,
     "held_items": [
-      "Star Piece"
+      {
+        "name": "star-piece",
+        "display_name": "Star Piece",
+        "effect": "A red gem shard. It would sell for a very high price."
+      }
     ],
     "id": 385,
     "location_area_encounters": [],
