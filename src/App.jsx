@@ -104,7 +104,7 @@ import SilhouettePage from './pages/SilhouettePage';
 import ZoomPage from './pages/ZoomPage';
 import ColoursPage from './pages/ColoursPage';
 import CardPage from './pages/CardPage';
-import GameInfoPage from './pages/GameInfoPage';
+import LocationsPage from './pages/LocationsPage';
 import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
@@ -136,7 +136,7 @@ const PAGES = [
   { key: 'silhouette', label: 'Silhouette' },
   { key: 'zoom', label: 'Zoom' },
   { key: 'colours', label: 'Colours' },
-  { key: 'gameinfo', label: 'Game Data' },
+  { key: 'map', label: 'Locations' },
   { key: 'results', label: 'Results' },
 ];
 
@@ -351,7 +351,7 @@ function App() {
       silhouette: { offset: 7 * 1000, letter: 's' },
       zoom: { offset: 8 * 1000, letter: 'z' },
       colours: { offset: 9 * 1000, letter: 'c' },
-      gameinfo: { offset: 13 * 1000, letter: 'g' },
+      map: { offset: 13 * 1000, letter: 'g' },
     };
 
     function getCardAnswer() {
@@ -599,7 +599,7 @@ function App() {
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={isShinyDay} />;
-    if (key === 'gameinfo') return <GameInfoPage pokemonData={pokemonData} daily={dailyByPage.gameinfo} guesses={guessesByPage.gameinfo || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, gameinfo: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
     return null;
   }

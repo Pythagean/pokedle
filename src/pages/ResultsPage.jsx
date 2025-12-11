@@ -969,7 +969,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     <div style={{ overflowX: 'auto' }} onTouchStart={onHistoryTouchStart} onTouchMove={onHistoryTouchMove} onWheel={onHistoryWheel}>
                         {(() => {
                             // Modes down the left, dates across the top
-                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Game'];
+                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Locations'];
                             // Always show the most recent 7 days. If data is missing for a date, show an empty row.
                             const DAYS = 7;
                             const today = new Date();
@@ -1017,7 +1017,6 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 if (!map) return '-';
                                 const key = String(mode).toLowerCase();
                                 if (Object.prototype.hasOwnProperty.call(map, key)) return map[key];
-                                // Try direct substring matches (e.g. 'game' -> 'game data' or 'game info')
                                 const keys = Object.keys(map);
                                 for (const k of keys) {
                                     if (k.includes(key) || key.includes(k)) return map[k];

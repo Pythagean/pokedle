@@ -5,7 +5,7 @@ import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
-import { GAMEINFO_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
+import { LOCATIONS_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
@@ -30,9 +30,9 @@ function getSeedFromUTCDate(date) {
     return parseInt(`${year}${month}${day}`, 10);
 }
 
-const BASE_CLUE_TYPES = ['stats', 'ability', 'moves', 'category', 'locations', 'held_items', 'shape'];
+const BASE_CLUE_TYPES = ['locations'];
 
-function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
+function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const [locationFileMap, setLocationFileMap] = useState(null);
@@ -41,6 +41,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const prevCorrectRef = useRef(false);
+    const [overrideId, setOverrideId] = useState('');
 
     const today = new Date();
     const defaultSeed = (getSeedFromUTCDate(today) + 13 * 1000 + 'g'.charCodeAt(0)); // UTC-based
@@ -50,59 +51,16 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     const rng = useMemo(() => mulberry32(seed), [seed]);
     const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
     const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
-    const dailyPokemon = daily || computedDaily;
+    
+    // Allow override by ID for testing
+    const overridePokemon = overrideId && pokemonData ? pokemonData.find(p => p.id === parseInt(overrideId, 10)) : null;
+    const dailyPokemon = overridePokemon || daily || computedDaily;
 
-    // Build and shuffle clues for the day
+    // Build clues for the day — Location Mode focused: show locations in stages
     const cluesForDay = useMemo(() => {
         if (!dailyPokemon) return [];
-        let clues = BASE_CLUE_TYPES.filter(type => {
-            if (type === 'held_items') {
-                return Array.isArray(dailyPokemon.held_items) && dailyPokemon.held_items.length > 0;
-            }
-            return true;
-        });
-        // Shuffle clues
-        for (let i = clues.length - 1; i > 0; i--) {
-            const j = Math.floor(rng() * (i + 1));
-            [clues[i], clues[j]] = [clues[j], clues[i]];
-        }
-        // Ensure the first clue follows allowed-first rules:
-        // - 'shape' must never be first
-        // - 'stats' (Base Stats) must not be first
-        // - 'locations' can't be first if the locations array is empty
-        // - 'held_items' can't be first if there are no held items
-        const isAllowedFirst = (type) => {
-            if (type === 'shape') return false;
-            if (type === 'stats') return false; // do not show Base Stats as the very first clue
-            if (type === 'locations') {
-                return Array.isArray(dailyPokemon.location_area_encounters) && dailyPokemon.location_area_encounters.length > 0;
-            }
-            if (type === 'held_items') {
-                return Array.isArray(dailyPokemon.held_items) && dailyPokemon.held_items.length > 0;
-            }
-            return true;
-        };
-
-        if (clues.length > 1 && !isAllowedFirst(clues[0])) {
-            let swapIdx = -1;
-            for (let i = 1; i < clues.length; i++) {
-                if (isAllowedFirst(clues[i])) {
-                    swapIdx = i;
-                    break;
-                }
-            }
-            if (swapIdx !== -1) {
-                [clues[0], clues[swapIdx]] = [clues[swapIdx], clues[0]];
-            } else {
-                // Fallback: keep previous behavior of not letting 'shape' be first
-                const shapeIdx = clues.indexOf('shape');
-                if (shapeIdx === 0 && clues.length > 1) {
-                    [clues[0], clues[1]] = [clues[1], clues[0]];
-                }
-            }
-        }
-        return clues;
-    }, [seed, dailyPokemon, rng]);
+        return ['locations'];
+    }, [dailyPokemon]);
 
     // Load mapping of location -> filename (produced by scripts/match_location_maps.py)
     useEffect(() => {
@@ -117,28 +75,28 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                 try {
                     const resp = await fetch(url);
                     if (!resp.ok) {
-                        console.debug('[GameInfoPage] mapping not found at', url, 'status', resp.status);
+                        console.debug('[LocationsPage] mapping not found at', url, 'status', resp.status);
                         continue;
                     }
                     const j = await resp.json();
                     if (!cancelled) {
                         setLocationFileMap(j);
-                        console.debug('[GameInfoPage] loaded location map from', url);
+                        console.debug('[LocationsPage] loaded location map from', url);
                     }
                     return;
                 } catch (e) {
-                    console.debug('[GameInfoPage] error fetching mapping from', url, e);
+                    console.debug('[LocationsPage] error fetching mapping from', url, e);
                     continue;
                 }
             }
-            console.debug('[GameInfoPage] no location mapping file found in any known location');
+            console.debug('[LocationsPage] no location mapping file found in any known location');
         }
         loadMap();
         return () => { cancelled = true; };
     }, []);
 
     // Determine which clues to show based on guesses (use page-specific config)
-    const clueCount = getClueCount(guesses.length, GAMEINFO_HINT_THRESHOLDS);
+    const clueCount = getClueCount(guesses.length, LOCATIONS_HINT_THRESHOLDS);
     const shownClues = cluesForDay.slice(0, clueCount);
 
     // Guessing state (controlled input for GuessInput)
@@ -176,7 +134,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
         return () => document.removeEventListener('mousedown', handleClick);
     }, [dropdownOpen]);
 
-    if (!pokemonData) return <div>Loading Pokémon game data...</div>;
+    if (!pokemonData) return <div>Loading Pokémon locations...</div>;
 
     function handleGuessSubmit(e, overrideGuess) {
         if (e) e.preventDefault();
@@ -195,7 +153,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     const isCorrect = lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name;
 
     useEffect(() => {
-        const key = `pokedle_confetti_gameinfo_${seed}`;
+        const key = `pokedle_confetti_locations_${seed}`;
         let alreadyShown = false;
         try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
         if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
@@ -347,7 +305,13 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             );
         }
         if (type === 'locations') {
-            const locations = dailyPokemon.location_area_encounters || [];
+            // Prefer direct wild encounter locations; fall back to pre-evolution encounter data
+            let rawLocations = dailyPokemon.location_area_encounters || [];
+            let usingPreevolution = false;
+            if ((!rawLocations || rawLocations.length === 0) && Array.isArray(dailyPokemon.preevolution_location_area_encounters) && dailyPokemon.preevolution_location_area_encounters.length > 0) {
+                rawLocations = dailyPokemon.preevolution_location_area_encounters;
+                usingPreevolution = true;
+            }
 
             const getRawName = (loc) => {
                 if (!loc) return '';
@@ -356,10 +320,67 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                 return String(loc);
             };
 
+            const getGenNumber = (p) => {
+                if (!p) return null;
+                const cand = p.generation ?? p.generation_int ?? p.generation_id ?? p.gen ?? p.gen_id ?? null;
+                if (typeof cand === 'number') return cand;
+                if (typeof cand === 'string') {
+                    const m = cand.match(/\d+/);
+                    if (m) return parseInt(m[0], 10);
+                }
+                if (p.generation && typeof p.generation === 'object' && p.generation.name) {
+                    const n = p.generation.name;
+                    const m = String(n).match(/\d+/);
+                    if (m) return parseInt(m[0], 10);
+                    const roman = String(n).replace(/^generation[-_]?/i, '').toLowerCase();
+                    const romanMap = { i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 };
+                    if (romanMap[roman]) return romanMap[roman];
+                }
+                return null;
+            };
+
+            const genNumber = getGenNumber(dailyPokemon);
+            const genRegionMap = { 1: 'Kanto', 2: 'Johto', 3: 'Hoenn' };
+            const regionFilter = genRegionMap[genNumber] || null;
+
+            // Calculate gen locations and additional locations
+            const genLocations = regionFilter ? rawLocations.filter(loc => {
+                if (!loc) return false;
+                if (typeof loc === 'object' && loc.region) {
+                    try {
+                        if (new RegExp(`^${regionFilter}\\b`, 'i').test(String(loc.region))) return true;
+                    } catch (e) { /* fall through */ }
+                }
+                const raw = getRawName(loc) || '';
+                try {
+                    return new RegExp(`^${regionFilter}\\b`, 'i').test(raw);
+                } catch (e) {
+                    return false;
+                }
+            }) : rawLocations;
+
+            const genNames = new Set(genLocations.map(loc => getRawName(loc)));
+            const additionalLocations = rawLocations.filter(loc => !genNames.has(getRawName(loc)));
+
+            // Determine what to show based on clue count
+            // clueCount: 1 = gen only, 2 = gen + additional, 3+ = gen + additional + methods
+            const locationStage = Math.min(clueCount, 3);
+            const showGenLocations = locationStage >= 1;
+            const showAdditionalLocations = locationStage >= 2;
+            const showMethods = locationStage >= 3;
+
+            let headerText = 'Wild Encounter Locations:';
+            if (locationStage === 1) {
+                headerText = `This Pokemon was first found in these locations in its home region:`;
+            } else if (locationStage === 2) {
+                headerText = 'This Pokemon can be found at these locations across Kanto, Johto, and Hoenn:';
+            } else if (locationStage === 3) {
+                headerText = 'This Pokemon can be found at these locations across Kanto, Johto, and Hoenn:';
+            }
+
             const formatDisplay = (loc) => {
                 const raw = (getRawName(loc) || '').trim();
                 if (!raw) return raw;
-                // if slug-like (viridian-city or viridian_city) convert to readable
                 let pretty;
                 if (/^[a-z0-9\-_]+$/.test(raw)) {
                     pretty = raw.replace(/[-_]+/g, ' ');
@@ -367,71 +388,118 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                 } else {
                     pretty = raw;
                 }
-
-                // If the location contains 'Safari' (case-insensitive), keep full name
                 if (/\bSafari\b/i.test(pretty)) return pretty;
-
-                // Remove the leading region word (first token) if there are multiple tokens
                 const parts = pretty.split(/\s+/);
-                if (parts.length > 1) {
-                    return parts.slice(1).join(' ');
-                }
+                if (parts.length > 1) return parts.slice(1).join(' ');
                 return pretty;
-            };
-
-            const onOpenMap = (loc) => (e) => {
-                e.preventDefault();
-                const raw = getRawName(loc);
-                if (!raw) {
-                    setMapPopup({ visible: true, title: '', url: null });
-                    return;
-                }
-                // Build a slug for map filenames/urls by replacing spaces with underscores
-                const slug = raw.replace(/\s+/g, '_');
-
-                // Try several lookup options in the locationFileMap (support both old and new keys)
-                let filename = null;
-                if (locationFileMap) {
-                    filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw.toLowerCase()] || locationFileMap[slug.toLowerCase()];
-                }
-
-                if (filename) {
-                    setMapPopup({ visible: true, title: formatDisplay(loc), url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` });
-                    return;
-                }
-
-                // Fallback: try a direct URL using the slug (append .png)
-                const directUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png`;
-                setMapPopup({ visible: true, title: formatDisplay(loc), url: directUrl });
             };
 
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
-                        <div style={{ fontWeight: 600, fontSize: 18 }}>Wild Encounter Locations:</div>
-                        <InfoButton
-                            ariaLabel="About locations clue"
-                            placement="right"
-                            marginTop={0}
-                            content={
-                                <div style={{ textAlign: 'left' }}>
-                                    Locations are <strong>only for the generation where the Pokemon was first introduced</strong>
-                                    <br />Eg. Butterfree will show Kanto locations only. (Johto Pokemon will show Kanto+Johto)
-                                    <br /><br />Click a location to view a map when available.
-                                </div>
+                        <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
+                    </div>
+                    {usingPreevolution && (
+                        <div style={{ marginTop: 6, marginBottom: 6, fontSize: 13, color: '#666', maxWidth: 420, textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
+                            This Pokémon <strong>can't be found in the wild</strong> - its pre-evolutions can be in these locations:
+                        </div>
+                    )}
+                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
+                        {/* Show gen locations */}
+                        {showGenLocations && genLocations.length > 0 && genLocations.map((loc, i) => {
+                            const raw = getRawName(loc);
+                            const slug = (raw || '').replace(/\s+/g, '_');
+                            let filename = null;
+                            if (locationFileMap) {
+                                filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
                             }
-                        />
+                            const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
+                            return (
+                                <div key={`${getRawName(loc) || String(i)}_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
+                                        {url ? (
+                                            <>
+                                                <img src={url} alt={formatDisplay(loc)}
+                                                    style={{ maxWidth: 220, maxHeight: 130, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
+                                                    onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                />
+                                                <div style={{ display: 'none', minWidth: 220, minHeight: 130, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                            </>
+                                        ) : (
+                                            <div style={{ width: 220, height: 130, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                        )}
+                                        <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
+                                        {showMethods && (() => {
+                                            let method = null;
+                                            if (loc && typeof loc === 'object') method = loc.method || null;
+                                            if (!method && typeof loc === 'string') method = null;
+                                            if (method) {
+                                                const pretty = String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                                return (
+                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                        <span style={{ fontWeight: 700 }}>Method:</span>
+                                                        <span style={{ fontWeight: 400 }}>{pretty}</span>
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        })()}
+                                </div>
+                            );
+                        })}
+                        {/* Show additional locations */}
+                        {showAdditionalLocations && additionalLocations.length > 0 && additionalLocations.map((loc, i) => {
+                            const raw = getRawName(loc);
+                            const slug = (raw || '').replace(/\s+/g, '_');
+                            let filename = null;
+                            if (locationFileMap) {
+                                filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
+                            }
+                            const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
+                            return (
+                                <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
+                                        {url ? (
+                                            <>
+                                                <img src={url} alt={formatDisplay(loc)}
+                                                    style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
+                                                    onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                />
+                                                <div style={{ display: 'none', minWidth: 160, minHeight: 120, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                            </>
+                                        ) : (
+                                            <div style={{ minWidth: 160, minHeight: 120, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                        )}
+                                        <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
+                                        {showMethods && (() => {
+                                            let method = null;
+                                            if (loc && typeof loc === 'object') method = loc.method || null;
+                                            if (!method && typeof loc === 'string') method = null;
+                                            if (method) {
+                                                const pretty = String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                                return (
+                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                        <span style={{ fontWeight: 700 }}>Method:</span>
+                                                        <span style={{ fontWeight: 400 }}>{pretty}</span>
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        })()}
+                                </div>
+                            );
+                        })}
+                        {!showGenLocations && genLocations.length === 0 && additionalLocations.length === 0 && 'No locations (only obtainable by evolution)'}
                     </div>
-                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', fontSize: 14 }}>
-                        {locations.length > 0 ? locations.map((loc, i) => (
-                            <div key={`${getRawName(loc) || String(i)}_${i}`}>
-                                <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer', display: 'inline-block' }}>
-                                    {formatDisplay(loc)}
-                                </a>
-                                {i < locations.length - 1 ? <span style={{ color: '#666' }}>,</span> : null}
-                            </div>
-                        )) : 'No locations (only obtainable by evolution)'}
-                    </div>
+                    {/* Hint placeholders for what's coming next */}
+                    {!isCorrect && locationStage === 1 && additionalLocations.length > 0 && (
+                        <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                            Additional locations from other regions revealed in {LOCATIONS_HINT_THRESHOLDS[0] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[0] - guesses.length === 1 ? '' : 'es'}
+                        </div>
+                    )}
+                    {!isCorrect && locationStage === 2 && (
+                        <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                            Encounter methods revealed in {LOCATIONS_HINT_THRESHOLDS[1] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[1] - guesses.length === 1 ? '' : 'es'}
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -490,13 +558,21 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
 
     return (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <style>{`
+                @media (max-width: 768px) {
+                    .location-card {
+                        width: calc(50% - 8px) !important;
+                        min-width: 140px !important;
+                    }
+                }
+            `}</style>
             {/* Map popup overlay */}
             {mapPopup.visible && (
                 <div
                     role="dialog"
                     aria-modal="true"
                     onClick={() => setMapPopup({ visible: false, title: null, url: null })}
-                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
                     <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '90%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                             <div style={{ fontWeight: 700 }}>{mapPopup.title || 'Map'}</div>
@@ -512,16 +588,18 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
             )}
             <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                <h2 style={{ margin: 0 }}>Game Data Mode</h2>
+                <h2 style={{ margin: 0 }}>Locations Mode</h2>
                 <InfoButton
                     ariaLabel="How to Play"
                     placement="right"
                     marginTop={130}
                     content={
                         <div style={{ textAlign: 'left' }}>
-                            Guess the Pokémon from a random set of clues based on in-game information!<br /><br />
-                            One random clue (Base Stats, Abilities, Moves Learnt by Level Up, Category, Shape, Wild Encounter Locations: or Held Items) is shown first.<br /><br />
-                            After 2, 4, 6, 8, 10 and 12 guesses, you will receive additional clues.
+                            Guess the Pokémon from the in-game <strong>Locations</strong>.<br /><br />
+                            <strong>Clue 1)</strong> Shows locations from the Pokémon's introduction generation (e.g. Kanto for Gen&nbsp;1).<br />
+                            <strong>Clue 2)</strong> Reveals additional locations from other generations.<br />
+                            <strong>Clue 3)</strong> Adds the encounter <em>method</em> (e.g. "Surf", "Fishing") beneath the same maps.<br /><br />
+                            If the Pokémon has no wild locations, pre-evolution encounter locations are used.
                         </div>
                     }
                 />
@@ -539,20 +617,34 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                     Reset
                 </button> */}
             </div>
+            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+                <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
+                <input
+                    id="override-id"
+                    type="number"
+                    value={overrideId}
+                    onChange={(e) => setOverrideId(e.target.value)}
+                    placeholder="Enter ID (1-151)"
+                    style={{ padding: '6px 10px', borderRadius: 4, border: '1px solid #ccc', width: 140, fontSize: 14 }}
+                />
+                {overridePokemon && (
+                    <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
+                )}
+            </div> */}
             <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
-                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Guess the Pokémon from the clues below:</div>}
+                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
                     <>
-                        <CongratsMessage guessCount={guesses.length} mode="Game Data" />
+                        <CongratsMessage guessCount={guesses.length} mode="Location Mode" />
                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                     </>
                 )}
                 {shownClues.map(type => renderClue(type))}
                 {/* Hint placeholder text for next clue, specifying clue type */}
                 {!isCorrect && (() => {
-                    const nextIdx = getNextThresholdIndex(guesses.length, GAMEINFO_HINT_THRESHOLDS);
+                    const nextIdx = getNextThresholdIndex(guesses.length, LOCATIONS_HINT_THRESHOLDS);
                     if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
-                        const nextThreshold = GAMEINFO_HINT_THRESHOLDS[nextIdx];
+                        const nextThreshold = LOCATIONS_HINT_THRESHOLDS[nextIdx];
                         const cluesLeft = nextThreshold - guesses.length;
                         const nextClueType = cluesForDay[shownClues.length];
                         // Human-friendly clue type names
@@ -667,4 +759,4 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
     );
 }
 
-export default GameInfoPage;
+export default LocationsPage;

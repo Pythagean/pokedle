@@ -1371,7 +1371,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -1563,7 +1563,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -1705,7 +1705,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -1840,7 +1840,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2017,7 +2017,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2155,7 +2155,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2336,7 +2336,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2473,7 +2473,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2605,7 +2605,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2761,7 +2761,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -2994,11 +2994,6 @@
         "region": "Kanto",
         "name": "Kanto Five Isle Meadow",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -3228,11 +3223,6 @@
         "region": "Kanto",
         "name": "Kanto Five Isle Meadow",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -3457,11 +3447,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Five Isle Meadow",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -3735,11 +3720,7 @@
         "name": "Kanto Five Isle Meadow",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Route 38",
@@ -4156,11 +4137,7 @@
         "name": "Johto Route 43",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 26",
@@ -4239,11 +4216,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Pokemon Mansion",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -4587,11 +4559,7 @@
         "name": "Johto Route 46",
         "method": "Headbutt"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 3",
@@ -4691,11 +4659,6 @@
         "region": "Johto",
         "name": "Johto Azalea Town",
         "method": "Headbutt"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -4835,16 +4798,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 9",
         "method": "Walk"
@@ -4917,11 +4870,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -5051,11 +4999,7 @@
         "name": "Johto Route 46",
         "method": "Headbutt"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 3",
@@ -5155,11 +5099,6 @@
         "region": "Johto",
         "name": "Johto Azalea Town",
         "method": "Headbutt"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -5276,11 +5215,6 @@
         "region": "Johto",
         "name": "Johto Azalea Town",
         "method": "Headbutt"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -5471,11 +5405,6 @@
         "region": "Kanto",
         "name": "Kanto Victory Road",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -5627,11 +5556,6 @@
         "region": "Johto",
         "name": "Johto Azalea Town",
         "method": "Headbutt"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -6160,11 +6084,6 @@
         "region": "Hoenn",
         "name": "Hoenn Mirage Tower",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -6344,11 +6263,6 @@
         "region": "Kanto",
         "name": "Kanto Route 23",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -6491,11 +6405,6 @@
         "region": "Hoenn",
         "name": "Hoenn Mirage Tower",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -6593,11 +6502,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -6762,11 +6666,6 @@
         "region": "Kanto",
         "name": "Kanto Safari Zone",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -6893,11 +6792,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -7064,11 +6958,7 @@
         "name": "Kanto Safari Zone",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Kanto",
         "name": "Kanto Route 13",
@@ -7342,11 +7232,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -7655,11 +7540,6 @@
         "region": "Kanto",
         "name": "Kanto Route 23",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -7747,11 +7627,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Route 4",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -8010,11 +7885,6 @@
         "region": "Kanto",
         "name": "Kanto Route 4",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -8089,11 +7959,6 @@
       {
         "region": "Johto",
         "name": "Johto Route 37",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
         "method": "Walk"
       },
       {
@@ -8350,11 +8215,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 7",
         "method": "Walk"
@@ -8492,11 +8352,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Route 115",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -8784,11 +8639,6 @@
         "region": "Hoenn",
         "name": "Hoenn Route 115",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -8915,11 +8765,7 @@
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -8993,11 +8839,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -9192,11 +9033,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 28",
@@ -9255,11 +9092,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -9429,11 +9261,7 @@
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -9507,11 +9335,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -9670,11 +9493,6 @@
         "region": "Kanto",
         "name": "Kanto Water Path",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -9801,19 +9619,10 @@
     ],
     "id": 44,
     "location_area_encounters": [
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 12",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
         "method": "Walk"
       },
       {
@@ -9879,11 +9688,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Water Path",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -10063,11 +9867,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Water Path",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -10285,21 +10084,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Cerulean Cave",
         "method": "Walk"
@@ -10388,11 +10172,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -10660,11 +10439,6 @@
         "region": "Kanto",
         "name": "Kanto Safari Zone",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -10732,7 +10506,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -11104,7 +10878,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -11221,16 +10995,6 @@
     ],
     "id": 50,
     "location_area_encounters": [
-      {
-        "region": "Kanto",
-        "name": "Kanto Vermilion City",
-        "method": "Rock Smash"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
       {
         "region": "Kanto",
         "name": "Kanto Digletts Cave",
@@ -11481,11 +11245,6 @@
         "region": "Kanto",
         "name": "Kanto Vermilion City",
         "method": "Rock Smash"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
       },
       {
         "region": "Kanto",
@@ -12308,11 +12067,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ],
     "moves": [
@@ -12504,11 +12258,6 @@
         "region": "Kanto",
         "name": "Kanto Cape Brink",
         "method": "Walk, Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -12838,11 +12587,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ]
   },
@@ -13344,11 +13088,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 7",
         "method": "Walk"
@@ -13598,11 +13337,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 7",
         "method": "Walk"
@@ -13735,11 +13469,6 @@
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Good Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Good Rod, Super Rod"
       },
       {
         "region": "Johto",
@@ -13890,11 +13619,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Super Rod"
       }
     ],
     "moves": [
@@ -14128,11 +13852,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Good Rod, Super Rod"
       }
     ],
     "moves": [
@@ -14277,11 +13996,6 @@
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Good Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Good Rod, Super Rod"
       },
       {
         "region": "Johto",
@@ -14432,11 +14146,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Super Rod"
       }
     ]
   },
@@ -14633,11 +14342,6 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
         "name": "Johto Mt Silver",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
@@ -14785,11 +14489,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Super Rod"
       }
     ]
   },
@@ -14906,11 +14605,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Route 116",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -15190,11 +14884,6 @@
         "region": "Hoenn",
         "name": "Hoenn Route 116",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -15406,11 +15095,7 @@
         "name": "Hoenn Route 116",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Kanto",
         "name": "Kanto Cerulean Cave",
@@ -15485,11 +15170,7 @@
         "name": "Johto Mt Mortar",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Rock Tunnel",
@@ -15523,11 +15204,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Mt Ember",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -15699,11 +15375,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Rock Tunnel",
@@ -15722,11 +15394,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Mt Ember",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -15832,11 +15499,7 @@
         "name": "Johto Mt Mortar",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Rock Tunnel",
@@ -15870,11 +15533,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Mt Ember",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -16042,11 +15700,7 @@
         "name": "Johto Mt Mortar",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Rock Tunnel",
@@ -16082,11 +15736,7 @@
         "name": "Kanto Mt Ember",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -16226,11 +15876,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Water Path",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -16587,11 +16232,6 @@
         "region": "Kanto",
         "name": "Kanto Water Path",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -16797,11 +16437,7 @@
         "name": "Kanto Water Path",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Kanto",
         "name": "Kanto Cerulean Cave",
@@ -16921,11 +16557,6 @@
         "region": "Johto",
         "name": "Johto Cianwood City",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Old Rod, Good Rod, Surf"
       },
       {
         "region": "Kanto",
@@ -17746,11 +17377,6 @@
         "method": "Surf"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Old Rod, Good Rod, Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Surf"
@@ -18193,11 +17819,7 @@
         "name": "Johto Dark Cave",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -18263,11 +17885,7 @@
         "name": "Kanto Sevault Canyon",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Team Rocket Hq",
@@ -18445,11 +18063,7 @@
         "name": "Johto Dark Cave",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -18620,11 +18234,7 @@
         "name": "Johto Dark Cave",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -18690,11 +18300,7 @@
         "name": "Kanto Sevault Canyon",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Team Rocket Hq",
@@ -18768,13 +18374,7 @@
       }
     ],
     "id": 76,
-    "location_area_encounters": [
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      }
-    ],
+    "location_area_encounters": [],
     "moves": [
       {
         "name": "Defense Curl",
@@ -18903,11 +18503,7 @@
         "name": "Johto Dark Cave",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -18973,11 +18569,7 @@
         "name": "Kanto Sevault Canyon",
         "method": "Walk, Rock Smash"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Team Rocket Hq",
@@ -19694,11 +19286,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -19896,11 +19483,6 @@
         "region": "Kanto",
         "name": "Kanto Cape Brink",
         "method": "Walk, Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -20230,11 +19812,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -20338,11 +19915,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn New Mauville",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -20528,11 +20100,6 @@
         "region": "Hoenn",
         "name": "Hoenn New Mauville",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -20664,11 +20231,6 @@
         "region": "Hoenn",
         "name": "Hoenn New Mauville",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -20745,29 +20307,15 @@
         "name": "Johto Route 43",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 12",
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 13",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -20958,11 +20506,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -21262,11 +20805,6 @@
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -21331,11 +20869,6 @@
         "region": "Johto",
         "name": "Johto Whirl Islands",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
       },
       {
         "region": "Kanto",
@@ -21581,11 +21114,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
@@ -21698,11 +21226,6 @@
         "region": "Hoenn",
         "name": "Hoenn Fiery Path",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ],
     "moves": [
@@ -22011,11 +21534,6 @@
         "region": "Hoenn",
         "name": "Hoenn Fiery Path",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ]
   },
@@ -22087,11 +21605,6 @@
       {
         "region": "Johto",
         "name": "Johto Route 41",
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
         "method": "Good Rod, Super Rod"
       },
       {
@@ -22397,11 +21910,6 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Good Rod, Super Rod"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
@@ -22568,11 +22076,6 @@
         "region": "Kanto",
         "name": "Kanto Lost Cave",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -22736,11 +22239,6 @@
         "region": "Kanto",
         "name": "Kanto Lost Cave",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -22867,11 +22365,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -23054,11 +22547,7 @@
         "name": "Kanto Lost Cave",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Kanto",
         "name": "Kanto Rock Tunnel",
@@ -23134,11 +22623,7 @@
         "name": "Johto Union Cave",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -23157,11 +22642,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -23333,11 +22813,6 @@
         "region": "Kanto",
         "name": "Kanto Berry Forest",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -23494,11 +22969,6 @@
         "region": "Kanto",
         "name": "Kanto Berry Forest",
         "method": "Walk, Only One"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -23616,11 +23086,6 @@
         "region": "Kanto",
         "name": "Kanto Berry Forest",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -23713,11 +23178,6 @@
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk, Rock Smash"
       },
       {
         "region": "Kanto",
@@ -23893,11 +23353,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -24067,11 +23522,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk, Rock Smash"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 19",
         "method": "Super Rod, Rock Smash"
@@ -24184,11 +23634,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Five Island",
-        "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Super Rod"
       }
     ],
@@ -24320,11 +23765,6 @@
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk, Rock Smash"
       },
       {
         "region": "Kanto",
@@ -24500,11 +23940,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -24977,7 +24412,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -25274,7 +24709,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -25380,11 +24815,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -25575,11 +25005,6 @@
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -25694,11 +25119,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -26077,11 +25497,6 @@
         "region": "Kanto",
         "name": "Kanto Cerulean Cave",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -26245,11 +25660,7 @@
         "name": "Hoenn Fiery Path",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Team Rocket Hq",
@@ -26406,11 +25817,6 @@
         "region": "Kanto",
         "name": "Kanto Pokemon Mansion",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -26517,11 +25923,7 @@
         "name": "Hoenn Fiery Path",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Team Rocket Hq",
@@ -26600,11 +26002,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -26857,11 +26254,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -27295,11 +26687,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -28424,11 +27811,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Good Rod, Super Rod, Surf"
       }
     ],
     "moves": [
@@ -28679,11 +28061,6 @@
         "region": "Kanto",
         "name": "Kanto Berry Forest",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Good Rod, Super Rod"
       }
     ],
     "moves": [
@@ -29011,11 +28388,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Good Rod, Super Rod, Surf"
       }
     ]
   },
@@ -29115,11 +28487,6 @@
         "region": "Johto",
         "name": "Johto Cianwood City",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
       },
       {
         "region": "Kanto",
@@ -29448,11 +28815,6 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
@@ -29577,11 +28939,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Route 21",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -30250,11 +29607,6 @@
         "region": "Kanto",
         "name": "Kanto Mt Ember",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -30571,18 +29923,8 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -30832,7 +30174,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
       {
@@ -30859,11 +30201,6 @@
         "region": "Johto",
         "name": "Johto Dark Cave",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Old Rod, Good Rod"
       },
       {
         "region": "Kanto",
@@ -31346,11 +30683,6 @@
         "method": "Good Rod, Old Rod"
       },
       {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 3",
         "method": "Gift"
@@ -31475,7 +30807,7 @@
     "location_area_encounters": [
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Good Rod, Super Rod, Surf, Only One"
       },
       {
@@ -31692,11 +31024,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Super Rod"
       }
     ],
     "moves": [
@@ -31892,7 +31219,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
       {
@@ -31919,11 +31246,6 @@
         "region": "Johto",
         "name": "Johto Dark Cave",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Old Rod, Good Rod"
       },
       {
         "region": "Kanto",
@@ -32406,11 +31728,6 @@
         "method": "Good Rod, Old Rod"
       },
       {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 3",
         "method": "Gift"
@@ -32492,11 +31809,6 @@
         "region": "Kanto",
         "name": "Kanto Saffron City",
         "method": "Gift"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Surf"
       }
     ],
     "moves": [
@@ -32665,11 +31977,7 @@
         "name": "Johto Route 35",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 13",
@@ -32703,11 +32011,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Desert Underpass",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -34931,11 +34234,6 @@
         "region": "Kanto",
         "name": "Kanto Safari Zone",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Super Rod"
       }
     ],
     "moves": [
@@ -35200,11 +34498,6 @@
         "region": "Kanto",
         "name": "Kanto Safari Zone",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Super Rod"
       }
     ]
   },
@@ -35377,11 +34670,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Safari Zone",
-        "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Super Rod"
       }
     ]
@@ -36880,11 +36168,6 @@
         "region": "Kanto",
         "name": "Kanto Canyon Entrance",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -37126,11 +36409,6 @@
         "region": "Kanto",
         "name": "Kanto Canyon Entrance",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -37248,7 +36526,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -37442,11 +36720,7 @@
         "name": "Johto Route 43",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Route 26",
@@ -37644,7 +36918,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -38698,11 +37972,7 @@
         "name": "Kanto Seafoam Islands",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -38778,11 +38048,7 @@
         "name": "Kanto Lost Cave",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
+
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -38874,11 +38140,6 @@
       {
         "region": "Johto",
         "name": "Johto Route 41",
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
         "method": "Good Rod, Super Rod"
       },
       {
@@ -39082,11 +38343,6 @@
         "method": "Super Rod"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Super Rod"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 20",
         "method": "Super Rod"
@@ -39212,11 +38468,6 @@
       {
         "region": "Johto",
         "name": "Johto Route 41",
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
         "method": "Good Rod, Super Rod"
       },
       {
@@ -40861,21 +40112,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Cerulean Cave",
         "method": "Walk"
@@ -41001,11 +40237,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ],
     "moves": [
@@ -41288,11 +40519,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ]
   },
@@ -41623,11 +40849,6 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
         "name": "Johto Mt Silver",
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
@@ -41775,11 +40996,6 @@
         "region": "Kanto",
         "name": "Kanto Four Island",
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Old Rod, Good Rod, Super Rod"
       }
     ]
   },
@@ -41853,11 +41069,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 11",
         "method": "Walk"
@@ -41901,11 +41112,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -42032,11 +41238,6 @@
         "region": "Kanto",
         "name": "Kanto Route 14",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -42140,11 +41341,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 11",
         "method": "Walk"
@@ -42188,11 +41384,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -42344,11 +41535,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 11",
         "method": "Walk"
@@ -42392,11 +41578,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -42653,11 +41834,6 @@
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -42858,11 +42034,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -43074,11 +42245,6 @@
         "method": "Surf, Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
-      },
-      {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Surf"
@@ -43102,11 +42268,6 @@
         "region": "Johto",
         "name": "Johto Violet City",
         "method": "Gift Egg"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ],
     "moves": [
@@ -43254,11 +42415,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 12",
         "method": "Surf"
@@ -43297,11 +42453,6 @@
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Surf"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ],
     "moves": [
@@ -43398,11 +42549,6 @@
         "method": "Surf, Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Surf"
-      },
-      {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Surf"
@@ -43426,11 +42572,6 @@
         "region": "Johto",
         "name": "Johto Violet City",
         "method": "Gift Egg"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk, Surf"
       }
     ]
   },
@@ -43789,11 +42930,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -44247,11 +43383,6 @@
         "region": "Kanto",
         "name": "Kanto Five Island",
         "method": "Super Rod"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -44309,19 +43440,10 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Lost Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -44557,11 +43679,6 @@
         "region": "Kanto",
         "name": "Kanto Ruin Valley",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -44688,18 +43805,8 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -44887,7 +43994,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -45167,7 +44274,7 @@
       },
       {
         "region": "Johto",
-        "name": "Johto Lake Of Rage",
+        "name": "Johto Lake of Rage",
         "method": "Headbutt"
       },
       {
@@ -45528,11 +44635,6 @@
         "region": "Johto",
         "name": "Johto Mt Silver",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -45628,11 +44730,7 @@
         "name": "Johto Union Cave",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -45651,11 +44749,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -49936,11 +49029,6 @@
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -50072,11 +49160,6 @@
       {
         "region": "Hoenn",
         "name": "Hoenn Artisan Cave",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ],
@@ -50855,11 +49938,7 @@
         "name": "Johto Route 39",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Hoenn",
         "name": "Hoenn Safari Zone",
@@ -51568,11 +50647,6 @@
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -51785,11 +50859,6 @@
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
         "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },
@@ -51920,11 +50989,6 @@
       {
         "region": "Kanto",
         "name": "Kanto Sevault Canyon",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
         "method": "Walk"
       }
     ]
@@ -54296,11 +53360,7 @@
         "name": "Johto Route 45",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -58912,11 +57972,7 @@
         "name": "Johto Route 45",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -59276,11 +58332,7 @@
         "name": "Johto Route 45",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -59551,11 +58603,7 @@
         "name": "Johto Route 45",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Johto",
         "name": "Johto Mt Silver",
@@ -59737,11 +58785,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -60067,11 +59111,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -62121,11 +61161,6 @@
         "method": "Walk"
       },
       {
-        "region": "Johto",
-        "name": "Johto Route 48",
-        "method": "Walk"
-      },
-      {
         "region": "Kanto",
         "name": "Kanto Route 1",
         "method": "Walk"
@@ -62354,11 +61389,6 @@
       {
         "region": "Johto",
         "name": "Johto Route 46",
-        "method": "Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Route 48",
         "method": "Walk"
       },
       {
@@ -63018,11 +62048,6 @@
     "id": 316,
     "location_area_encounters": [
       {
-        "region": "Kanto",
-        "name": "Kanto Route 3",
-        "method": "Walk"
-      },
-      {
         "region": "Hoenn",
         "name": "Hoenn Route 110",
         "method": "Walk"
@@ -63250,11 +62275,6 @@
       "Black"
     ],
     "preevolution_location_area_encounters": [
-      {
-        "region": "Kanto",
-        "name": "Kanto Route 3",
-        "method": "Walk"
-      },
       {
         "region": "Hoenn",
         "name": "Hoenn Route 110",
@@ -69672,11 +68692,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -69807,11 +68823,7 @@
         "name": "Johto Mt Silver",
         "method": "Walk"
       },
-      {
-        "region": "Johto",
-        "name": "Johto Route 47",
-        "method": "Walk"
-      },
+      
       {
         "region": "Kanto",
         "name": "Kanto Mt Moon",
@@ -70560,11 +69572,7 @@
     "held_items": [],
     "id": 364,
     "location_area_encounters": [
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
-      }
+      
     ],
     "moves": [
       {
@@ -70807,11 +69815,6 @@
         "region": "Hoenn",
         "name": "Hoenn Shoal Cave",
         "method": "Surf, Walk"
-      },
-      {
-        "region": "Johto",
-        "name": "Johto Safari Zone",
-        "method": "Walk"
       }
     ]
   },

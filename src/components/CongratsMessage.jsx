@@ -226,16 +226,16 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
     { text: 'No tint or tone can escape you', mode: 'Colours', min: 1, max: 6 },
     { text: 'Even Smeargle would’ve raised an eyebrow', mode: 'Colours', min: 8, max: 9999 },
 
-    // Game Data
-    { text: 'You know your Pokédex better than a Rotom Dex', mode: 'Game Data', min: 1, max: 5 },
-    { text: 'Your game data knowledge is elite-four tier', mode: 'Game Data', min: 1, max: 5 },
-    { text: 'Abilities and stats bend to your will', mode: 'Game Data', min: 1, max: 5 },
-    { text: 'You analyse Pokémon like a true Battle Tower champion', mode: 'Game Data', min: 1, max: 5 },
-    { text: 'Your data sense is stronger than a Porygon’s analysis', mode: 'Game Data', min: 1, max: 5 },
-    { text: 'Even Professor {professor} would be impressed', mode: 'Game Data', min: 1, max: 6 },
-    { text: 'You read Pokémon metadata like the PokéNerd you are', mode: 'Game Data', min: 1, max: 2 },
-    { text: 'Your Pokédex knowledge took a nap', mode: 'Game Data', min: 9, max: 9999 },
-    { text: 'Even a Rotom Dex would\'ve glitched on that one', mode: 'Game Data', min: 8, max: 9999 },
+    // Locations
+    { text: 'You know your Pokédex better than a Rotom Dex', mode: 'Locations', min: 1, max: 5 },
+    { text: 'Your Locations knowledge is elite-four tier', mode: 'Locations', min: 1, max: 5 },
+    { text: 'Abilities and stats bend to your will', mode: 'Locations', min: 1, max: 5 },
+    { text: 'You analyse Pokémon like a true Battle Tower champion', mode: 'Locations', min: 1, max: 5 },
+    { text: 'Your data sense is stronger than a Porygon’s analysis', mode: 'Locations', min: 1, max: 5 },
+    { text: 'Even Professor {professor} would be impressed', mode: 'Locations', min: 1, max: 6 },
+    { text: 'You read Pokémon metadata like the PokéNerd you are', mode: 'Locations', min: 1, max: 2 },
+    { text: 'Your Pokédex knowledge took a nap', mode: 'Locations', min: 9, max: 9999 },
+    { text: 'Even a Rotom Dex would\'ve glitched on that one', mode: 'Locations', min: 8, max: 9999 },
   ];
 
   const POKEMON = {
