@@ -348,35 +348,61 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
         }
         if (type === 'locations') {
             const locations = dailyPokemon.location_area_encounters || [];
-            const formatDisplay = (raw) => {
+
+            const getRawName = (loc) => {
+                if (!loc) return '';
+                if (typeof loc === 'string') return loc;
+                if (typeof loc === 'object') return loc.name || '';
+                return String(loc);
+            };
+
+            const formatDisplay = (loc) => {
+                const raw = (getRawName(loc) || '').trim();
                 if (!raw) return raw;
-                // if slug-like (viridian-city) convert to readable
+                // if slug-like (viridian-city or viridian_city) convert to readable
+                let pretty;
                 if (/^[a-z0-9\-_]+$/.test(raw)) {
-                    const pretty = raw.replace(/[-_]+/g, ' ');
-                    return pretty.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    pretty = raw.replace(/[-_]+/g, ' ');
+                    pretty = pretty.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                } else {
+                    pretty = raw;
                 }
-                return raw;
+
+                // If the location contains 'Safari' (case-insensitive), keep full name
+                if (/\bSafari\b/i.test(pretty)) return pretty;
+
+                // Remove the leading region word (first token) if there are multiple tokens
+                const parts = pretty.split(/\s+/);
+                if (parts.length > 1) {
+                    return parts.slice(1).join(' ');
+                }
+                return pretty;
             };
 
             const onOpenMap = (loc) => (e) => {
                 e.preventDefault();
-                const key = loc;
-                const filename = locationFileMap && locationFileMap[key];
-                if (!filename) {
-                    // try fallback by normalizing slug/display
-                    const altKey = formatDisplay(key);
-                    const alt = locationFileMap && locationFileMap[altKey];
-                    if (alt) {
-                        setMapPopup({ visible: true, title: altKey, url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${alt}` });
-                        return;
-                    }
-                    // no mapping available
-                    setMapPopup({ visible: true, title: formatDisplay(key), url: null });
+                const raw = getRawName(loc);
+                if (!raw) {
+                    setMapPopup({ visible: true, title: '', url: null });
                     return;
                 }
-                console.log('Opening map for', key, '->', filename);
-                console.log(`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}`);
-                setMapPopup({ visible: true, title: formatDisplay(key), url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` });
+                // Build a slug for map filenames/urls by replacing spaces with underscores
+                const slug = raw.replace(/\s+/g, '_');
+
+                // Try several lookup options in the locationFileMap (support both old and new keys)
+                let filename = null;
+                if (locationFileMap) {
+                    filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw.toLowerCase()] || locationFileMap[slug.toLowerCase()];
+                }
+
+                if (filename) {
+                    setMapPopup({ visible: true, title: formatDisplay(loc), url: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` });
+                    return;
+                }
+
+                // Fallback: try a direct URL using the slug (append .png)
+                const directUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png`;
+                setMapPopup({ visible: true, title: formatDisplay(loc), url: directUrl });
             };
 
             return (
@@ -398,7 +424,7 @@ function GameInfoPage({ pokemonData, guesses, setGuesses, daily, useShinySprites
                     </div>
                     <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', fontSize: 14 }}>
                         {locations.length > 0 ? locations.map((loc, i) => (
-                            <div key={String(loc) + i}>
+                            <div key={`${getRawName(loc) || String(i)}_${i}`}>
                                 <a href="#" onClick={onOpenMap(loc)} style={{ color: '#1976d2', textDecoration: 'underline', cursor: 'pointer', display: 'inline-block' }}>
                                     {formatDisplay(loc)}
                                 </a>
