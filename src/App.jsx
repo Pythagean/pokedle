@@ -133,12 +133,28 @@ const PAGES = [
   { key: 'classic', label: 'Classic' },
   { key: 'card', label: 'Card' },
   { key: 'pokedex', label: 'Pokedex' },
-  { key: 'silhouette', label: 'Silhouette' },
-  { key: 'zoom', label: 'Zoom' },
+  { key: 'details', label: 'Details' },
   { key: 'colours', label: 'Colours' },
   { key: 'map', label: 'Locations' },
   { key: 'results', label: 'Results' },
 ];
+
+// Determine which detail mode (silhouette or zoom) based on UTC day of week
+// Monday=1, Wednesday=3, Friday=5, Saturday=6 → Silhouette
+// Tuesday=2, Thursday=4, Sunday=0 → Zoom
+function getDetailsModeForDate(date) {
+  let effective = date;
+  if (date.getUTCHours() >= RESET_HOUR_UTC) {
+    effective = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
+  }
+  const utcDay = effective.getUTCDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
+  // Silhouette days: 1, 3, 5, 6
+  if (utcDay === 1 || utcDay === 3 || utcDay === 5 || utcDay === 6) {
+    return 'silhouette';
+  }
+  // Zoom days: 0, 2, 4
+  return 'zoom';
+}
 
 function App() {
   const pokemonData = usePokemonData();
@@ -279,8 +295,7 @@ function App() {
       ability: [],
       moves: [],
       category: [],
-      silhouette: [],
-      zoom: [],
+      details: [],
       colours: [],
       locations: [],
       card: []
@@ -344,12 +359,12 @@ function App() {
     if (!pokemonData) return [];
 
     // Seed offsets per page to match the logic used inside each page component
+    const detailsMode = getDetailsModeForDate(today);
     const SEED_OFFSETS = {
       classic: { offset: 7 * 1000, letter: 'c' },
       card: { offset: 9999, letter: null },
       pokedex: { offset: 7 * 1000, letter: 'p' },
-      silhouette: { offset: 7 * 1000, letter: 's' },
-      zoom: { offset: 8 * 1000, letter: 'z' },
+      details: detailsMode === 'silhouette' ? { offset: 7 * 1000, letter: 's' } : { offset: 8 * 1000, letter: 'z' },
       colours: { offset: 9 * 1000, letter: 'c' },
       map: { offset: 13 * 1000, letter: 'g' },
     };
@@ -594,8 +609,14 @@ function App() {
     if (key === 'ability') return <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />;
     if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} useShinySprites={isShinyDay} />;
-    if (key === 'silhouette') return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.silhouette} guesses={guessesByPage.silhouette} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, silhouette: newGuesses }))} useShinySprites={isShinyDay} />;
-    if (key === 'zoom') return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.zoom} guesses={guessesByPage.zoom} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, zoom: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'details') {
+      const detailsMode = getDetailsModeForDate(new Date());
+      if (detailsMode === 'silhouette') {
+        return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} useShinySprites={isShinyDay} />;
+      } else {
+        return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} useShinySprites={isShinyDay} />;
+      }
+    }
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={isShinyDay} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={isShinyDay} />;

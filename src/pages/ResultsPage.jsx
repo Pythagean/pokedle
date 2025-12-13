@@ -162,16 +162,21 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 // Draw mode label with guess count
                 ctx.font = '700 18px "Montserrat", Arial, sans-serif';
                 ctx.fillStyle = '#333';
-                ctx.textAlign = 'left';
+                ctx.textAlign = 'center';
                 ctx.textBaseline = 'top';
-                ctx.fillText(`${row.label} (${row.count})`, leftMargin, y);
+                ctx.fillText(`${row.label} (${row.count})`, canvasWidth / 2, y);
                 y += headerHeight;
 
-                // Load and draw sprites (leftmost = index 0 = correct guess)
-                let x = leftMargin;
+                // Load and draw sprites (rightmost = last index = correct guess)
+                // Right-align the row by calculating starting x position
+                const rowWidth = row.ids.length * spriteSize + (row.ids.length - 1) * 4;
+                let x = canvasWidth - leftMargin - rowWidth;
                 for (let i = 0; i < row.ids.length; i++) {
                     const id = row.ids[i];
                     const drawX = x;
+                    // Set opacity for non-correct guesses
+                    const isCorrectGuess = i === row.ids.length - 1;
+                    ctx.globalAlpha = isCorrectGuess ? 1.0 : 0.65;
                     try {
                         const spriteUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${id}-front.png`;
                         const sprite = await loadImage(spriteUrl);
@@ -184,9 +189,11 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         ctx.lineWidth = 1;
                         ctx.strokeRect(drawX, y, spriteSize, spriteSize);
                     }
+                    // Reset globalAlpha
+                    ctx.globalAlpha = 1.0;
 
-                    // If this is the leftmost/first sprite, mark it as the correct guess
-                    if (i === 0) {
+                    // If this is the rightmost/last sprite, mark it as the correct guess
+                    if (isCorrectGuess) {
                         try {
                             // Draw a green border around the sprite
                             ctx.lineWidth = 3;
@@ -455,7 +462,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             // body text color (white for dark template)
             ctx.fillStyle = isDarkTemplate ? '#fff' : '#222';
             // Move results block slightly lower on the card for better spacing
-            const startX = 50, startY = 370;
+            const startX = 50, startY = 390;
             const lineHeight = 32;
             // For the exported card, omit the leading 'I've completed...' line
             // and remove the 'Total:' line from the body — we'll render the
@@ -969,7 +976,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     <div style={{ overflowX: 'auto' }} onTouchStart={onHistoryTouchStart} onTouchMove={onHistoryTouchMove} onWheel={onHistoryWheel}>
                         {(() => {
                             // Modes down the left, dates across the top
-                            const modes = ['Classic', 'Card', 'Pokedex', 'Silhouette', 'Zoom', 'Colours', 'Locations'];
+                            const modes = ['Classic', 'Card', 'Pokedex', 'Details', 'Colours', 'Locations'];
                             // Always show the most recent 7 days. If data is missing for a date, show an empty row.
                             const DAYS = 7;
                             const today = new Date();
