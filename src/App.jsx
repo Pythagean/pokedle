@@ -108,6 +108,7 @@ import LocationsPage from './pages/LocationsPage';
 import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
+import { getDailyOverride } from './config/dailyOverrides';
 
 
 // Simple deterministic PRNG using a seed
@@ -358,6 +359,8 @@ function App() {
   const perPageResults = useMemo(() => {
     if (!pokemonData) return [];
 
+    const todaySeed = getSeedFromDate(today);
+
     // Seed offsets per page to match the logic used inside each page component
     const detailsMode = getDetailsModeForDate(today);
     const SEED_OFFSETS = {
@@ -370,6 +373,79 @@ function App() {
     };
 
     function getCardAnswer() {
+      // Check for override first
+      const override = getDailyOverride(todaySeed, 'card');
+      console.log('[Override] Card override check for date', todaySeed, ':', override);
+      
+      if (override && typeof override === 'object' && override.pokemonId) {
+        const chosen = pokemonData.find(p => p.id === override.pokemonId);
+        console.log('[Override] Found pokemon for card override:', chosen?.name, chosen?.id);
+        
+        if (chosen && cardManifest) {
+          let cardType = override.cardType;
+          let cardFile = override.cardFile;
+          
+          console.log('[Override] Card override config - cardType:', cardType, 'cardFile:', cardFile);
+          
+          // If only cardFile is specified, search for it in all card types
+          if (cardFile && !cardType) {
+            console.log('[Override] Searching for cardFile across all types...');
+            const cardTypes = ['normal', 'full_art', 'shiny', 'special'];
+            for (const type of cardTypes) {
+              const manifestList = cardManifest[type]?.[chosen.id];
+              if (manifestList && manifestList.includes(cardFile)) {
+                cardType = type;
+                console.log('[Override] Found cardFile in type:', type);
+                break;
+              }
+            }
+            if (!cardType) {
+              console.log('[Override] Card file not found in any manifest, available files:', 
+                Object.keys(cardManifest).map(type => ({
+                  type,
+                  files: cardManifest[type]?.[chosen.id] || []
+                }))
+              );
+            }
+          }
+          
+          // Default to normal if no cardType found
+          if (!cardType) cardType = 'normal';
+          
+          const manifestList = cardManifest[cardType]?.[chosen.id];
+          if (manifestList && manifestList.length > 0) {
+            // Use specified card file if valid, otherwise pick first one
+            if (!cardFile || !manifestList.includes(cardFile)) {
+              console.log('[Override] Card file not in manifest or not specified, using first available:', manifestList[0]);
+              cardFile = manifestList[0];
+            }
+            const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+            let cardObj = null;
+            if (cardType === 'normal' || cardType === 'shiny') {
+              cardObj = {
+                cropped: `${folder}/cropped/${cardFile}`,
+                resized: `${folder}/resized/${cardFile}`,
+                cardFile,
+                folder,
+                cardType
+              };
+            } else {
+              cardObj = {
+                cropped: `${folder}/${cardFile}`,
+                resized: `${folder}/${cardFile}`,
+                cardFile,
+                folder,
+                cardType
+              };
+            }
+            console.log('[Override] Successfully created card override:', { pokemon: chosen.name, cardType, cardFile });
+            return { pokemon: chosen, card: cardObj };
+          } else {
+            console.log('[Override] No manifest list found for cardType:', cardType, 'pokemon:', chosen.id);
+          }
+        }
+      }
+
       // Replicate CardPage selection logic to pick a pokemon that has a card manifest entry
       if (!cardManifest) return null;
       const baseSeed = getSeedFromDate(today) + 9999;
@@ -430,9 +506,22 @@ function App() {
       } else {
         seedFor = getSeedFromDate(today) + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
       }
-      const rngFor = mulberry32(seedFor);
-      const idx = Math.floor(rngFor() * pokemonData.length);
-      const daily = pokemonData[idx];
+      
+      // Check for override
+      const override = getDailyOverride(todaySeed, p.key);
+      let daily;
+      if (override && typeof override === 'number') {
+        // Override with specific Pokemon ID
+        console.log('[Override]', p.key, 'page override for date', todaySeed, '- Pokemon ID:', override);
+        daily = pokemonData.find(poke => poke.id === override) || null;
+        console.log('[Override]', p.key, 'page - Found pokemon:', daily?.name, daily?.id);
+      } else {
+        // Use normal random selection
+        const rngFor = mulberry32(seedFor);
+        const idx = Math.floor(rngFor() * pokemonData.length);
+        daily = pokemonData[idx];
+      }
+      
       const pageGuesses = guessesByPage[p.key] || [];
       const solved = daily && pageGuesses.some(g => g.name === (daily.name));
       return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
