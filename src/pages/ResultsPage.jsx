@@ -994,19 +994,21 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 return found || { date: dateKey, results: [] };
                             });
                             const dates = displayedHistory.map(h => {
-                                // h.date is YYYYMMDD
+                                // h.date is YYYYMMDD - calculate Pokedle day number
                                 const y = parseInt(String(h.date).slice(0,4), 10);
                                 const mth = parseInt(String(h.date).slice(4,6), 10) - 1;
                                 const dnum = parseInt(String(h.date).slice(6,8), 10);
-                                const weekdayNames = ['Su','M','Tu','W','Th','F','Sa'];
                                 const dt = new Date(y, mth, dnum);
-                                const wd = dt.getDay();
-                                return weekdayNames[wd] || '';
+                                
+                                // Calculate Pokedle day number (same logic as at the top of the file)
+                                const effectiveDate = effectiveUTCDate(dt);
+                                const dayNum = Math.floor((effectiveDate.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
+                                return `#${dayNum}`;
                             });
 
                             // First column for mode labels (narrower), then one column per date, then a Total column
                             // Use a reasonable min width for date columns so they remain readable on mobile
-                            const gridCols = `61px repeat(${dates.length}, minmax(18px, 1fr)) 40px`;
+                            const gridCols = `61px repeat(${dates.length}, minmax(22px, 1fr)) 40px`;
 
                             // Precompute lookup map for quick access: dateIndex -> label -> value
                             const lookup = {};
@@ -1041,7 +1043,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             return (
                                 <div>
                                     {/* header row: empty cell then date columns then Total */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: 13 }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 5, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: 13 }}>
                                         <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 6 }}>Mode</div>
                                         {dates.map((dLabel, i) => (
                                             <div key={i} style={{ fontWeight: 700, textAlign: 'center' }}>{dLabel}</div>
@@ -1067,7 +1069,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                         });
 
                                         return (
-                                            <div key={mi} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderBottom: mi !== modes.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
+                                            <div key={mi} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 2, alignItems: 'center', padding: '8px 6px', borderBottom: mi !== modes.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
                                                 <div style={{ fontWeight: 500, textAlign: 'left', paddingLeft: 3 }}>{mode}</div>
                                                 {cells.map((v, i) => (
                                                     <div key={i} style={{ textAlign: 'center' }}>{v}</div>
@@ -1078,8 +1080,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     })}
 
                                     {/* totals row per date (moved to bottom) */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 8, alignItems: 'center', padding: '8px 6px', borderTop: '1px solid #eee', fontSize: 13, background: '#fbfbfb', marginTop: 6 }}>
-                                        <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 6 }}>Total</div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 4, alignItems: 'center', padding: '8px 6px', borderTop: '1px solid #eee', fontSize: 13, background: '#fbfbfb', marginTop: 6 }}>
+                                        <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 2 }}>Total</div>
                                         {dateTotals.map((dt, i) => (
                                             <div key={i} style={{ fontWeight: 800, textAlign: 'center' }}>{dt}</div>
                                         ))}
