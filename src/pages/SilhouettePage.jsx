@@ -542,9 +542,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               draggable={false}
               onDragStart={e => e.preventDefault()}
               onContextMenu={e => e.preventDefault()}
-              // When the puzzle is already correct, hide the silhouette immediately
-              // to avoid briefly flashing the silhouette image when switching pages.
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect) ? 1 : 0, transition: combinedTransition }}
+              // Hide until loaded to prevent flash of unzoomed image
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect && silhouetteLoaded) ? 1 : 0, transition: combinedTransition }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
                 try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) { }

@@ -33,6 +33,8 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const prevCorrectRef = useRef(false);
+    const [eyesLoaded, setEyesLoaded] = useState(false);
+    const [realLoaded, setRealLoaded] = useState(false);
 
     // Use the daily pokemon passed from parent (already filtered for manifest availability)
     const dailyPokemon = daily;
@@ -107,9 +109,33 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
     // Use thresholds from hintConfig
     const [fullImageThreshold, generationHintThreshold, typesHintThreshold] = EyesHints.thresholds;
     const showFullImage = guesses.length >= fullImageThreshold;
-    const imagePath = showFullImage
+    const eyesImagePath = showFullImage
         ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/eyes/full/${dailyPokemon.id}.png`
         : `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/eyes/trimmed/${dailyPokemon.id}.png`;
+    const realImagePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
+
+    // Preload both images
+    useEffect(() => {
+        if (!dailyPokemon) return;
+        try {
+            const eyesImg = new Image();
+            eyesImg.src = eyesImagePath;
+            const realImg = new Image();
+            realImg.src = realImagePath;
+            eyesImg.onload = () => { /* cached */ };
+            eyesImg.onerror = () => { /* ignore */ };
+            realImg.onload = () => { /* cached */ };
+            realImg.onerror = () => { /* ignore */ };
+            return () => {
+                eyesImg.onload = null;
+                eyesImg.onerror = null;
+                realImg.onload = null;
+                realImg.onerror = null;
+            };
+        } catch (e) {
+            // ignore
+        }
+    }, [dailyPokemon && dailyPokemon.id, eyesImagePath, realImagePath]);
 
     // Show generation hint after threshold
     const showGenerationHint = guesses.length >= generationHintThreshold;
@@ -226,10 +252,11 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                     </>
                 )}
-                <div className="eyes-img-container">
+                <div className="eyes-img-container" style={{ position: 'relative' }}>
+                    {/* Eyes image (trimmed or full) */}
                     <img
-                        src={imagePath}
-                        alt={isCorrect ? dailyPokemon.name : "Pokemon eyes"}
+                        src={eyesImagePath}
+                        alt="Pokemon eyes"
                         draggable={false}
                         onDragStart={e => e.preventDefault()}
                         onContextMenu={e => e.preventDefault()}
@@ -237,11 +264,42 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                             width: '100%',
                             height: '100%',
                             objectFit: 'contain',
-                            transition: 'opacity 0.4s',
+                            position: 'absolute',
+                            inset: 0,
+                            zIndex: 1,
+                            opacity: (!isCorrect && eyesLoaded) ? 1 : 0,
+                            transition: 'opacity 300ms ease',
+                        }}
+                        onLoad={e => {
+                            setEyesLoaded(true);
                         }}
                         onError={e => {
-                            e.target.style.display = 'none';
+                            setEyesLoaded(false);
                             console.error('Failed to load eyes image for ID:', dailyPokemon.id);
+                        }}
+                    />
+                    {/* Real pokemon image (shown when correct) */}
+                    <img
+                        src={realImagePath}
+                        alt={dailyPokemon.name}
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        onContextMenu={e => e.preventDefault()}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            position: 'absolute',
+                            inset: 0,
+                            zIndex: 2,
+                            opacity: (isCorrect && realLoaded) ? 1 : 0,
+                            transition: 'opacity 300ms ease',
+                        }}
+                        onLoad={e => {
+                            setRealLoaded(true);
+                        }}
+                        onError={e => {
+                            setRealLoaded(false);
                         }}
                     />
                 </div>
