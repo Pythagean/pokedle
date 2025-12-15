@@ -144,17 +144,15 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   const colourPath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/artwork/${dailyPokemon.id}.png`;
   const spriteColourPath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/sprite/${dailyPokemon.id}.png`;
 
-  // --- Hints logic (types, sprite colours) ---
+  // --- Hints logic (types, generation) ---
   const types = dailyPokemon.types || [];
   const generation = dailyPokemon.generation || "N/A";
   let generationHint = null;
   let generationHintPlaceholder = null;
   let typeHint = null;
   let typeHintPlaceholder = null;
-  let spriteColourHint = null;
-  let spriteColourHintPlaceholder = null;
-  // thresholds: [spriteColoursThreshold, typesThreshold, generationThreshold]
-  const [spriteT, typesT, genT] = COLOURS_HINT_THRESHOLDS;
+  // thresholds: [typesThreshold, generationThreshold]
+  const [typesT, genT] = COLOURS_HINT_THRESHOLDS;
 
   if (guesses.length >= genT) {
     // Show generation
@@ -168,8 +166,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
       typeHint = <span><span style={{ fontWeight: 700 }}>Types:</span> <span>{types[0]}, {types[1]}</span></span>;
     }
   }
-  // Always show the in-game sprite colours image.
-  spriteColourHint = (
+  // Always show the in-game sprite colours and top 30 colours
+  const spriteColourDisplay = (
     <div style={{ margin: '16px auto 0', maxWidth: 350, textAlign: 'center' }}>
       <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 8 }}>In-game sprite colours:</div>
       <img
@@ -190,41 +188,32 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
           background: '#fff'
         }}
       />
-      {/* Reveal the top_30 colours image when the sprite threshold is reached */}
-      {guesses.length >= spriteT ? (
-        <div style={{ marginTop: 12 }}>
-          <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 6 }}>Top 30 colours (no grouping or aggregation):</div>
-          <img
-            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/top_30/${dailyPokemon.id}.png`}
-            alt="Top 30 colours"
-            draggable={false}
-            onDragStart={e => e.preventDefault()}
-            onContextMenu={e => e.preventDefault()}
-            style={{ width: 'auto', maxWidth: '100%', height: 100, display: 'block', margin: '0 auto', objectFit: 'contain', borderRadius: 6, border: '1px solid #bbb', background: '#fff' }}
-          />
-        </div>
-      ) : null}
+      {/* <div style={{ marginTop: 12 }}>
+        <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 6 }}>Top 30 colours (no grouping or aggregation):</div>
+        <img
+          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colours/top_30/${dailyPokemon.id}.png`}
+          alt="Top 30 colours"
+          draggable={false}
+          onDragStart={e => e.preventDefault()}
+          onContextMenu={e => e.preventDefault()}
+          style={{ width: 'auto', maxWidth: '100%', height: 100, display: 'block', margin: '0 auto', objectFit: 'contain', borderRadius: 6, border: '1px solid #bbb', background: '#fff' }}
+        />
+      </div> */}
     </div>
   );
 
-  // Keep existing generation/type placeholders logic unchanged — only the top_30 reveal is gated by spriteT.
-  if (guesses.length < genT && guesses.length >= typesT) {
-    generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {genT - guesses.length} guess{genT - guesses.length === 1 ? '' : 'es'}!</span>;
-  }
-  if (guesses.length < typesT && types.length > 0 && guesses.length >= spriteT) {
+  // Placeholders for upcoming hints: Types -> Generation
+  if (guesses.length > 0 && guesses.length < typesT && types.length > 0) {
     typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
-
-  // Placeholder for top_30 image when not yet revealed
-  if (guesses.length > 0 && guesses.length < spriteT) {
-    spriteColourHintPlaceholder = <span style={{ color: '#888' }}>The top 30 colours will be revealed in {spriteT - guesses.length} guess{spriteT - guesses.length === 1 ? '' : 'es'}!</span>;
+  if (guesses.length < genT && guesses.length >= typesT) {
+    generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {genT - guesses.length} guess{genT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
 
   // If the puzzle has been solved, remove any placeholders for hints that haven't been shown.
   if (isCorrect) {
     generationHintPlaceholder = null;
     typeHintPlaceholder = null;
-    spriteColourHintPlaceholder = null;
   }
 
   return (
@@ -302,12 +291,9 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             />
           )}
         </div>
-        {/* Sprite colour blocks hint or placeholder */}
-        {spriteColourHint}
-        {spriteColourHintPlaceholder && (
-          <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>{spriteColourHintPlaceholder}</div>
-        )}
-        {/* Hints section */}
+        {/* Sprite colour blocks - always shown */}
+        {spriteColourDisplay}
+        {/* Hints section: Types, then Generation */}
         {typeHint && (
           <div style={{
             color: '#333',

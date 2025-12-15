@@ -72,7 +72,7 @@ def get_most_common_colors(image_path, num_colors=10):
     with Image.open(image_path) as img:
         img = img.convert('RGBA')
         # Resize to speed up color counting
-        small = img.resize((256, 256), Image.LANCZOS)
+        small = img.resize((600, 600), Image.LANCZOS)
         # If verbose/debug mode is enabled, save the resized image to the debug dir
         try:
             if globals().get('VERBOSE', False):
