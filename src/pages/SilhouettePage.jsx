@@ -170,9 +170,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
   // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
-  const maxZoom = 4.0;
-  const minZoom = 1.0;
-  const maxSteps = 10;
+  const maxZoom = 3.5;
+  const minZoom = 1.2;
+  const maxSteps = 15;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.1;
   const eased = Math.pow(t, easePower);
@@ -421,7 +421,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-        <h2 style={{ margin: 0 }}>Silhouette Mode</h2>
+        <h2 style={{ margin: 0 }}>Details Mode</h2>
+        
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
@@ -434,6 +435,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             </div>
           }
         />
+        
         
             {/* <button
               style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
@@ -498,6 +500,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               </div>
             )}
       </div>
+      <h3 style={{ margin: 0 }}>Today is Silhouette Day!</h3>
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (

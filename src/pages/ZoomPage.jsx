@@ -399,6 +399,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           Reset
         </button> */}
       </div>
+      <h3 style={{ margin: 0 }}>Today is Zoom Day!</h3>
       <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
