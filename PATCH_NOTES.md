@@ -1,3 +1,43 @@
+## Release Notes — December 15, 2025
+
+## Overview
+
+Major version release - Combined Silhoutte/Zoom mode into Details mode (and added Eyes Mode). Replaced Game Info Mode with Locations Mode. Results card generation
+
+## What’s New
+
+- **Eyes Mode** - Added new Eyes Mode, guess the pokemon based on their eyes!
+- **Details Mode** - Added a new 'Details Mode' which will alternate between Zoom and Silhouette Modes (with Eyes mode on Friday)
+- **Card Mode** - Slightly reduced blur level for Full Art and Illustration cards
+- **Colours Mode** - Hints given are now the Pokemon's Types, and then the Generation (after 3 then 6 guess respectively). Re-generated Colour blocks with different parameters
+- **Locations Mode** - Added new Locations Mode (replacing Game Info), shows the maps where the Pokemon is found straight away
+- **Results Page** - Allow user to generate a TCG Card with their results on it, and generate a Guesses Image with all of their guesses in it. Changed 'Last 7 Days' section to use Pokedle numbers instead of weekdays
+
+## Commits included (newest first)
+
+```text
+8136236 | Add image preloading and visibility handling for Eyes and Zoom pages
+8a4c993 | Add TYPE_COLORS for consistent Pokémon type styling across pages
+37e2611 | Changing Location Page hints to give the user the pokemon type
+deb9ede | Refine blur levels based on guess count for improved visual feedback
+e4a4980 | Re-generated colour blocks with different parameters. Changes what clues are given for the user in Colours Mode
+7e97274 | Script tidy up
+844c56a | Added Eyes mode
+c50423e | Adjust zoom parameters and update headings for Silhouette and Zoom pages
+bcd4b06 | Clean up old localStorage entries on app mount
+5eda4f4 | Update Last 7 Days section to use Pokedle numbers instead of weekday labels
+9dc40ee | Update card manifest
+3dc3098 | Setting up card override feature, rebuilding card manifest
+4410382 | Added Details Mode, tweaks to Results Page image generation
+61989f6 | Replaced Game Info page with Locations
+c6ca4a8 | Pokemon Data setup for GameData > Map Mode transformation
+4d6d399 | Results card tweaks
+c71e3cc | Guess image in results page
+308089c | Results Page - Initial commit for results card generation
+b3af82c | Game Data - Added effect descriptions to Held Items
+13f4383 | Update PATCH_NOTES.md for December 8, 2025
+```
+
 
 ## Release Notes — December 8, 2025
 
