@@ -6,6 +6,7 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 import { LOCATIONS_HINT_THRESHOLDS, getClueCount, getNextThresholdIndex } from '../config/hintConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 // import pokemonData from '../../data/pokemon_data.json';
 
 function mulberry32(a) {
@@ -509,33 +510,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
         if (type === 'types') {
             const types = dailyPokemon.types || [];
             if (types.length === 0) return null;
-            const typeColors = {
-                normal: '#A8A878',
-                fire: '#F08030',
-                water: '#6890F0',
-                electric: '#F8D030',
-                grass: '#78C850',
-                ice: '#98D8D8',
-                fighting: '#C03028',
-                poison: '#A040A0',
-                ground: '#E0C068',
-                flying: '#A890F0',
-                psychic: '#F85888',
-                bug: '#A8B820',
-                rock: '#B8A038',
-                ghost: '#705898',
-                dragon: '#7038F8',
-                dark: '#705848',
-                steel: '#B8B8D0',
-                fairy: '#EE99AC',
-            };
             return (
                 <div style={{ marginBottom: 10 }}>
                     <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 8 }}>Type{types.length > 1 ? 's' : ''}:</div>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
                         {types.map(t => {
                             const tLower = String(t).toLowerCase();
-                            const bgColor = typeColors[tLower] || '#777';
+                            const bgColor = TYPE_COLORS[tLower] || '#777';
                             return (
                                 <div
                                     key={t}

@@ -5,8 +5,7 @@ import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
-import { POKEDEX_HINT_THRESHOLDS, PokedexHints } from '../config/hintConfig';
-// import pokemonData from '../../data/pokemon_data.json';
+import { POKEDEX_HINT_THRESHOLDS, PokedexHints } from '../config/hintConfig';import { TYPE_COLORS } from '../config/typeColors';// import pokemonData from '../../data/pokemon_data.json';
 
 
 // Get a YYYYMMDD string from UTC date
@@ -215,8 +214,33 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
         ))}
         {/* Types hint or placeholder */}
         {guesses.length >= typesT ? (
-          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
-            <span style={{ fontWeight: 700 }}>Types:</span> {dailyPokemon.types && dailyPokemon.types.length > 0 ? dailyPokemon.types.join(', ') : 'Unknown'}
+          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <span style={{ fontWeight: 700 }}>Type{dailyPokemon.types && dailyPokemon.types.length > 1 ? 's' : ''}:</span>
+            {dailyPokemon.types && dailyPokemon.types.length > 0 ? (
+              dailyPokemon.types.map(t => {
+                const tLower = String(t).toLowerCase();
+                const bgColor = TYPE_COLORS[tLower] || '#777';
+                return (
+                  <div
+                    key={t}
+                    style={{
+                      background: bgColor,
+                      color: '#fff',
+                      padding: '4px 12px',
+                      borderRadius: 6,
+                      fontWeight: 700,
+                      fontSize: 14,
+                      textTransform: 'capitalize',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    }}
+                  >
+                    {t}
+                  </div>
+                );
+              })
+            ) : (
+              <span>Unknown</span>
+            )}
           </div>
         ) : (!isCorrect && guesses.length >= thirdT && guesses.length < typesT && (
           <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>

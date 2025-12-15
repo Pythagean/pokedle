@@ -6,6 +6,7 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -159,12 +160,33 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
       generationHint = <span><span style={{ fontWeight: 700 }}>Generation:</span> <span>{generation}</span></span>;
   }
   if (guesses.length >= typesT) {
-    // Show all types
-    if (types.length === 1) {
-      typeHint = <span><span style={{ fontWeight: 700 }}>Type:</span> <span>{types[0]}</span></span>;
-    } else if (types.length === 2) {
-      typeHint = <span><span style={{ fontWeight: 700 }}>Types:</span> <span>{types[0]}, {types[1]}</span></span>;
-    }
+    // Show all types with colored badges
+    typeHint = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <span style={{ fontWeight: 700 }}>Type{types.length > 1 ? 's' : ''}:</span>
+        {types.map(t => {
+          const tLower = String(t).toLowerCase();
+          const bgColor = TYPE_COLORS[tLower] || '#777';
+          return (
+            <div
+              key={t}
+              style={{
+                background: bgColor,
+                color: '#fff',
+                padding: '4px 12px',
+                borderRadius: 6,
+                fontWeight: 700,
+                fontSize: 14,
+                textTransform: 'capitalize',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}
+            >
+              {t}
+            </div>
+          );
+        })}
+      </div>
+    );
   }
   // Always show the in-game sprite colours and top 30 colours
   const spriteColourDisplay = (

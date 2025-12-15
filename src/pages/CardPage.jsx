@@ -6,6 +6,7 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 import { CARD_HINT_THRESHOLDS, CardHints } from '../config/hintConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
 
@@ -494,9 +495,35 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                     borderTop: '1px dashed #bbb',
                     paddingTop: 10,
                     marginTop: 16,
-                    fontSize: 16
+                    fontSize: 16,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    justifyContent: 'center',
+                    flexWrap: 'wrap'
                   }}>
-                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
+                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span>
+                    {answer.types.map(t => {
+                      const tLower = String(t).toLowerCase();
+                      const bgColor = TYPE_COLORS[tLower] || '#777';
+                      return (
+                        <div
+                          key={t}
+                          style={{
+                            background: bgColor,
+                            color: '#fff',
+                            padding: '4px 12px',
+                            borderRadius: 6,
+                            fontWeight: 700,
+                            fontSize: 14,
+                            textTransform: 'capitalize',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                          }}
+                        >
+                          {t}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </>
@@ -519,9 +546,35 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                     borderTop: '1px dashed #bbb',
                     paddingTop: 10,
                     marginTop: 16,
-                    fontSize: 16
+                    fontSize: 16,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    justifyContent: 'center',
+                    flexWrap: 'wrap'
                   }}>
-                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span> <span>{answer.types.join(', ')}</span>
+                    <span style={{ fontWeight: 700 }}>Type{answer.types.length > 1 ? 's' : ''}:</span>
+                    {answer.types.map(t => {
+                      const tLower = String(t).toLowerCase();
+                      const bgColor = TYPE_COLORS[tLower] || '#777';
+                      return (
+                        <div
+                          key={t}
+                          style={{
+                            background: bgColor,
+                            color: '#fff',
+                            padding: '4px 12px',
+                            borderRadius: 6,
+                            fontWeight: 700,
+                            fontSize: 14,
+                            textTransform: 'capitalize',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                          }}
+                        >
+                          {t}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </>
