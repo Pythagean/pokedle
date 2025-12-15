@@ -164,6 +164,55 @@ function App() {
   const silhouetteMeta = useSilhouetteMeta();
   const zoomMeta = useZoomMeta();
   const titleImg = useTitleImg();
+  
+  // Clean up old confetti localStorage entries on mount
+  useEffect(() => {
+    try {
+      const today = new Date();
+      const todaySeed = getSeedFromDate(today);
+      
+      // Calculate yesterday's seed for comparison
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdaySeed = getSeedFromDate(yesterday);
+      
+      const keysToRemove = [];
+      
+      // Scan all localStorage keys for old daily entries (confetti, emoji, phrase)
+      const dailyPrefixes = ['pokedle_confetti_', 'pokedle_emoji_', 'pokedle_phrase_'];
+      
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && dailyPrefixes.some(prefix => key.startsWith(prefix))) {
+          // Extract the seed from the key (format: pokedle_<type>_<mode>_<seed>)
+          // The seed might have offsets added, but the base date seed is in the same range
+          const parts = key.split('_');
+          const seedStr = parts[parts.length - 1];
+          const seed = parseInt(seedStr, 10);
+          
+          // Remove if the base date portion is clearly from a previous day
+          // Seeds are YYYYMMDD format, so check if it's before yesterday
+          if (!isNaN(seed)) {
+            const baseDatePortion = Math.floor(seed / 10000) * 10000 + (seed % 10000);
+            // If base date is older than yesterday, remove it
+            if (baseDatePortion < yesterdaySeed) {
+              keysToRemove.push(key);
+            }
+          }
+        }
+      }
+      
+      // Remove old entries
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+      
+      if (keysToRemove.length > 0) {
+        console.log(`Cleaned up ${keysToRemove.length} old daily entries`);
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
+  }, []);
+  
   // Preload navigation icons (including the Results icon) so they appear immediately when header renders
   useEffect(() => {
     const imgs = [];
