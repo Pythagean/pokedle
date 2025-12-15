@@ -65,7 +65,8 @@ export function makeHintConfig(thresholds = HINT_THRESHOLDS) {
 
 // Per-page threshold constants and convenience configs
 // Adjust these arrays to change unlocking behavior per page/mode.
-export const LOCATIONS_HINT_THRESHOLDS = [3, 6, 9];
+// Locations: [additional locations, methods, types]
+export const LOCATIONS_HINT_THRESHOLDS = [2, 4, 6];
 export const LocationsHints = makeHintConfig(LOCATIONS_HINT_THRESHOLDS);
 
 export const POKEDEX_HINT_THRESHOLDS = [4, 8, 12];

@@ -56,10 +56,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     const overridePokemon = overrideId && pokemonData ? pokemonData.find(p => p.id === parseInt(overrideId, 10)) : null;
     const dailyPokemon = overridePokemon || daily || computedDaily;
 
-    // Build clues for the day — Location Mode focused: show locations in stages
+    // Build clues for the day — Location Mode focused: show locations in stages, then types
     const cluesForDay = useMemo(() => {
         if (!dailyPokemon) return [];
-        return ['locations'];
+        return ['locations', 'types'];
     }, [dailyPokemon]);
 
     // Load mapping of location -> filename (produced by scripts/match_location_maps.py)
@@ -97,7 +97,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
 
     // Determine which clues to show based on guesses (use page-specific config)
     const clueCount = getClueCount(guesses.length, LOCATIONS_HINT_THRESHOLDS);
-    const shownClues = cluesForDay.slice(0, clueCount);
+    // Filter out 'types' unless we've reached the third threshold (6 guesses)
+    const shownClues = cluesForDay.slice(0, clueCount).filter(clueType => {
+        if (clueType === 'types') {
+            return guesses.length >= LOCATIONS_HINT_THRESHOLDS[2];
+        }
+        return true;
+    });
 
     // Guessing state (controlled input for GuessInput)
     const [guess, setGuess] = useState('');
@@ -362,19 +368,16 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             const genNames = new Set(genLocations.map(loc => getRawName(loc)));
             const additionalLocations = rawLocations.filter(loc => !genNames.has(getRawName(loc)));
 
-            // Determine what to show based on clue count
-            // clueCount: 1 = gen only, 2 = gen + additional, 3+ = gen + additional + methods
-            const locationStage = Math.min(clueCount, 3);
-            const showGenLocations = locationStage >= 1;
-            const showAdditionalLocations = locationStage >= 2;
-            const showMethods = locationStage >= 3;
+            // Determine what to show based on thresholds from hintConfig
+            // LOCATIONS_HINT_THRESHOLDS = [2, 4, 6] → [additional locations, methods, types]
+            const showGenLocations = true; // Always shown
+            const showAdditionalLocations = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
+            const showMethods = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
 
             let headerText = 'Wild Encounter Locations:';
-            if (locationStage === 1) {
+            if (!showAdditionalLocations) {
                 headerText = `This Pokemon was first found in these locations in its home region:`;
-            } else if (locationStage === 2) {
-                headerText = 'This Pokemon can be found at these locations across Kanto, Johto, and Hoenn:';
-            } else if (locationStage === 3) {
+            } else {
                 headerText = 'This Pokemon can be found at these locations across Kanto, Johto, and Hoenn:';
             }
 
@@ -490,16 +493,68 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         {!showGenLocations && genLocations.length === 0 && additionalLocations.length === 0 && 'No locations (only obtainable by evolution)'}
                     </div>
                     {/* Hint placeholders for what's coming next */}
-                    {!isCorrect && locationStage === 1 && additionalLocations.length > 0 && (
+                    {/* {!isCorrect && !showAdditionalLocations && additionalLocations.length > 0 && (
                         <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                             Additional locations from other regions revealed in {LOCATIONS_HINT_THRESHOLDS[0] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[0] - guesses.length === 1 ? '' : 'es'}
                         </div>
                     )}
-                    {!isCorrect && locationStage === 2 && (
+                    {!isCorrect && showAdditionalLocations && !showMethods && (
                         <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                             Encounter methods revealed in {LOCATIONS_HINT_THRESHOLDS[1] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[1] - guesses.length === 1 ? '' : 'es'}
                         </div>
-                    )}
+                    )} */}
+                </div>
+            );
+        }
+        if (type === 'types') {
+            const types = dailyPokemon.types || [];
+            if (types.length === 0) return null;
+            const typeColors = {
+                normal: '#A8A878',
+                fire: '#F08030',
+                water: '#6890F0',
+                electric: '#F8D030',
+                grass: '#78C850',
+                ice: '#98D8D8',
+                fighting: '#C03028',
+                poison: '#A040A0',
+                ground: '#E0C068',
+                flying: '#A890F0',
+                psychic: '#F85888',
+                bug: '#A8B820',
+                rock: '#B8A038',
+                ghost: '#705898',
+                dragon: '#7038F8',
+                dark: '#705848',
+                steel: '#B8B8D0',
+                fairy: '#EE99AC',
+            };
+            return (
+                <div style={{ marginBottom: 10 }}>
+                    <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 8 }}>Type{types.length > 1 ? 's' : ''}:</div>
+                    <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+                        {types.map(t => {
+                            const tLower = String(t).toLowerCase();
+                            const bgColor = typeColors[tLower] || '#777';
+                            return (
+                                <div
+                                    key={t}
+                                    style={{
+                                        background: bgColor,
+                                        color: '#fff',
+                                        padding: '6px 16px',
+                                        borderRadius: 6,
+                                        fontWeight: 700,
+                                        fontSize: 15,
+                                        textTransform: 'capitalize',
+                                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                                    }}
+                                >
+                                    {t}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
@@ -597,8 +652,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         <div style={{ textAlign: 'left' }}>
                             Guess the Pokémon from the in-game <strong>Locations</strong>.<br /><br />
                             <strong>Clue 1)</strong> Shows locations from the Pokémon's introduction generation (e.g. Kanto for Gen&nbsp;1).<br />
-                            <strong>Clue 2)</strong> Reveals additional locations from other generations.<br />
-                            <strong>Clue 3)</strong> Adds the encounter <em>method</em> (e.g. "Surf", "Fishing") beneath the same maps.<br /><br />
+                            <strong>After 2 guesses:</strong> Reveals additional locations from other generations.<br />
+                            <strong>After 4 guesses:</strong> Adds the encounter <em>method</em> (e.g. "Surf", "Fishing") beneath the same maps.<br />
+                            <strong>After 6 guesses:</strong> Shows the Pokémon's type(s).<br /><br />
                             If the Pokémon has no wild locations, pre-evolution encounter locations are used.
                         </div>
                     }
@@ -640,26 +696,35 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     </>
                 )}
                 {shownClues.map(type => renderClue(type))}
-                {/* Hint placeholder text for next clue, specifying clue type */}
+                {/* Hint placeholder text for next clue - custom logic for Locations page */}
                 {!isCorrect && (() => {
-                    const nextIdx = getNextThresholdIndex(guesses.length, LOCATIONS_HINT_THRESHOLDS);
-                    if (nextIdx !== -1 && cluesForDay.length > shownClues.length) {
-                        const nextThreshold = LOCATIONS_HINT_THRESHOLDS[nextIdx];
-                        const cluesLeft = nextThreshold - guesses.length;
-                        const nextClueType = cluesForDay[shownClues.length];
-                        // Human-friendly clue type names
-                        const clueTypeLabels = {
-                            stats: 'Base Stats',
-                            ability: 'Abilities',
-                            moves: 'Moves Learned by Level Up',
-                            category: 'Category',
-                            locations: 'Wild Encounter Locations',
-                            held_items: 'Held Items',
-                            shape: 'Shape',
-                        };
+                    // Determine what hint will be revealed next based on current guess count
+                    const showAdditionalLocs = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
+                    const showMethods = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
+                    const showTypes = guesses.length >= LOCATIONS_HINT_THRESHOLDS[2];
+                    
+                    if (!showAdditionalLocs) {
+                        // Next: Additional locations at threshold[0] (2 guesses)
+                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[0] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>{clueTypeLabels[nextClueType] || nextClueType}</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                                <span>Next clue (<b>Additional Locations</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                            </div>
+                        );
+                    } else if (!showMethods) {
+                        // Next: Methods at threshold[1] (4 guesses)
+                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[1] - guesses.length;
+                        return (
+                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                                <span>Next clue (<b>Encounter Methods</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                            </div>
+                        );
+                    } else if (!showTypes) {
+                        // Next: Types at threshold[2] (6 guesses)
+                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[2] - guesses.length;
+                        return (
+                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                                <span>Next clue (<b>Types</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
                             </div>
                         );
                     }
