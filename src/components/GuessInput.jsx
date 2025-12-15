@@ -300,6 +300,19 @@ export default function GuessInput({
       )}
       {/* Responsive mobile styles for GuessInput */}
       <style>{`
+        .guess-input {
+          color-scheme: light;
+          background: #fff !important;
+          color: #111 !important;
+        }
+        .guess-dropdown {
+          color-scheme: light;
+          background: #fff !important;
+          color: #111 !important;
+        }
+        .guess-dropdown li {
+          color: #111 !important;
+        }
         @media (max-width: 600px) {
           .guess-input {
             min-width: 60px !important;
