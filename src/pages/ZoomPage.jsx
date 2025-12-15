@@ -315,19 +315,23 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
         }
       `}</style>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-        <h2 style={{ margin: 0 }}>Zoom Mode</h2>
+        <h2 style={{ margin: 0 }}>Details Mode</h2>
         <InfoButton
-          ariaLabel="How to Play"
-          placement="right"
-          marginTop={110}
-          content={
-            <div style={{ textAlign: 'left' }}>
-              Guess the Pokémon from a zoomed-in image!<br /><br />
-              Each incorrect guess zooms out to reveal more of the real image.<br /><br />
-              <b>Note:</b> The image may be <b>mirrored</b> (flipped horizontally) for extra challenge.
-            </div>
-          }
-        />
+                  ariaLabel="Details Mode"
+                  placement="right"
+                  marginTop={110}
+                  iconSize={22}
+                  content={
+                    <div style={{ textAlign: 'left' }}>
+                      Details mode consists of 3 different game types, chosen based on the day of the week:
+                      <ul>
+                        <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Wednesday and Saturday)</li>
+                        <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
+                        <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's eyes (Fr-eyes-day... get it?)</li>
+                      </ul>
+                    </div>
+                  }
+                />
         {/* <button
           style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
           onClick={() => setDebugOverlay(d => !d)}
@@ -399,7 +403,25 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           Reset
         </button> */}
       </div>
-      <h3 style={{ margin: 0 }}>Today is Zoom Day!</h3>
+      
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        <h3 style={{ margin: 0 }}>Today is Zoom Day!</h3>
+        <InfoButton
+          ariaLabel="How to Play"
+          placement="right"
+          marginTop={110}
+          iconSize={16}
+          fontSize={12}
+          content={
+            <div style={{ textAlign: 'left' }}>
+              Guess the Pokémon from a zoomed-in image!<br /><br />
+              Each incorrect guess zooms out to reveal more of the real image.<br /><br />
+              <b>Note:</b> The image may be <b>mirrored</b> (flipped horizontally) for extra challenge.
+            </div>
+          }
+        />
+      </div>
+      
       <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (

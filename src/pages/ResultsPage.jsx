@@ -1002,7 +1002,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 
                                 // Calculate Pokedle day number (same logic as at the top of the file)
                                 const effectiveDate = effectiveUTCDate(dt);
-                                const dayNum = Math.floor((effectiveDate.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
+                                const dayNum = Math.floor((effectiveDate.getTime() - epoch.getTime()) / MS_PER_DAY) + 2;
                                 return `#${dayNum}`;
                             });
 

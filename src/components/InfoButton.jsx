@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-export default function InfoButton({ ariaLabel = 'Info', content, placement = 'right', marginTop = 100 }) {
+export default function InfoButton({ ariaLabel = 'Info', content, placement = 'right', marginTop = 100, iconSize = 22, fontSize = 16 }) {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ left: 0, top: 0 });
   const btnRef = useRef(null);
@@ -57,17 +57,17 @@ export default function InfoButton({ ariaLabel = 'Info', content, placement = 'r
       <button
         ref={btnRef}
         style={{
-          width: 22,
-          height: 22,
+          width: iconSize,
+          height: iconSize,
           borderRadius: '50%',
           background: '#e3eafc',
           border: '1px solid #90caf9',
           color: '#1976d2',
           fontWeight: 700,
-          fontSize: 15,
+          fontSize: fontSize,
           cursor: 'pointer',
           padding: 0,
-          lineHeight: '22px',
+          lineHeight: `${iconSize}px`,
           textAlign: 'center',
           marginLeft: 2
         }}

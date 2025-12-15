@@ -131,7 +131,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
     if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
       setShowConfetti(true);
-      try { localStorage.setItem(key, '1'); } catch (e) {}
+      try { localStorage.setItem(key, '1'); } catch (e) { }
       const t = setTimeout(() => setShowConfetti(false), 2500);
       prevCorrectRef.current = true;
       return () => clearTimeout(t);
@@ -311,7 +311,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           const r = containerRef.current.getBoundingClientRect();
           setContainerSize({ w: r.width, h: r.height });
         }
-      } catch (e) {}
+      } catch (e) { }
     }
     measure();
     window.addEventListener('resize', measure);
@@ -366,7 +366,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
     originPercentX = Math.max(0, Math.min(1, focalPixelX / containerSize.w));
     originPercentY = Math.max(0, Math.min(1, focalPixelY / containerSize.h));
   }
-    // originScale: hold at 1.0 for the first ORIGIN_HOLD_GUESSES guesses,
+  // originScale: hold at 1.0 for the first ORIGIN_HOLD_GUESSES guesses,
   if (originPercentX === null || originPercentY === null) {
     const fallbackX = shouldMirror ? (1 - centerX) : centerX;
     const fallbackY = centerY;
@@ -422,11 +422,97 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <h2 style={{ margin: 0 }}>Details Mode</h2>
-        
+
+        <InfoButton
+          ariaLabel="Details Mode"
+          placement="right"
+          marginTop={110}
+          iconSize={22}
+          content={
+            <div style={{ textAlign: 'left' }}>
+              Details mode consists of 3 different game types, chosen based on the day of the week:
+              <ul>
+                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Wednesday and Saturday)</li>
+                <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
+                <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's eyes (Fr-eyes-day... get it?)</li>
+              </ul>
+            </div>
+          }
+        />
+
+
+        {/* <button
+              style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
+              onClick={() => setDebugOverlay(d => !d)}
+              aria-pressed={debugOverlay}
+              aria-label="Toggle silhouette debug overlay"
+            >
+              {debugOverlay ? 'Debug: ON' : 'Debug'}
+            </button> */}
+
+        {debugOverlay && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8 }}>
+            <label style={{ fontSize: 13, color: '#444' }}>Zoom</label>
+            <input
+              type="range"
+              min={minZoom}
+              max={maxZoom}
+              step={0.01}
+              value={debugZoom !== null ? debugZoom : zoom}
+              onChange={e => setDebugZoom(Number(e.target.value))}
+              style={{ width: 160 }}
+            />
+            <div style={{ minWidth: 44, textAlign: 'right', fontSize: 13 }}>{((debugZoom !== null ? debugZoom : zoom) * 100).toFixed(0)}%</div>
+            <button onClick={() => setDebugZoom(null)} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid #bbb', background: '#efefef', cursor: 'pointer', fontSize: 13 }}>Auto</button>
+          </div>
+        )}
+
+        {debugOverlay && (
+          <div style={{ marginLeft: 12, fontSize: 12, color: '#333', fontFamily: 'monospace' }}>
+            <div>Chosen target: {typeof targetX === 'number' ? `${targetX.toFixed(3)}, ${targetY.toFixed(3)}` : 'none'}</div>
+            <div>Image natural: {imgNatural && imgNatural.w ? `${imgNatural.w}x${imgNatural.h}` : 'unknown'}</div>
+            <div>Container: {containerSize && containerSize.w ? `${containerSize.w}x${containerSize.h}` : 'unknown'}</div>
+            <div style={{ marginTop: 4 }}>Computed translate: {(() => {
+              if (!imgNatural || !imgNatural.w || typeof targetX !== 'number') return 'n/a';
+              const chosenXpix = targetX * imgNatural.w;
+              const chosenYpix = targetY * imgNatural.h;
+              const cx = imgNatural.w / 2;
+              const cy = imgNatural.h / 2;
+              const xd = cx - chosenXpix;
+              const yd = cy - chosenYpix;
+              const xPct = (xd / imgNatural.w) * 100;
+              const yPct = (yd / imgNatural.h) * 100;
+              // mirror and zoom applied when rendering; show base percent
+              return `${xPct.toFixed(2)}%, ${yPct.toFixed(2)}%`;
+            })()}</div>
+            <div style={{ marginTop: 6 }}>Image Translate (percent):</div>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+              <label style={{ fontSize: 12 }}>X</label>
+              <input type="number" value={manualTranslate.x} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+              <label style={{ fontSize: 12 }}>Y</label>
+              <input type="number" value={manualTranslate.y} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+              <button onClick={() => setManualTranslate({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+            </div>
+            <div style={{ marginTop: 6 }}>Debug point offset (percent):</div>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+              <label style={{ fontSize: 12 }}>X</label>
+              <input type="number" value={debugPointOffset.x} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
+              <label style={{ fontSize: 12 }}>Y</label>
+              <input type="number" value={debugPointOffset.y} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
+              <button onClick={() => setDebugPointOffset({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        <h3 style={{ margin: 0 }}>Today is Silhouette Day!</h3>
         <InfoButton
           ariaLabel="How to Play"
           placement="right"
           marginTop={110}
+          iconSize={16}
+          fontSize={12}
           content={
             <div style={{ textAlign: 'left' }}>
               Guess the Pokémon from its silhouette!<br /><br />
@@ -435,76 +521,13 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             </div>
           }
         />
-        
-        
-            {/* <button
-              style={{ padding: '4px 8px', borderRadius: 6, background: debugOverlay ? '#ffe0b2' : '#f0f0f0', border: '1px solid #bbb', fontWeight: 600, fontSize: 13, cursor: 'pointer', marginLeft: 6 }}
-              onClick={() => setDebugOverlay(d => !d)}
-              aria-pressed={debugOverlay}
-              aria-label="Toggle silhouette debug overlay"
-            >
-              {debugOverlay ? 'Debug: ON' : 'Debug'}
-            </button> */}
-        
-            {debugOverlay && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 8 }}>
-                <label style={{ fontSize: 13, color: '#444' }}>Zoom</label>
-                <input
-                  type="range"
-                  min={minZoom}
-                  max={maxZoom}
-                  step={0.01}
-                  value={debugZoom !== null ? debugZoom : zoom}
-                  onChange={e => setDebugZoom(Number(e.target.value))}
-                  style={{ width: 160 }}
-                />
-                <div style={{ minWidth: 44, textAlign: 'right', fontSize: 13 }}>{((debugZoom !== null ? debugZoom : zoom) * 100).toFixed(0)}%</div>
-                <button onClick={() => setDebugZoom(null)} style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid #bbb', background: '#efefef', cursor: 'pointer', fontSize: 13 }}>Auto</button>
-              </div>
-            )}
-
-            {debugOverlay && (
-              <div style={{ marginLeft: 12, fontSize: 12, color: '#333', fontFamily: 'monospace' }}>
-                <div>Chosen target: {typeof targetX === 'number' ? `${targetX.toFixed(3)}, ${targetY.toFixed(3)}` : 'none'}</div>
-                <div>Image natural: {imgNatural && imgNatural.w ? `${imgNatural.w}x${imgNatural.h}` : 'unknown'}</div>
-                <div>Container: {containerSize && containerSize.w ? `${containerSize.w}x${containerSize.h}` : 'unknown'}</div>
-                <div style={{ marginTop: 4 }}>Computed translate: {(() => {
-                  if (!imgNatural || !imgNatural.w || typeof targetX !== 'number') return 'n/a';
-                  const chosenXpix = targetX * imgNatural.w;
-                  const chosenYpix = targetY * imgNatural.h;
-                  const cx = imgNatural.w / 2;
-                  const cy = imgNatural.h / 2;
-                  const xd = cx - chosenXpix;
-                  const yd = cy - chosenYpix;
-                  const xPct = (xd / imgNatural.w) * 100;
-                  const yPct = (yd / imgNatural.h) * 100;
-                  // mirror and zoom applied when rendering; show base percent
-                  return `${xPct.toFixed(2)}%, ${yPct.toFixed(2)}%`;
-                })()}</div>
-                <div style={{ marginTop: 6 }}>Image Translate (percent):</div>
-                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
-                  <label style={{ fontSize: 12 }}>X</label>
-                  <input type="number" value={manualTranslate.x} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
-                  <label style={{ fontSize: 12 }}>Y</label>
-                  <input type="number" value={manualTranslate.y} step={0.5} onChange={e => setManualTranslate(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
-                  <button onClick={() => setManualTranslate({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
-                </div>
-                <div style={{ marginTop: 6 }}>Debug point offset (percent):</div>
-                <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
-                  <label style={{ fontSize: 12 }}>X</label>
-                  <input type="number" value={debugPointOffset.x} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, x: Number(e.target.value) }))} style={{ width: 80 }} />
-                  <label style={{ fontSize: 12 }}>Y</label>
-                  <input type="number" value={debugPointOffset.y} step={0.5} onChange={e => setDebugPointOffset(prev => ({ ...prev, y: Number(e.target.value) }))} style={{ width: 80 }} />
-                  <button onClick={() => setDebugPointOffset({ x: 0, y: 0 })} style={{ padding: '4px 8px', fontSize: 12 }}>Reset</button>
-                </div>
-              </div>
-            )}
       </div>
-      <h3 style={{ margin: 0 }}>Today is Silhouette Day!</h3>
+
+
       <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
-            <>
+          <>
             <CongratsMessage guessCount={guesses.length} mode="Silhouette" />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
@@ -524,7 +547,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect) ? 1 : 0, transition: combinedTransition }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
-                try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) {}
+                try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) { }
               }}
               onError={e => { setSilhouetteLoaded(false); }}
             />
