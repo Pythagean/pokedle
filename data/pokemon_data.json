@@ -28938,6 +28938,11 @@
     "location_area_encounters": [
       {
         "region": "Kanto",
+        "name": "Kanto Route 2",
+        "method": "Walk"
+      },
+      {
+        "region": "Kanto",
         "name": "Kanto Route 21",
         "method": "Walk"
       }
