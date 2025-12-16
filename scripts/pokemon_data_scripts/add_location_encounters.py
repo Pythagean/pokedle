@@ -22,8 +22,8 @@ response_cache: Dict[str, Optional[Dict]] = {}
 # Valid game versions to filter encounters
 VALID_VERSIONS = {
     'red', 'blue', 'firered', 'leafgreen', 'yellow',
-    'heartgold', 'soulsilver', 'gold', 'silver', 'crystal',
-    'ruby', 'sapphire', 'emerald', 'omega-ruby', 'alpha-sapphire'
+    'gold', 'silver', 'crystal',
+    'ruby', 'sapphire', 'emerald'
 }
 
 def get_evolution_chain(pokemon_id: int) -> Optional[Dict]:
@@ -113,7 +113,7 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
         pokemon_id: The Pokemon ID
         
     Returns:
-        List of unique location area names
+        List of unique location area dicts with name, region, and games
     """
     try:
         encounters_url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}/encounters"
@@ -126,9 +126,9 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
             encounters_data = response.json()
             response_cache[encounters_url] = encounters_data
 
-        locations = []
-        # cache region lookups per location_area url to avoid duplicate API calls
-        region_cache: Dict[str, Optional[str]] = {}
+        # Use dict to aggregate games by location name
+        location_map: Dict[str, Dict] = {}
+        
         for encounter in encounters_data:
             la = encounter.get('location_area', {}) or {}
             location_name = la.get('name')
@@ -141,15 +141,16 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                 print(f"    Skipping location_area (unknown-*): {location_name}")
                 continue
 
-            # Check if any version_details match our valid versions and collect methods
+            # Collect all matching game versions and methods
             version_details = encounter.get('version_details', [])
-            matched = False
-            methods_seen: List[str] = []
+            matching_games = []
+            methods_seen = []
             for detail in version_details:
                 version_name = detail.get('version', {}).get('name', '')
                 if version_name in VALID_VERSIONS:
-                    matched = True
-                    # gather methods from encounter_details
+                    if version_name not in matching_games:
+                        matching_games.append(version_name)
+                    # Gather methods from encounter_details
                     for ed in detail.get('encounter_details', []) or []:
                         method_obj = ed.get('method') or {}
                         method_name = None
@@ -163,7 +164,8 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                         mnorm = method_name.replace('-', ' ').title()
                         if mnorm not in methods_seen:
                             methods_seen.append(mnorm)
-            if not matched:
+            
+            if not matching_games:
                 continue
 
             region_name = None
@@ -225,20 +227,38 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                 if region_title.lower() not in combined.lower():
                     combined = f"{region_title} {combined}"
 
-            # If any method contains 'Headbutt', collapse to a single 'Headbutt' entry
-            if any('headbutt' in m.lower() for m in methods_seen):
-                methods_seen = ['Headbutt']
+            # Aggregate games for this location
+            if combined not in location_map:
+                location_map[combined] = {
+                    'region': region_name.replace('-', ' ').title() if region_name else None,
+                    'games': [],
+                    'methods': []
+                }
+            
+            # Add games that aren't already in the list
+            for game in matching_games:
+                if game not in location_map[combined]['games']:
+                    location_map[combined]['games'].append(game)
+            
+            # Add methods that aren't already in the list
+            for method in methods_seen:
+                if method not in location_map[combined]['methods']:
+                    location_map[combined]['methods'].append(method)
 
-            method_str = ', '.join(methods_seen) if methods_seen else ''
-            locations.append({'region': region_name.replace('-', ' ').title() if region_name else None, 'name': combined, 'method': method_str})
-
-        # Deduplicate while preserving order
-        seen = set()
+        # Convert to output format with sorted games
         out = []
-        for item in locations:
-            if item['name'] not in seen:
-                seen.add(item['name'])
-                out.append(item)
+        for name, data in location_map.items():
+            # If any method contains 'Headbutt', collapse to a single 'Headbutt' entry
+            methods = data['methods']
+            if any('headbutt' in m.lower() for m in methods):
+                methods = ['Headbutt']
+            
+            out.append({
+                'name': name,
+                'region': data['region'],
+                'games': sorted(data['games']),
+                'method': ', '.join(methods) if methods else ''
+            })
         return out
 
     except requests.RequestException as e:

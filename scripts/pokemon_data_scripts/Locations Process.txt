@@ -1,0 +1,13 @@
+Scrape PokeAPI for locations
+python .\pokemon_data_scripts\add_location_encounters.py --input-json ..\public\data\pokemon_data.json --output-json ./pokemon_data.json --locations-list ./locations.txt
+
+Run script to input Trade overrides (which don't exist in PokeAPI)
+python .\pokemon_data_scripts\add_trade_locations.py --input-json .\pokemon_data.json --input-csv .\pokemon_data_scripts\pokemon_trade_overrides.csv --output-json .\pokemon_data.json
+
+Check that all locations exist in maps directory:
+python .\pokemon_data_scripts\find_location_maps.py --input-file .\locations.txt --map-dir D:\Github\pokedle_assets\maps --output-csv ./missing_locations.csv
+
+Go through and add any location overrides needed
+
+Run script to rename locations based on overrides
+python .\pokemon_data_scripts\apply_location_overrides.py --input-csv .\missing_locations.csv --input-json .\pokemon_data_with_trades.json --output-json .\pokemon_data_locations_override.json
