@@ -814,10 +814,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     let res = null;
                                     if (newShow) {
                                         // switched into details: generate sprite grid
-                                        res = await generateSpriteGrid(cardName && String(cardName).trim().slice(0,50));
+                                        res = await generateSpriteGrid(cardName && String(cardName).trim().slice(0,12));
                                     } else {
                                         // switched out of details: generate the card image
-                                        res = await generateCardImage(false, cardName && String(cardName).trim().slice(0,50));
+                                        res = await generateCardImage(false, cardName && String(cardName).trim().slice(0,12));
                                     }
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
@@ -859,8 +859,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     setExportError(null);
                                     setExportStatus('working');
                                     const res = showDetails 
-                                        ? await generateSpriteGrid(cardName && String(cardName).trim().slice(0,50)) 
-                                        : await generateCardImage(showDetails, cardName && String(cardName).trim().slice(0,50));
+                                        ? await generateSpriteGrid(cardName && String(cardName).trim().slice(0,12)) 
+                                        : await generateCardImage(showDetails, cardName && String(cardName).trim().slice(0,12));
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
@@ -893,7 +893,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             type="text"
                             maxLength={50}
                             value={cardName}
-                            onChange={(e) => { setCardName(e.target.value.slice(0,50)); setGeneratedDisabled(false); }}
+                            onChange={(e) => { setCardName(e.target.value.slice(0,12)); setGeneratedDisabled(false); }}
                             placeholder="Type your name here..."
                             aria-label="Card name"
                             style={{ height: 28, padding: '6px 8px', borderRadius: 8, border: '1px solid #e0e0e0', fontSize: 14, minWidth: 80, width: isMobile ? '95%' : undefined }}
