@@ -461,7 +461,12 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                     if (bIdx === -1) return -1;
                                                     return aIdx - bIdx;
                                                 }) : [];
-                                                const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ') : null;
+                                                const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => {
+                                                    const gl = String(g).toLowerCase();
+                                                    if (gl === 'firered') return 'FireRed';
+                                                    if (gl === 'leafgreen') return 'LeafGreen';
+                                                    return String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                                }).join(', ') : null;
                                                 return (
                                                     <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
                                                         {prettyMethod && (
@@ -538,7 +543,12 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                             if (bIdx === -1) return -1;
                                                             return aIdx - bIdx;
                                                         }) : [];
-                                                        const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ') : null;
+                                                        const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => {
+                                                            const gl = String(g).toLowerCase();
+                                                            if (gl === 'firered') return 'FireRed';
+                                                            if (gl === 'leafgreen') return 'LeafGreen';
+                                                            return String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                                        }).join(', ') : null;
                                                         return (
                                                             <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
                                                                 {prettyMethod && (
@@ -719,15 +729,17 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 <InfoButton
                     ariaLabel="How to Play"
                     placement="right"
-                    marginTop={130}
+                    marginTop={190}
                     content={
                         <div style={{ textAlign: 'left' }}>
-                            Guess the Pokémon from the in-game <strong>Locations</strong>.<br /><br />
-                            <strong>Clue 1)</strong> Shows locations from the Pokémon's introduction generation (Gen 1: R/B/Y, Gen 2: G/S/C, Gen 3: R/S/E) with encounter methods.<br />
+                            Guess the Pokémon from the in-game Locations.<br /><br />
+                            <strong>Initial Clue:</strong> Shows locations from the Pokémon's introduction generation (Gen 1: R/B/Y, Gen 2: G/S/C, Gen 3: R/S/E) with encounter methods.<br />
                             <strong>After 2 guesses:</strong> Reveals all other locations from different generations.<br />
                             <strong>After 4 guesses:</strong> Shows the Pokémon's type(s).<br />
                             <strong>After 6 guesses:</strong> Shows the evolution stage.<br /><br />
                             If the Pokémon has no wild locations, pre-evolution encounter locations are used.
+                            <br /><br />
+                            The <strong>method</strong> used to find the Pokemon can be any of these: Walk, Surf, Headbutt, Rock Smash, Seaweed, Trade, Roaming, Gift Egg, Gift, Only One, Old Rod, Good Rod, Super Rod
                         </div>
                     }
                 />

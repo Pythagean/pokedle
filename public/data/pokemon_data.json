@@ -67956,7 +67956,7 @@
           "gold",
           "silver"
         ],
-        "method": "Roaming Grass"
+        "method": "Roaming"
       }
     ],
     "moves": [
@@ -68087,7 +68087,7 @@
           "gold",
           "silver"
         ],
-        "method": "Roaming Grass"
+        "method": "Roaming"
       }
     ],
     "moves": [
@@ -68216,7 +68216,7 @@
           "gold",
           "silver"
         ],
-        "method": "Roaming Grass"
+        "method": "Roaming"
       },
       {
         "name": "Johto Bell Tower",
@@ -85969,7 +85969,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Feebas Tile Fishing"
+        "method": "Good Rod, Super Rod, Old Rod"
       }
     ],
     "moves": [
@@ -86170,7 +86170,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Feebas Tile Fishing"
+        "method": "Good Rod, Super Rod, Old Rod"
       }
     ]
   },
@@ -86369,7 +86369,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Walk, Devon Scope"
+        "method": "Walk (with Devon Scope)"
       },
       {
         "name": "Hoenn Route 120",
@@ -86379,7 +86379,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Walk, Devon Scope"
+        "method": "Walk (with Devon Scope)"
       },
       {
         "name": "Hoenn Route 121",
@@ -90533,7 +90533,7 @@
           "emerald",
           "sapphire"
         ],
-        "method": "Roaming Grass, Roaming Water"
+        "method": "Roaming"
       }
     ],
     "moves": [
@@ -90668,7 +90668,7 @@
           "emerald",
           "ruby"
         ],
-        "method": "Roaming Grass, Roaming Water"
+        "method": "Roaming"
       }
     ],
     "moves": [
