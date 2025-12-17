@@ -57,10 +57,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     const overridePokemon = overrideId && pokemonData ? pokemonData.find(p => p.id === parseInt(overrideId, 10)) : null;
     const dailyPokemon = overridePokemon || daily || computedDaily;
 
-    // Build clues for the day — Location Mode focused: show locations in stages, then types
+    // Build clues for the day — Location Mode focused: show locations in stages, then types, then evolution stage
     const cluesForDay = useMemo(() => {
         if (!dailyPokemon) return [];
-        return ['locations', 'types'];
+        return ['locations', 'types', 'evolution_stage'];
     }, [dailyPokemon]);
 
     // Load mapping of location -> filename (produced by scripts/match_location_maps.py)
@@ -95,14 +95,11 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     }, []);
 
     // Determine which clues to show based on guesses (use page-specific config)
-    const clueCount = getClueCount(guesses.length, LOCATIONS_HINT_THRESHOLDS);
-    // Filter out 'types' unless we've reached the third threshold (6 guesses)
-    const shownClues = cluesForDay.slice(0, clueCount).filter(clueType => {
-        if (clueType === 'types') {
-            return guesses.length >= LOCATIONS_HINT_THRESHOLDS[2];
-        }
-        return true;
-    });
+    // LOCATIONS_HINT_THRESHOLDS = [2, 4, 6] → [all locations, types, evolution stage]
+    // Note: threshold[0]=2 is handled inside locations renderer for additional locations
+    const clueThresholds = [LOCATIONS_HINT_THRESHOLDS[1], LOCATIONS_HINT_THRESHOLDS[2]]; // [4, 6] for types and evolution
+    const clueCount = getClueCount(guesses.length, clueThresholds);
+    const shownClues = cluesForDay.slice(0, clueCount);
 
     // Guessing state (controlled input for GuessInput)
     const [guess, setGuess] = useState('');
@@ -345,39 +342,49 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             };
 
             const genNumber = getGenNumber(dailyPokemon);
-            const genRegionMap = { 1: 'Kanto', 2: 'Johto', 3: 'Hoenn' };
-            const regionFilter = genRegionMap[genNumber] || null;
+            const genGameSets = {
+                1: new Set(['red', 'blue', 'yellow' ]),
+                2: new Set(['gold', 'silver', 'crystal']),
+                3: new Set(['ruby', 'sapphire', 'emerald', 'firered', 'leafgreen'])
+            };
+            const genGames = genGameSets[genNumber] || null;
 
-            // Calculate gen locations and additional locations
-            const genLocations = regionFilter ? rawLocations.filter(loc => {
-                if (!loc) return false;
-                if (typeof loc === 'object' && loc.region) {
-                    try {
-                        if (new RegExp(`^${regionFilter}\\b`, 'i').test(String(loc.region))) return true;
-                    } catch (e) { /* fall through */ }
-                }
-                const raw = getRawName(loc) || '';
-                try {
-                    return new RegExp(`^${regionFilter}\\b`, 'i').test(raw);
-                } catch (e) {
-                    return false;
-                }
-            }) : rawLocations;
-
-            const genNames = new Set(genLocations.map(loc => getRawName(loc)));
-            const additionalLocations = rawLocations.filter(loc => !genNames.has(getRawName(loc)));
+            // Split locations by gen-specific vs non-gen-specific games
+            // Gen locations: locations with gen-specific games (showing only those games)
+            // Additional locations: locations with non-gen-specific games (showing only those games)
+            const genLocations = [];
+            const additionalLocations = [];
+            
+            if (genGames) {
+                rawLocations.forEach(loc => {
+                    if (!loc || typeof loc !== 'object' || !Array.isArray(loc.games)) return;
+                    
+                    const genGamesForLoc = loc.games.filter(game => genGames.has(game.toLowerCase()));
+                    const otherGamesForLoc = loc.games.filter(game => !genGames.has(game.toLowerCase()));
+                    
+                    if (genGamesForLoc.length > 0) {
+                        genLocations.push({ ...loc, games: genGamesForLoc });
+                    }
+                    if (otherGamesForLoc.length > 0) {
+                        additionalLocations.push({ ...loc, games: otherGamesForLoc });
+                    }
+                });
+            } else {
+                // No gen filtering - show all in gen section
+                genLocations.push(...rawLocations);
+            }
 
             // Determine what to show based on thresholds from hintConfig
-            // LOCATIONS_HINT_THRESHOLDS = [2, 4, 6] → [additional locations, methods, types]
-            const showGenLocations = true; // Always shown
+            // LOCATIONS_HINT_THRESHOLDS = [2, 4, 6] → [all locations, types, evolution stage]
+            const showGenLocations = true; // Always shown with methods
             const showAdditionalLocations = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
-            const showMethods = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
+            const showMethods = true; // Always show methods now
 
             let headerText = 'Wild Encounter Locations:';
             if (!showAdditionalLocations) {
-                headerText = `This Pokemon was first found in these locations in its home region:`;
+                headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
             } else {
-                headerText = 'This Pokemon can be found at these locations across Kanto, Johto, and Hoenn:';
+                headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
             }
 
             const formatDisplay = (loc) => {
@@ -398,6 +405,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
 
             return (
                 <div style={{ marginBottom: 10 }}>
+                    {/* Gen-specific locations section */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
                     </div>
@@ -406,7 +414,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             This Pokémon <strong>can't be found in the wild</strong> - its pre-evolutions can be in these locations:
                         </div>
                     )}
-                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
+                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                         {/* Show gen locations */}
                         {showGenLocations && genLocations.length > 0 && genLocations.map((loc, i) => {
                             const raw = getRawName(loc);
@@ -432,55 +440,42 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                         <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
                                         {showMethods && (() => {
                                             let method = null;
-                                            if (loc && typeof loc === 'object') method = loc.method || null;
-                                            if (!method && typeof loc === 'string') method = null;
-                                            if (method) {
-                                                const pretty = String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                                                return (
-                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                        <span style={{ fontWeight: 700 }}>Method:</span>
-                                                        <span style={{ fontWeight: 400 }}>{pretty}</span>
-                                                    </div>
-                                                );
+                                            let games = null;
+                                            if (loc && typeof loc === 'object') {
+                                                method = loc.method || null;
+                                                games = loc.games || null;
                                             }
-                                            return null;
-                                        })()}
-                                </div>
-                            );
-                        })}
-                        {/* Show additional locations */}
-                        {showAdditionalLocations && additionalLocations.length > 0 && additionalLocations.map((loc, i) => {
-                            const raw = getRawName(loc);
-                            const slug = (raw || '').replace(/\s+/g, '_');
-                            let filename = null;
-                            if (locationFileMap) {
-                                filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
-                            }
-                            const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
-                            return (
-                                <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
-                                        {url ? (
-                                            <>
-                                                <img src={url} alt={formatDisplay(loc)}
-                                                    style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
-                                                    onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
-                                                />
-                                                <div style={{ display: 'none', minWidth: 160, minHeight: 120, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                            </>
-                                        ) : (
-                                            <div style={{ minWidth: 160, minHeight: 120, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                        )}
-                                        <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
-                                        {showMethods && (() => {
-                                            let method = null;
-                                            if (loc && typeof loc === 'object') method = loc.method || null;
                                             if (!method && typeof loc === 'string') method = null;
-                                            if (method) {
-                                                const pretty = String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                                            const hasInfo = method || (games && games.length > 0);
+                                            if (hasInfo) {
+                                                const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                // Games are already filtered at this point
+                                                const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
+                                                const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
+                                                    const aLower = String(a).toLowerCase();
+                                                    const bLower = String(b).toLowerCase();
+                                                    const aIdx = gameOrder.indexOf(aLower);
+                                                    const bIdx = gameOrder.indexOf(bLower);
+                                                    if (aIdx === -1 && bIdx === -1) return 0;
+                                                    if (aIdx === -1) return 1;
+                                                    if (bIdx === -1) return -1;
+                                                    return aIdx - bIdx;
+                                                }) : [];
+                                                const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ') : null;
                                                 return (
-                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                        <span style={{ fontWeight: 700 }}>Method:</span>
-                                                        <span style={{ fontWeight: 400 }}>{pretty}</span>
+                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
+                                                        {prettyMethod && (
+                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
+                                                            </div>
+                                                        )}
+                                                        {prettyGames && (
+                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                <span style={{ fontWeight: 700 }}>Games:</span>
+                                                                <span style={{ fontWeight: 400 }}>{prettyGames}</span>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 );
                                             }
@@ -491,6 +486,84 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         })}
                         {!showGenLocations && genLocations.length === 0 && additionalLocations.length === 0 && 'No locations (only obtainable by evolution)'}
                     </div>
+
+                    {/* Additional locations section */}
+                    {showAdditionalLocations && additionalLocations.length > 0 && (
+                        <>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 6, justifyContent: 'center' }}>
+                                <div style={{ fontWeight: 600, fontSize: 15 }}>Additional locations across all generations:</div>
+                            </div>
+                            <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
+                                {additionalLocations.map((loc, i) => {
+                                    const raw = getRawName(loc);
+                                    const slug = (raw || '').replace(/\s+/g, '_');
+                                    let filename = null;
+                                    if (locationFileMap) {
+                                        filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
+                                    }
+                                    const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
+                                    return (
+                                        <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
+                                                {url ? (
+                                                    <>
+                                                        <img src={url} alt={formatDisplay(loc)}
+                                                            style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
+                                                            onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                        />
+                                                        <div style={{ display: 'none', minWidth: 160, minHeight: 120, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                                    </>
+                                                ) : (
+                                                    <div style={{ minWidth: 160, minHeight: 120, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
+                                                )}
+                                                <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
+                                                {showMethods && (() => {
+                                                    let method = null;
+                                                    let games = null;
+                                                    if (loc && typeof loc === 'object') {
+                                                        method = loc.method || null;
+                                                        games = loc.games || null;
+                                                    }
+                                                    if (!method && typeof loc === 'string') method = null;
+                                                    const hasInfo = method || (games && games.length > 0);
+                                                    if (hasInfo) {
+                                                        const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                        const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
+                                                        const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
+                                                            const aLower = String(a).toLowerCase();
+                                                            const bLower = String(b).toLowerCase();
+                                                            const aIdx = gameOrder.indexOf(aLower);
+                                                            const bIdx = gameOrder.indexOf(bLower);
+                                                            if (aIdx === -1 && bIdx === -1) return 0;
+                                                            if (aIdx === -1) return 1;
+                                                            if (bIdx === -1) return -1;
+                                                            return aIdx - bIdx;
+                                                        }) : [];
+                                                        const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ') : null;
+                                                        return (
+                                                            <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
+                                                                {prettyMethod && (
+                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                        <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
+                                                                    </div>
+                                                                )}
+                                                                {prettyGames && (
+                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                        <span style={{ fontWeight: 700 }}>Games:</span>
+                                                                        <span style={{ fontWeight: 400 }}>{prettyGames}</span>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    }
+                                                    return null;
+                                                })()}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </>
+                    )}
                     {/* Hint placeholders for what's coming next */}
                     {/* {!isCorrect && !showAdditionalLocations && additionalLocations.length > 0 && (
                         <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
@@ -587,6 +660,26 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 </div>
             );
         }
+        if (type === 'evolution_stage') {
+            const stage = dailyPokemon.evolution_stage || 1;
+            const stageText = stage === 1 ? '1st' : stage === 2 ? '2nd' : stage === 3 ? '3rd' : `${stage}th`;
+            const spriteUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${stage}-front.png`;
+            return (
+                <div style={{ marginBottom: 10 }}>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Evolution Stage:</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+                        
+                        <div style={{ color: '#333', fontSize: 16, fontWeight: 600, marginTop: 5 }}>{stageText}</div>
+                        <img 
+                            src={spriteUrl} 
+                            alt={`Stage ${stage}`}
+                            style={{ width: 24, height: 24, objectFit: 'contain', transform: 'scale(1.5)' }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                    </div>
+                </div>
+            );
+        }
         return null;
     }
 
@@ -630,10 +723,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     content={
                         <div style={{ textAlign: 'left' }}>
                             Guess the Pokémon from the in-game <strong>Locations</strong>.<br /><br />
-                            <strong>Clue 1)</strong> Shows locations from the Pokémon's introduction generation (e.g. Kanto for Gen&nbsp;1).<br />
-                            <strong>After 2 guesses:</strong> Reveals additional locations from other generations.<br />
-                            <strong>After 4 guesses:</strong> Adds the encounter <em>method</em> (e.g. "Surf", "Fishing") beneath the same maps.<br />
-                            <strong>After 6 guesses:</strong> Shows the Pokémon's type(s).<br /><br />
+                            <strong>Clue 1)</strong> Shows locations from the Pokémon's introduction generation (Gen 1: R/B/Y, Gen 2: G/S/C, Gen 3: R/S/E) with encounter methods.<br />
+                            <strong>After 2 guesses:</strong> Reveals all other locations from different generations.<br />
+                            <strong>After 4 guesses:</strong> Shows the Pokémon's type(s).<br />
+                            <strong>After 6 guesses:</strong> Shows the evolution stage.<br /><br />
                             If the Pokémon has no wild locations, pre-evolution encounter locations are used.
                         </div>
                     }
@@ -679,31 +772,31 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {!isCorrect && (() => {
                     // Determine what hint will be revealed next based on current guess count
                     const showAdditionalLocs = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
-                    const showMethods = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
-                    const showTypes = guesses.length >= LOCATIONS_HINT_THRESHOLDS[2];
+                    const showTypes = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
+                    const showEvolution = guesses.length >= LOCATIONS_HINT_THRESHOLDS[2];
                     
                     if (!showAdditionalLocs) {
                         // Next: Additional locations at threshold[0] (2 guesses)
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[0] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>Additional Locations</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
-                            </div>
-                        );
-                    } else if (!showMethods) {
-                        // Next: Methods at threshold[1] (4 guesses)
-                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[1] - guesses.length;
-                        return (
-                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>Encounter Methods</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                                <span>Next clue (<b>All Locations</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
                             </div>
                         );
                     } else if (!showTypes) {
-                        // Next: Types at threshold[2] (6 guesses)
-                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[2] - guesses.length;
+                        // Next: Types at threshold[1] (4 guesses)
+                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[1] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                                 <span>Next clue (<b>Types</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                            </div>
+                        );
+                    } else if (!showEvolution) {
+                        // Next: Evolution stage at threshold[2] (6 guesses)
+                        const cluesLeft = LOCATIONS_HINT_THRESHOLDS[2] - guesses.length;
+                        return (
+                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                                <span>Next clue (<b>Evolution Stage</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
                             </div>
                         );
                     }
