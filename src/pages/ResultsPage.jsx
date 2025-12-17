@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
+import { PHRASES, POKEMON } from '../components/CongratsMessage';
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null }) {
     const [copied, setCopied] = useState(false);
@@ -602,6 +603,75 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 ctx.restore();
             } catch (e) {
                 // ignore any drawing errors
+            }
+
+            // Draw congratulatory phrase at the bottom of the card
+            try {
+                // Use seeded RNG to select a deterministic phrase per day
+                const adjustedGuessCount = Math.max(1, Math.floor(total / 8));
+                const mode = 'all';
+                
+                // Filter candidates by mode and adjusted guess count
+                const candidates = PHRASES.filter(p => {
+                    const pm = (p.mode || '').toLowerCase();
+                    const m = (mode || '').toLowerCase();
+                    const modeMatch = pm === 'all' || pm === m || m.includes(pm) || pm.includes(m);
+                    return modeMatch && adjustedGuessCount >= p.min && adjustedGuessCount <= p.max;
+                });
+                
+                if (candidates.length > 0) {
+                    // Use seeded RNG for consistent selection
+                    const chosen = candidates[Math.floor(rng() * candidates.length)];
+                    let phraseText = chosen.text || '';
+                    
+                    // Token substitution using seeded RNG
+                    phraseText = phraseText.replace(/\{(\w+)\}/g, (full, key) => {
+                        const list = POKEMON[key];
+                        if (!Array.isArray(list) || list.length === 0) return full;
+                        const idx = Math.floor(rng() * list.length);
+                        return list[idx];
+                    });
+                    
+                    if (phraseText) {
+                        ctx.save();
+                        ctx.font = '500 18px "Montserrat", Inter, Arial, sans-serif';
+                        ctx.fillStyle = isDarkTemplate ? '#fff' : '#222';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        
+                        // Word wrap the phrase to fit within card width with padding
+                        const maxPhraseWidth = W - 80; // 40px padding on each side
+                        const words = phraseText.split(' ');
+                        const lines = [];
+                        let currentLine = '';
+                        
+                        for (const word of words) {
+                            const testLine = currentLine ? `${currentLine} ${word}` : word;
+                            const metrics = ctx.measureText(testLine);
+                            if (metrics.width > maxPhraseWidth && currentLine) {
+                                lines.push(currentLine);
+                                currentLine = word;
+                            } else {
+                                currentLine = testLine;
+                            }
+                        }
+                        if (currentLine) lines.push(currentLine);
+                        
+                        // Draw lines from bottom up
+                        const lineHeight = 24;
+                        const bottomMargin = 20;
+                        let y = H - bottomMargin;
+                        
+                        for (let i = lines.length - 1; i >= 0; i--) {
+                            ctx.fillText(lines[i], W / 2, y);
+                            y -= lineHeight;
+                        }
+                        
+                        ctx.restore();
+                    }
+                }
+            } catch (e) {
+                // ignore phrase drawing errors
             }
 
             // Export blob and return an object URL for preview. Also attempt clipboard copy
