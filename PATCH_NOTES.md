@@ -1,3 +1,30 @@
+## Release Notes — December 17, 2025
+
+## What’s New
+
+- **Locations Mode** - Re-working Locations Mode to include game names in the clues, tweaked logic behind hints to provide extra clues
+- **Results Mode** - Truncate name textfield to prevent overflow on generated card image, added message down bottom based on score
+- **Pokedex Mode** - 2nd hint is now the Pokemon Genus, before moving onto the other pokedex entries
+- **Colours Mode** - Added a pixelated mosaic as the first hint given, to help certain people who aren't very good at this mode
+
+## Commits included (newest first)
+
+```text
+4459f39 | 2025-12-17 | Added message down bottom of generated results card
+dc6c25b | 2025-12-17 | Colours Page: Added colour mosaic hint
+d3993b5 | 2025-12-17 | Added new colour scripts for making mosaics
+5f59c9a | 2025-12-17 | Xmas period setup
+0e4db69 | 2025-12-17 | Fix: Update Pokedex Mode hints and correct title capitalization
+b80e4fe | 2025-12-17 | Pokedex Page: 2nd hint is now the Pokemon Genus, before moving onto the other pokedex entries
+34e539b | 2025-12-17 | Override dark mode preference on name field
+8b6b43c | 2025-12-17 | Limit card name input and processing to 12 characters for improved performance and consistency
+60fa6aa | 2025-12-17 | Re-working Locations Mode to include games in the clues, tweaked logic behind hints to provide extra clues and make the mode easier for certain people
+00dead4 | 2025-12-17 | Location data update
+6c0e3bc | 2025-12-15 | Added more results card backgrounds and fixed dark mode on name textfield
+e1d37ae | 2025-12-15 | Fix file path for loading location to file map in LocationsPage
+8b47732 | 2025-12-15 | Update PATCH_NOTES.md for December 15, 2025 release, highlighting new features and improvements
+```
+
 ## Release Notes — December 15, 2025
 
 ## Overview
