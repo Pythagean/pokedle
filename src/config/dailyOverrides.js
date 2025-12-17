@@ -26,12 +26,12 @@
 export const DAILY_OVERRIDES = {
   // Example: Christmas 2025 - Delibird
   "20251225": {
-    classic: 225,
+    classic: 204,
     card: { pokemonId: 225, cardFile: "225-12.jpg" },
-    pokedex: 225,
-    details: 225,
-    colours: 225,
-    map: 225
+    pokedex: 361,
+    details: 234,
+    colours: 124,
+    map: 120
   },
   "20251224": {
     card: { pokemonId: 180, cardFile: "180-30.jpg" }
