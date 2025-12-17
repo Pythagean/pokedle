@@ -896,7 +896,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             onChange={(e) => { setCardName(e.target.value.slice(0,12)); setGeneratedDisabled(false); }}
                             placeholder="Type your name here..."
                             aria-label="Card name"
-                            style={{ height: 28, padding: '6px 8px', borderRadius: 8, border: '1px solid #e0e0e0', fontSize: 14, minWidth: 80, width: isMobile ? '95%' : undefined }}
+                            style={{ height: 28, padding: '6px 8px', borderRadius: 8, border: '1px solid #e0e0e0', fontSize: 14, minWidth: 80, width: isMobile ? '95%' : undefined, colorScheme: 'light', background: '#fff', color: '#111' }}
                         />
                         {exportStatus === 'working' && <div style={{ color: '#666', fontSize: 13 }}>Generating</div>}
                         {exportStatus === 'copied' && <div style={{ color: '#1976d2', fontSize: 13 }}>Copied</div>}
