@@ -25,7 +25,7 @@ def main():
     os.makedirs(success_dir, exist_ok=True)
 
     # Load pokemon data
-    with open(os.path.join('data', 'pokemon_data.json'), encoding='utf-8') as f:
+    with open(os.path.join('public/data', 'pokemon_data.json'), encoding='utf-8') as f:
         pokemon_data = json.load(f)
     name_to_id = {p['name']: str(p['id']) for p in pokemon_data}
 
