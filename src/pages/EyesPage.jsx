@@ -4,6 +4,7 @@ import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { EyesHints } from '../config/hintConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 
@@ -311,13 +312,43 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                         borderTop: '1px dashed #bbb',
                         paddingTop: 10,
                         marginTop: 16,
-                        fontSize: 16
+                        fontSize: 16,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 8
                     }}>
-                        <span style={{ fontWeight: 700 }}>Generation:</span> <span>{dailyPokemon.generation}</span>
+                        <span style={{ fontWeight: 700 }}>Generation:</span>
+                        <span>{dailyPokemon.generation}</span>
+                        {(() => {
+                            // Map generation to starter sprite ID (using first starter for each gen)
+                            const genStarterMap = {
+                                1: 1,   // Bulbasaur
+                                2: 152, // Chikorita
+                                3: 252, // Treecko
+                                4: 387, // Turtwig
+                                5: 495, // Snivy
+                                6: 650, // Chespin
+                                7: 722, // Rowlet
+                                8: 810, // Grookey
+                                9: 906  // Sprigatito
+                            };
+                            const gen = parseInt(String(dailyPokemon.generation).match(/\d+/)?.[0], 10);
+                            const starterId = genStarterMap[gen];
+                            if (!starterId) return null;
+                            return (
+                                <img
+                                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${starterId}-front.png`}
+                                    alt={`Gen ${gen} starter`}
+                                    style={{ width: 32, height: 32, objectFit: 'contain', transform: 'scale(1.2)' }}
+                                    onError={e => { e.target.style.display = 'none'; }}
+                                />
+                            );
+                        })()}
                     </div>
                 )}
 
-                {/* Show types hint after 6 guesses */}
+                {/* Show types hint after 9 guesses */}
                 {!isCorrect && showTypesHint && dailyPokemon && dailyPokemon.types && (
                     <div style={{
                         color: '#333',
@@ -326,7 +357,30 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                         marginTop: 16,
                         fontSize: 16
                     }}>
-                        <span style={{ fontWeight: 700 }}>Types:</span> <span>{dailyPokemon.types.join(', ')}</span>
+                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Type{dailyPokemon.types.length > 1 ? 's' : ''}:</div>
+                        <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+                            {dailyPokemon.types.map(t => {
+                                const tLower = String(t).toLowerCase();
+                                const bgColor = TYPE_COLORS[tLower] || '#777';
+                                return (
+                                    <div
+                                        key={t}
+                                        style={{
+                                            background: bgColor,
+                                            color: '#fff',
+                                            padding: '6px 16px',
+                                            borderRadius: 6,
+                                            fontWeight: 700,
+                                            fontSize: 15,
+                                            textTransform: 'capitalize',
+                                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                                        }}
+                                    >
+                                        {t}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 )}
 
@@ -342,7 +396,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                         Generation will be revealed in {generationHintThreshold - guesses.length} guess{generationHintThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
-                {!isCorrect && showFullImage && !showGenerationHint && (
+                {!isCorrect && showFullImage && showGenerationHint && !showTypesHint && (
                     <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
                         Types will be revealed in {typesHintThreshold - guesses.length} guess{typesHintThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>

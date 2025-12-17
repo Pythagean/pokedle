@@ -158,8 +158,34 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   const [typesT, mosaicT, genT] = COLOURS_HINT_THRESHOLDS;
 
   if (guesses.length >= genT) {
-    // Show generation
-      generationHint = <span><span style={{ fontWeight: 700 }}>Generation:</span> <span>{generation}</span></span>;
+    // Show generation with starter sprite
+    const gen = parseInt(String(generation).match(/\d+/)?.[0], 10);
+    const genStarterMap = {
+      1: 1,   // Bulbasaur
+      2: 152, // Chikorita
+      3: 252, // Treecko
+      4: 387, // Turtwig
+      5: 495, // Snivy
+      6: 650, // Chespin
+      7: 722, // Rowlet
+      8: 810, // Grookey
+      9: 906  // Sprigatito
+    };
+    const starterId = genStarterMap[gen];
+    generationHint = (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+        <span style={{ fontWeight: 700 }}>Generation:</span>
+        <span>{generation}</span>
+        {starterId && (
+          <img
+            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${starterId}-front.png`}
+            alt={`Gen ${gen} starter`}
+            style={{ width: 32, height: 32, objectFit: 'contain', transform: 'scale(1.2)' }}
+            onError={e => { e.target.style.display = 'none'; }}
+          />
+        )}
+      </div>
+    );
   }
   if (guesses.length >= mosaicT) {
     // Show mosaic hint
