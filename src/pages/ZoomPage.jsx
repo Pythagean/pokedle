@@ -263,6 +263,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
     };
   }, [imgContainerRef]);
 
+  const combinedTransition = `opacity 300ms ease, ${imgStyle.transition}`;
+
   return (
     <div style={{ textAlign: 'center', marginTop: 10, width: '100%' }}>
       <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
@@ -438,7 +440,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                  draggable={false}
                  onDragStart={e => e.preventDefault()}
                  onContextMenu={e => e.preventDefault()}
-                 style={{ ...imgStyle, position: 'absolute', inset: 0, opacity: imgLoaded ? 1 : 0, transition: 'opacity 300ms ease' }}
+                 style={{ ...imgStyle, position: 'absolute', inset: 0, opacity: imgLoaded ? 1 : 0, transition: combinedTransition }}
                  onLoad={e => {
                    setImgLoaded(true);
                    try {
