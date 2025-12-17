@@ -150,7 +150,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-        <h2 style={{ margin: 0 }}>Pokedex Mode</h2>
+        <h2 style={{ margin: 0 }}>Pokédex Mode</h2>
         <InfoButton
           ariaLabel="How to Play"
           marginTop={120}
@@ -159,10 +159,13 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
               Guess the Pokémon from its Pokédex entries.
               <br />
               <br />
-              After 4 guesses a second entry is revealed; after 8 guesses a third; after 12 guesses the Pokémon's types are revealed.
+              After 3 guesses the Pokémon genus is revealed<br  />
+              After 6 guesses a second Pokédex entry is revealed<br  />
+              After 9 guesses a third Pokédex entry is revealed<br  />
+              After 12 guesses the Pokémon's type(s) are revealed.
               <br />
               <br />
-              All Pokémon names have been removed from the Pokédex entries
+              <strong>All</strong> Pokémon names have been removed from the Pokédex entries
             </div>
           }
         />
