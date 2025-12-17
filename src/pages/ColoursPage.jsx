@@ -253,13 +253,13 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   );
 
   // Placeholders for upcoming hints: Mosaic -> Types -> Generation
-  if (guesses.length > 0 && guesses.length < mosaicT) {
+  if (guesses.length > 0 && guesses.length < mosaicT && guesses.length >= typesT) {
     mosaicHintPlaceholder = <span style={{ color: '#888' }}>A colour mosaic will be revealed in {mosaicT - guesses.length} guess{mosaicT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
-  if (guesses.length >= mosaicT && guesses.length < typesT && types.length > 0) {
+  if (guesses.length < typesT && types.length > 0 && guesses.length > 0) {
     typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
-  if (guesses.length < genT && guesses.length >= typesT) {
+  if (guesses.length < genT && guesses.length >= mosaicT) {
     generationHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's generation will be revealed in {genT - guesses.length} guess{genT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
 
@@ -348,24 +348,6 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         {/* Sprite colour blocks - always shown */}
         {spriteColourDisplay}
         {/* Hints section: Mosaic, Types, then Generation */}
-        {mosaicHint && (
-          <div style={{
-            color: '#333',
-            borderTop: '1px dashed #bbb',
-            paddingTop: 10,
-            marginTop: 16,
-            fontSize: 16
-          }}>{mosaicHint}</div>
-        )}
-        {mosaicHintPlaceholder && (
-          <div style={{
-            color: '#888',
-            borderTop: '1px dashed #eee',
-            paddingTop: 10,
-            marginTop: 16,
-            fontSize: 15
-          }}>{mosaicHintPlaceholder}</div>
-        )}
         {typeHint && (
           <div style={{
             color: '#333',
@@ -384,6 +366,25 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             fontSize: 15
           }}>{typeHintPlaceholder}</div>
         )}
+        {mosaicHint && (
+          <div style={{
+            color: '#333',
+            borderTop: '1px dashed #bbb',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 16
+          }}>{mosaicHint}</div>
+        )}
+        {mosaicHintPlaceholder && (
+          <div style={{
+            color: '#888',
+            borderTop: '1px dashed #eee',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 15
+          }}>{mosaicHintPlaceholder}</div>
+        )}
+        
         {generationHint && (
           <div style={{
             color: '#333',
