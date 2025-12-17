@@ -152,12 +152,40 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   let generationHintPlaceholder = null;
   let typeHint = null;
   let typeHintPlaceholder = null;
+  let mosaicHint = null;
+  let mosaicHintPlaceholder = null;
   // thresholds: [typesThreshold, generationThreshold]
-  const [typesT, genT] = COLOURS_HINT_THRESHOLDS;
+  const [typesT, mosaicT, genT] = COLOURS_HINT_THRESHOLDS;
 
   if (guesses.length >= genT) {
     // Show generation
       generationHint = <span><span style={{ fontWeight: 700 }}>Generation:</span> <span>{generation}</span></span>;
+  }
+  if (guesses.length >= mosaicT) {
+    // Show mosaic hint
+    mosaicHint = (
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontWeight: 700, marginBottom: 8 }}>Colour Mosaic:</div>
+        <img
+          src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/colour_hexagons/${dailyPokemon.id}.png`}
+          alt="Colour mosaic"
+          draggable={false}
+          onDragStart={e => e.preventDefault()}
+          onContextMenu={e => e.preventDefault()}
+          style={{
+            width: 'auto',
+            maxWidth: '100%',
+            height: 200,
+            display: 'block',
+            margin: '0 auto',
+            objectFit: 'contain',
+            borderRadius: 6,
+            border: '1px solid #bbb',
+            background: '#fff'
+          }}
+        />
+      </div>
+    );
   }
   if (guesses.length >= typesT) {
     // Show all types with colored badges
@@ -224,8 +252,11 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
     </div>
   );
 
-  // Placeholders for upcoming hints: Types -> Generation
-  if (guesses.length > 0 && guesses.length < typesT && types.length > 0) {
+  // Placeholders for upcoming hints: Mosaic -> Types -> Generation
+  if (guesses.length > 0 && guesses.length < mosaicT) {
+    mosaicHintPlaceholder = <span style={{ color: '#888' }}>A colour mosaic will be revealed in {mosaicT - guesses.length} guess{mosaicT - guesses.length === 1 ? '' : 'es'}!</span>;
+  }
+  if (guesses.length >= mosaicT && guesses.length < typesT && types.length > 0) {
     typeHintPlaceholder = <span style={{ color: '#888' }}>The Pokémon's type{types.length === 2 ? 's' : ''} will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!</span>;
   }
   if (guesses.length < genT && guesses.length >= typesT) {
@@ -235,6 +266,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   // If the puzzle has been solved, remove any placeholders for hints that haven't been shown.
   if (isCorrect) {
     generationHintPlaceholder = null;
+    mosaicHintPlaceholder = null;
     typeHintPlaceholder = null;
   }
 
@@ -315,7 +347,25 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         </div>
         {/* Sprite colour blocks - always shown */}
         {spriteColourDisplay}
-        {/* Hints section: Types, then Generation */}
+        {/* Hints section: Mosaic, Types, then Generation */}
+        {mosaicHint && (
+          <div style={{
+            color: '#333',
+            borderTop: '1px dashed #bbb',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 16
+          }}>{mosaicHint}</div>
+        )}
+        {mosaicHintPlaceholder && (
+          <div style={{
+            color: '#888',
+            borderTop: '1px dashed #eee',
+            paddingTop: 10,
+            marginTop: 16,
+            fontSize: 15
+          }}>{mosaicHintPlaceholder}</div>
+        )}
         {typeHint && (
           <div style={{
             color: '#333',
