@@ -87,8 +87,9 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
     return idx;
   };
   // thresholds: [secondEntryThreshold, thirdEntryThreshold, typesThreshold]
-  const [secondT, thirdT, typesT] = POKEDEX_HINT_THRESHOLDS;
+  const [genusT, secondT, thirdT, typesT] = POKEDEX_HINT_THRESHOLDS;
   // After secondT guesses, show a second clue; after thirdT, a third
+  const showGenusHint = guesses.length >= genusT;
   const showSecondHint = guesses.length >= secondT;
   const showThirdHint = guesses.length >= thirdT;
   const secondFlavorIdx = useMemo(() => getOtherRandomIdx(mainFlavorIdx), [mainFlavorIdx, flavorEntries.length, rng]);
@@ -191,13 +192,24 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
-        <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length > 0 && guesses.length < secondT)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
+        <div style={{ color: '#333', marginBottom: (showGenusHint || (guesses.length > 0 && guesses.length < genusT)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
+        {/* Genus hint or placeholder */}
+        {showGenusHint ? (
+          <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length >= genusT && guesses.length < secondT)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <span style={{ fontWeight: 700 }}>Genus:</span>
+            <span>{dailyPokemon.genus || 'Unknown'}</span>
+          </div>
+        ) : (!isCorrect && guesses.length > 0 && guesses.length < genusT && (
+          <div style={{ color: '#aaa', marginBottom: 12, borderTop: '1px dashed #eee', paddingTop: 10 }}>
+            Genus revealed in {genusT - guesses.length} guess{genusT - guesses.length === 1 ? '' : 'es'}
+          </div>
+        ))}
         {/* Second hint or placeholder */}
         {showSecondHint && flavorEntries.length > 1 ? (
           <div style={{ color: '#333', marginBottom: (showThirdHint || (guesses.length >= secondT && guesses.length < thirdT)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10 }}>
             {flavorEntries[secondFlavorIdx]}
           </div>
-        ) : (!isCorrect && guesses.length > 0 && guesses.length < secondT && flavorEntries.length > 1 && (
+        ) : (!isCorrect && guesses.length >= genusT && guesses.length < secondT && flavorEntries.length > 1 && (
           <div style={{ color: '#aaa', marginBottom: guesses.length + 1 < secondT ? 12 : 0, borderTop: '1px dashed #eee', paddingTop: 10 }}>
             Second Pokedex entry in {secondT - guesses.length} guess{secondT - guesses.length === 1 ? '' : 'es'}
           </div>

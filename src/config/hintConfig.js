@@ -69,7 +69,7 @@ export function makeHintConfig(thresholds = HINT_THRESHOLDS) {
 export const LOCATIONS_HINT_THRESHOLDS = [2, 4, 6];
 export const LocationsHints = makeHintConfig(LOCATIONS_HINT_THRESHOLDS);
 
-export const POKEDEX_HINT_THRESHOLDS = [4, 8, 12];
+export const POKEDEX_HINT_THRESHOLDS = [3, 6, 9, 12];
 export const PokedexHints = makeHintConfig(POKEDEX_HINT_THRESHOLDS);
 
 // Colours page thresholds (types, generation)
