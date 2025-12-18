@@ -1,3 +1,23 @@
+## Release Notes — December 18, 2025
+
+## What’s New
+
+- **Classic Mode** - Added sprites, type styling and habitat images
+- **Card Mode** - Added latest TCG Pocket expansion (Crimson Blaze) to card list
+- **Colours Mode** - Fixed some bugs around the hints and hint placeholders
+- **Locations Mode** - Updated tooltip to contain all known encounter methods
+
+## Commits included (newest first)
+
+```text
+535cc91 | 2025-12-18 | Classic - added sprites to Generation/Stage boxes, added type styling to Types, added habitat images to Habitats
+9b2e22a | 2025-12-18 | Adding sprites to generation hints
+cc373c4 | 2025-12-18 | Zoom Page - use combined transition approach to fix zoom out bug
+2873b38 | 2025-12-18 | Colours Page: fixed bugs around hints and hint placeholders
+13f3dac | 2025-12-18 | Locations Page: A few tweaks to pokemon locations, updating tooltip
+5c55e91 | 2025-12-18 | Adding Crimson Blaze cards
+```
+
 ## Release Notes — December 17, 2025
 
 ## What’s New
@@ -10,6 +30,7 @@
 ## Commits included (newest first)
 
 ```text
+c6d93c7 | 2025-12-17 | Update PATCH_NOTES.md for December 17, 2025 release, adding new features and commits
 4459f39 | 2025-12-17 | Added message down bottom of generated results card
 dc6c25b | 2025-12-17 | Colours Page: Added colour mosaic hint
 d3993b5 | 2025-12-17 | Added new colour scripts for making mosaics
