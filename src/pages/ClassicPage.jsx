@@ -3,6 +3,7 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 
@@ -594,10 +595,70 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
                       </div>
                     </div>
                     <div className={`feedback-box ${generationStatus} feedback-box-large-text`} style={revealRow === rowIdx ? { animationDelay: `${1 * BOX_DELAY_STEP}s` } : undefined}>
-                      <div className="feedback-box-content">{poke.generation}</div>
+                      <div className="feedback-box-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+                        <span>{poke.generation}</span>
+                        {(() => {
+                          const gen = parseInt(String(poke.generation).match(/\d+/)?.[0], 10);
+                          // Map generation to all 3 starter IDs (Grass, Fire, Water)
+                          const genStartersMap = {
+                            1: [1, 4, 7],          // Bulbasaur, Charmander, Squirtle
+                            2: [152, 155, 158],    // Chikorita, Cyndaquil, Totodile
+                            3: [252, 255, 258],    // Treecko, Torchic, Mudkip
+                            4: [387, 390, 393],    // Turtwig, Chimchar, Piplup
+                            5: [495, 498, 501],    // Snivy, Tepig, Oshawott
+                            6: [650, 653, 656],    // Chespin, Fennekin, Froakie
+                            7: [722, 725, 728],    // Rowlet, Litten, Popplio
+                            8: [810, 813, 816],    // Grookey, Scorbunny, Sobble
+                            9: [906, 909, 912]     // Sprigatito, Fuecoco, Quaxly
+                          };
+                          const starterIds = genStartersMap[gen];
+                          if (!starterIds) return null;
+                          return (
+                            <div style={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
+                              {starterIds.map(id => (
+                                <img
+                                  key={id}
+                                  className="starter-sprite"
+                                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed_tight/${id}-front.png`}
+                                  alt=""
+                                  style={{ width: 30, height: 30, objectFit: 'contain', opacity: generationStatus === 'match' ? 1.0 : 0.3 }}
+                                  onError={e => { e.target.style.display = 'none'; }}
+                                />
+                              ))}
+                            </div>
+                          );
+                        })()}
+                      </div>
                     </div>
                     <div className={`feedback-box ${cmp.types}`} style={revealRow === rowIdx ? { animationDelay: `${2 * BOX_DELAY_STEP}s` } : undefined}>
-                      <div className="feedback-box-content">{poke.types.join(', ')}</div>
+                      <div className="feedback-box-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, width: '100%', padding: '4px' }}>
+                        {poke.types.map(t => {
+                          const tLower = String(t).toLowerCase();
+                          const bgColor = TYPE_COLORS[tLower] || '#777';
+                          const typeOpacity = cmp.types === 'match' ? 1.0 : (cmp.types === 'partial' ? 0.7 : 0.4);
+                          return (
+                            <div
+                              key={t}
+                              className="type-badge"
+                              style={{
+                                background: bgColor,
+                                color: '#fff',
+                                padding: '3px 8px',
+                                borderRadius: 4,
+                                fontWeight: 700,
+                                fontSize: 11,
+                                textTransform: 'capitalize',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                                width: 'fit-content',
+                                minWidth: '60%',
+                                opacity: typeOpacity
+                              }}
+                            >
+                              {t}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                     {/* Main Colour box temporarily hidden */}
                     {/* <div className={`feedback-box ${cmp.color}`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
@@ -608,10 +669,55 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
                           <div className="feedback-box-content">{poke.secondary_colours && poke.secondary_colours.length ? poke.secondary_colours.join(', ') : 'None'}</div>
                         </div> */}
                     <div className={`feedback-box ${evolutionStatus} feedback-box-large-text`} style={revealRow === rowIdx ? { animationDelay: `${3 * BOX_DELAY_STEP}s` } : undefined}>
-                      <div className="feedback-box-content">{poke.evolution_stage || 1}</div>
+                      <div className="feedback-box-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+                        <span>{poke.evolution_stage || 1}</span>
+                        {(() => {
+                          const gen = parseInt(String(poke.generation).match(/\d+/)?.[0], 10);
+                          const evoStage = poke.evolution_stage || 1;
+                          // Map generation to all 3 starter base IDs
+                          const genStartersMap = {
+                            1: [1, 4, 7],          // Bulbasaur, Charmander, Squirtle
+                            2: [152, 155, 158],    // Chikorita, Cyndaquil, Totodile
+                            3: [252, 255, 258],    // Treecko, Torchic, Mudkip
+                            4: [387, 390, 393],    // Turtwig, Chimchar, Piplup
+                            5: [495, 498, 501],    // Snivy, Tepig, Oshawott
+                            6: [650, 653, 656],    // Chespin, Fennekin, Froakie
+                            7: [722, 725, 728],    // Rowlet, Litten, Popplio
+                            8: [810, 813, 816],    // Grookey, Scorbunny, Sobble
+                            9: [906, 909, 912]     // Sprigatito, Fuecoco, Quaxly
+                          };
+                          const baseIds = genStartersMap[gen];
+                          if (!baseIds) return null;
+                          // Calculate sprite IDs for each starter at this evolution stage
+                          const spriteIds = baseIds.map(baseId => baseId + (evoStage - 1));
+                          return (
+                            <div style={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
+                              {spriteIds.map(id => (
+                                <img
+                                  key={id}
+                                  className="starter-sprite"
+                                  src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed_tight/${id}-front.png`}
+                                  alt=""
+                                  style={{ width: 30, height: 30, objectFit: 'contain', opacity: evolutionStatus === 'match' ? 1.0 : 0.3 }}
+                                  onError={e => { e.target.style.display = 'none'; }}
+                                />
+                              ))}
+                            </div>
+                          );
+                        })()}
+                      </div>
                     </div>
                     <div className={`feedback-box ${cmp.habitat}`} style={revealRow === rowIdx ? { animationDelay: `${4 * BOX_DELAY_STEP}s` } : undefined}>
-                      <div className="feedback-box-content">{poke.habitat}</div>
+                      <div className="feedback-box-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <span>{poke.habitat}</span>
+                        <img
+                          className="habitat-img"
+                          src={`images/habitats/${poke.habitat}.png`}
+                          alt=""
+                          style={{ opacity: cmp.habitat === 'match' ? 1.0 : 0.45 }}
+                          onError={e => { e.target.style.display = 'none'; }}
+                        />
+                      </div>
                     </div>
                     <div className={`feedback-box ${heightStatus} feedback-box-medium-text`} style={revealRow === rowIdx ? { position: 'relative', animationDelay: `${5 * BOX_DELAY_STEP}s` } : { position: 'relative' }}>
                       {cmp.height !== 'match' && (
@@ -838,6 +944,21 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
           }
           /* On small screens hide the pokemon name label in the leftmost box */
           .feedback-pokemon-box .feedback-box-content { display: none !important; }
+          /* Make habitat images smaller on mobile */
+          .habitat-img {
+            height: 23px !important;
+            width: 30px !important;
+          }
+          /* Make starter sprites smaller on mobile */
+          .starter-sprite {
+            width: 12px !important;
+          }
+          /* Make type badges smaller on mobile */
+          .type-badge {
+            font-size: 8px !important;
+            padding: 2px 4px !important;
+            min-width: 50% !important;
+          }
         }
         /* Placeholder rows shown before any guesses are made */
         .placeholder {
