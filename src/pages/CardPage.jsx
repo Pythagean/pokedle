@@ -195,29 +195,29 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     // Blur logic for full_art and special cards
     switch (true) {
       case guesses.length === 0:
-        blurLevel = 19; break;
+        blurLevel = 18; break;
       case guesses.length === 1:
-        blurLevel = 17; break;
-      case guesses.length === 2:
         blurLevel = 15; break;
+      case guesses.length === 2:
+        blurLevel = 12; break;
       case guesses.length === 3:
-        blurLevel = 13; break;
-      case guesses.length === 4:
-        blurLevel = 11; break;
-      case guesses.length === 5:
         blurLevel = 9; break;
-      case guesses.length === 6:
-        blurLevel = 8; break;
-      case guesses.length === 7:
+      case guesses.length === 4:
         blurLevel = 7; break;
-      case guesses.length === 8:
-        blurLevel = 6; break;
-      case guesses.length === 9:
+      case guesses.length === 5:
         blurLevel = 5; break;
-      case guesses.length === 10:
+      case guesses.length === 6:
         blurLevel = 4; break;
-      case guesses.length === 11:
+      case guesses.length === 7:
         blurLevel = 3; break;
+      case guesses.length === 8:
+        blurLevel = 2; break;
+      case guesses.length === 9:
+        blurLevel = 2; break;
+      case guesses.length === 10:
+        blurLevel = 2; break;
+      case guesses.length === 11:
+        blurLevel = 2; break;
       case guesses.length === 12:
         blurLevel = 2; break;
       default:
@@ -229,27 +229,27 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       case guesses.length === 0:
         blurLevel = 18; break;
       case guesses.length === 1:
-        blurLevel = 16; break;
+        blurLevel = 15; break;
       case guesses.length === 2:
-        blurLevel = 14; break;
-      case guesses.length === 3:
         blurLevel = 12; break;
-      case guesses.length === 4:
-        blurLevel = 10; break;
-      case guesses.length === 5:
+      case guesses.length === 3:
         blurLevel = 9; break;
-      case guesses.length === 6:
+      case guesses.length === 4:
         blurLevel = 8; break;
-      case guesses.length === 7:
+      case guesses.length === 5:
         blurLevel = 7; break;
-      case guesses.length === 8:
+      case guesses.length === 6:
         blurLevel = 6; break;
+      case guesses.length === 7:
+        blurLevel = 5; break;
+      case guesses.length === 8:
+        blurLevel = 4; break;
       case guesses.length === 9:
         blurLevel = 5; break;
       case guesses.length === 10:
-        blurLevel = 4; break;
-      case guesses.length === 11:
         blurLevel = 3; break;
+      case guesses.length === 11:
+        blurLevel = 2; break;
       case guesses.length === 12:
         blurLevel = 2; break;
       default:
