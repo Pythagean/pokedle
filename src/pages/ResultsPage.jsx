@@ -608,7 +608,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             // Draw congratulatory phrase at the bottom of the card
             try {
                 // Use seeded RNG to select a deterministic phrase per day
-                const adjustedGuessCount = Math.max(1, Math.floor(total / 8));
+                const adjustedGuessCount = Math.max(1, Math.floor(total / 6));
                 const mode = 'all';
                 
                 // Filter candidates by mode and adjusted guess count
