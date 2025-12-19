@@ -381,7 +381,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             const showMethods = true; // Always show methods now
 
             let headerText = 'Wild Encounter Locations:';
-            if (!showAdditionalLocations) {
+            if (usingPreevolution) {
+                headerText = (
+                    <span>
+                        This Pokémon <span style={{ color: '#eb3d3dff' }}>can't be found in the wild</span> - its pre-evolution(s) can be in these locations in Gen {genNumber}:
+                    </span>
+                );
+            } else if (!showAdditionalLocations) {
                 headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
             } else {
                 headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
@@ -409,11 +415,6 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
                     </div>
-                    {usingPreevolution && (
-                        <div style={{ marginTop: 6, marginBottom: 6, fontSize: 13, color: '#666', maxWidth: 420, textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
-                            This Pokémon <strong>can't be found in the wild</strong> - its pre-evolutions can be in these locations:
-                        </div>
-                    )}
                     <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                         {/* Show gen locations */}
                         {showGenLocations && genLocations.length > 0 && genLocations.map((loc, i) => {
@@ -744,7 +745,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
-                {/* <button
+                <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -755,9 +756,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     disabled={resetCount >= 200}
                 >
                     Reset
-                </button> */}
+                </button>
             </div>
-            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
                 <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
                 <input
                     id="override-id"
@@ -770,7 +771,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {overridePokemon && (
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
-            </div> */}
+            </div>
             <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
