@@ -1,3 +1,11 @@
+## Release Notes — December 20, 2025
+
+## What’s New
+
+- **Card Mode** - Re-classified some cards from Full Art to Special Illustration. Removed some regional variant cards
+- **Locations Mode** - Re-worded messaging around when a Pokemon can't be found in the wild to make it more obvious
+- **Results Page** - Tweak logic around results message appearing on card
+
 ## Release Notes — December 18, 2025
 
 ## What’s New
