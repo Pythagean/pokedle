@@ -659,7 +659,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         
                         // Draw lines from bottom up
                         const lineHeight = 24;
-                        const bottomMargin = 20;
+                        const bottomMargin = 30;
                         let y = H - bottomMargin;
                         
                         for (let i = lines.length - 1; i >= 0; i--) {
