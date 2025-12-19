@@ -6,6 +6,21 @@
 - **Locations Mode** - Re-worded messaging around when a Pokemon can't be found in the wild to make it more obvious
 - **Results Page** - Tweak logic around results message appearing on card
 
+## Commits included (newest first)
+
+```text
+174f87a | 2025-12-20 | Increase bottom margin in ResultsPage for improved layout
+7305851 | 2025-12-20 | Adjust blur levels in CardPage based on guess count for improved visual feedback
+effbb92 | 2025-12-20 | Update release notes for December 20, 2025
+03496f6 | 2025-12-20 | Comment out unused button and div elements in LocationsPage for cleaner code
+fe276c9 | 2025-12-20 | Update LocationsPage to display pre-evolution location message and clean up unused code
+c3c047a | 2025-12-20 | Re-classified some cards from Full Art to Special Illustration. Removed some regional variant cards
+1ae75a7 | 2025-12-20 | Tweak logic around results message appearing on card
+6572466 | 2025-12-19 | Add extract_pokemon_fields script to process and filter Pokemon data from JSON
+7336689 | 2025-12-18 | Adding some overrides
+5b9d081 | 2025-12-18 | Update PATCH_NOTES.md for December 18, 2025 release
+```
+
 ## Release Notes — December 18, 2025
 
 ## What’s New
