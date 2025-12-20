@@ -10527,16 +10527,6 @@
         "region": "Kanto",
         "games": [
           "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
           "firered",
           "leafgreen",
           "red",
@@ -10820,16 +10810,6 @@
         "region": "Kanto",
         "games": [
           "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -11883,36 +11863,6 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Johto Route 42",
         "region": "Johto",
         "games": [
@@ -11982,18 +11932,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -12051,16 +11989,7 @@
         ],
         "method": "Walk"
       },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
+
       {
         "name": "Kanto Mt Moon",
         "region": "Kanto",
@@ -12322,36 +12251,6 @@
       },
       {
         "name": "Johto Slowpoke Well",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -12734,36 +12633,6 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Johto Route 42",
         "region": "Johto",
         "games": [
@@ -12833,18 +12702,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -12899,16 +12756,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -14232,30 +14079,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Safari Zone",
         "region": "Kanto",
         "games": [
@@ -14564,30 +14387,6 @@
           "leafgreen",
           "red",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -17624,15 +17423,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Route 3",
         "region": "Kanto",
         "games": [
@@ -17986,15 +17776,6 @@
         "region": "Johto",
         "games": [
           "gold"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
         ],
         "method": "Walk"
       },
@@ -21232,23 +21013,14 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -21256,16 +21028,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -21662,18 +21424,7 @@
         ],
         "method": "Walk"
       },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
+
       {
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
@@ -21682,7 +21433,10 @@
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -21690,16 +21444,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -21927,23 +21671,14 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -21951,16 +21686,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -24131,26 +23856,6 @@
         "method": "Surf"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Surf"
-      },
-      {
         "name": "Johto Cianwood City",
         "region": "Johto",
         "games": [
@@ -25436,18 +25141,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -25467,16 +25160,6 @@
           "leafgreen"
         ],
         "method": "Rock Smash"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
       },
       {
         "name": "Kanto Mt Moon",
@@ -26048,18 +25731,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -26079,16 +25750,6 @@
           "leafgreen"
         ],
         "method": "Rock Smash"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
       },
       {
         "name": "Kanto Mt Moon",
@@ -26458,18 +26119,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -26489,16 +26138,6 @@
           "leafgreen"
         ],
         "method": "Rock Smash"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
       },
       {
         "name": "Kanto Mt Moon",
@@ -29650,36 +29289,6 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
@@ -29958,36 +29567,6 @@
     "main_colour": "White",
     "secondary_colours": [],
     "preevolution_location_area_encounters": [
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
       {
         "name": "Johto Whirl Islands",
         "region": "Johto",
@@ -31448,14 +31027,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Route 8",
         "region": "Kanto",
         "games": [
@@ -31862,14 +31433,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Route 8",
         "region": "Kanto",
         "games": [
@@ -31956,15 +31519,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
         ],
         "method": "Walk"
       },
@@ -32644,36 +32198,6 @@
         "method": "Walk, Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
         "name": "Johto Cianwood City",
         "region": "Johto",
         "games": [
@@ -33209,26 +32733,6 @@
         "method": "Super Rod"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
         "name": "Johto Cianwood City",
         "region": "Johto",
         "games": [
@@ -33570,36 +33074,6 @@
           "silver"
         ],
         "method": "Old Rod, Good Rod, Super Rod, Rock Smash"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
       },
       {
         "name": "Johto Whirl Islands",
@@ -35089,16 +34563,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Pokemon Tower",
         "region": "Kanto",
         "games": [
@@ -35282,12 +34746,6 @@
     "id": 105,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
       },
       {
         "name": "Kanto Rock Tunnel",
@@ -35447,16 +34905,6 @@
       "White"
     ],
     "preevolution_location_area_encounters": [
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
       {
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
@@ -37469,26 +36917,6 @@
         "method": "Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
@@ -37938,26 +37366,6 @@
           "gold",
           "silver"
         ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
         "method": "Super Rod, Surf"
       },
       {
@@ -38238,26 +37646,6 @@
       "Yellow"
     ],
     "preevolution_location_area_encounters": [
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
       {
         "name": "Johto Whirl Islands",
         "region": "Johto",
@@ -42164,26 +41552,6 @@
         "method": "Old Rod, Good Rod"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
         "name": "Johto Cianwood City",
         "region": "Johto",
         "games": [
@@ -44066,26 +43434,6 @@
       },
       {
         "name": "Johto Route 41",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -52225,36 +51573,6 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Johto Route 42",
         "region": "Johto",
         "games": [
@@ -52324,18 +51642,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -52390,16 +51696,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -60678,15 +59974,6 @@
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel",
-        "region": "Kanto",
-        "games": [
           "blue",
           "crystal",
           "firered",
@@ -64732,26 +64019,6 @@
       "White"
     ],
     "preevolution_location_area_encounters": [
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
       {
         "name": "Johto Whirl Islands",
         "region": "Johto",
