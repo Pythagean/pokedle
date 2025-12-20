@@ -415,7 +415,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
                     </div>
-                    <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
+                    <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                         {/* Show gen locations */}
                         {showGenLocations && genLocations.length > 0 && genLocations.map((loc, i) => {
                             const raw = getRawName(loc);
@@ -426,7 +426,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             }
                             const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
                             return (
-                                <div key={`${getRawName(loc) || String(i)}_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
+                                <div key={`${getRawName(loc) || String(i)}_${i}`} className="location-card">
                                         {url ? (
                                             <>
                                                 <img src={url} alt={formatDisplay(loc)}
@@ -470,16 +470,16 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                 }).join(', ') : null;
                                                 return (
                                                     <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                        {prettyMethod && (
-                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
-                                                            </div>
-                                                        )}
                                                         {prettyGames && (
                                                             <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                 <span style={{ fontWeight: 700 }}>Games:</span>
                                                                 <span style={{ fontWeight: 400 }}>{prettyGames}</span>
+                                                            </div>
+                                                        )}
+                                                        {prettyMethod && (
+                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
                                                             </div>
                                                         )}
                                                     </div>
@@ -499,7 +499,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 6, justifyContent: 'center' }}>
                                 <div style={{ fontWeight: 600, fontSize: 15 }}>Additional locations across all generations:</div>
                             </div>
-                            <div style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
+                            <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                                 {additionalLocations.map((loc, i) => {
                                     const raw = getRawName(loc);
                                     const slug = (raw || '').replace(/\s+/g, '_');
@@ -509,7 +509,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                     }
                                     const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
                                     return (
-                                        <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'calc(33.333% - 8px)', minWidth: 180, maxWidth: 220, flex: '0 1 auto' }}>
+                                        <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card">
                                                 {url ? (
                                                     <>
                                                         <img src={url} alt={formatDisplay(loc)}
@@ -552,16 +552,16 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                         }).join(', ') : null;
                                                         return (
                                                             <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                                {prettyMethod && (
-                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                        <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
-                                                                    </div>
-                                                                )}
                                                                 {prettyGames && (
                                                                     <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                         <span style={{ fontWeight: 700 }}>Games:</span>
                                                                         <span style={{ fontWeight: 400 }}>{prettyGames}</span>
+                                                                    </div>
+                                                                )}
+                                                                {prettyMethod && (
+                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                        <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
                                                                     </div>
                                                                 )}
                                                             </div>
@@ -697,10 +697,27 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     return (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
             <style>{`
+                .location-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    width: calc(33.333% - 8px);
+                    min-width: 180px;
+                    max-width: 220px;
+                    flex: 0 1 auto;
+                }
                 @media (max-width: 768px) {
                     .location-card {
-                        width: calc(50% - 8px) !important;
-                        min-width: 140px !important;
+                        width: calc(50% - 10px) !important;
+                        min-width: 0 !important;
+                        max-width: none !important;
+                    }
+                    .location-card img {
+                        max-width: 150px !important;
+                        max-height: 140px !important;
+                    }
+                    .locations-container {
+                        gap: 20px 20px !important;
                     }
                 }
             `}</style>

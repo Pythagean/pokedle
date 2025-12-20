@@ -8441,7 +8441,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -8707,7 +8707,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "gold"
@@ -8833,7 +8833,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -10492,7 +10492,7 @@
     "id": 35,
     "location_area_encounters": [
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -10523,17 +10523,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -10793,7 +10783,7 @@
         "method": "Gift Egg"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -10824,17 +10814,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -11873,37 +11853,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -11952,7 +11902,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -11964,45 +11914,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12017,19 +11929,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12089,18 +11989,9 @@
         ],
         "method": "Walk"
       },
+
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12112,7 +12003,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12369,37 +12260,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -12447,51 +12308,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12521,7 +12338,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal"
@@ -12806,37 +12623,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -12885,7 +12672,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12897,45 +12684,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12950,19 +12699,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13023,17 +12760,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13045,7 +12772,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14338,7 +14065,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14348,30 +14075,6 @@
           "leafgreen",
           "red",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -14674,7 +14377,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14684,30 +14387,6 @@
           "leafgreen",
           "red",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -16569,48 +16248,12 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -17147,42 +16790,10 @@
         "method": "Surf"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
+          "red",
           "blue",
           "firered"
         ],
@@ -17361,48 +16972,12 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -17839,16 +17414,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "firered",
@@ -18214,16 +17780,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "firered",
@@ -18862,17 +18419,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -19705,17 +19252,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -20273,17 +19810,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -21483,26 +21010,17 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -21510,16 +21028,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -21761,7 +21269,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -21916,27 +21424,19 @@
         ],
         "method": "Walk"
       },
+
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -21944,16 +21444,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -22178,26 +21668,17 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
+          "yellow",
+          "crystal",
+          "gold",
+          "silver"
         ],
         "method": "Walk"
       },
@@ -22205,16 +21686,6 @@
         "name": "Kanto Route 10",
         "region": "Kanto",
         "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
           "yellow"
         ],
         "method": "Walk"
@@ -23423,7 +22894,7 @@
         "method": "Old Rod, Good Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -23443,15 +22914,7 @@
         "method": "Surf"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "yellow"
@@ -24383,27 +23846,7 @@
         "method": "Super Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -24838,7 +24281,7 @@
         "method": "Old Rod, Good Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -24858,15 +24301,7 @@
         "method": "Surf"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "yellow"
@@ -25688,7 +25123,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -25703,19 +25138,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -25739,17 +25162,7 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -25761,7 +25174,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26075,7 +25488,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "firered",
@@ -26300,7 +25713,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26315,19 +25728,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26351,17 +25752,7 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26373,7 +25764,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26710,7 +26101,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26725,19 +26116,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26761,17 +26140,7 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -26783,7 +26152,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -27504,51 +26873,13 @@
         "method": "Walk, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -28077,45 +27408,13 @@
         "method": "Surf"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
+          "blue",
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Surf"
       },
@@ -28288,51 +27587,13 @@
         "method": "Walk, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -30018,7 +29279,7 @@
     "id": 86,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -30028,82 +29289,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -30271,32 +29457,13 @@
     "id": 87,
     "location_area_encounters": [
       {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
           "yellow"
         ],
         "method": "Walk, Surf"
@@ -30401,7 +29568,7 @@
     "secondary_colours": [],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -30411,82 +29578,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -31112,42 +30204,7 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -31540,42 +30597,7 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -31997,15 +31019,7 @@
     "id": 93,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal"
@@ -32411,15 +31425,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal"
@@ -32517,16 +31523,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -32555,7 +31552,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -33191,37 +32188,7 @@
         "method": "Old Rod, Good Rod, Super Rod, Rock Smash"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -33251,45 +32218,7 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -33794,27 +32723,7 @@
         "method": "Super Rod"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -33834,35 +32743,10 @@
         "method": "Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
           "yellow"
         ],
         "method": "Walk, Super Rod"
@@ -34192,37 +33076,7 @@
         "method": "Old Rod, Good Rod, Super Rod, Rock Smash"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk, Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -34252,45 +33106,7 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -35737,17 +34553,7 @@
     "id": 104,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -35940,15 +34746,9 @@
     "id": 105,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -36106,17 +34906,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -37952,7 +36742,7 @@
     "id": 115,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -38117,7 +36907,7 @@
     "id": 116,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -38127,62 +36917,7 @@
         "method": "Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -38624,27 +37359,7 @@
     "id": 117,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -38654,15 +37369,7 @@
         "method": "Super Rod, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "red"
@@ -38940,7 +37647,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -38950,62 +37657,7 @@
         "method": "Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -39420,17 +38072,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -40360,17 +39002,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -40942,43 +39574,7 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Super Rod, Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -41388,43 +39984,7 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Super Rod, Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -42982,27 +41542,7 @@
         "method": "Old Rod, Good Rod"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -43112,19 +41652,7 @@
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -44285,16 +42813,7 @@
         "method": "Good Rod, Super Rod, Surf, Only One"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "firered",
@@ -44924,27 +43443,7 @@
         "method": "Old Rod, Good Rod"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -45054,19 +43553,7 @@
         "method": "Old Rod, Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -48333,7 +46820,7 @@
     "id": 144,
     "location_area_encounters": [
       {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -53076,37 +51563,7 @@
         "method": "Walk"
       },
       {
-        "name": "Johto Whirl Islands 1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B1f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -53155,7 +51612,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -53167,45 +51624,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon 1f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -53220,19 +51639,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "crystal",
-          "firered",
-          "gold",
-          "leafgreen",
-          "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -53293,17 +51700,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Mt Moon B1f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon B2f",
+        "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
           "blue",
@@ -53315,7 +51712,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -56736,17 +55133,7 @@
         "method": "Old Rod, Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -59647,51 +58034,13 @@
         "method": "Walk, Surf"
       },
       {
-        "name": "Kanto Seafoam Islands 1f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -61622,16 +59971,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel 1f",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Rock Tunnel B1f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -61660,7 +60000,7 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Rock Tunnel B2f",
+        "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
           "blue",
@@ -65680,7 +64020,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands 1f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
@@ -65690,62 +64030,7 @@
         "method": "Good Rod, Super Rod, Surf"
       },
       {
-        "name": "Johto Whirl Islands B2f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Johto Whirl Islands B3f",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands 1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B1f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B2f",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands B3f",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands B4f",
+        "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
           "blue",
@@ -68771,7 +67056,7 @@
     "id": 249,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands B2f",
+        "name": "Johto Whirl Islands",
         "region": "Johto",
         "games": [
           "crystal",
