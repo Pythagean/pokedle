@@ -11964,44 +11964,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
@@ -12459,50 +12421,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -12892,44 +12810,6 @@
           "firered",
           "leafgreen",
           "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
           "yellow"
         ],
         "method": "Walk"
@@ -16576,42 +16456,6 @@
           "firered",
           "red"
         ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
         "method": "Walk, Super Rod, Surf"
       },
       {
@@ -17150,39 +16994,7 @@
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
+          "red",
           "blue",
           "firered"
         ],
@@ -17367,42 +17179,6 @@
           "blue",
           "firered",
           "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -18872,16 +18648,6 @@
         "method": "Good Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -19715,16 +19481,6 @@
         "method": "Good Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -20271,16 +20027,6 @@
           "silver"
         ],
         "method": "Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -23451,14 +23197,6 @@
         "method": "Surf"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Surf"
-      },
-      {
         "name": "Kanto Route 12",
         "region": "Kanto",
         "games": [
@@ -24854,14 +24592,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
         ],
         "method": "Surf"
       },
@@ -27512,44 +27242,6 @@
           "red",
           "yellow"
         ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
         "method": "Walk, Super Rod, Surf"
       },
       {
@@ -28080,42 +27772,10 @@
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
+          "blue",
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Surf"
       },
@@ -28295,44 +27955,6 @@
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -30062,51 +29684,6 @@
         "region": "Kanto",
         "games": [
           "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
           "firered",
           "leafgreen",
           "red",
@@ -30275,28 +29852,9 @@
         "region": "Kanto",
         "games": [
           "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
           "firered",
           "leafgreen",
           "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
           "yellow"
         ],
         "method": "Walk, Surf"
@@ -30439,51 +29997,6 @@
           "silver"
         ],
         "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk, Surf"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -31115,41 +30628,6 @@
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
           "blue",
           "red"
         ],
@@ -31538,41 +31016,6 @@
           "silver"
         ],
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk, Super Rod"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -33255,44 +32698,6 @@
         "region": "Kanto",
         "games": [
           "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
           "firered",
           "leafgreen",
           "yellow"
@@ -33840,31 +33245,6 @@
           "blue",
           "yellow"
         ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
         "method": "Walk, Super Rod"
       },
       {
@@ -34250,44 +33630,6 @@
           "silver"
         ],
         "method": "Rock Smash"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -38150,41 +37492,6 @@
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
           "blue",
           "firered",
           "leafgreen",
@@ -38662,14 +37969,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Route 12",
         "region": "Kanto",
         "games": [
@@ -38968,41 +38267,6 @@
           "silver"
         ],
         "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -39418,16 +38682,6 @@
           "silver"
         ],
         "method": "Old Rod, Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod, Super Rod"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -40370,16 +39624,6 @@
         "method": "Good Rod, Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod, Super Rod"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -40945,42 +40189,6 @@
         "name": "Kanto Seafoam Islands",
         "region": "Kanto",
         "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Super Rod, Walk, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
           "blue",
           "red",
           "yellow"
@@ -41386,42 +40594,6 @@
           "silver"
         ],
         "method": "Good Rod, Super Rod"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Super Rod, Walk, Surf"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -43124,18 +42296,6 @@
         "method": "Old Rod, Good Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Old Rod, Good Rod"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -44294,15 +43454,6 @@
         "method": "Super Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen"
-        ],
-        "method": "Super Rod"
-      },
-      {
         "name": "Kanto Route 12",
         "region": "Kanto",
         "games": [
@@ -45052,18 +44203,6 @@
           "silver"
         ],
         "method": "Old Rod, Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Old Rod, Good Rod"
       },
       {
         "name": "Kanto Seafoam Islands",
@@ -53167,44 +52306,6 @@
         "method": "Walk"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "firered",
-          "leafgreen",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Mt Moon",
         "region": "Kanto",
         "games": [
@@ -56746,16 +55847,6 @@
         "method": "Good Rod"
       },
       {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "red",
-          "yellow"
-        ],
-        "method": "Good Rod"
-      },
-      {
         "name": "Johto Mt Silver",
         "region": "Johto",
         "games": [
@@ -59654,44 +58745,6 @@
           "leafgreen",
           "red",
           "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "leafgreen",
-          "red"
         ],
         "method": "Walk, Super Rod, Surf"
       },
@@ -65708,41 +64761,6 @@
           "silver"
         ],
         "method": "Good Rod, Super Rod, Surf"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "red"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Seafoam Islands",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Walk, Super Rod, Good Rod, Surf"
       },
       {
         "name": "Kanto Seafoam Islands",
