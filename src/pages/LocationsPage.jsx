@@ -417,7 +417,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     </div>
                     <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                         {/* Show gen locations */}
-                        {showGenLocations && genLocations.length > 0 && genLocations.map((loc, i) => {
+                        {showGenLocations && genLocations.length > 0 && genLocations.filter(loc => {
+                            // Filter out locations with only Rock Smash method for Gen 1 (but only before All Locations threshold)
+                            if (!showAdditionalLocations && genNumber === 1 && loc && typeof loc === 'object' && loc.method) {
+                                return !/rock\s*smash/i.test(String(loc.method));
+                            }
+                            return true;
+                        }).map((loc, i) => {
                             const raw = getRawName(loc);
                             const slug = (raw || '').replace(/\s+/g, '_');
                             let filename = null;
@@ -449,7 +455,11 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                             if (!method && typeof loc === 'string') method = null;
                                             const hasInfo = method || (games && games.length > 0);
                                             if (hasInfo) {
-                                                const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                let prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                // Remove Rock Smash for Gen 1 Pokemon (but only before All Locations threshold)
+                                                if (!showAdditionalLocations && genNumber === 1 && prettyMethod && /rock\s*smash/i.test(prettyMethod)) {
+                                                    prettyMethod = null;
+                                                }
                                                 // Games are already filtered at this point
                                                 const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
                                                 const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
@@ -500,7 +510,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                 <div style={{ fontWeight: 600, fontSize: 15 }}>Additional locations across all generations:</div>
                             </div>
                             <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
-                                {additionalLocations.map((loc, i) => {
+                                {additionalLocations.filter(loc => {
+                                    // Filter out locations with only Rock Smash method for Gen 1 (but only before All Locations threshold)
+                                    if (!showAdditionalLocations && genNumber === 1 && loc && typeof loc === 'object' && loc.method) {
+                                        return !/rock\s*smash/i.test(String(loc.method));
+                                    }
+                                    return true;
+                                }).map((loc, i) => {
                                     const raw = getRawName(loc);
                                     const slug = (raw || '').replace(/\s+/g, '_');
                                     let filename = null;
@@ -532,7 +548,11 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                     if (!method && typeof loc === 'string') method = null;
                                                     const hasInfo = method || (games && games.length > 0);
                                                     if (hasInfo) {
-                                                        const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                        let prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
+                                                        // Remove Rock Smash for Gen 1 Pokemon (but only before All Locations threshold)
+                                                        if (!showAdditionalLocations && genNumber === 1 && prettyMethod && /rock\s*smash/i.test(prettyMethod)) {
+                                                            prettyMethod = null;
+                                                        }
                                                         const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
                                                         const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
                                                             const aLower = String(a).toLowerCase();
@@ -762,7 +782,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
-                {/* <button
+                <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -773,9 +793,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     disabled={resetCount >= 200}
                 >
                     Reset
-                </button> */}
+                </button>
             </div>
-            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
                 <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
                 <input
                     id="override-id"
@@ -788,7 +808,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {overridePokemon && (
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
-            </div> */}
+            </div>
             <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (

@@ -25162,18 +25162,6 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
