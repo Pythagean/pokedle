@@ -543,8 +543,21 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
               statuses.push(g.height === answer.height ? 'match' : 'miss');
               statuses.push(g.weight === answer.weight ? 'match' : 'miss');
               const emojiFor = s => (s === 'match' ? '🟩' : s === 'partial' ? '🟨' : '🟥');
-              // remove the first status (name) and show the remaining feedback boxes
-              const emojiSeq = statuses.slice(1, 7).map(emojiFor).join('');
+              // remove the first status (name) and convert to emojis
+              // for height and weight (last 2), use arrows instead of colored boxes
+              const feedback = statuses.slice(1, 7).map((s, idx) => {
+                // indices 4 and 5 are height and weight
+                if (idx === 4) { // height
+                  if (s === 'match') return '🟩';
+                  return g.height < answer.height ? '⬆️' : '⬇️';
+                }
+                if (idx === 5) { // weight
+                  if (s === 'match') return '🟩';
+                  return g.weight < answer.weight ? '⬆️' : '⬇️';
+                }
+                return emojiFor(s);
+              });
+              const emojiSeq = feedback.join('');
               return (
                 <div key={g.name + i} role="listitem" aria-label={`Guess ${i + 1}`} style={{ userSelect: 'text', fontSize: 16, lineHeight: '18px', display: 'flex', gap: 8, alignItems: 'center' }}>
                   <span aria-hidden="true" style={{ fontFamily: 'monospace' }}>{emojiSeq}</span>
@@ -589,8 +602,21 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
                 statuses.push(g.habitat === answer.habitat ? 'match' : 'miss');
                 statuses.push(g.height === answer.height ? 'match' : 'miss');
                 statuses.push(g.weight === answer.weight ? 'match' : 'miss');
-                // drop the first (name) and include the remaining six feedback boxes
-                return statuses.slice(1, 7).map(emojiFor).join('');
+                // drop the first (name) and convert to emojis
+                // for height and weight (last 2), use arrows instead of colored boxes
+                const feedback = statuses.slice(1, 7).map((s, idx) => {
+                  // indices 4 and 5 are height and weight
+                  if (idx === 4) { // height
+                    if (s === 'match') return '🟩';
+                    return g.height < answer.height ? '⬆️' : '⬇️';
+                  }
+                  if (idx === 5) { // weight
+                    if (s === 'match') return '🟩';
+                    return g.weight < answer.weight ? '⬆️' : '⬇️';
+                  }
+                  return emojiFor(s);
+                });
+                return feedback.join('');
               });
               toCopy = `${text}\n${lines.join('\n')}`;
             }
