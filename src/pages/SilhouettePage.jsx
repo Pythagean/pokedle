@@ -170,9 +170,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
 
   // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
   // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
-  const maxZoom = 3.5;
-  const minZoom = 1.2;
-  const maxSteps = 15;
+  const maxZoom = 3.0;
+  const minZoom = 1.1;
+  const maxSteps = 9;
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.1;
   const eased = Math.pow(t, easePower);
