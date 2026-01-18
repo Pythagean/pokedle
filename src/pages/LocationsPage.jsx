@@ -504,11 +504,16 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     </div>
 
                     {/* Additional locations section */}
-                    {showAdditionalLocations && additionalLocations.length > 0 && (
+                    {showAdditionalLocations && (
                         <>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 6, justifyContent: 'center' }}>
                                 <div style={{ fontWeight: 600, fontSize: 15 }}>Additional locations across all generations:</div>
                             </div>
+                            {additionalLocations.length === 0 ? (
+                                <div style={{ color: '#eb3d3dff', fontSize: 14, textAlign: 'center', marginTop: 8 }}>
+                                    <strong>No additional locations found in other generations.</strong>
+                                </div>
+                            ) : (
                             <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                                 {additionalLocations.filter(loc => {
                                     // Filter out locations with only Rock Smash method for Gen 1 (but only before All Locations threshold)
@@ -593,6 +598,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                     );
                                 })}
                             </div>
+                            )}
                         </>
                     )}
                     {/* Hint placeholders for what's coming next */}
