@@ -1,3 +1,19 @@
+## Release Notes — January 19, 2026
+
+## What’s New
+
+- **Classic Mode** - Added arrows to congrats message for Height/Weight
+- **Silhouette Mode** - Made this mode a bit easier by decreasing the intital zoom-in value. And the image zooms out a bit more with each guess
+- **Locations Mode** - Locations: Removed "Rock Smash" when only showing Gen 1 locations. 
+                     - Fixed issue with Ruins of Alph map not displaying
+                     - Display header and text even if there are no extra locations to show beyond Pokemon's generation
+
+## Commits included (newest first)
+
+```text
+
+```
+
 ## Release Notes — December 20, 2025
 
 ## What’s New
