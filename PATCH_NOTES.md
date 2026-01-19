@@ -11,7 +11,13 @@
 ## Commits included (newest first)
 
 ```text
-
+5b59e88 | 2026-01-19 | Only show shiny sprites in GuessInput on card page (if it's Shiny Saturday)
+ce178f4 | 2026-01-19 | Locations: Display header and text even if there are no extra locations to show beyond Pokemon's generation
+dd90215 | 2026-01-19 | Removed debug mode from Locations
+4d5d27e | 2026-01-19 | Locations: Removed "Rock Smash" when only showing Gen 1 locations
+81dbf34 | 2026-01-19 | Classic: Added arrows to congrats message for Height/Weight
+eac2e87 | 2026-01-19 | Silhouette: Made this mode a bit easier by decreasing the intital zoom-in value. And the image zooms out a bit more with each guess
+c39252c | 2025-12-21 | Pokemon location tidy up, ensure mobile shows 2 maps per row
 ```
 
 ## Release Notes — December 20, 2025
