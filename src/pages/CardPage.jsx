@@ -195,7 +195,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     // Blur logic for full_art and special cards
     switch (true) {
       case guesses.length === 0:
-        blurLevel = 18; break;
+        blurLevel = 17; break;
       case guesses.length === 1:
         blurLevel = 15; break;
       case guesses.length === 2:
@@ -227,7 +227,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     // Blur logic for normal and shiny cards
     switch (true) {
       case guesses.length === 0:
-        blurLevel = 18; break;
+        blurLevel = 17; break;
       case guesses.length === 1:
         blurLevel = 15; break;
       case guesses.length === 2:
