@@ -307,14 +307,6 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             );
         }
         if (type === 'locations') {
-            // Prefer direct wild encounter locations; fall back to pre-evolution encounter data
-            let rawLocations = dailyPokemon.location_area_encounters || [];
-            let usingPreevolution = false;
-            if ((!rawLocations || rawLocations.length === 0) && Array.isArray(dailyPokemon.preevolution_location_area_encounters) && dailyPokemon.preevolution_location_area_encounters.length > 0) {
-                rawLocations = dailyPokemon.preevolution_location_area_encounters;
-                usingPreevolution = true;
-            }
-
             const getRawName = (loc) => {
                 if (!loc) return '';
                 if (typeof loc === 'string') return loc;
@@ -349,11 +341,32 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             };
             const genGames = genGameSets[genNumber] || null;
 
+            // Prefer direct wild encounter locations; fall back to pre-evolution encounter data
+            // Check if Pokemon has any locations in its own generation
+            let rawLocations = dailyPokemon.location_area_encounters || [];
+            let usingPreevolutionForGen = false;
+            let usingPreevolutionForAdditional = false;
+            
+            let hasGenLocations = false;
+            if (genGames && rawLocations && rawLocations.length > 0) {
+                hasGenLocations = rawLocations.some(loc => {
+                    if (!loc || typeof loc !== 'object' || !Array.isArray(loc.games)) return false;
+                    return loc.games.some(game => genGames.has(game.toLowerCase()));
+                });
+            }
+
+            // If no gen-specific locations exist, use preevolution data for gen section
+            if (!hasGenLocations && Array.isArray(dailyPokemon.preevolution_location_area_encounters) && dailyPokemon.preevolution_location_area_encounters.length > 0) {
+                rawLocations = dailyPokemon.preevolution_location_area_encounters;
+                usingPreevolutionForGen = true;
+                usingPreevolutionForAdditional = true; // Default to true, may override below
+            }
+
             // Split locations by gen-specific vs non-gen-specific games
             // Gen locations: locations with gen-specific games (showing only those games)
             // Additional locations: locations with non-gen-specific games (showing only those games)
             const genLocations = [];
-            const additionalLocations = [];
+            let additionalLocations = [];
             
             if (genGames) {
                 rawLocations.forEach(loc => {
@@ -374,23 +387,74 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 genLocations.push(...rawLocations);
             }
 
+            // If we're using preevolution for gen locations, but the actual Pokemon has locations in other gens,
+            // use those for the additional locations section instead of preevolution's additional locations
+            if (usingPreevolutionForGen && dailyPokemon.location_area_encounters && dailyPokemon.location_area_encounters.length > 0) {
+                const actualAdditionalLocations = [];
+                if (genGames) {
+                    dailyPokemon.location_area_encounters.forEach(loc => {
+                        if (!loc || typeof loc !== 'object' || !Array.isArray(loc.games)) return;
+                        // Only include locations from OTHER generations (not the Pokemon's own gen)
+                        const otherGamesForLoc = loc.games.filter(game => !genGames.has(game.toLowerCase()));
+                        if (otherGamesForLoc.length > 0) {
+                            actualAdditionalLocations.push({ ...loc, games: otherGamesForLoc });
+                        }
+                    });
+                } else {
+                    actualAdditionalLocations.push(...dailyPokemon.location_area_encounters);
+                }
+                
+                // If the actual Pokemon has additional locations, use those instead
+                if (actualAdditionalLocations.length > 0) {
+                    additionalLocations = actualAdditionalLocations;
+                    usingPreevolutionForAdditional = false;
+                }
+            }
+
             // Determine what to show based on thresholds from hintConfig
             // LOCATIONS_HINT_THRESHOLDS = [2, 4, 6] → [all locations, types, evolution stage]
             const showGenLocations = true; // Always shown with methods
             const showAdditionalLocations = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
             const showMethods = true; // Always show methods now
 
+            // Calculate which generations the additional locations are from
+            const additionalGenerations = new Set();
+            if (additionalLocations.length > 0) {
+                additionalLocations.forEach(loc => {
+                    if (loc && typeof loc === 'object' && Array.isArray(loc.games)) {
+                        loc.games.forEach(game => {
+                            const gameLower = game.toLowerCase();
+                            // Map games to their generations
+                            if (['red', 'blue', 'yellow'].includes(gameLower)) additionalGenerations.add(1);
+                            else if (['gold', 'silver', 'crystal'].includes(gameLower)) additionalGenerations.add(2);
+                            else if (['ruby', 'sapphire', 'emerald', 'firered', 'leafgreen'].includes(gameLower)) additionalGenerations.add(3);
+                        });
+                    }
+                });
+            }
+            const sortedAdditionalGens = Array.from(additionalGenerations).sort((a, b) => a - b);
+            let additionalGensText = 'ALL generations';
+            if (sortedAdditionalGens.length === 1) {
+                additionalGensText = `Gen ${sortedAdditionalGens[0]}`;
+            } else if (sortedAdditionalGens.length === 2) {
+                additionalGensText = `Gen ${sortedAdditionalGens[0]} and ${sortedAdditionalGens[1]}`;
+            } else if (sortedAdditionalGens.length > 2) {
+                const lastGen = sortedAdditionalGens[sortedAdditionalGens.length - 1];
+                const otherGens = sortedAdditionalGens.slice(0, -1).map(g => `Gen ${g}`).join(', ');
+                additionalGensText = `${otherGens}, and Gen ${lastGen}`;
+            }
+
             let headerText = 'Wild Encounter Locations:';
-            if (usingPreevolution) {
+            if (usingPreevolutionForGen) {
                 headerText = (
                     <span>
                         This Pokémon <span style={{ color: '#eb3d3dff' }}>can't be found in the wild</span> - its pre-evolution(s) can be in these locations in Gen {genNumber}:
                     </span>
                 );
             } else if (!showAdditionalLocations) {
-                headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
+                headerText = `This Pokémon can be found in these locations in Gen ${genNumber}:`;
             } else {
-                headerText = `This Pokemon was first found in these locations in Gen ${genNumber}:`;
+                headerText = `This Pokémon can be found in these locations in Gen ${genNumber}:`;
             }
 
             const formatDisplay = (loc) => {
@@ -507,7 +571,19 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     {showAdditionalLocations && (
                         <>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 6, justifyContent: 'center' }}>
-                                <div style={{ fontWeight: 600, fontSize: 15 }}>Additional locations across all generations:</div>
+                                <div style={{ fontWeight: 600, fontSize: 15 }}>
+                                    {usingPreevolutionForAdditional 
+                                        ? (
+                                            <>
+                                                This Pokémon <span style={{ color: '#eb3d3dff' }}>can't be found in the wild in ANY generation</span>. Its pre-evolution(s) can be found in these locations in {additionalGensText}:
+                                            </>
+                                        )
+                                        : (
+                                            <>
+                                            This Pokémon can be found in these locations in {additionalGensText}:
+                                            </>
+                                        )}
+                                </div>
                             </div>
                             {additionalLocations.length === 0 ? (
                                 <div style={{ color: '#eb3d3dff', fontSize: 14, textAlign: 'center', marginTop: 8 }}>
@@ -783,7 +859,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             <strong>After 6 guesses:</strong> Shows the evolution stage.<br /><br />
                             If the Pokémon has no wild locations, pre-evolution encounter locations are used.
                             <br /><br />
-                            The <strong>method</strong> used to find the Pokemon can be any of these: Walk, Surf, Headbutt, Rock Smash, Seaweed, Trade, Roaming, Gift Egg, Gift, Only One, Old Rod, Good Rod, Super Rod
+                            The <strong>method</strong> used to find the Pokémon can be any of these: Walk, Surf, Headbutt, Rock Smash, Seaweed, Trade, Roaming, Gift Egg, Gift, Only One, Old Rod, Good Rod, Super Rod
                         </div>
                     }
                 />
