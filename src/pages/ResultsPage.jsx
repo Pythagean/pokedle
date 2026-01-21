@@ -374,10 +374,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     // Map `total` into quality buckets and try to find a matching folder in the manifest.
                     const t = Number(total) && Number(total) >= 0 ? Number(total) : 0;
                     let category = 'Terrible';
-                    if (t <= 10) category = 'Great';
-                    else if (t <= 17) category = 'Good';
-                    else if (t <= 23) category = 'Okay';
-                    else if (t <= 29) category = 'Bad';
+                    if (t <= 9) category = 'Great';
+                    else if (t <= 14) category = 'Good';
+                    else if (t <= 18) category = 'Okay';
+                    else if (t <= 22) category = 'Bad';
                     else category = 'Terrible';
 
                     const keys = Object.keys(backgroundsManifest);
