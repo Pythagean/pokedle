@@ -1,3 +1,24 @@
+## Release Notes — January 21, 2026
+
+## What’s New
+
+- **Locations Mode** <br>
+    - Fixes around how maps are picked (mainly around pre-evolutions and different future logic)
+    - Added Map Popup feature - Clicking on the map will display a screenshot from the game (this doesn't contain the exact place the Pokemon is found, it's intended to be memory refresher)
+- **Results Page** <br>
+    - Added more images for results card and tweaked thresholds for each type
+
+## Commits included (newest first)
+
+```text
+f02f69e | 2026-01-21 | Added more images for results card and tweaked thresholds for each type
+ea897c3 | 2026-01-21 | Locations: Added map popup feature
+8a330c6 | 2026-01-21 | Card: Very slight tweak to initial blur level
+f92eb43 | 2026-01-21 | Fixing locations mode for Pokemon that can't be found in their generation, but can be found in future gens
+5cdcac9 | 2026-01-19 | Update PATCH_NOTES.md to format new features and fix display issues in Locations Mode
+1109cb6 | 2026-01-19 | Update PATCH_NOTES.md to include recent commits and enhancements
+```
+
 ## Release Notes — January 19, 2026
 
 ## What’s New
