@@ -500,15 +500,31 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                         {url ? (
                                             <>
                                                 <img src={url} alt={formatDisplay(loc)}
-                                                    style={{ maxWidth: 220, maxHeight: 130, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
+                                                    style={{ maxWidth: 220, maxHeight: 130, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'pointer', display: 'block' }}
                                                     onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                    onClick={() => {
+                                                        const locationUrl = filename 
+                                                            ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
+                                                            : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                                                        setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
+                                                    }}
                                                 />
                                                 <div style={{ display: 'none', minWidth: 220, minHeight: 130, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
                                             </>
                                         ) : (
                                             <div style={{ width: 220, height: 130, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
                                         )}
-                                        <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
+                                        <div 
+                                            style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
+                                            onClick={() => {
+                                                const locationUrl = filename 
+                                                    ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
+                                                    : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                                                setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
+                                            }}
+                                        >
+                                            {formatDisplay(loc)}
+                                        </div>
                                         {showMethods && (() => {
                                             let method = null;
                                             let games = null;
@@ -610,15 +626,31 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                 {url ? (
                                                     <>
                                                         <img src={url} alt={formatDisplay(loc)}
-                                                            style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'default', display: 'block' }}
+                                                            style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'pointer', display: 'block' }}
                                                             onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                            onClick={() => {
+                                                                const locationUrl = filename 
+                                                                    ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
+                                                                    : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                                                                setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
+                                                            }}
                                                         />
                                                         <div style={{ display: 'none', minWidth: 160, minHeight: 120, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
                                                     </>
                                                 ) : (
                                                     <div style={{ minWidth: 160, minHeight: 120, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
                                                 )}
-                                                <div style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#333' }}>{formatDisplay(loc)}</div>
+                                                <div 
+                                                    style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
+                                                    onClick={() => {
+                                                        const locationUrl = filename 
+                                                            ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
+                                                            : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                                                        setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
+                                                    }}
+                                                >
+                                                    {formatDisplay(loc)}
+                                                </div>
                                                 {showMethods && (() => {
                                                     let method = null;
                                                     let games = null;
@@ -830,13 +862,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     aria-modal="true"
                     onClick={() => setMapPopup({ visible: false, title: null, url: null })}
                     style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
-                    <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '90%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)' }}>
+                    <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '70%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                             <div style={{ fontWeight: 700 }}>{mapPopup.title || 'Map'}</div>
                             <button onClick={() => setMapPopup({ visible: false, title: null, url: null })} style={{ marginLeft: 12 }}>Close</button>
                         </div>
                         {mapPopup.url ? (
-                            <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '80vh', display: 'block' }} onError={(e) => { e.target.style.display = 'none'; }} />
+                            <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '60vh', display: 'block', margin: '0 auto' }} onError={(e) => { e.target.style.display = 'none'; }} />
                         ) : (
                             <div style={{ padding: 24, color: '#666' }}>No map available for this location.</div>
                         )}
