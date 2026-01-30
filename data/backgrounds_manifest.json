@@ -1,4 +1,7 @@
 {
+    "0-Perfect": [
+        "86.png"
+    ],
     "1-Great": [
         "20.png",
         "28.png",
@@ -11,8 +14,7 @@
         "82.png",
         "83.png",
         "84.png",
-        "85.png",
-        "86.png"
+        "85.png"
     ],
     "2-Good": [
         "105.png",
@@ -56,6 +58,8 @@
         "158.png",
         "159.png",
         "16.png",
+        "160.png",
+        "161.png",
         "26.png",
         "27.png",
         "30.png",
@@ -284,8 +288,5 @@
         "67.png",
         "69.png",
         "70.png"
-    ],
-    "backgrounds": [
-        "template.png"
     ]
 }
