@@ -479,6 +479,21 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
                     </div>
+                    
+                    {/* Show breeding-only message if applicable */}
+                    {dailyPokemon.can_only_be_caught_by_breeding && (
+                        <div style={{ 
+                            color: '#eb3d3dff', 
+                            fontSize: 14, 
+                            fontWeight: 600, 
+                            textAlign: 'center', 
+                            marginBottom: 12,
+                            padding: '8px 12px',
+                        }}>
+                            This Pokémon can only be obtained through breeding and cannot be found in the wild.
+                        </div>
+                    )}
+                    
                     <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
                         {/* Show gen locations */}
                         {showGenLocations && genLocations.length > 0 && genLocations.filter(loc => {
