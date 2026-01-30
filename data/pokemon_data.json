@@ -75604,6 +75604,7 @@
     "held_items": [],
     "id": 298,
     "location_area_encounters": [],
+    "can_only_be_caught_by_breeding": true,
     "moves": [
       {
         "name": "Splash",
