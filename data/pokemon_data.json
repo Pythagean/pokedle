@@ -10521,18 +10521,6 @@
           "crystal"
         ],
         "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
       }
     ],
     "moves": [
@@ -10810,18 +10798,6 @@
         "region": "Kanto",
         "games": [
           "crystal"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       }
@@ -11989,19 +11965,6 @@
         ],
         "method": "Walk"
       },
-
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
       {
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
@@ -12756,18 +12719,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
@@ -25740,18 +25691,6 @@
         "method": "Rock Smash"
       },
       {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
-      },
-      {
         "name": "Kanto Rock Tunnel",
         "region": "Kanto",
         "games": [
@@ -26126,18 +26065,6 @@
           "leafgreen"
         ],
         "method": "Rock Smash"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Walk"
       },
       {
         "name": "Kanto Rock Tunnel",
@@ -51684,18 +51611,6 @@
           "crystal",
           "gold",
           "silver"
-        ],
-        "method": "Walk"
-      },
-      {
-        "name": "Kanto Mt Moon",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
         ],
         "method": "Walk"
       },
