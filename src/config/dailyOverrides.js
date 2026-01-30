@@ -58,11 +58,11 @@ export const DAILY_OVERRIDES = {
   //Brayden's Birthday
   "20260128": {
     classic: 6,
-    card: { pokemonId: 94 },
-    pokedex: 98,
-    details: 244,
-    colours: 334,
-    map: 249
+    card: { pokemonId: 244 },
+    pokedex: 255,
+    details: 344,
+    colours: 4,
+    map: 155
   },
   //Chinese New Year 
   "20260217": {
