@@ -1,3 +1,7 @@
+------------------
+---POCKET CARDS---
+------------------
+
 Navigate to collection page: https://tcgpocketcollectiontracker.com/#/collection/8674722716823402
 
 Apply necessary filters to get cards you are after (can take several runs to get all cards downloaded - make sure to run the process script before re-downloading as it requires the .html file)
@@ -12,6 +16,33 @@ Manual check - remove any unwanted cards (Megas etc.)
 Move the cards in /success into root directory of pocket_download, delete everything else
 
 Run this script to crop and resize cards
+python .\scripts\card\resize_and_crop_images.py .\scripts\card\pocket_download\ --crop-x 33 --crop-y 57 --crop-width 320 --crop-height 210 --width 400 --verbose
+
+Manually place cards in their respective directories inside ./scripts/card/pocket_to_move
+
+Run this script to move cards into pokedle_assets repo
+python .\scripts\card\move_images.py --input-dir .\scripts\card\pocket_to_move\ --output-dir D:\Github\pokedle_assets\cards --verbose
+
+Commit and Sync pokedle_assets
+
+Run this script to re-build the card manifest file
+python .\scripts\card\build_card_manifest_from_dirs.py --input-dir D:\Github\pokedle_assets\cards --output-json .\public\data\card_manifest.json
+
+
+------------------
+---ACTUAL CARDS---
+------------------
+
+Navigate to this page: https://www.pokellector.com/
+
+Go into new sets, find the cards you want, right click > Save Image As > Save to .\scripts\card\pocket_download\
+
+Rename images to match pokemon ids (eg. 23-99)
+
+Run script to convert to jpg:
+python scripts\image_tools\convert_webp_to_jpg.py .\scripts\card\pocket_download\
+
+Then run:
 python .\scripts\card\resize_and_crop_images.py .\scripts\card\pocket_download\ --crop-x 33 --crop-y 57 --crop-width 320 --crop-height 210 --width 400 --verbose
 
 Manually place cards in their respective directories inside ./scripts/card/pocket_to_move
