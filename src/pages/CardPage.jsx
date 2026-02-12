@@ -227,9 +227,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
     // Blur logic for normal and shiny cards
     switch (true) {
       case guesses.length === 0:
-        blurLevel = 17; break;
+        blurLevel = 16; break;
       case guesses.length === 1:
-        blurLevel = 15; break;
+        blurLevel = 14; break;
       case guesses.length === 2:
         blurLevel = 12; break;
       case guesses.length === 3:
