@@ -458,7 +458,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                         {prettyMethod && (
                                                             <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                 <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
+                                                                <span style={{ fontWeight: 400 }}>{prettyMethod} ({loc.chance} chance)</span>
+                                                            </div>
+                                                        )}
+                                                        {(
+                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                <span style={{ fontWeight: 700 }}>Levels:</span>
+                                                                <span style={{ fontWeight: 400 }}>{loc.level_range}</span>
                                                             </div>
                                                         )}
                                                     </div>
@@ -583,7 +589,13 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                                 {prettyMethod && (
                                                                     <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                         <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod}</span>
+                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod} ({loc.chance} chance)</span>
+                                                                    </div>
+                                                                )}
+                                                                {(
+                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                        <span style={{ fontWeight: 700 }}>Levels:</span>
+                                                                        <span style={{ fontWeight: 400 }}>{loc.level_range}</span>
                                                                     </div>
                                                                 )}
                                                             </div>
