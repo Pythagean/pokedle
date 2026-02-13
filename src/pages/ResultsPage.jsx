@@ -808,7 +808,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         // More pronounced effect on mobile/touch (35 degrees) vs desktop (20 degrees)
-        const multiplier = isTouch ? 35 : 20;
+        const multiplier = isTouch ? 25 : 12;
         const rotateX = -((y - centerY) / centerY) * multiplier;
         const rotateY = -((centerX - x) / centerX) * multiplier;
         setHoloRotate({ x: rotateX, y: rotateY });
