@@ -1,3 +1,36 @@
+## Release Notes — February 13, 2026
+
+## What’s New
+
+- **Locations Mode** <br>
+    - Added % Chance and Pokemon Levels to locations mode
+- **Card Mode** <br>
+    - Added cards from Ascended Heroes, Fantastical Parade
+    - Very slight tweak to intial blur level
+    - Removed shiny cards from pool
+
+## Commits included (newest first)
+
+```text
+27fa617 | 2026-02-13 | Locations: Adding % chance and Levels to locations mode
+764b0ae | 2026-02-13 | pokemon_data tidy up and removal of unused fields
+475589a | 2026-02-13 | Locations: Adding Level Range and Chance % to locations in pokemon_data.json
+22f4ab9 | 2026-02-13 | Slight reduction in initial blur level
+13453ec | 2026-02-13 | Card: Slight reduction in initial blur level
+59c9fc4 | 2026-02-11 | Removed shiny card logic, Saturdays are always full art
+e95d82a | 2026-02-06 | More results images
+7457e9e | 2026-02-05 | Adding new results images
+0635e81 | 2026-02-05 | Adding cards from Ascended Heroes
+a9083f2 | 2026-02-05 | Added Fantastical Parade Cards
+4e99921 | 2026-02-04 | Adding more results images
+df3fac0 | 2026-02-04 | Fixing Marowak location
+b2c352e | 2026-02-04 | Adding more results images
+06229ae | 2026-01-31 | Fixed issue with Azurill - added text saying pokemon can only be bred
+36be954 | 2026-01-30 | Added perfect category for result images
+bdb4f77 | 2026-01-30 | Fixing Mount moon location
+0c7738f | 2026-01-30 | Changing results thresholds, adding more images
+```
+
 ## Release Notes — January 21, 2026
 
 ## What’s New
