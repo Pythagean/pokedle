@@ -11,6 +11,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [cardPreviewUrl, setCardPreviewUrl] = useState(null);
     const [cardName, setCardName] = useState('');
     const [generatedDisabled, setGeneratedDisabled] = useState(false);
+    const [holoRotate, setHoloRotate] = useState({ x: 0, y: 0 });
+    const [holoEnabled, setHoloEnabled] = useState(true);
+    const cardRef = useRef(null);
 
     // Fallback: if no results provided, attempt to read a global exported value
     if ((!results || results.length === 0) && typeof window !== 'undefined' && window.__pokedle_results__) {
@@ -755,6 +758,43 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         };
     }, [cardPreviewUrl]);
 
+    // Mouse and touch tracking for holographic effect
+    const updateHoloRotation = (clientX, clientY) => {
+        if (!cardRef.current || !holoEnabled) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * 15;
+        const rotateY = ((centerX - x) / centerX) * 15;
+        setHoloRotate({ x: rotateX, y: rotateY });
+    };
+
+    const handleHoloMouseMove = (e) => {
+        updateHoloRotation(e.clientX, e.clientY);
+    };
+
+    const handleHoloMouseLeave = () => {
+        setHoloRotate({ x: 0, y: 0 });
+    };
+
+    const handleHoloTouchStart = (e) => {
+        if (!holoEnabled || !e.touches || e.touches.length === 0) return;
+        e.preventDefault(); // Prevent scrolling while interacting with card
+        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY);
+    };
+
+    const handleHoloTouchMove = (e) => {
+        if (!holoEnabled || !e.touches || e.touches.length === 0) return;
+        e.preventDefault(); // Prevent scrolling while interacting with card
+        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY);
+    };
+
+    const handleHoloTouchEnd = () => {
+        setHoloRotate({ x: 0, y: 0 });
+    };
+
     // Prevent horizontal scroll gestures inside the history scroller from
     // propagating to parent handlers (which may interpret them as page swipes).
     const historyTouchStart = useRef(null);
@@ -1007,8 +1047,101 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {/* Preview of generated card (if available) */}
                 {cardPreviewUrl ? (
                     <div style={{ marginTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start', justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
-                        <div style={{ border: '1px solid #eee', padding: 8, borderRadius: 6, background: '#fff' }}>
-                            <img src={cardPreviewUrl} alt="Generated card preview" style={{ width: isMobile ? '100%' : 350, height: 'auto', display: 'block', borderRadius: 4 }} />
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
+                            <div 
+                                ref={cardRef}
+                                onMouseMove={handleHoloMouseMove}
+                                onMouseLeave={handleHoloMouseLeave}
+                                onTouchStart={handleHoloTouchStart}
+                                onTouchMove={handleHoloTouchMove}
+                                onTouchEnd={handleHoloTouchEnd}
+                                style={{ 
+                                    perspective: '1000px',
+                                    width: isMobile ? '100%' : 350,
+                                    maxWidth: '100%',
+                                    cursor: holoEnabled ? 'pointer' : 'default',
+                                    touchAction: holoEnabled ? 'none' : 'auto'
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        position: 'relative',
+                                        border: '1px solid #eee',
+                                        padding: 8,
+                                        borderRadius: 6,
+                                        background: '#fff',
+                                        transform: holoEnabled 
+                                            ? `rotateX(${holoRotate.x}deg) rotateY(${holoRotate.y}deg)`
+                                            : 'none',
+                                        transition: 'transform 0.3s ease-out',
+                                        transformStyle: 'preserve-3d'
+                                    }}
+                                >
+                                    <img 
+                                        src={cardPreviewUrl} 
+                                        alt="Generated card preview" 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: 'auto', 
+                                            display: 'block', 
+                                            borderRadius: 4,
+                                            position: 'relative',
+                                            zIndex: 1
+                                        }} 
+                                    />
+                                    {holoEnabled && (
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                top: 8,
+                                                left: 8,
+                                                right: 8,
+                                                bottom: 8,
+                                                borderRadius: 4,
+                                                background: `
+                                                    linear-gradient(
+                                                        ${115 + holoRotate.y * 2}deg,
+                                                        transparent 20%,
+                                                        rgba(255, 0, 255, 0.2) 50%,
+                                                        rgba(0, 255, 255, 0.2) 60%,
+                                                        rgba(255, 255, 0, 0.2) 70%,
+                                                        rgba(255, 0, 0, 0.2) 80%,
+                                                        transparent 50%
+                                                    ),
+                                                    repeating-linear-gradient(
+                                                        ${0 + holoRotate.x}deg,
+                                                        rgba(255, 255, 255, 0.03) 0px,
+                                                        rgba(255, 255, 255, 0.03) 2px,
+                                                        transparent 2px,
+                                                        transparent 4px
+                                                    )
+                                                `,
+                                                pointerEvents: 'none',
+                                                mixBlendMode: 'overlay',
+                                                opacity: 0.6 + Math.abs(holoRotate.x) * 0.02 + Math.abs(holoRotate.y) * 0.02,
+                                                transition: 'opacity 0.3s ease-out',
+                                                zIndex: 2
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                            {/* <button
+                                onClick={() => setHoloEnabled(!holoEnabled)}
+                                style={{
+                                    height: 32,
+                                    padding: '4px 12px',
+                                    borderRadius: 6,
+                                    border: '1px solid #e0e0e0',
+                                    background: holoEnabled ? '#1976d2' : '#efefef',
+                                    color: holoEnabled ? '#fff' : '#111',
+                                    cursor: 'pointer',
+                                    fontSize: 12,
+                                    marginTop: 4
+                                }}
+                            >
+                                ✨ Holo {holoEnabled ? 'ON' : 'OFF'}
+                            </button> */}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {/* On mobile show Download button under the preview */}
