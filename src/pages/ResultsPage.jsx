@@ -40,6 +40,29 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const epoch = effectiveUTCDate(new Date('2025-11-24T00:00:00Z'));
     const dayNumber = Math.floor((todayEffective.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
     const pokedleLabel = `Pokédle #${dayNumber}`;
+    
+    // Initialize card preview from localStorage (but only if it's for the current day)
+    useEffect(() => {
+        try {
+            const storedDay = localStorage.getItem('pokedle_card_day');
+            const storedUrl = localStorage.getItem('pokedle_card_preview_url');
+            const storedName = localStorage.getItem('pokedle_card_name');
+            
+            if (storedDay && parseInt(storedDay, 10) === dayNumber) {
+                // Same day - restore the card
+                if (storedUrl) setCardPreviewUrl(storedUrl);
+                if (storedName) setCardName(storedName);
+            } else {
+                // Different day - clear the stored card
+                localStorage.removeItem('pokedle_card_day');
+                localStorage.removeItem('pokedle_card_preview_url');
+                localStorage.removeItem('pokedle_card_name');
+            }
+        } catch (e) {
+            // ignore
+        }
+    }, [dayNumber]);
+    
     const entries = (results || []).map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
     const allCompleted = Array.isArray(results) && results.length > 0 && results.every(r => r && r.solved);
@@ -259,25 +282,32 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             return await new Promise((resolve) => {
                 canvas.toBlob(async (blob) => {
                     if (!blob) { resolve({ status: 'error', message: 'no_blob' }); return; }
-                    const url = URL.createObjectURL(blob);
-                    // Try clipboard
-                    try {
-                        if (navigator.clipboard && window.ClipboardItem) {
-                            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                            resolve({ status: 'clipboard', url });
-                            return;
-                        }
-                    } catch (e) {}
-                    // Fallback download
-                    try {
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `${pokedleLabel.replace(/\s+/g, ' ')}-guesses.png`;
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    } catch (e) {}
-                    resolve({ status: 'downloaded', url });
+                    
+                    // Convert blob to data URL for localStorage persistence
+                    const reader = new FileReader();
+                    reader.onloadend = async () => {
+                        const dataUrl = reader.result;
+                        // Try clipboard
+                        try {
+                            if (navigator.clipboard && window.ClipboardItem) {
+                                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                resolve({ status: 'clipboard', url: dataUrl });
+                                return;
+                            }
+                        } catch (e) {}
+                        // Fallback download
+                        try {
+                            const a = document.createElement('a');
+                            a.href = dataUrl;
+                            a.download = `${pokedleLabel.replace(/\s+/g, ' ')}-guesses.png`;
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                        } catch (e) {}
+                        resolve({ status: 'downloaded', url: dataUrl });
+                    };
+                    reader.onerror = () => resolve({ status: 'error', message: 'read_fail' });
+                    reader.readAsDataURL(blob);
                 }, 'image/png');
             });
         } catch (err) {
@@ -686,30 +716,37 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     return await new Promise((resolve) => {
                 canvas.toBlob(async (blob) => {
                     if (!blob) { resolve({ status: 'error', message: 'no_blob' }); return; }
-                    const url = URL.createObjectURL(blob);
-                    // Try to copy to clipboard first (but keep the object URL for preview)
-                    try {
-                        if (navigator.clipboard && window.ClipboardItem) {
-                            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                            resolve({ status: 'clipboard', url });
-                            return;
+                    
+                    // Convert blob to data URL for localStorage persistence
+                    const reader = new FileReader();
+                    reader.onloadend = async () => {
+                        const dataUrl = reader.result;
+                        // Try to copy to clipboard first
+                        try {
+                            if (navigator.clipboard && window.ClipboardItem) {
+                                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                resolve({ status: 'clipboard', url: dataUrl });
+                                return;
+                            }
+                        } catch (e) {
+                            // ignore clipboard errors
                         }
-                    } catch (e) {
-                        // ignore clipboard errors
-                    }
-                    // Fallback: trigger a download but still return the object URL for preview
-                    try {
-                        const a = document.createElement('a');
-                        a.href = url;
-                        const safeLabel = pokedleLabel.replace(/\s+/g, ' ');
-                        a.download = `${safeLabel}.png`;
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    } catch (e) {
-                        // ignore download errors
-                    }
-                    resolve({ status: 'downloaded', url });
+                        // Fallback: trigger a download
+                        try {
+                            const a = document.createElement('a');
+                            a.href = dataUrl;
+                            const safeLabel = pokedleLabel.replace(/\s+/g, ' ');
+                            a.download = `${safeLabel}.png`;
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                        } catch (e) {
+                            // ignore download errors
+                        }
+                        resolve({ status: 'downloaded', url: dataUrl });
+                    };
+                    reader.onerror = () => resolve({ status: 'error', message: 'read_fail' });
+                    reader.readAsDataURL(blob);
                 }, 'image/png');
             });
         } catch (err) {
@@ -751,16 +788,40 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         };
     }, []);
 
-    // Revoke object URL when preview changes or component unmounts
+    // Save card preview URL and name to localStorage with day number
+    useEffect(() => {
+        try {
+            if (cardPreviewUrl) {
+                localStorage.setItem('pokedle_card_preview_url', cardPreviewUrl);
+                localStorage.setItem('pokedle_card_day', String(dayNumber));
+            } else {
+                localStorage.removeItem('pokedle_card_preview_url');
+                localStorage.removeItem('pokedle_card_day');
+            }
+        } catch (e) {
+            // ignore
+        }
+    }, [cardPreviewUrl, dayNumber]);
+
+    useEffect(() => {
+        try {
+            if (cardName) {
+                localStorage.setItem('pokedle_card_name', cardName);
+                localStorage.setItem('pokedle_card_day', String(dayNumber));
+            } else {
+                localStorage.removeItem('pokedle_card_name');
+            }
+        } catch (e) {
+            // ignore
+        }
+    }, [cardName, dayNumber]);
+
+    // Revoke object URL when component unmounts (but not when preview changes)
     useEffect(() => {
         return () => {
-            try {
-                if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl);
-            } catch (e) {
-                // ignore
-            }
+            // No cleanup needed for data URLs - they're self-contained
         };
-    }, [cardPreviewUrl]);
+    }, []);
 
     // Generate sparkle particles when holo is active
     useEffect(() => {
@@ -926,7 +987,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         transform: translateY(0px) rotateX(-2deg) rotateY(2deg);
                     }
                     50% {
-                        transform: translateY(-2px) rotateX(2deg) rotateY(-2deg);
+                        transform: translateY(-2px) rotateX(3deg) rotateY(-3deg);
                     }
                 }
             `}</style>
@@ -1208,16 +1269,16 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                         linear-gradient(
                                                             ${115 + holoRotate.y * (isMobile ? 3 : 2)}deg,
                                                             transparent 20%,
-                                                            rgba(255, 0, 255, 0.15) 40%,
-                                                            rgba(0, 255, 255, 0.15) 50%,
-                                                            rgba(255, 255, 0, 0.15) 60%,
-                                                            rgba(255, 0, 0, 0.15) 70%,
-                                                            transparent 50%
+                                                            rgba(255, 0, 255, 0.15) 50%,
+                                                            rgba(0, 255, 255, 0.15) 60%,
+                                                            rgba(255, 255, 0, 0.15) 70%,
+                                                            rgba(255, 0, 0, 0.15) 80%,
+                                                            transparent 40%
                                                         ),
                                                         repeating-linear-gradient(
                                                             ${0 + holoRotate.x * (isMobile ? 1.5 : 1)}deg,
-                                                            rgba(255, 255, 255, 0.03) 0px,
-                                                            rgba(255, 255, 255, 0.03) 2px,
+                                                            rgba(255, 255, 255, 0.06) 0px,
+                                                            rgba(255, 255, 255, 0.06) 2px,
                                                             transparent 2px,
                                                             transparent 4px
                                                         )
