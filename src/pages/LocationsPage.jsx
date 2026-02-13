@@ -170,133 +170,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
 
     // Clue renderers
     function renderClue(type) {
-        if (type === 'stats') {
-            const stats = dailyPokemon.stats || {};
-            const statOrder = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
-            const statLabels = {
-                hp: 'HP', attack: 'Atk', defense: 'Def', 'special-attack': 'Sp.Atk', 'special-defense': 'Sp.Def', speed: 'Speed',
-            };
-            // Per-stat maximums for normalization
-            const statMax = {
-                hp: 255,
-                attack: 180,
-                defense: 180,
-                'special-attack': 180,
-                'special-defense': 180,
-                speed: 180,
-            };
 
-            return (
-                <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, marginBottom: 8, fontSize: 18 }}>Base Stats:</div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {statOrder.map(s => {
-                            const v = Number(stats[s] || 0);
-                            const maxFor = statMax[s] || 255;
-                            const pct = Math.round((v / maxFor) * 100);
-                            return (
-                                <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12 }} aria-label={`${statLabels[s]}: ${v}`}>
-                                    <div style={{ width: 72, fontSize: 13, color: '#333', fontWeight: 600 }}>{statLabels[s]}</div>
-                                    <div style={{ flex: 1, height: 14, background: '#e8eef6', borderRadius: 8, overflow: 'hidden' }}>
-                                        <div style={{ height: '100%', width: `${pct}%`, background: '#1976d2', borderRadius: 8, transition: 'width 360ms cubic-bezier(.2,.8,.2,1)' }} />
-                                    </div>
-                                    <div style={{ width: 44, textAlign: 'right', fontWeight: 700, color: '#111' }}>{v}</div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            );
-        }
-        if (type === 'ability') {
-            const abilities = dailyPokemon.abilities || [];
-
-            const prettyName = (raw) => {
-                if (!raw) return raw;
-                return String(raw).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-            };
-
-            return (
-                <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 18 }}>Abilities:</div>
-                    <div style={{ color: '#333', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center', fontSize: 14 }}>
-                        {abilities.length > 0 ? (
-                            abilities.map((a, i) => {
-                                if (!a) return null;
-                                if (typeof a === 'string') {
-                                    return <div key={i}>{prettyName(a)}</div>;
-                                }
-                                const n = a.name || (a.ability && a.ability.name) || '';
-                                const rawEff = a.effect || a.short_effect || a.flavor_text || null;
-                                let eff = null;
-                                if (rawEff) {
-                                    // Trim surrounding whitespace and remove trailing full-stops/whitespace
-                                    const cleaned = String(rawEff).trim().replace(/[.\s]+$/u, '');
-                                    eff = cleaned.length > 0 ? cleaned : null;
-                                }
-                                return (
-                                    <div key={n || i}>
-                                        <strong>{prettyName(n)}</strong>{eff ? ` (${eff})` : null}
-                                    </div>
-                                );
-                            })
-                        ) : 'No abilities'}
-                    </div>
-                </div>
-            );
-        }
-        if (type === 'moves') {
-            const moves = dailyPokemon.moves || [];
-            // Support legacy string-array moves and new [{name, level_learned_at}] format
-            let movesByLevel = null;
-            if (moves.length > 0 && typeof moves[0] === 'string') {
-                // Legacy format: just show a single line
-                movesByLevel = { none: moves };
-            } else {
-                movesByLevel = moves.reduce((acc, m) => {
-                    if (!m) return acc;
-                    const name = m.name || (typeof m === 'string' ? m : null);
-                    const level = (m && (m.level_learned_at || m.level || 0)) ?? 0;
-                    if (!name) return acc;
-                    const key = String(level);
-                    if (!acc[key]) acc[key] = [];
-                    acc[key].push(name);
-                    return acc;
-                }, {});
-            }
-
-            const levelKeys = Object.keys(movesByLevel || {}).filter(k => k !== 'none').map(k => parseInt(k, 10));
-            levelKeys.sort((a, b) => a - b);
-
-            return (
-                <div style={{ marginBottom: 10 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
-                        <div style={{ fontWeight: 600, fontSize: 18 }}>Moves Learnt:</div>
-                        <InfoButton
-                            ariaLabel="About moves clue"
-                            placement="right"
-                            marginTop={0}
-                            content={
-                                <div style={{ textAlign: 'left' }}>
-                                    Moves Learnt are from Gen 3, and only include those learnt by leveling up (no TMs, HMs, breeding, tutoring, or move tutors).<br />
-                                </div>
-                            }
-                        />
-                    </div>
-                    <div style={{ color: '#333', textAlign: 'center', fontSize: 14 }}>
-                        {Object.prototype.hasOwnProperty.call(movesByLevel, 'none') ? (
-                            <div>{movesByLevel.none.join(', ')}</div>
-                        ) : (
-                            (levelKeys.length > 0 ? levelKeys.map(lvl => (
-                                <div key={lvl} style={{ marginBottom: 4, textAlign: 'center' }}>
-                                    <strong>Lvl {lvl}</strong> - {(movesByLevel[String(lvl)] || []).slice().sort().join(', ')}
-                                </div>
-                            )) : 'No moves')
-                        )}
-                    </div>
-                </div>
-            );
-        }
         if (type === 'category') {
             const genus = dailyPokemon.genus || '';
             return (
@@ -808,15 +682,6 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             </div>
                         ) : 'No held items'}
                     </div>
-                </div>
-            );
-        }
-        if (type === 'shape') {
-            const shape = dailyPokemon.shape || '';
-            return (
-                <div style={{ marginBottom: 10 }}>
-                    <div style={{ fontWeight: 600, fontSize: 18 }}>Shape:</div>
-                    <div style={{ color: '#333', fontSize: 14 }}>{shape || 'Unknown'}</div>
                 </div>
             );
         }
