@@ -13,7 +13,11 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [generatedDisabled, setGeneratedDisabled] = useState(false);
     const [holoRotate, setHoloRotate] = useState({ x: 0, y: 0 });
     const [holoEnabled, setHoloEnabled] = useState(true);
+    const [lightPos, setLightPos] = useState({ x: 50, y: 50 });
+    const [sparkles, setSparkles] = useState([]);
+    const [isInteracting, setIsInteracting] = useState(false);
     const cardRef = useRef(null);
+    const sparkleIdCounter = useRef(0);
 
     // Fallback: if no results provided, attempt to read a global exported value
     if ((!results || results.length === 0) && typeof window !== 'undefined' && window.__pokedle_results__) {
@@ -758,41 +762,91 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         };
     }, [cardPreviewUrl]);
 
+    // Generate sparkle particles when holo is active
+    useEffect(() => {
+        if (!holoEnabled || !cardPreviewUrl) return;
+        
+        const generateSparkle = () => {
+            const id = sparkleIdCounter.current++;
+            const newSparkle = {
+                id,
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                size: Math.random() * 3 + 2,
+                duration: Math.random() * 1000 + 900,
+                opacity: Math.random() * 0.05 + 0.05,
+                delay: 0
+            };
+            //console.log('Generated sparkle: ', newSparkle.opacity);
+            
+            setSparkles(prev => [...prev, newSparkle]);
+            
+            // Remove sparkle after animation
+            setTimeout(() => {
+                setSparkles(prev => prev.filter(s => s.id !== id));
+            }, newSparkle.duration);
+        };
+        
+        // Generate sparkles periodically
+        const interval = setInterval(() => {
+            // Generate 1-5 sparkles at a time
+            const count = Math.floor(Math.random() * 2) + 1;
+            for (let i = 0; i < count; i++) {
+                setTimeout(generateSparkle, i * 100);
+            }
+        }, 600);
+        
+        return () => clearInterval(interval);
+    }, [holoEnabled, cardPreviewUrl]);
+
     // Mouse and touch tracking for holographic effect
-    const updateHoloRotation = (clientX, clientY) => {
+    const updateHoloRotation = (clientX, clientY, isTouch = false) => {
         if (!cardRef.current || !holoEnabled) return;
         const rect = cardRef.current.getBoundingClientRect();
         const x = clientX - rect.left;
         const y = clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * 15;
-        const rotateY = ((centerX - x) / centerX) * 15;
+        // More pronounced effect on mobile/touch (35 degrees) vs desktop (20 degrees)
+        const multiplier = isTouch ? 35 : 20;
+        const rotateX = -((y - centerY) / centerY) * multiplier;
+        const rotateY = -((centerX - x) / centerX) * multiplier;
         setHoloRotate({ x: rotateX, y: rotateY });
+        
+        // Update light spot position (as percentage)
+        const lightX = (x / rect.width) * 100;
+        const lightY = (y / rect.height) * 100;
+        setLightPos({ x: lightX, y: lightY });
     };
 
     const handleHoloMouseMove = (e) => {
+        setIsInteracting(true);
         updateHoloRotation(e.clientX, e.clientY);
     };
 
     const handleHoloMouseLeave = () => {
+        setIsInteracting(false);
         setHoloRotate({ x: 0, y: 0 });
+        setLightPos({ x: 50, y: 50 });
     };
 
     const handleHoloTouchStart = (e) => {
         if (!holoEnabled || !e.touches || e.touches.length === 0) return;
         e.preventDefault(); // Prevent scrolling while interacting with card
-        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY);
+        setIsInteracting(true);
+        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY, true);
     };
 
     const handleHoloTouchMove = (e) => {
         if (!holoEnabled || !e.touches || e.touches.length === 0) return;
         e.preventDefault(); // Prevent scrolling while interacting with card
-        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY);
+        updateHoloRotation(e.touches[0].clientX, e.touches[0].clientY, true);
     };
 
     const handleHoloTouchEnd = () => {
+        setIsInteracting(false);
         setHoloRotate({ x: 0, y: 0 });
+        setLightPos({ x: 50, y: 50 });
     };
 
     // Prevent horizontal scroll gestures inside the history scroller from
@@ -848,6 +902,34 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
 
     return (
         <div style={outerStyle}>
+            <style>{`
+                @keyframes sparkle-fade {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0) rotate(0deg);
+                    }
+                    10% {
+                        opacity: 1;
+                        transform: scale(1) rotate(90deg);
+                    }
+                    90% {
+                        opacity: 1;
+                        transform: scale(1) rotate(180deg);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: scale(0) rotate(270deg);
+                    }
+                }
+                @keyframes idle-float {
+                    0%, 100% {
+                        transform: translateY(0px) rotateX(-2deg) rotateY(2deg);
+                    }
+                    50% {
+                        transform: translateY(-2px) rotateX(2deg) rotateY(-2deg);
+                    }
+                }
+            `}</style>
             <div style={{ textAlign: 'center', marginTop: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                     <h2 style={{ marginBottom: 10 }}>Results</h2>
@@ -1048,83 +1130,232 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {cardPreviewUrl ? (
                     <div style={{ marginTop: 12, display: 'flex', gap: 12, alignItems: 'flex-start', justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
-                            <div 
-                                ref={cardRef}
-                                onMouseMove={handleHoloMouseMove}
-                                onMouseLeave={handleHoloMouseLeave}
-                                onTouchStart={handleHoloTouchStart}
-                                onTouchMove={handleHoloTouchMove}
-                                onTouchEnd={handleHoloTouchEnd}
-                                style={{ 
-                                    perspective: '1000px',
-                                    width: isMobile ? '100%' : 350,
-                                    maxWidth: '100%',
-                                    cursor: holoEnabled ? 'pointer' : 'default',
-                                    touchAction: holoEnabled ? 'none' : 'auto'
-                                }}
-                            >
-                                <div
-                                    style={{
+                            <div style={{ position: 'relative', width: isMobile ? '100%' : 350, maxWidth: '100%' }}>
+                                {/* Dynamic 3D drop shadow - positioned behind card */}
+                                {holoEnabled && (
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            top: '52%',
+                                            left: '50%',
+                                            width: '100%',
+                                            height: '100%',
+                                            transform: `translate(-50%, -50%) translateX(${-holoRotate.y * 0.8}px) translateY(${holoRotate.x * 0.8 + 15}px)`,
+                                            background: 'radial-gradient(ellipse 100% 50%, rgba(0, 0, 0, 0.4) 40%, transparent 60%)',
+                                            filter: `blur(${12 + (Math.abs(holoRotate.x) + Math.abs(holoRotate.y)) * 0.4}px)`,
+                                            opacity: 0.5 + (Math.abs(holoRotate.x) + Math.abs(holoRotate.y)) * 0.015,
+                                            transition: `all ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                            zIndex: 0,
+                                            pointerEvents: 'none'
+                                        }}
+                                    />
+                                )}
+                                <div 
+                                    ref={cardRef}
+                                    onMouseMove={handleHoloMouseMove}
+                                    onMouseLeave={handleHoloMouseLeave}
+                                    onTouchStart={handleHoloTouchStart}
+                                    onTouchMove={handleHoloTouchMove}
+                                    onTouchEnd={handleHoloTouchEnd}
+                                    style={{ 
+                                        perspective: '1000px',
+                                        width: '100%',
+                                        cursor: holoEnabled ? 'pointer' : 'default',
+                                        touchAction: holoEnabled ? 'none' : 'auto',
                                         position: 'relative',
-                                        border: '1px solid #eee',
-                                        padding: 8,
-                                        borderRadius: 6,
-                                        background: '#fff',
-                                        transform: holoEnabled 
-                                            ? `rotateX(${holoRotate.x}deg) rotateY(${holoRotate.y}deg)`
-                                            : 'none',
-                                        transition: 'transform 0.3s ease-out',
-                                        transformStyle: 'preserve-3d'
+                                        zIndex: 1
                                     }}
                                 >
-                                    <img 
-                                        src={cardPreviewUrl} 
-                                        alt="Generated card preview" 
-                                        style={{ 
-                                            width: '100%', 
-                                            height: 'auto', 
-                                            display: 'block', 
-                                            borderRadius: 4,
+                                    <div
+                                        style={{
                                             position: 'relative',
-                                            zIndex: 1
-                                        }} 
-                                    />
-                                    {holoEnabled && (
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                top: 8,
-                                                left: 8,
-                                                right: 8,
-                                                bottom: 8,
+                                            //padding: 8,
+                                            background: '#fff',
+                                            transform: holoEnabled 
+                                                ? `rotateX(${holoRotate.x}deg) rotateY(${holoRotate.y}deg)`
+                                                : 'none',
+                                            transition: `transform ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                            transformStyle: 'preserve-3d',
+                                            animation: holoEnabled && !isInteracting && holoRotate.x === 0 && holoRotate.y === 0
+                                                ? 'idle-float 4s ease-in-out infinite'
+                                                : 'none'
+                                        }}
+                                    >
+                                        <img 
+                                            src={cardPreviewUrl} 
+                                            alt="Generated card preview" 
+                                            style={{ 
+                                                width: '100%', 
+                                                height: 'auto', 
+                                                display: 'block', 
                                                 borderRadius: 4,
-                                                background: `
-                                                    linear-gradient(
-                                                        ${115 + holoRotate.y * 2}deg,
-                                                        transparent 20%,
-                                                        rgba(255, 0, 255, 0.2) 50%,
-                                                        rgba(0, 255, 255, 0.2) 60%,
-                                                        rgba(255, 255, 0, 0.2) 70%,
-                                                        rgba(255, 0, 0, 0.2) 80%,
-                                                        transparent 50%
-                                                    ),
-                                                    repeating-linear-gradient(
-                                                        ${0 + holoRotate.x}deg,
-                                                        rgba(255, 255, 255, 0.03) 0px,
-                                                        rgba(255, 255, 255, 0.03) 2px,
-                                                        transparent 2px,
-                                                        transparent 4px
-                                                    )
-                                                `,
-                                                pointerEvents: 'none',
-                                                mixBlendMode: 'overlay',
-                                                opacity: 0.6 + Math.abs(holoRotate.x) * 0.02 + Math.abs(holoRotate.y) * 0.02,
-                                                transition: 'opacity 0.3s ease-out',
-                                                zIndex: 2
-                                            }}
+                                                position: 'relative',
+                                                zIndex: 1
+                                            }} 
                                         />
+                                    {holoEnabled && (
+                                        <>
+                                            {/* Rainbow gradient overlay */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        linear-gradient(
+                                                            ${115 + holoRotate.y * (isMobile ? 3 : 2)}deg,
+                                                            transparent 20%,
+                                                            rgba(255, 0, 255, 0.15) 40%,
+                                                            rgba(0, 255, 255, 0.15) 50%,
+                                                            rgba(255, 255, 0, 0.15) 60%,
+                                                            rgba(255, 0, 0, 0.15) 70%,
+                                                            transparent 50%
+                                                        ),
+                                                        repeating-linear-gradient(
+                                                            ${0 + holoRotate.x * (isMobile ? 1.5 : 1)}deg,
+                                                            rgba(255, 255, 255, 0.03) 0px,
+                                                            rgba(255, 255, 255, 0.03) 2px,
+                                                            transparent 2px,
+                                                            transparent 4px
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'overlay',
+                                                    opacity: 0.6 + Math.abs(holoRotate.x) * (isMobile ? 0.035 : 0.02) + Math.abs(holoRotate.y) * (isMobile ? 0.035 : 0.02),
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 2
+                                                }}
+                                            />
+                                            
+                                            {/* Dynamic light spot */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        radial-gradient(
+                                                            circle at ${lightPos.x}% ${lightPos.y}%,
+                                                            rgba(255, 255, 255, 0.8) 0%,
+                                                            rgba(255, 255, 255, 0.4) 10%,
+                                                            rgba(200, 200, 255, 0.2) 20%,
+                                                            transparent 40%
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'soft-light',
+                                                    opacity: 0.7,
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 3
+                                                }}
+                                            />
+                                            {/* Sparkle particles */}
+                                            {sparkles.map(sparkle => (
+                                                <div
+                                                    key={sparkle.id}
+                                                    style={{
+                                                        position: 'absolute',
+                                                        left: `${sparkle.x}%`,
+                                                        top: `${sparkle.y}%`,
+                                                        width: `${sparkle.size}px`,
+                                                        height: `${sparkle.size}px`,
+                                                        borderRadius: '50%',
+                                                        background: `radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent ${sparkle.opacity * 100}%)`,
+                                                        boxShadow: `0 0 ${sparkle.size * 2}px rgba(255, 255, 255, 0.8), 0 0 ${sparkle.size}px rgba(200, 200, 255, 0.6)`,
+                                                        pointerEvents: 'none',
+                                                        animation: `sparkle-fade ${sparkle.duration}ms ease-in-out forwards`,
+                                                        zIndex: 4
+                                                    }}
+                                                />
+                                            ))}
+                                            
+                                            {/* Multiple gradient layers for depth */}
+                                            {/* Layer 1: Blue/Cyan sweep */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        linear-gradient(
+                                                            ${45 - holoRotate.x * (isMobile ? 2 : 1.5)}deg,
+                                                            transparent 0%,
+                                                            rgba(0, 150, 255, 0.2) 30%,
+                                                            rgba(0, 255, 255, 0.25) 50%,
+                                                            rgba(100, 200, 255, 0.2) 70%,
+                                                            transparent 100%
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'color-dodge',
+                                                    opacity: 0.3 + Math.abs(holoRotate.x) * 0.015,
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 5
+                                                }}
+                                            />
+                                            {/* Layer 2: Purple/Magenta sweep */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        linear-gradient(
+                                                            ${135 + holoRotate.y * (isMobile ? 2.5 : 1.8)}deg,
+                                                            transparent 0%,
+                                                            rgba(255, 0, 150, 0.18) 25%,
+                                                            rgba(200, 0, 255, 0.22) 50%,
+                                                            rgba(255, 100, 255, 0.18) 75%,
+                                                            transparent 100%
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'color-dodge',
+                                                    opacity: 0.35 + Math.abs(holoRotate.y) * 0.018,
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 6
+                                                }}
+                                            />
+                                            {/* Layer 3: Gold/Orange shimmer */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        radial-gradient(
+                                                            ellipse ${100 + holoRotate.y * 2}% ${100 - holoRotate.x * 2}% at ${lightPos.x}% ${lightPos.y}%,
+                                                            rgba(255, 200, 0, 0.15) 0%,
+                                                            rgba(255, 150, 50, 0.12) 25%,
+                                                            transparent 60%
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'screen',
+                                                    opacity: 0.4 + (Math.abs(holoRotate.x) + Math.abs(holoRotate.y)) * 0.01,
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 7
+                                                }}
+                                            />
+                                        </>
                                     )}
                                 </div>
+                            </div>
                             </div>
                             {/* <button
                                 onClick={() => setHoloEnabled(!holoEnabled)}
