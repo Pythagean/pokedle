@@ -145,6 +145,9 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
             version_details = encounter.get('version_details', [])
             matching_games = []
             methods_seen = []
+            min_levels = []
+            max_levels = []
+            chances = []
             for detail in version_details:
                 version_name = detail.get('version', {}).get('name', '')
                 if version_name in VALID_VERSIONS:
@@ -164,6 +167,14 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                         mnorm = method_name.replace('-', ' ').title()
                         if mnorm not in methods_seen:
                             methods_seen.append(mnorm)
+                        
+                        # Collect level and chance data
+                        if 'min_level' in ed and ed['min_level'] is not None:
+                            min_levels.append(ed['min_level'])
+                        if 'max_level' in ed and ed['max_level'] is not None:
+                            max_levels.append(ed['max_level'])
+                        if 'chance' in ed and ed['chance'] is not None:
+                            chances.append(ed['chance'])
             
             if not matching_games:
                 continue
@@ -232,7 +243,11 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                 location_map[combined] = {
                     'region': region_name.replace('-', ' ').title() if region_name else None,
                     'games': [],
-                    'methods': []
+                    'methods': [],
+                    'min_level': None,
+                    'max_level': None,
+                    'min_chance': None,
+                    'max_chance': None
                 }
             
             # Add games that aren't already in the list
@@ -244,6 +259,29 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
             for method in methods_seen:
                 if method not in location_map[combined]['methods']:
                     location_map[combined]['methods'].append(method)
+            
+            # Update level and chance values (take min of min_levels, max of max_levels, max of chances)
+            if min_levels:
+                current_min = location_map[combined]['min_level']
+                new_min = min(min_levels)
+                if current_min is None or new_min < current_min:
+                    location_map[combined]['min_level'] = new_min
+            
+            if max_levels:
+                current_max = location_map[combined]['max_level']
+                new_max = max(max_levels)
+                if current_max is None or new_max > current_max:
+                    location_map[combined]['max_level'] = new_max
+            
+            if chances:
+                current_min = location_map[combined]['min_chance']
+                current_max = location_map[combined]['max_chance']
+                new_min = min(chances)
+                new_max = max(chances)
+                if current_min is None or new_min < current_min:
+                    location_map[combined]['min_chance'] = new_min
+                if current_max is None or new_max > current_max:
+                    location_map[combined]['max_chance'] = new_max
 
         # Convert to output format with sorted games
         out = []
@@ -253,12 +291,36 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
             if any('headbutt' in m.lower() for m in methods):
                 methods = ['Headbutt']
             
-            out.append({
+            location_entry = {
                 'name': name,
                 'region': data['region'],
                 'games': sorted(data['games']),
                 'method': ', '.join(methods) if methods else ''
-            })
+            }
+            
+            # Add level_range if we have level data
+            if data['min_level'] is not None and data['max_level'] is not None:
+                if data['min_level'] == data['max_level']:
+                    location_entry['level_range'] = str(data['min_level'])
+                else:
+                    location_entry['level_range'] = f"{data['min_level']}-{data['max_level']}"
+            elif data['min_level'] is not None:
+                location_entry['level_range'] = str(data['min_level'])
+            elif data['max_level'] is not None:
+                location_entry['level_range'] = str(data['max_level'])
+            
+            # Add chance if available
+            if data['min_chance'] is not None and data['max_chance'] is not None:
+                if data['min_chance'] == data['max_chance']:
+                    location_entry['chance'] = f"{data['min_chance']}%"
+                else:
+                    location_entry['chance'] = f"{data['min_chance']}-{data['max_chance']}%"
+            elif data['max_chance'] is not None:
+                location_entry['chance'] = f"{data['max_chance']}%"
+            elif data['min_chance'] is not None:
+                location_entry['chance'] = f"{data['min_chance']}%"
+            
+            out.append(location_entry)
         return out
 
     except requests.RequestException as e:

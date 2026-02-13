@@ -15,7 +15,7 @@ import sys
 
 def merge_locations(locations):
     """
-    Merge locations with the same name, combining their games and methods.
+    Merge locations with the same name, combining their games, methods, levels, and chances.
     
     Args:
         locations: List of location dictionaries
@@ -40,8 +40,16 @@ def merge_locations(locations):
                 'name': name,
                 'region': loc.get('region'),
                 'games': set(loc.get('games', [])),
-                'method': loc.get('method', '')
+                'method': loc.get('method', ''),
+                'level_ranges': set(),
+                'chances': set()
             }
+            # Store level_range if present
+            if 'level_range' in loc and loc['level_range']:
+                location_map[name]['level_ranges'].add(loc['level_range'])
+            # Store chance if present
+            if 'chance' in loc and loc['chance']:
+                location_map[name]['chances'].add(loc['chance'])
         else:
             # Merge with existing location
             existing = location_map[name]
@@ -65,16 +73,74 @@ def merge_locations(locations):
                     existing['method'] = ', '.join(sorted(methods))
                 else:
                     existing['method'] = new_method
+            
+            # Merge level_range
+            if 'level_range' in loc and loc['level_range']:
+                existing['level_ranges'].add(loc['level_range'])
+            
+            # Merge chance
+            if 'chance' in loc and loc['chance']:
+                existing['chances'].add(loc['chance'])
     
     # Convert back to list format
     result = []
     for loc_data in location_map.values():
-        result.append({
+        entry = {
             'name': loc_data['name'],
             'region': loc_data['region'],
             'games': sorted(list(loc_data['games'])),
             'method': loc_data['method']
-        })
+        }
+        
+        # Combine level ranges if present
+        if loc_data['level_ranges']:
+            level_ranges = sorted(loc_data['level_ranges'])
+            if len(level_ranges) == 1:
+                entry['level_range'] = level_ranges[0]
+            else:
+                # Merge multiple level ranges
+                all_levels = set()
+                for lr in level_ranges:
+                    if '-' in lr:
+                        min_val, max_val = lr.split('-')
+                        all_levels.add(int(min_val))
+                        all_levels.add(int(max_val))
+                    else:
+                        all_levels.add(int(lr))
+                if all_levels:
+                    min_level = min(all_levels)
+                    max_level = max(all_levels)
+                    if min_level == max_level:
+                        entry['level_range'] = str(min_level)
+                    else:
+                        entry['level_range'] = f"{min_level}-{max_level}"
+        
+        # Combine chances if present
+        if loc_data['chances']:
+            chances = sorted(loc_data['chances'])
+            if len(chances) == 1:
+                entry['chance'] = chances[0]
+            else:
+                # Merge multiple chances
+                all_chances = set()
+                for ch in chances:
+                    # Remove '%' and parse
+                    ch_clean = ch.rstrip('%')
+                    if '-' in ch_clean:
+                        min_val, max_val = ch_clean.split('-')
+                        all_chances.add(int(min_val))
+                        all_chances.add(int(max_val))
+                    else:
+                        all_chances.add(int(ch_clean))
+                if all_chances:
+                    min_chance = min(all_chances)
+                    max_chance = max(all_chances)
+                    if min_chance == max_chance:
+                        entry['chance'] = f"{min_chance}%"
+                    else:
+                        entry['chance'] = f"{min_chance}-{max_chance}%"
+        
+        result.append(entry)
     
     return result
 

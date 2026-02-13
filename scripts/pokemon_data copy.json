@@ -9487,7 +9487,7 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -9779,7 +9779,7 @@
         "chance": "1-4%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "gold"
@@ -9915,7 +9915,7 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -10188,16 +10188,6 @@
         "method": "Walk",
         "level_range": "14-36",
         "chance": "5-20%"
-      },
-      {
-        "name": "Kanto Underground Path",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -10401,16 +10391,6 @@
         "method": "Walk",
         "level_range": "23-33",
         "chance": "5-10%"
-      },
-      {
-        "name": "Kanto Route 11",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -11009,16 +10989,6 @@
         "method": "Walk",
         "level_range": "14-36",
         "chance": "5-20%"
-      },
-      {
-        "name": "Kanto Underground Path",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -11218,14 +11188,6 @@
         "method": "Walk",
         "level_range": "23-33",
         "chance": "5-10%"
-      },
-      {
-        "name": "Kanto Route 11",
-        "region": "Kanto",
-        "games": [
-          "leafgreen"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -11744,7 +11706,7 @@
     "id": 35,
     "location_area_encounters": [
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -11757,7 +11719,7 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "8-13",
+        "level_range": "8-12",
         "chance": "1-20%"
       },
       {
@@ -11779,6 +11741,32 @@
         "method": "Walk",
         "level_range": "6",
         "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-12",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-13",
+        "chance": "1-5%"
       }
     ],
     "moves": [
@@ -12033,7 +12021,7 @@
         "chance": "100%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -12046,7 +12034,7 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "8-13",
+        "level_range": "8-12",
         "chance": "1-20%"
       },
       {
@@ -12068,6 +12056,32 @@
         "method": "Walk",
         "level_range": "6",
         "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-12",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-13",
+        "chance": "1-5%"
       }
     ]
   },
@@ -12190,7 +12204,7 @@
         "chance": "1-20%"
       },
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -12480,7 +12494,7 @@
         "chance": "1-20%"
       },
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -13146,7 +13160,7 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -13154,8 +13168,20 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "5-23",
+        "level_range": "5-8",
         "chance": "5-30%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "19-23",
+        "chance": "20-30%"
       },
       {
         "name": "Johto Ilex Forest",
@@ -13181,7 +13207,7 @@
         "chance": "5-10%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -13189,7 +13215,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "23-26",
+        "level_range": "23",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-25",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "25-26",
         "chance": "30%"
       },
       {
@@ -13217,14 +13279,47 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "gold",
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-24",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
         "chance": "5-20%"
       },
       {
@@ -13240,7 +13335,7 @@
         "chance": "4-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13250,11 +13345,57 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "9-45",
+        "level_range": "9-36",
         "chance": "4-20%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "18-36",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "22-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "24-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "36-45",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13267,11 +13408,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "6-13",
+        "level_range": "6-11",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "8-16",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13284,8 +13439,8 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "8-22",
-        "chance": "1-30%"
+        "level_range": "10-21",
+        "chance": "5-30%"
       },
       {
         "name": "Kanto Route 3",
@@ -13344,6 +13499,44 @@
         "chance": "30%"
       },
       {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "8-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-22",
+        "chance": "10-20%"
+      },
+      {
         "name": "Kanto Victory Road",
         "region": "Kanto",
         "games": [
@@ -13394,6 +13587,18 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "28-35",
+        "chance": "5-20%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -13418,6 +13623,16 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
+      },
+      {
         "name": "Kanto Icefall Cave",
         "region": "Kanto",
         "games": [
@@ -13438,6 +13653,17 @@
         "method": "Walk",
         "level_range": "37",
         "chance": "20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -13599,7 +13825,7 @@
         "chance": "20-30%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -13611,7 +13837,7 @@
         "chance": "5%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -13619,7 +13845,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "23-28",
+        "level_range": "23-25",
+        "chance": "5%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-26",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-27",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "25-28",
         "chance": "1-5%"
       },
       {
@@ -13645,7 +13907,7 @@
         "chance": "1-20%"
       },
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -13653,8 +13915,44 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-26",
+        "level_range": "22-25",
         "chance": "1-30%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22-25",
+        "chance": "4-30%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-26",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-25",
+        "chance": "20-30%"
       },
       {
         "name": "Johto Dark Cave",
@@ -13669,7 +13967,59 @@
         "chance": "1-4%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-36",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-30",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-36",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-30",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -13705,7 +14055,7 @@
         "chance": "1-20%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "crystal"
@@ -13758,7 +14108,31 @@
         "chance": "1-20%"
       },
       {
-        "name": "Hoenn Meteor Falls",
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "30-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "30-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -13779,6 +14153,18 @@
         ],
         "method": "Surf, Walk",
         "level_range": "30-36",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "33-36",
         "chance": "1-4%"
       },
       {
@@ -13806,7 +14192,31 @@
         "chance": "1-4%"
       },
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "34-50",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "34-53",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -13993,7 +14403,7 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -14001,8 +14411,20 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "5-23",
+        "level_range": "5-8",
         "chance": "5-30%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "19-23",
+        "chance": "20-30%"
       },
       {
         "name": "Johto Ilex Forest",
@@ -14028,7 +14450,7 @@
         "chance": "5-10%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -14036,7 +14458,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "23-26",
+        "level_range": "23",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-25",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "25-26",
         "chance": "30%"
       },
       {
@@ -14064,14 +14522,47 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "gold",
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-24",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
         "chance": "5-20%"
       },
       {
@@ -14087,7 +14578,7 @@
         "chance": "4-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14097,11 +14588,57 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "9-45",
+        "level_range": "9-36",
         "chance": "4-20%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "18-36",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "22-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "24-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "36-45",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14114,11 +14651,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "6-13",
+        "level_range": "6-11",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "8-16",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -14131,8 +14682,8 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "8-22",
-        "chance": "1-30%"
+        "level_range": "10-21",
+        "chance": "5-30%"
       },
       {
         "name": "Kanto Route 3",
@@ -14191,6 +14742,44 @@
         "chance": "30%"
       },
       {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "8-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-22",
+        "chance": "10-20%"
+      },
+      {
         "name": "Kanto Victory Road",
         "region": "Kanto",
         "games": [
@@ -14241,6 +14830,18 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "28-35",
+        "chance": "5-20%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -14265,6 +14866,16 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
+      },
+      {
         "name": "Kanto Icefall Cave",
         "region": "Kanto",
         "games": [
@@ -14285,6 +14896,17 @@
         "method": "Walk",
         "level_range": "37",
         "chance": "20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
       }
     ]
   },
@@ -15648,7 +16270,7 @@
         "chance": "1-10%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -15657,12 +16279,39 @@
           "gold",
           "leafgreen",
           "red",
-          "silver",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "8-12",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "5-13",
+        "level_range": "5-11",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "10-13",
+        "chance": "5-15%"
       },
       {
         "name": "Kanto Safari Zone",
@@ -15868,14 +16517,6 @@
         "method": "Walk",
         "level_range": "25-32",
         "chance": "5-10%"
-      },
-      {
-        "name": "Kanto Route 18",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -15973,7 +16614,7 @@
         "chance": "1-10%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -15982,12 +16623,39 @@
           "gold",
           "leafgreen",
           "red",
-          "silver",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "8-12",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "5-13",
+        "level_range": "5-11",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "10-13",
+        "chance": "5-15%"
       },
       {
         "name": "Kanto Safari Zone",
@@ -17015,14 +17683,6 @@
         "method": "Walk",
         "level_range": "16-32",
         "chance": "1-5%"
-      },
-      {
-        "name": "Kanto Route 11",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -17396,14 +18056,6 @@
         "method": "Walk",
         "level_range": "43",
         "chance": "10%"
-      },
-      {
-        "name": "Hoenn Battle Frontier",
-        "region": "Hoenn",
-        "games": [
-          "emerald"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -18033,16 +18685,60 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "red"
         ],
-        "method": "Super Rod, Surf, Walk",
-        "level_range": "15-40",
+        "method": "Walk",
+        "level_range": "26-33",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk",
+        "level_range": "28-31",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-10%"
       },
       {
         "name": "Kanto Route 12",
@@ -18669,14 +19365,54 @@
         "chance": "10%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "38",
+        "chance": "1%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "firered"
+        ],
+        "method": "Walk",
+        "level_range": "33-35",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
         "region": "Kanto",
         "games": [
           "blue",
-          "firered",
-          "red"
+          "firered"
         ],
-        "method": "Surf, Walk",
+        "method": "Walk",
+        "level_range": "32-37",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "32-40",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk, Surf",
         "level_range": "32-40",
         "chance": "1-10%"
       },
@@ -18871,16 +19607,60 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
           "firered",
           "red"
         ],
-        "method": "Super Rod, Surf, Walk",
-        "level_range": "15-40",
+        "method": "Walk",
+        "level_range": "26-33",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk",
+        "level_range": "28-31",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-10%"
       },
       {
         "name": "Kanto Route 12",
@@ -19405,7 +20185,18 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "16-17",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "firered",
@@ -19801,7 +20592,18 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "16-17",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "firered",
@@ -20420,7 +21222,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -20504,7 +21306,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod",
+        "level_range": "10",
+        "chance": "50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -21373,7 +22187,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -21457,7 +22271,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod",
+        "level_range": "10",
+        "chance": "50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -22013,7 +22839,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -22097,7 +22923,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod",
+        "level_range": "10",
+        "chance": "50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -23427,21 +24265,32 @@
         "chance": "5-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
-          "blue",
           "crystal",
           "firered",
           "gold",
           "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "12-17",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
           "red",
-          "silver",
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "12-21",
-        "chance": "1-20%"
+        "level_range": "15-21",
+        "chance": "1-10%"
       },
       {
         "name": "Kanto Route 10",
@@ -23452,6 +24301,18 @@
         "method": "Walk",
         "level_range": "16-18",
         "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "15-20",
+        "chance": "5-15%"
       },
       {
         "name": "Kanto Victory Road",
@@ -23509,18 +24370,41 @@
           "leafgreen"
         ],
         "method": "Walk",
+        "level_range": "35",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
         "level_range": "31-39",
         "chance": "1-20%"
       },
       {
-        "name": "Johto Goldenrod City",
-        "region": "Johto",
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
         "games": [
-          "crystal",
-          "gold",
-          "silver"
+          "firered",
+          "leafgreen"
         ],
-        "method": "Trade"
+        "method": "Walk",
+        "level_range": "32-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "34-38",
+        "chance": "10-20%"
       }
     ],
     "moves": [
@@ -23704,7 +24588,7 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -23741,23 +24625,26 @@
         "chance": "1-5%"
       },
       {
-        "name": "Kanto Mt Ember",
+        "name": "Kanto Mt Ember Inside",
         "region": "Kanto",
         "games": [
           "firered",
           "leafgreen"
         ],
         "method": "Walk",
-        "level_range": "38-42",
+        "level_range": "38-40",
         "chance": "1-5%"
       },
       {
-        "name": "Kanto Underground Path",
+        "name": "Kanto Mt Ember 1f Cave",
         "region": "Kanto",
         "games": [
-          "yellow"
+          "firered",
+          "leafgreen"
         ],
-        "method": "Trade"
+        "method": "Walk",
+        "level_range": "40-42",
+        "chance": "1-5%"
       }
     ],
     "moves": [
@@ -23870,21 +24757,32 @@
         "chance": "5-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
-          "blue",
           "crystal",
           "firered",
           "gold",
           "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "12-17",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
           "red",
-          "silver",
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "12-21",
-        "chance": "1-20%"
+        "level_range": "15-21",
+        "chance": "1-10%"
       },
       {
         "name": "Kanto Route 10",
@@ -23895,6 +24793,18 @@
         "method": "Walk",
         "level_range": "16-18",
         "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "15-20",
+        "chance": "5-15%"
       },
       {
         "name": "Kanto Victory Road",
@@ -23952,8 +24862,41 @@
           "leafgreen"
         ],
         "method": "Walk",
+        "level_range": "35",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
         "level_range": "31-39",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "32-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "34-38",
+        "chance": "10-20%"
       }
     ]
   },
@@ -24128,21 +25071,32 @@
         "chance": "5-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
-          "blue",
           "crystal",
           "firered",
           "gold",
           "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "12-17",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
           "red",
-          "silver",
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "12-21",
-        "chance": "1-20%"
+        "level_range": "15-21",
+        "chance": "1-10%"
       },
       {
         "name": "Kanto Route 10",
@@ -24153,6 +25107,18 @@
         "method": "Walk",
         "level_range": "16-18",
         "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "15-20",
+        "chance": "5-15%"
       },
       {
         "name": "Kanto Victory Road",
@@ -24210,8 +25176,41 @@
           "leafgreen"
         ],
         "method": "Walk",
+        "level_range": "35",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
         "level_range": "31-39",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "32-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "34-38",
+        "chance": "10-20%"
       },
       {
         "name": "Johto Mt Silver",
@@ -25516,7 +26515,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -25540,7 +26539,17 @@
         "chance": "30-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Surf",
+        "level_range": "20-40",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "yellow"
@@ -26626,7 +27635,31 @@
         "chance": "20-30%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Surf",
+        "level_range": "20-24",
+        "chance": "10%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Surf",
+        "level_range": "20-24",
+        "chance": "10%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -27133,7 +28166,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -27157,7 +28190,17 @@
         "chance": "30-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Surf",
+        "level_range": "20-40",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "yellow"
@@ -28129,7 +29172,7 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -28142,11 +29185,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "7-11",
+        "level_range": "7-10",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "10-17",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -28158,7 +29215,7 @@
           "silver",
           "yellow"
         ],
-        "method": "Rock Smash, Walk",
+        "method": "Walk, Rock Smash",
         "level_range": "5-30",
         "chance": "1-60%"
       },
@@ -28172,6 +29229,44 @@
         "method": "Rock Smash",
         "level_range": "30-60",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-11",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-21",
+        "chance": "1-20%"
       },
       {
         "name": "Kanto Victory Road",
@@ -28264,8 +29359,63 @@
           "firered",
           "leafgreen"
         ],
-        "method": "Rock Smash, Walk",
-        "level_range": "5-44",
+        "method": "Walk, Rock Smash",
+        "level_range": "5-33",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "29-37",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "5-34",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-42",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-44",
         "chance": "1-60%"
       },
       {
@@ -28289,6 +29439,17 @@
         "method": "Walk, Rock Smash",
         "level_range": "25-46",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Summit",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "5-30",
+        "chance": "5-60%"
       },
       {
         "name": "Johto Team Rocket Hq",
@@ -28508,7 +29669,7 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "firered",
@@ -28575,8 +29736,52 @@
           "leafgreen"
         ],
         "method": "Rock Smash",
-        "level_range": "25-50",
-        "chance": "1-30%"
+        "level_range": "25-40",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "25-40",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "30-50",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Mt Ember B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "30-50",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "30-50",
+        "chance": "5-30%"
       },
       {
         "name": "Kanto Kindle Road",
@@ -28599,6 +29804,17 @@
         "method": "Rock Smash",
         "level_range": "30-50",
         "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Mt Ember Summit",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "25-40",
+        "chance": "1-4%"
       }
     ],
     "moves": [
@@ -28761,7 +29977,7 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -28774,11 +29990,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "7-11",
+        "level_range": "7-10",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "10-17",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -28790,7 +30020,7 @@
           "silver",
           "yellow"
         ],
-        "method": "Rock Smash, Walk",
+        "method": "Walk, Rock Smash",
         "level_range": "5-30",
         "chance": "1-60%"
       },
@@ -28804,6 +30034,44 @@
         "method": "Rock Smash",
         "level_range": "30-60",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-11",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-21",
+        "chance": "1-20%"
       },
       {
         "name": "Kanto Victory Road",
@@ -28896,8 +30164,63 @@
           "firered",
           "leafgreen"
         ],
-        "method": "Rock Smash, Walk",
-        "level_range": "5-44",
+        "method": "Walk, Rock Smash",
+        "level_range": "5-33",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "29-37",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "5-34",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-42",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-44",
         "chance": "1-60%"
       },
       {
@@ -28921,6 +30244,17 @@
         "method": "Walk, Rock Smash",
         "level_range": "25-46",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Summit",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "5-30",
+        "chance": "5-60%"
       },
       {
         "name": "Johto Team Rocket Hq",
@@ -29167,7 +30501,7 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -29180,11 +30514,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "7-11",
+        "level_range": "7-10",
+        "chance": "5-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "10-17",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -29196,7 +30544,7 @@
           "silver",
           "yellow"
         ],
-        "method": "Rock Smash, Walk",
+        "method": "Walk, Rock Smash",
         "level_range": "5-30",
         "chance": "1-60%"
       },
@@ -29210,6 +30558,44 @@
         "method": "Rock Smash",
         "level_range": "30-60",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "9-11",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-21",
+        "chance": "1-20%"
       },
       {
         "name": "Kanto Victory Road",
@@ -29302,8 +30688,63 @@
           "firered",
           "leafgreen"
         ],
-        "method": "Rock Smash, Walk",
-        "level_range": "5-44",
+        "method": "Walk, Rock Smash",
+        "level_range": "5-33",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "29-37",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember Inside",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "5-34",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Mt Ember 1f Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-42",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
+        "level_range": "25-44",
         "chance": "1-60%"
       },
       {
@@ -29327,6 +30768,17 @@
         "method": "Walk, Rock Smash",
         "level_range": "25-46",
         "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Mt Ember Summit",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "5-30",
+        "chance": "5-60%"
       },
       {
         "name": "Johto Team Rocket Hq",
@@ -29708,15 +31160,6 @@
         "method": "Walk",
         "level_range": "37-40",
         "chance": "1-4%"
-      },
-      {
-        "name": "Kanto Pewter City",
-        "region": "Kanto",
-        "games": [
-          "gold",
-          "silver"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -29981,7 +31424,7 @@
     "id": 79,
     "location_area_encounters": [
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -29993,7 +31436,19 @@
         "chance": "1-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "15-24",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -30001,9 +31456,55 @@
           "red",
           "yellow"
         ],
-        "method": "Super Rod, Surf, Walk",
-        "level_range": "15-40",
+        "method": "Walk",
+        "level_range": "26-33",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "28-31",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-10%"
       },
       {
         "name": "Kanto Route 12",
@@ -30608,7 +32109,7 @@
     "id": 80,
     "location_area_encounters": [
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -30620,16 +32121,56 @@
         "chance": "10%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
-          "blue",
+          "blue"
+        ],
+        "method": "Walk",
+        "level_range": "38",
+        "chance": "1%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "33-35",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
           "leafgreen",
           "red",
           "yellow"
         ],
-        "method": "Surf, Walk",
-        "level_range": "31-40",
+        "method": "Walk",
+        "level_range": "31-37",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "32-40",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "32-40",
         "chance": "1-10%"
       },
       {
@@ -30805,7 +32346,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -30817,7 +32358,19 @@
         "chance": "1-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "15-24",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -30825,9 +32378,55 @@
           "red",
           "yellow"
         ],
-        "method": "Super Rod, Surf, Walk",
-        "level_range": "15-40",
+        "method": "Walk",
+        "level_range": "26-33",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "28-31",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-10%"
       },
       {
         "name": "Kanto Route 12",
@@ -31421,7 +33020,7 @@
         "chance": "10-20%"
       },
       {
-        "name": "Hoenn New Mauville",
+        "name": "Hoenn New Mauville Entrance",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -31431,6 +33030,18 @@
         "method": "Walk",
         "level_range": "22-26",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn New Mauville",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-26",
+        "chance": "4-20%"
       }
     ],
     "moves": [
@@ -31619,13 +33230,12 @@
         "region": "Kanto",
         "games": [
           "blue",
-          "crystal",
           "firered",
           "leafgreen",
           "red",
           "yellow"
         ],
-        "method": "Trade, Walk",
+        "method": "Walk",
         "level_range": "31-38",
         "chance": "1-15%"
       },
@@ -31810,7 +33420,7 @@
         "chance": "10-20%"
       },
       {
-        "name": "Hoenn New Mauville",
+        "name": "Hoenn New Mauville Entrance",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -31820,6 +33430,18 @@
         "method": "Walk",
         "level_range": "22-26",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn New Mauville",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-26",
+        "chance": "4-20%"
       }
     ]
   },
@@ -31932,17 +33554,6 @@
         "method": "Walk",
         "level_range": "26-31",
         "chance": "1-4%"
-      },
-      {
-        "name": "Kanto Vermilion City",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -32421,14 +34032,6 @@
         "method": "Walk",
         "level_range": "29-31",
         "chance": "1-4%"
-      },
-      {
-        "name": "Johto Blackthorn City",
-        "region": "Johto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -32697,7 +34300,7 @@
     "id": 86,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -32705,11 +34308,58 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-27",
+        "level_range": "22-24",
         "chance": "1-20%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-26",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-27",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30",
+        "chance": "20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -32718,9 +34368,51 @@
           "red",
           "yellow"
         ],
-        "method": "Surf, Walk",
-        "level_range": "22-35",
-        "chance": "1-60%"
+        "method": "Walk",
+        "level_range": "22-30",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "24-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "25-35",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "25-35",
+        "chance": "5-60%"
       },
       {
         "name": "Kanto Icefall Cave",
@@ -32732,17 +34424,6 @@
         "method": "Walk, Surf",
         "level_range": "5-47",
         "chance": "10-60%"
-      },
-      {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -32881,7 +34562,18 @@
     "id": 87,
     "location_area_encounters": [
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "38",
+        "chance": "4%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -32890,8 +34582,20 @@
           "red",
           "yellow"
         ],
-        "method": "Surf, Walk",
+        "method": "Walk, Surf",
         "level_range": "28-40",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "30-40",
         "chance": "1-5%"
       },
       {
@@ -32904,14 +34608,6 @@
         "method": "Walk, Surf",
         "level_range": "35-53",
         "chance": "1-10%"
-      },
-      {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -32996,7 +34692,7 @@
     "secondary_colours": [],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -33004,11 +34700,58 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-27",
+        "level_range": "22-24",
         "chance": "1-20%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-26",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-27",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30",
+        "chance": "20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -33017,9 +34760,51 @@
           "red",
           "yellow"
         ],
-        "method": "Surf, Walk",
-        "level_range": "22-35",
-        "chance": "1-60%"
+        "method": "Walk",
+        "level_range": "22-30",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "24-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "25-35",
+        "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "25-35",
+        "chance": "5-60%"
       },
       {
         "name": "Kanto Icefall Cave",
@@ -33415,14 +35200,6 @@
         "method": "Walk",
         "level_range": "32-42",
         "chance": "1-10%"
-      },
-      {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -33682,15 +35459,58 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "4-15%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "blue",
           "red"
         ],
-        "method": "Super Rod, Walk",
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "15-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk, Super Rod",
+        "level_range": "15-31",
+        "chance": "5-17%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk, Super Rod",
         "level_range": "15-33",
-        "chance": "4-20%"
+        "chance": "8-20%"
       },
       {
         "name": "Kanto Route 19",
@@ -34113,15 +35933,58 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "4-15%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "blue",
           "red"
         ],
-        "method": "Super Rod, Walk",
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "15-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk, Super Rod",
+        "level_range": "15-31",
+        "chance": "5-17%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk, Super Rod",
         "level_range": "15-33",
-        "chance": "4-20%"
+        "chance": "8-20%"
       },
       {
         "name": "Kanto Route 19",
@@ -34583,14 +36446,24 @@
     "id": 93,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
           "crystal"
         ],
         "method": "Walk",
-        "level_range": "15-17",
-        "chance": "5-10%"
+        "level_range": "17",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Walk",
+        "level_range": "15",
+        "chance": "5%"
       },
       {
         "name": "Kanto Route 8",
@@ -35025,14 +36898,24 @@
         "chance": "5-20%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
           "crystal"
         ],
         "method": "Walk",
-        "level_range": "15-17",
-        "chance": "5-10%"
+        "level_range": "17",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Walk",
+        "level_range": "15",
+        "chance": "5%"
       },
       {
         "name": "Kanto Route 8",
@@ -35131,7 +37014,18 @@
         "chance": "20-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "13-15",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -35140,11 +37034,10 @@
           "gold",
           "leafgreen",
           "red",
-          "silver",
-          "yellow"
+          "silver"
         ],
         "method": "Walk",
-        "level_range": "13-22",
+        "level_range": "13-17",
         "chance": "1-20%"
       },
       {
@@ -35165,6 +37058,18 @@
         "chance": "5-20%"
       },
       {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "13-22",
+        "chance": "1-5%"
+      },
+      {
         "name": "Kanto Sevault Canyon",
         "region": "Kanto",
         "games": [
@@ -35174,16 +37079,6 @@
         "method": "Walk",
         "level_range": "54",
         "chance": "5%"
-      },
-      {
-        "name": "Johto Violet City",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -35829,14 +37724,50 @@
         "chance": "15-90%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
           "gold",
           "silver"
         ],
-        "method": "Good Rod, Old Rod, Super Rod, Walk",
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-25",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
         "level_range": "10-40",
         "chance": "10-40%"
       },
@@ -35865,7 +37796,40 @@
         "chance": "90%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "25-30",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "27-30",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -35873,9 +37837,22 @@
           "leafgreen",
           "yellow"
         ],
-        "method": "Good Rod, Super Rod, Surf, Walk",
-        "level_range": "5-33",
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-31",
         "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-33",
+        "chance": "15-60%"
       },
       {
         "name": "Kanto Route 12",
@@ -36452,7 +38429,31 @@
         "chance": "10%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Super Rod",
+        "level_range": "40",
+        "chance": "20%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Super Rod",
+        "level_range": "40",
+        "chance": "20%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -36476,15 +38477,46 @@
         "chance": "10%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "blue",
           "yellow"
         ],
-        "method": "Super Rod, Walk",
-        "level_range": "28-39",
-        "chance": "1-20%"
+        "method": "Walk",
+        "level_range": "28-37",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "28",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk, Super Rod",
+        "level_range": "30-39",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Walk, Super Rod",
+        "level_range": "32-35",
+        "chance": "10-20%"
       },
       {
         "name": "Kanto Route 19",
@@ -36867,14 +38899,50 @@
         "chance": "15-90%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
           "gold",
           "silver"
         ],
-        "method": "Good Rod, Old Rod, Super Rod, Walk",
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-25",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Old Rod, Good Rod, Super Rod",
         "level_range": "10-40",
         "chance": "10-40%"
       },
@@ -36903,7 +38971,40 @@
         "chance": "90%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "25-30",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "26-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "27-30",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -36911,9 +39012,22 @@
           "leafgreen",
           "yellow"
         ],
-        "method": "Good Rod, Super Rod, Surf, Walk",
-        "level_range": "5-33",
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-31",
         "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-33",
+        "chance": "15-60%"
       },
       {
         "name": "Kanto Route 12",
@@ -37388,6 +39502,18 @@
         "chance": "10-100%"
       },
       {
+        "name": "Hoenn New Mauville Entrance",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-26",
+        "chance": "1-20%"
+      },
+      {
         "name": "Hoenn New Mauville",
         "region": "Hoenn",
         "games": [
@@ -37395,9 +39521,9 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Only One, Walk",
+        "method": "Walk, Only One",
         "level_range": "22-26",
-        "chance": "1-100%"
+        "chance": "4-100%"
       },
       {
         "name": "Johto Team Rocket Hq",
@@ -37410,16 +39536,6 @@
         "method": "Only One",
         "level_range": "23",
         "chance": "100%"
-      },
-      {
-        "name": "Johto Olivine City",
-        "region": "Johto",
-        "games": [
-          "crystal",
-          "gold",
-          "silver"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -37635,15 +39751,14 @@
         "chance": "100%"
       },
       {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
+        "name": "Unova Liberty Garden Lighthouse Basement",
+        "region": "Unova",
         "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
+          "ruby"
         ],
-        "method": "Trade"
+        "method": "Only One",
+        "level_range": "30",
+        "chance": "100%"
       }
     ],
     "moves": [
@@ -37761,6 +39876,18 @@
         "chance": "10-100%"
       },
       {
+        "name": "Hoenn New Mauville Entrance",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-26",
+        "chance": "1-20%"
+      },
+      {
         "name": "Hoenn New Mauville",
         "region": "Hoenn",
         "games": [
@@ -37768,9 +39895,9 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Only One, Walk",
+        "method": "Walk, Only One",
         "level_range": "22-26",
-        "chance": "1-100%"
+        "chance": "4-100%"
       },
       {
         "name": "Johto Team Rocket Hq",
@@ -38522,7 +40649,7 @@
     "id": 104,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -38532,6 +40659,18 @@
         "method": "Walk",
         "level_range": "10-13",
         "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "12",
+        "chance": "30%"
       },
       {
         "name": "Kanto Pokemon Tower",
@@ -38723,7 +40862,17 @@
     "id": 105,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Walk",
+        "level_range": "12",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -38731,8 +40880,8 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "12-15",
-        "chance": "1-5%"
+        "level_range": "14-15",
+        "chance": "5%"
       },
       {
         "name": "Kanto Route 9",
@@ -38895,7 +41044,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -38905,6 +41054,18 @@
         "method": "Walk",
         "level_range": "10-13",
         "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "12",
+        "chance": "30%"
       },
       {
         "name": "Kanto Pokemon Tower",
@@ -39371,17 +41532,6 @@
         "method": "Walk",
         "level_range": "50-55",
         "chance": "1-4%"
-      },
-      {
-        "name": "Kanto Route 18",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -40155,23 +42305,6 @@
         "method": "Walk",
         "level_range": "52-62",
         "chance": "1-20%"
-      },
-      {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
-        "games": [
-          "yellow"
-        ],
-        "method": "Trade"
-      },
-      {
-        "name": "Johto Blackthorn City",
-        "region": "Johto",
-        "games": [
-          "gold",
-          "silver"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -40663,17 +42796,6 @@
         "method": "Walk",
         "level_range": "33-35",
         "chance": "10-20%"
-      },
-      {
-        "name": "Kanto Cinnabar Island",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -40821,7 +42943,7 @@
     "id": 115,
     "location_area_encounters": [
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "crystal",
@@ -40990,7 +43112,19 @@
     "id": 116,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -41002,7 +43136,49 @@
         "chance": "10-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -41010,9 +43186,22 @@
           "leafgreen",
           "red"
         ],
-        "method": "Good Rod, Super Rod, Surf, Walk",
-        "level_range": "5-33",
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-31",
         "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-33",
+        "chance": "8-60%"
       },
       {
         "name": "Kanto Route 12",
@@ -41366,14 +43555,6 @@
         "method": "Good Rod, Super Rod",
         "level_range": "5-25",
         "chance": "20-60%"
-      },
-      {
-        "name": "Hoenn Pacifidlog Town",
-        "region": "Hoenn",
-        "games": [
-          "emerald"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -41510,7 +43691,31 @@
     "id": 117,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Super Rod",
+        "level_range": "40",
+        "chance": "10%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Super Rod",
+        "level_range": "40",
+        "chance": "10%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -41522,14 +43727,24 @@
         "chance": "10%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B1f",
         "region": "Kanto",
         "games": [
           "red"
         ],
         "method": "Walk",
-        "level_range": "37-39",
-        "chance": "1-4%"
+        "level_range": "37",
+        "chance": "1%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "39",
+        "chance": "4%"
       },
       {
         "name": "Kanto Route 12",
@@ -41850,7 +44065,19 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -41862,7 +44089,49 @@
         "chance": "10-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -41870,9 +44139,22 @@
           "leafgreen",
           "red"
         ],
-        "method": "Good Rod, Super Rod, Surf, Walk",
-        "level_range": "5-33",
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-31",
         "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-33",
+        "chance": "8-60%"
       },
       {
         "name": "Kanto Route 12",
@@ -42305,7 +44587,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -42353,7 +44647,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-15",
+        "chance": "25-50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -42741,6 +45047,42 @@
         "chance": "20-30%"
       },
       {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -43047,7 +45389,19 @@
         "chance": "10%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Super Rod",
+        "level_range": "40",
+        "chance": "10%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -43367,7 +45721,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "10-40%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -43415,7 +45781,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-15",
+        "chance": "25-50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -43803,6 +46181,42 @@
         "chance": "20-30%"
       },
       {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "20-30%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -44083,14 +46497,58 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "4-15%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "15-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
           "red",
           "yellow"
         ],
-        "method": "Super Rod, Surf, Walk",
+        "method": "Super Rod, Walk, Surf",
+        "level_range": "15-40",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Super Rod, Walk, Surf",
         "level_range": "15-40",
         "chance": "1-30%"
       },
@@ -44529,14 +46987,58 @@
         "chance": "10-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "blue"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "4-15%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "15-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
           "red",
           "yellow"
         ],
-        "method": "Super Rod, Surf, Walk",
+        "method": "Super Rod, Walk, Surf",
+        "level_range": "15-40",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Super Rod, Walk, Surf",
         "level_range": "15-40",
         "chance": "1-30%"
       },
@@ -44739,18 +47241,6 @@
         "method": "Walk",
         "level_range": "28-30",
         "chance": "1-5%"
-      },
-      {
-        "name": "Kanto Route 2",
-        "region": "Kanto",
-        "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red",
-          "yellow"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -45082,7 +47572,18 @@
     "id": 124,
     "location_area_encounters": [
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "20-22",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -45090,19 +47591,32 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "20-26",
+        "level_range": "20-22",
         "chance": "1-5%"
       },
       {
-        "name": "Kanto Cerulean City",
-        "region": "Kanto",
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
         "games": [
-          "blue",
-          "firered",
-          "leafgreen",
-          "red"
+          "crystal",
+          "gold",
+          "silver"
         ],
-        "method": "Trade"
+        "method": "Walk",
+        "level_range": "21-24",
+        "chance": "1-5%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22-26",
+        "chance": "1-5%"
       }
     ],
     "moves": [
@@ -46057,7 +48571,7 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -46081,7 +48595,19 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -46177,7 +48703,31 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "10-20",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "10-20",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -46309,7 +48859,21 @@
         "chance": "10-70%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "5-15",
+        "chance": "20-100%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -46845,6 +49409,42 @@
       },
       {
         "name": "Hoenn Meteor Falls",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -47664,7 +50264,18 @@
         "chance": "10-100%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Super Rod",
+        "level_range": "15-35",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "firered",
@@ -48290,7 +50901,7 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -48314,7 +50925,19 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod, Super Rod",
+        "level_range": "10-40",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -48410,7 +51033,31 @@
         "chance": "15-70%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "10-20",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "10-20",
+        "chance": "15-70%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -48542,7 +51189,21 @@
         "chance": "10-70%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Old Rod, Good Rod",
+        "level_range": "5-15",
+        "chance": "20-100%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -49078,6 +51739,42 @@
       },
       {
         "name": "Hoenn Meteor Falls",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Old Rod",
+        "level_range": "5-30",
+        "chance": "60-70%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -51067,7 +53764,7 @@
     "id": 138,
     "location_area_encounters": [
       {
-        "name": "Kanto Cinnabar Island",
+        "name": "Kanto Cinnabar Island Cinnabar Lab",
         "region": "Kanto",
         "games": [
           "blue",
@@ -51308,7 +54005,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Kanto Cinnabar Island",
+        "name": "Kanto Cinnabar Island Cinnabar Lab",
         "region": "Kanto",
         "games": [
           "blue",
@@ -51378,7 +54075,7 @@
     "id": 140,
     "location_area_encounters": [
       {
-        "name": "Kanto Cinnabar Island",
+        "name": "Kanto Cinnabar Island Cinnabar Lab",
         "region": "Kanto",
         "games": [
           "blue",
@@ -51627,7 +54324,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Kanto Cinnabar Island",
+        "name": "Kanto Cinnabar Island Cinnabar Lab",
         "region": "Kanto",
         "games": [
           "blue",
@@ -51698,7 +54395,7 @@
     "id": 142,
     "location_area_encounters": [
       {
-        "name": "Kanto Cinnabar Island",
+        "name": "Kanto Cinnabar Island Cinnabar Lab",
         "region": "Kanto",
         "games": [
           "blue",
@@ -52047,7 +54744,7 @@
     "id": 144,
     "location_area_encounters": [
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -52341,7 +55038,7 @@
         "chance": "100%"
       },
       {
-        "name": "Kanto Mt Ember",
+        "name": "Kanto Mt Ember Summit",
         "region": "Kanto",
         "games": [
           "firered",
@@ -57095,7 +59792,7 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -57103,8 +59800,20 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "5-23",
+        "level_range": "5-8",
         "chance": "5-30%"
+      },
+      {
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "19-23",
+        "chance": "20-30%"
       },
       {
         "name": "Johto Ilex Forest",
@@ -57130,7 +59839,7 @@
         "chance": "5-10%"
       },
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -57138,7 +59847,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "23-26",
+        "level_range": "23",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-25",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "25-26",
         "chance": "30%"
       },
       {
@@ -57166,14 +59911,47 @@
         "chance": "1-30%"
       },
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "gold",
           "silver"
         ],
         "method": "Walk",
-        "level_range": "22-24",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24",
         "chance": "5-20%"
       },
       {
@@ -57189,7 +59967,7 @@
         "chance": "4-30%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -57199,11 +59977,57 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "9-45",
+        "level_range": "9-36",
         "chance": "4-20%"
       },
       {
-        "name": "Kanto Mt Moon",
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "18-36",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "22-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "24-36",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "36-45",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -57216,11 +60040,25 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "6-13",
+        "level_range": "6-11",
         "chance": "1-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "crystal",
+          "firered",
+          "gold",
+          "leafgreen",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "8-16",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -57233,8 +60071,8 @@
           "yellow"
         ],
         "method": "Walk",
-        "level_range": "8-22",
-        "chance": "1-30%"
+        "level_range": "10-21",
+        "chance": "5-30%"
       },
       {
         "name": "Kanto Route 3",
@@ -57293,6 +60131,44 @@
         "chance": "30%"
       },
       {
+        "name": "Kanto Mt Moon B1f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "7-11",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Mt Moon B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "8-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "16-22",
+        "chance": "10-20%"
+      },
+      {
         "name": "Kanto Victory Road",
         "region": "Kanto",
         "games": [
@@ -57315,7 +60191,7 @@
           "sapphire"
         ],
         "method": "Surf, Walk",
-        "level_range": "5-40",
+        "level_range": "5-35",
         "chance": "1-60%"
       },
       {
@@ -57343,6 +60219,18 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "28-35",
+        "chance": "5-20%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -57367,6 +60255,16 @@
         "chance": "5-30%"
       },
       {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
+      },
+      {
         "name": "Kanto Icefall Cave",
         "region": "Kanto",
         "games": [
@@ -57387,6 +60285,17 @@
         "method": "Walk",
         "level_range": "37",
         "chance": "20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
       },
       {
         "name": "Johto Mt Silver",
@@ -57425,7 +60334,67 @@
         "chance": "1-20%"
       },
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "30-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "30-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "30-40",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "34-50",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "34-53",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -58866,7 +61835,7 @@
     "id": 177,
     "location_area_encounters": [
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -59031,14 +62000,6 @@
         "method": "Walk",
         "level_range": "29-31",
         "chance": "1-4%"
-      },
-      {
-        "name": "Kanto Pewter City",
-        "region": "Kanto",
-        "games": [
-          "crystal"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -59115,7 +62076,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -59235,6 +62196,27 @@
         "method": "Walk",
         "level_range": "34-36",
         "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -59473,6 +62455,27 @@
         "method": "Walk",
         "level_range": "34-36",
         "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
       }
     ]
   },
@@ -59630,6 +62633,27 @@
         "method": "Walk",
         "level_range": "34-36",
         "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "3-13",
+        "chance": "1-20%"
       }
     ]
   },
@@ -60886,7 +63910,7 @@
         "chance": "10-60%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -60970,7 +63994,19 @@
         "chance": "10-40%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Good Rod",
+        "level_range": "10",
+        "chance": "50%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -62380,6 +65416,27 @@
         "chance": "10-20%"
       },
       {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
+      },
+      {
         "name": "Johto Azalea Town",
         "region": "Johto",
         "games": [
@@ -62994,7 +66051,7 @@
         "chance": "4-30%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -63195,7 +66252,7 @@
         "chance": "30%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -63415,7 +66472,7 @@
         "chance": "4-30%"
       },
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -64117,7 +67174,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Slowpoke Well",
+        "name": "Johto Slowpoke Well 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -64129,7 +67186,19 @@
         "chance": "1-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Slowpoke Well B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk, Surf",
+        "level_range": "15-24",
+        "chance": "1-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -64137,9 +67206,55 @@
           "red",
           "yellow"
         ],
-        "method": "Super Rod, Surf, Walk",
-        "level_range": "15-40",
+        "method": "Walk",
+        "level_range": "26-33",
         "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "28-31",
+        "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "4-10%"
       },
       {
         "name": "Kanto Route 12",
@@ -64788,7 +67903,7 @@
     "id": 201,
     "location_area_encounters": [
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Interior A",
         "region": "Johto",
         "games": [
           "crystal",
@@ -64798,6 +67913,119 @@
         "method": "Walk",
         "level_range": "5",
         "chance": "1-30%"
+      },
+      {
+        "name": "Johto Ruins Of Alph Interior B",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "5",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Johto Ruins Of Alph Interior C",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "5",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Johto Ruins Of Alph Interior D",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "5",
+        "chance": "1-30%"
+      },
+      {
+        "name": "Kanto Monean Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Liptoo Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Weepth Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Dilford Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Scufib Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Rixy Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Viapos Chamber",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "25",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -65391,6 +68619,27 @@
         "chance": "5%"
       },
       {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "19-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "19-29",
+        "chance": "1-20%"
+      },
+      {
         "name": "Johto Azalea Town",
         "region": "Johto",
         "games": [
@@ -65775,6 +69024,27 @@
         "method": "Walk",
         "level_range": "34",
         "chance": "5%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "19-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "19-29",
+        "chance": "1-20%"
       },
       {
         "name": "Johto Azalea Town",
@@ -66258,7 +69528,18 @@
         "chance": "20-30%"
       },
       {
-        "name": "Kanto Rock Tunnel",
+        "name": "Kanto Rock Tunnel 1f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "13-15",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B1f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -66267,11 +69548,10 @@
           "gold",
           "leafgreen",
           "red",
-          "silver",
-          "yellow"
+          "silver"
         ],
         "method": "Walk",
-        "level_range": "13-22",
+        "level_range": "13-17",
         "chance": "1-20%"
       },
       {
@@ -66290,6 +69570,18 @@
         "method": "Walk",
         "level_range": "32-49",
         "chance": "5-20%"
+      },
+      {
+        "name": "Kanto Rock Tunnel B2f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "red",
+          "yellow"
+        ],
+        "method": "Walk",
+        "level_range": "13-22",
+        "chance": "1-5%"
       },
       {
         "name": "Kanto Sevault Canyon",
@@ -67258,6 +70550,27 @@
         "method": "Rock Smash",
         "level_range": "20-40",
         "chance": "1-60%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -67685,7 +70998,27 @@
     "id": 215,
     "location_area_encounters": [
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Walk",
+        "level_range": "22",
+        "chance": "1%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Walk",
+        "level_range": "22-24",
+        "chance": "1-4%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
         "region": "Johto",
         "games": [
           "crystal"
@@ -67905,6 +71238,27 @@
         "method": "Walk",
         "level_range": "34-36",
         "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -68192,6 +71546,27 @@
         "method": "Walk",
         "level_range": "34-36",
         "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "6-16",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
       }
     ]
   },
@@ -68298,13 +71673,35 @@
         "chance": "5-10%"
       },
       {
-        "name": "Kanto Mt Ember",
+        "name": "Kanto Mt Ember B1f",
         "region": "Kanto",
         "games": [
           "firered",
           "leafgreen"
         ],
-        "method": "Rock Smash, Walk",
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "22-32",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
         "level_range": "15-36",
         "chance": "1-60%"
       }
@@ -68426,7 +71823,7 @@
     "id": 219,
     "location_area_encounters": [
       {
-        "name": "Kanto Mt Ember",
+        "name": "Kanto Mt Ember B3f",
         "region": "Kanto",
         "games": [
           "firered",
@@ -68570,13 +71967,35 @@
         "chance": "5-10%"
       },
       {
-        "name": "Kanto Mt Ember",
+        "name": "Kanto Mt Ember B1f",
         "region": "Kanto",
         "games": [
           "firered",
           "leafgreen"
         ],
-        "method": "Rock Smash, Walk",
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Kanto Mt Ember B2f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "22-32",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Mt Ember B3f",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk, Rock Smash",
         "level_range": "15-36",
         "chance": "1-60%"
       }
@@ -68635,7 +72054,7 @@
     "id": 220,
     "location_area_encounters": [
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -68643,7 +72062,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "21-26",
+        "level_range": "21-23",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "21-24",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22-25",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-26",
         "chance": "10-30%"
       },
       {
@@ -68862,7 +72317,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -68870,7 +72325,43 @@
           "silver"
         ],
         "method": "Walk",
-        "level_range": "21-26",
+        "level_range": "21-23",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "21-24",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22-25",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-26",
         "chance": "10-30%"
       },
       {
@@ -69064,15 +72555,6 @@
         "method": "Super Rod",
         "level_range": "30-35",
         "chance": "15%"
-      },
-      {
-        "name": "Hoenn Pacifidlog Town",
-        "region": "Hoenn",
-        "games": [
-          "ruby",
-          "sapphire"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -69704,14 +73186,47 @@
     "id": 225,
     "location_area_encounters": [
       {
-        "name": "Johto Ice Path",
+        "name": "Johto Ice Path 1f",
         "region": "Johto",
         "games": [
           "crystal",
           "silver"
         ],
         "method": "Walk",
-        "level_range": "21-26",
+        "level_range": "21-23",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "22-24",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B2f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "23-25",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Ice Path B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "silver"
+        ],
+        "method": "Walk",
+        "level_range": "24-26",
         "chance": "10-30%"
       },
       {
@@ -70187,6 +73702,27 @@
         "method": "Walk",
         "level_range": "36-39",
         "chance": "1-4%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "12-22",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "12-22",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -70417,6 +73953,27 @@
         "method": "Walk",
         "level_range": "36-39",
         "chance": "1-4%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "12-22",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "12-22",
+        "chance": "1-20%"
       }
     ]
   },
@@ -70548,7 +74105,19 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands 1f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-30%"
+      },
+      {
+        "name": "Johto Whirl Islands B2f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -70560,7 +74129,49 @@
         "chance": "10-60%"
       },
       {
-        "name": "Kanto Seafoam Islands",
+        "name": "Johto Whirl Islands B3f",
+        "region": "Johto",
+        "games": [
+          "crystal",
+          "gold",
+          "silver"
+        ],
+        "method": "Good Rod, Super Rod, Surf",
+        "level_range": "15-40",
+        "chance": "10-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands 1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B1f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "30-32",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B2f",
+        "region": "Kanto",
+        "games": [
+          "red"
+        ],
+        "method": "Walk",
+        "level_range": "28-30",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B3f",
         "region": "Kanto",
         "games": [
           "blue",
@@ -70568,9 +74179,22 @@
           "leafgreen",
           "red"
         ],
-        "method": "Good Rod, Super Rod, Surf, Walk",
-        "level_range": "5-33",
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-31",
         "chance": "5-60%"
+      },
+      {
+        "name": "Kanto Seafoam Islands B4f",
+        "region": "Kanto",
+        "games": [
+          "blue",
+          "firered",
+          "leafgreen",
+          "red"
+        ],
+        "method": "Walk, Super Rod, Good Rod, Surf",
+        "level_range": "5-33",
+        "chance": "8-60%"
       },
       {
         "name": "Kanto Route 12",
@@ -71573,6 +75197,27 @@
         "method": "Walk",
         "level_range": "36-39",
         "chance": "1-4%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
       }
     ],
     "moves": [
@@ -71697,7 +75342,7 @@
     "id": 235,
     "location_area_encounters": [
       {
-        "name": "Johto Ruins Of Alph",
+        "name": "Johto Ruins Of Alph Outside",
         "region": "Johto",
         "games": [
           "crystal",
@@ -71716,6 +75361,27 @@
         ],
         "method": "Walk",
         "level_range": "40-50",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Altering Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Kanto Altering Cave",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Walk",
+        "level_range": "18-28",
         "chance": "1-20%"
       }
     ],
@@ -72902,14 +76568,25 @@
     "id": 243,
     "location_area_encounters": [
       {
-        "name": "Johto Roaming Johto",
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Roaming Grass",
+        "level_range": "50",
+        "chance": "25%"
+      },
+      {
+        "name": "Roaming Johto",
         "region": "Johto",
         "games": [
           "crystal",
           "gold",
           "silver"
         ],
-        "method": "Roaming",
+        "method": "Roaming Grass",
         "level_range": "40",
         "chance": "10%"
       }
@@ -73035,14 +76712,25 @@
     "id": 244,
     "location_area_encounters": [
       {
-        "name": "Johto Roaming Johto",
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Roaming Grass",
+        "level_range": "50",
+        "chance": "25%"
+      },
+      {
+        "name": "Roaming Johto",
         "region": "Johto",
         "games": [
           "crystal",
           "gold",
           "silver"
         ],
-        "method": "Roaming",
+        "method": "Roaming Grass",
         "level_range": "40",
         "chance": "10%"
       }
@@ -73167,13 +76855,24 @@
     "id": 245,
     "location_area_encounters": [
       {
-        "name": "Johto Roaming Johto",
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Roaming Grass",
+        "level_range": "50",
+        "chance": "25%"
+      },
+      {
+        "name": "Roaming Johto",
         "region": "Johto",
         "games": [
           "gold",
           "silver"
         ],
-        "method": "Roaming",
+        "method": "Roaming Grass",
         "level_range": "40",
         "chance": "10%"
       },
@@ -73746,7 +77445,7 @@
     "id": 249,
     "location_area_encounters": [
       {
-        "name": "Johto Whirl Islands",
+        "name": "Johto Whirl Islands B2f",
         "region": "Johto",
         "games": [
           "crystal",
@@ -77879,14 +81578,6 @@
         "method": "Walk",
         "level_range": "25",
         "chance": "1%"
-      },
-      {
-        "name": "Hoenn Rustboro City",
-        "region": "Hoenn",
-        "games": [
-          "emerald"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -78738,7 +82429,7 @@
         "chance": "5-30%"
       },
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -79722,7 +83413,7 @@
         "chance": "5-30%"
       },
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -82567,15 +86258,6 @@
         "method": "Walk",
         "level_range": "36",
         "chance": "10%"
-      },
-      {
-        "name": "Hoenn Rustboro City",
-        "region": "Hoenn",
-        "games": [
-          "ruby",
-          "sapphire"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -83191,15 +86873,6 @@
         "method": "Walk",
         "level_range": "7-8",
         "chance": "1%"
-      },
-      {
-        "name": "Hoenn Fortree City",
-        "region": "Hoenn",
-        "games": [
-          "ruby",
-          "sapphire"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -83474,6 +87147,17 @@
         "chance": "1-5%"
       },
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "30-34",
+        "chance": "10%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -83485,7 +87169,29 @@
         "chance": "5-20%"
       },
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "33-50",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "33-53",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -83655,6 +87361,16 @@
         "chance": "1-5%"
       },
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "30-34",
+        "chance": "10%"
+      },
+      {
         "name": "Hoenn Victory Road",
         "region": "Hoenn",
         "games": [
@@ -83666,13 +87382,33 @@
         "chance": "1-20%"
       },
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
         "region": "Hoenn",
         "games": [
           "ruby"
         ],
         "method": "Walk",
-        "level_range": "48-56",
+        "level_range": "48-50",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "51-53",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "54-56",
         "chance": "10-20%"
       }
     ],
@@ -84312,7 +88048,7 @@
     "id": 307,
     "location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "ruby",
@@ -84575,7 +88311,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Outside",
         "region": "Hoenn",
         "games": [
           "ruby",
@@ -84971,14 +88707,6 @@
         "method": "Walk",
         "level_range": "12-13",
         "chance": "1-10%"
-      },
-      {
-        "name": "Hoenn Fortree City",
-        "region": "Hoenn",
-        "games": [
-          "emerald"
-        ],
-        "method": "Trade"
       }
     ],
     "moves": [
@@ -89386,7 +93114,7 @@
     "id": 334,
     "location_area_encounters": [
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -89863,6 +93591,36 @@
           "sapphire"
         ],
         "method": "Surf, Walk",
+        "level_range": "5-35",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "5-39",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "5-39",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "sapphire"
+        ],
+        "method": "Surf, Walk",
         "level_range": "5-39",
         "chance": "1-10%"
       }
@@ -89997,6 +93755,39 @@
     "location_area_encounters": [
       {
         "name": "Hoenn Meteor Falls",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "5-35",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "5-39",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby"
+        ],
+        "method": "Surf, Walk",
+        "level_range": "5-39",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -90146,6 +93937,42 @@
         "method": "Good Rod, Super Rod",
         "level_range": "10-45",
         "chance": "1-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
       },
       {
         "name": "Hoenn Victory Road",
@@ -90338,7 +94165,31 @@
     "id": 340,
     "location_area_encounters": [
       {
-        "name": "Hoenn Meteor Falls",
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Super Rod",
+        "level_range": "30-45",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Super Rod",
+        "level_range": "30-45",
+        "chance": "1-15%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -90466,6 +94317,42 @@
         "method": "Good Rod, Super Rod",
         "level_range": "10-45",
         "chance": "1-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Back",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls B1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
+      },
+      {
+        "name": "Hoenn Meteor Falls Backsmall Room",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Good Rod, Super Rod",
+        "level_range": "10-35",
+        "chance": "20-40%"
       },
       {
         "name": "Hoenn Victory Road",
@@ -91046,7 +94933,31 @@
     "id": 344,
     "location_area_encounters": [
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "36-50",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "36-53",
+        "chance": "1-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -91055,7 +94966,7 @@
         ],
         "method": "Walk",
         "level_range": "36-56",
-        "chance": "1-10%"
+        "chance": "4-10%"
       }
     ],
     "moves": [
@@ -91789,7 +95700,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Good Rod, Super Rod, Old Rod",
+        "method": "Feebas Tile Fishing",
         "level_range": "20-25",
         "chance": "50%"
       }
@@ -91992,7 +95903,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Good Rod, Super Rod, Old Rod",
+        "method": "Feebas Tile Fishing",
         "level_range": "20-25",
         "chance": "50%"
       }
@@ -92197,7 +96108,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Walk (with Devon Scope)",
+        "method": "Walk, Devon Scope",
         "level_range": "25-30",
         "chance": "1-100%"
       },
@@ -92209,7 +96120,7 @@
           "ruby",
           "sapphire"
         ],
-        "method": "Walk (with Devon Scope)",
+        "method": "Walk, Devon Scope",
         "level_range": "25-30",
         "chance": "1-100%"
       },
@@ -92382,7 +96293,40 @@
     "id": 353,
     "location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 2f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 4f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -92390,8 +96334,55 @@
           "sapphire"
         ],
         "method": "Walk",
-        "level_range": "22-30",
+        "level_range": "22-29",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 5f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 6f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Outside",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "27-29",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Summit",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "4-20%"
       },
       {
         "name": "Hoenn Route 121",
@@ -92548,7 +96539,29 @@
     "id": 354,
     "location_area_encounters": [
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "37-50",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "37-53",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -92637,7 +96650,40 @@
     "secondary_colours": [],
     "preevolution_location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre 1f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 2f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 3f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 4f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -92645,8 +96691,55 @@
           "sapphire"
         ],
         "method": "Walk",
-        "level_range": "22-30",
+        "level_range": "22-29",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 5f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 6f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Outside",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "27-29",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Summit",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "4-20%"
       },
       {
         "name": "Hoenn Route 121",
@@ -92726,7 +96819,37 @@
     "id": 355,
     "location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre 1f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 2f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 3f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 4f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -92734,8 +96857,54 @@
           "sapphire"
         ],
         "method": "Walk",
-        "level_range": "22-30",
+        "level_range": "22-29",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 5f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 6f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Outside",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "27-29",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Summit",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "4-20%"
       },
       {
         "name": "Hoenn Route 121",
@@ -92892,13 +97061,33 @@
     "id": 356,
     "location_area_encounters": [
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar 1f",
         "region": "Hoenn",
         "games": [
           "ruby"
         ],
         "method": "Walk",
-        "level_range": "48-56",
+        "level_range": "48-50",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 3f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "51-53",
+        "chance": "5-10%"
+      },
+      {
+        "name": "Hoenn Sky Pillar 5f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "54-56",
         "chance": "5-10%"
       }
     ],
@@ -92990,7 +97179,37 @@
     "secondary_colours": [],
     "preevolution_location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre 1f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 2f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 3f",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 4f",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -92998,8 +97217,54 @@
           "sapphire"
         ],
         "method": "Walk",
-        "level_range": "22-30",
+        "level_range": "22-29",
         "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 5f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre 6f",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "22-29",
+        "chance": "1-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Outside",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Walk",
+        "level_range": "27-29",
+        "chance": "10-20%"
+      },
+      {
+        "name": "Hoenn Mt Pyre Summit",
+        "region": "Hoenn",
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Walk",
+        "level_range": "24-30",
+        "chance": "4-20%"
       },
       {
         "name": "Hoenn Route 121",
@@ -93219,7 +97484,7 @@
     "id": 358,
     "location_area_encounters": [
       {
-        "name": "Hoenn Mt Pyre",
+        "name": "Hoenn Mt Pyre Summit",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -95189,7 +99454,7 @@
     "id": 371,
     "location_area_encounters": [
       {
-        "name": "Hoenn Meteor Falls",
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -95434,7 +99699,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Hoenn Meteor Falls",
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -95598,7 +99863,7 @@
     ],
     "preevolution_location_area_encounters": [
       {
-        "name": "Hoenn Meteor Falls",
+        "name": "Hoenn Meteor Falls Backsmall Room",
         "region": "Hoenn",
         "games": [
           "emerald",
@@ -96451,13 +100716,13 @@
         "chance": "100%"
       },
       {
-        "name": "Hoenn Roaming Hoenn",
+        "name": "Roaming Hoenn",
         "region": "Hoenn",
         "games": [
           "emerald",
           "sapphire"
         ],
-        "method": "Roaming",
+        "method": "Roaming Grass, Roaming Water",
         "level_range": "40",
         "chance": "25%"
       }
@@ -96590,13 +100855,13 @@
         "chance": "100%"
       },
       {
-        "name": "Hoenn Roaming Hoenn",
+        "name": "Roaming Hoenn",
         "region": "Hoenn",
         "games": [
           "emerald",
           "ruby"
         ],
-        "method": "Roaming",
+        "method": "Roaming Grass, Roaming Water",
         "level_range": "40",
         "chance": "25%"
       }
@@ -96718,6 +100983,16 @@
     "held_items": [],
     "id": 382,
     "location_area_encounters": [
+      {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "sapphire"
+        ],
+        "method": "Only One",
+        "level_range": "45",
+        "chance": "100%"
+      },
       {
         "name": "Hoenn Marine Cave",
         "region": "Hoenn",
@@ -96850,6 +101125,16 @@
     "id": 383,
     "location_area_encounters": [
       {
+        "name": "Hoenn Cave",
+        "region": "Hoenn",
+        "games": [
+          "ruby"
+        ],
+        "method": "Only One",
+        "level_range": "45",
+        "chance": "100%"
+      },
+      {
         "name": "Hoenn Terra Cave",
         "region": "Hoenn",
         "games": [
@@ -96980,7 +101265,7 @@
     "id": 384,
     "location_area_encounters": [
       {
-        "name": "Hoenn Sky Pillar",
+        "name": "Hoenn Sky Pillar Apex",
         "region": "Hoenn",
         "games": [
           "emerald",

@@ -10,4 +10,16 @@ python .\pokemon_data_scripts\find_location_maps.py --input-file .\locations.txt
 Go through and add any location overrides needed
 
 Run script to rename locations based on overrides
-python .\pokemon_data_scripts\apply_location_overrides.py --input-csv .\missing_locations.csv --input-json .\pokemon_data_with_trades.json --output-json .\pokemon_data_locations_override.json
+python .\pokemon_data_scripts\apply_location_overrides.py --input-csv pokemon_data_scripts\missing_locations.csv --input-json .\pokemon_data.json --output-json .\pokemon_data.json
+
+Repeat until all locations are in
+    python .\pokemon_data_scripts\extract_location_names.py --input-json .\pokemon_data.json --output-txt .\locations.txt
+    python .\pokemon_data_scripts\find_location_maps.py --input-file .\locations.txt --map-dir D:\Github\pokedle_assets\maps --output-csv ./missing_locations.csv
+
+Find and replace 
+"Roaming Grass"                     with    "Roaming"
+"Roaming Grass, Roaming Water"      with    "Roaming"
+"Feebas Tile Fishing"               with    "Good Rod, Super Rod, Old Rod"
+"Walk, Devon Scope"                 with    "Walk (with Devon Scope)"
+
+Ensure there are only 13 instances of "Kanto Mt Moon"
