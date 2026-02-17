@@ -1,3 +1,37 @@
+## Release Notes — February 18, 2026
+
+## What’s New
+
+- **Classic Mode** <br>
+    - Height arrows now scale based on metre difference:
+        - < 0.25m: Very Small
+        - 0.25m - 0.99m: Small
+        - 1m - 2m: Medium
+        - \> 2m: Large
+    - Weight arrows now scale based on kg difference:
+        - < 5kg: Very Small
+        - 5kg - 9.99kg: Small
+        - 10kg - 19.99kg: Medium
+        - ≥ 20kg: Large
+- **Pokemon Selection Logic** <br>
+    - Added logic to prevent repeating of pokemon. For each mode, Pokemon will not repeat within a 4 week period
+- **Results** <br>
+    - Added holo effects to generated result card
+    - Generated card should be retained between sessions and page switches
+
+## Commits included (newest first)
+
+```text
+cf34738 | 2026-02-18 | Classic: Rework of height/weight arrows to give better feedback
+2d05697 | 2026-02-18 | Added logic to prevent repeating of pokemon. For each mode, Pokemon will not repeat within a 4 week period
+5ff3bce | 2026-02-13 | Added new results images
+41b8a02 | 2026-02-13 | Retain card between sessions and page switches
+5a65cd4 | 2026-02-13 | Tweaked rotation on results card
+1ef6fda | 2026-02-13 | Results: Adding some new animations to the results card
+83a8ade | 2026-02-13 | Results Page: Added Holo effect to card
+ab14a4f | 2026-02-13 | Patch Notes for 13th Feb
+```
+
 ## Release Notes — February 13, 2026
 
 ## What’s New
