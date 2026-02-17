@@ -535,21 +535,34 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
                 const cmp = getComparison(poke, dailyPokemon);
                 const heightStatus = cmp.height === 'match' ? 'match' : 'miss';
                 const weightStatus = cmp.weight === 'match' ? 'match' : 'miss';
-                // Scale the arrows proportional to how far the guess is from the answer.
-                // Larger difference => bigger arrow. Clamp to a sensible range.
-                function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+                // Scale the height arrow based on absolute meter difference
+                // < 1m: small, 1-2m: medium, > 2m: large
                 let heightScale = 1;
                 let weightScale = 1;
                 try {
                   if (dailyPokemon && typeof poke.height === 'number' && typeof dailyPokemon.height === 'number') {
                     const hDiff = Math.abs((poke.height || 0) - (dailyPokemon.height || 0));
-                    const norm = Math.max(1, dailyPokemon.height || 1);
-                    heightScale = clamp((1 + (hDiff / norm)) * 0.3, 0.65, 1.1);
+                    if (hDiff < 0.25) {
+                      heightScale = 0.5;  // small
+                    } else if (hDiff < 1) {
+                      heightScale = 0.7;  // small
+                    } else if (hDiff >= 1 && hDiff <= 2) {
+                      heightScale = 0.85;  // medium
+                    } else {
+                      heightScale = 1.1;  // large
+                    }
                   }
                   if (dailyPokemon && typeof poke.weight === 'number' && typeof dailyPokemon.weight === 'number') {
                     const wDiff = Math.abs((poke.weight || 0) - (dailyPokemon.weight || 0));
-                    const normW = Math.max(1, dailyPokemon.weight || 1);
-                    weightScale = clamp((1 + (wDiff / normW)) * 0.4, 0.65, 1.1);
+                    if (wDiff < 5) {
+                      weightScale = 0.5;  // very small
+                    } else if (wDiff < 10) {
+                      weightScale = 0.7;  // small
+                    } else if (wDiff < 20) {
+                      weightScale = 0.85;  // medium
+                    } else {
+                      weightScale = 1.1;  // large
+                    }
                   }
                 } catch (e) {
                   // fallback to defaults
