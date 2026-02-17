@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { RESET_HOUR_UTC } from './config/resetConfig';
 // import pokemonData from '../data/pokemon_data.json';
@@ -395,6 +395,9 @@ function App() {
   const dropdownRef = useRef(null);
   // Page transition state for animated mobile swipes
   const [pageTransition, setPageTransition] = useState(null);
+  // Debug state for testing different days
+  const [debugDayOffset, setDebugDayOffset] = useState(0);
+  const [debugPanelOpen, setDebugPanelOpen] = useState(false);
 
   function startPageTransition(toKey, direction) {
     if (!toKey || toKey === page) return;
@@ -408,7 +411,14 @@ function App() {
   }
 
   // Get today's date as seed, use page key for deterministic daily selection per page
-  const today = new Date();
+  // Apply debug day offset if set
+  const today = useMemo(() => {
+    const base = new Date();
+    if (debugDayOffset !== 0) {
+      base.setDate(base.getDate() + debugDayOffset);
+    }
+    return base;
+  }, [debugDayOffset]);
   // Determine whether this UTC-based day is a 'shiny' Saturday using same seed as Card selection
   const baseSeedForCardType = getSeedFromDate(today) + 9999;
   const cardTypeRng = mulberry32(baseSeedForCardType);
@@ -428,26 +438,316 @@ function App() {
   // Pick daily pokemon for the current page
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const dailyPokemon = pokemonData ? pokemonData[dailyIndex] : null;
+
+  // Helper function to get Pokemon IDs selected in the previous N days for a specific mode
+  // Returns a Set of Pokemon IDs that should be excluded
+  const getRecentPokemonIds = useCallback((currentDate, modeKey, lookbackDays = 28) => {
+    if (!pokemonData) return new Set();
+    
+    const cache = new Map();
+    const excludedIds = new Set();
+    
+    // Get details mode for current date
+    const currentDetailsMode = getDetailsModeForDate(currentDate);
+    const SEED_OFFSETS = {
+      classic: { offset: 6 * 452, letter: 'c' },
+      card: { offset: 9999, letter: null },
+      pokedex: { offset: 7 * 3355, letter: 'p' },
+      details: currentDetailsMode === 'silhouette' ? { offset: 7 * 1000, letter: 's' } : (currentDetailsMode === 'zoom' ? { offset: 8 * 1000, letter: 'z' } : { offset: 14 * 1000, letter: 'e' }),
+      colours: { offset: 9 * 5657, letter: 'c' },
+      map: { offset: 13 * 5575, letter: 'g' },
+    };
+    
+    const meta = SEED_OFFSETS[modeKey] || { offset: modeKey.length * 1000, letter: modeKey.charAt(0) };
+    
+    // Debug logging for Locations mode - show what we're building
+    if (modeKey === 'map') {
+      const currentDateStr = currentDate.toISOString().split('T')[0];
+      console.log(`[Locations Lookback START] Building exclusions for ${currentDateStr}, looking back ${lookbackDays} days`);
+    }
+    
+    // Build selections iteratively from oldest to newest to avoid recursion
+    // We need to look back 2x the lookback window to ensure we have enough history
+    // for each past date to have its own 28-day exclusion list
+    const totalLookback = lookbackDays * 2;
+    for (let daysBack = totalLookback; daysBack >= 1; daysBack--) {
+      const pastDate = new Date(currentDate);
+      pastDate.setDate(pastDate.getDate() - daysBack);
+      const pastSeed = getSeedFromDate(pastDate);
+      const pastDetailsMode = getDetailsModeForDate(pastDate);
+      
+      // Debug logging for Locations mode - show each iteration
+      if (modeKey === 'map' && daysBack <= lookbackDays) {
+        const pastDateStr = pastDate.toISOString().split('T')[0];
+        console.log(`[Locations Lookback] Processing day -${daysBack}: ${pastDateStr}`);
+      }
+      
+      // Check for override first
+      const override = getDailyOverride(pastSeed, modeKey);
+      let selectedId;
+      
+      if (override && typeof override === 'number') {
+        selectedId = override;
+      } else if (override && typeof override === 'object' && override.pokemonId) {
+        selectedId = override.pokemonId;
+      } else {
+        // Build exclusion set for this past date from dates we've already processed (older dates)
+        // Each date should exclude the 28 days before IT, not just the dates within our window
+        const pastExcludedIds = new Set();
+        for (let olderDaysBack = daysBack + 1; olderDaysBack <= daysBack + lookbackDays; olderDaysBack++) {
+          const olderDate = new Date(currentDate);
+          olderDate.setDate(olderDate.getDate() - olderDaysBack);
+          const olderKey = `${olderDate.getTime()}-${modeKey}`;
+          const olderId = cache.get(olderKey);
+          if (olderId !== undefined) {
+            pastExcludedIds.add(olderId);
+          }
+        }
+        
+        // Debug logging for Locations mode
+        if (modeKey === 'map' && daysBack <= lookbackDays) {
+          const pastDateStr = pastDate.toISOString().split('T')[0];
+          console.log(`[Locations Lookback]   Building exclusions for ${pastDateStr}: ${pastExcludedIds.size} Pokemon excluded`);
+        }
+        
+        // Calculate seed for this past date
+        let seedFor;
+        if (modeKey === 'details') {
+          const pastMeta = pastDetailsMode === 'silhouette' 
+            ? { offset: 7 * 1000, letter: 's' }
+            : (pastDetailsMode === 'zoom' ? { offset: 8 * 1000, letter: 'z' } : { offset: 14 * 1000, letter: 'e' });
+          seedFor = pastSeed + pastMeta.offset + (pastMeta.letter ? pastMeta.letter.charCodeAt(0) : 0);
+        } else {
+          seedFor = pastSeed + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
+        }
+        
+        // Replay selection logic for this past date
+        if (modeKey === 'details' && pastDetailsMode === 'eyes' && eyesManifest) {
+          // Eyes mode: manifest-based selection
+          const rngFor = mulberry32(seedFor);
+          let found = false;
+          let attempts = 0;
+          while (attempts < 200 && !found) {
+            const idx = Math.floor(rngFor() * pokemonData.length);
+            const candidate = pokemonData[idx];
+            const filename = `${candidate.id}.png`;
+            if (eyesManifest.includes(filename) && !pastExcludedIds.has(candidate.id)) {
+              selectedId = candidate.id;
+              found = true;
+            }
+            attempts++;
+          }
+        } else {
+          // Regular selection with anti-repeat
+          const rngFor = mulberry32(seedFor);
+          let found = false;
+          let attempts = 0;
+          while (attempts < pokemonData.length && !found) {
+            const idx = Math.floor(rngFor() * pokemonData.length);
+            const candidate = pokemonData[idx];
+            if (!pastExcludedIds.has(candidate.id)) {
+              selectedId = candidate.id;
+              found = true;
+            }
+            attempts++;
+          }
+        }
+      }
+      
+      // Store in cache
+      if (selectedId !== undefined) {
+        const cacheKey = `${pastDate.getTime()}-${modeKey}`;
+        cache.set(cacheKey, selectedId);
+        
+        // Only add to exclusion list if within the lookback window (not the extended window)
+        if (daysBack <= lookbackDays) {
+          excludedIds.add(selectedId);
+        }
+        
+        // Debug logging for Locations mode
+        if (modeKey === 'map' && daysBack <= lookbackDays) {
+          const dateStr = pastDate.toISOString().split('T')[0];
+          const pokemon = pokemonData.find(p => p.id === selectedId);
+          console.log(`[Locations Lookback]   -> Selected: ${pokemon?.name || 'Unknown'} (ID: ${selectedId})`);
+        }
+      }
+    }
+    
+    // Debug logging for Locations mode
+    if (modeKey === 'map') {
+      console.log(`[Locations Lookback END] Total excluded: ${excludedIds.size} Pokemon`);
+    }
+    
+    return excludedIds;
+  }, [pokemonData, eyesManifest]);
+
+  // Helper function to select the Pokemon for a specific date and mode
+  // This replicates the exact selection logic including anti-repeat filtering
+  const selectPokemonForDate = useCallback((targetDate, modeKey) => {
+    if (!pokemonData) return null;
+    
+    const targetSeed = getSeedFromDate(targetDate);
+    const targetDetailsMode = getDetailsModeForDate(targetDate);
+    
+    // Check for override first
+    const override = getDailyOverride(targetSeed, modeKey);
+    if (override && typeof override === 'number') {
+      const chosen = pokemonData.find(p => p.id === override);
+      return chosen || null;
+    } else if (override && typeof override === 'object' && override.pokemonId) {
+      const chosen = pokemonData.find(p => p.id === override.pokemonId);
+      return chosen || null;
+    }
+    
+    // Get exclusion list for this date
+    const excludedIds = getRecentPokemonIds(targetDate, modeKey);
+    
+    // Debug logging for Locations mode
+    if (modeKey === 'map') {
+      const dateStr = targetDate.toISOString().split('T')[0];
+      console.log(`[Locations SELECT] Selecting for ${dateStr}, excluded: ${excludedIds.size} Pokemon, IDs: [${Array.from(excludedIds).sort((a, b) => a - b).join(', ')}]`);
+    }
+    
+    // Determine seed based on mode - calculate SEED_OFFSETS locally
+    const detailsModeSeedOffsets = targetDetailsMode === 'silhouette' 
+      ? { offset: 7 * 1000, letter: 's' }
+      : (targetDetailsMode === 'zoom' ? { offset: 8 * 1000, letter: 'z' } : { offset: 14 * 1000, letter: 'e' });
+    
+    const SEED_OFFSETS = {
+      classic: { offset: 6 * 452, letter: 'c' },
+      card: { offset: 9999, letter: null },
+      pokedex: { offset: 7 * 3355, letter: 'p' },
+      details: detailsModeSeedOffsets,
+      colours: { offset: 9 * 5657, letter: 'c' },
+      map: { offset: 13 * 5575, letter: 'g' },
+    };
+    
+    const meta = SEED_OFFSETS[modeKey] || { offset: modeKey.length * 1000, letter: modeKey.charAt(0) };
+    let seedFor;
+    
+    if (modeKey === 'details') {
+      const detailMeta = targetDetailsMode === 'silhouette' 
+        ? { offset: 7 * 1000, letter: 's' }
+        : (targetDetailsMode === 'zoom' ? { offset: 8 * 1000, letter: 'z' } : { offset: 14 * 1000, letter: 'e' });
+      seedFor = targetSeed + detailMeta.offset + (detailMeta.letter ? detailMeta.letter.charCodeAt(0) : 0);
+    } else {
+      seedFor = targetSeed + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
+    }
+    
+    // Select Pokemon based on mode
+    let selected = null;
+    
+    if (modeKey === 'details' && targetDetailsMode === 'eyes' && eyesManifest) {
+      // Eyes mode: manifest-based selection
+      const rngFor = mulberry32(seedFor);
+      let attempts = 0;
+      while (attempts < 200) {
+        const idx = Math.floor(rngFor() * pokemonData.length);
+        const candidate = pokemonData[idx];
+        const filename = `${candidate.id}.png`;
+        if (eyesManifest.includes(filename) && !excludedIds.has(candidate.id)) {
+          selected = candidate;
+          break;
+        }
+        attempts++;
+      }
+      
+      // Fallback
+      if (!selected) {
+        const fallbackRng = mulberry32(seedFor);
+        let fallbackAttempts = 0;
+        while (fallbackAttempts < 200) {
+          const idx = Math.floor(fallbackRng() * pokemonData.length);
+          const candidate = pokemonData[idx];
+          const filename = `${candidate.id}.png`;
+          if (eyesManifest.includes(filename)) {
+            selected = candidate;
+            break;
+          }
+          fallbackAttempts++;
+        }
+      }
+    } else {
+      // Regular selection with anti-repeat
+      const rngFor = mulberry32(seedFor);
+      let attempts = 0;
+      
+      // Debug logging for Locations mode
+      if (modeKey === 'map') {
+        console.log(`[Locations SELECT] Starting selection loop, excludedIds size: ${excludedIds.size}`);
+      }
+      
+      while (attempts < pokemonData.length) {
+        const idx = Math.floor(rngFor() * pokemonData.length);
+        const candidate = pokemonData[idx];
+        
+        // Debug logging for Locations mode
+        if (modeKey === 'map' && attempts < 10) {
+          const isExcluded = excludedIds.has(candidate.id);
+          console.log(`[Locations SELECT]   Attempt ${attempts}: idx=${idx}, ${candidate.name} (ID: ${candidate.id}), excluded=${isExcluded}`);
+        }
+        
+        if (!excludedIds.has(candidate.id)) {
+          selected = candidate;
+          
+          // Debug logging for Locations mode
+          if (modeKey === 'map') {
+            console.log(`[Locations SELECT]   ✓ Found non-excluded Pokemon after ${attempts} attempts: ${candidate.name} (ID: ${candidate.id})`);
+          }
+          
+          break;
+        }
+        attempts++;
+      }
+      
+      // Fallback
+      if (!selected) {
+        // Debug logging for Locations mode
+        if (modeKey === 'map') {
+          console.log(`[Locations SELECT]   ⚠ FALLBACK: Could not find non-excluded Pokemon, selecting random one`);
+        }
+        
+        const fallbackRng = mulberry32(seedFor);
+        const idx = Math.floor(fallbackRng() * pokemonData.length);
+        selected = pokemonData[idx];
+        
+        // Debug logging for Locations mode
+        if (modeKey === 'map') {
+          console.log(`[Locations SELECT]   ⚠ FALLBACK selected: ${selected.name} (ID: ${selected.id})`);
+        }
+      }
+    }
+    
+    // Debug logging for Locations mode
+    if (modeKey === 'map' && selected) {
+      const dateStr = targetDate.toISOString().split('T')[0];
+      console.log(`[Locations SELECT]   -> FINAL: ${selected.name} (ID: ${selected.id})\n`);
+    }
+    
+    return selected;
+  }, [pokemonData, eyesManifest, getRecentPokemonIds]);
+
   // Compute per-page daily pokemon and solved status (run this hook unconditionally)
   const perPageResults = useMemo(() => {
     if (!pokemonData) return [];
 
     const todaySeed = getSeedFromDate(today);
-
-    // Seed offsets per page to match the logic used inside each page component
     const detailsMode = getDetailsModeForDate(today);
     const SEED_OFFSETS = {
-      classic: { offset: 7 * 1000, letter: 'c' },
+      classic: { offset: 6 * 452, letter: 'c' },
       card: { offset: 9999, letter: null },
-      pokedex: { offset: 7 * 1000, letter: 'p' },
+      pokedex: { offset: 7 * 3355, letter: 'p' },
       details: detailsMode === 'silhouette' ? { offset: 7 * 1000, letter: 's' } : (detailsMode === 'zoom' ? { offset: 8 * 1000, letter: 'z' } : { offset: 14 * 1000, letter: 'e' }),
-      colours: { offset: 9 * 1000, letter: 'c' },
-      map: { offset: 13 * 1000, letter: 'g' },
+      colours: { offset: 9 * 5657, letter: 'c' },
+      map: { offset: 13 * 5575, letter: 'g' },
     };
 
     function getEyesAnswer() {
       // Select a pokemon that has eyes images in the manifest
       if (!eyesManifest) return null;
+      
+      // Get recently used Pokemon IDs to exclude
+      const excludedIds = getRecentPokemonIds(today, 'details');
       
       // Check for override first
       const override = getDailyOverride(todaySeed, 'eyes');
@@ -463,10 +763,24 @@ function App() {
         }
       }
 
-      // Randomly select a pokemon that has eyes images in the manifest
+      // Randomly select a pokemon that has eyes images in the manifest and is not recently used
       const seedFor = getSeedFromDate(today) + 14 * 1000 + 'e'.charCodeAt(0);
       let localRng = mulberry32(seedFor);
       let attempts = 0;
+      while (attempts < 200) {
+        const idx = Math.floor(localRng() * pokemonData.length);
+        const chosen = pokemonData[idx];
+        const filename = `${chosen.id}.png`;
+        if (eyesManifest.includes(filename) && !excludedIds.has(chosen.id)) {
+          return chosen;
+        }
+        attempts++;
+      }
+      
+      // Fallback: if we can't find a non-repeating Pokemon, just pick any valid one
+      console.warn('[Eyes] Could not find non-repeating Pokemon, allowing repeat');
+      localRng = mulberry32(seedFor);
+      attempts = 0;
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
         const chosen = pokemonData[idx];
@@ -476,11 +790,15 @@ function App() {
         }
         attempts++;
       }
+      
       console.error('[Eyes] Failed to find Pokemon with eyes image after 200 attempts');
       return null;
     }
 
     function getCardAnswer() {
+      // Get recently used Pokemon IDs to exclude
+      const excludedIds = getRecentPokemonIds(today, 'card');
+      
       // Check for override first
       const override = getDailyOverride(todaySeed, 'card');
       console.log('[Override] Card override check for date', todaySeed, ':', override);
@@ -554,7 +872,7 @@ function App() {
         }
       }
 
-      // Replicate CardPage selection logic to pick a pokemon that has a card manifest entry
+      // Replicate CardPage selection logic to pick a pokemon that has a card manifest entry and is not recently used
       if (!cardManifest) return null;
       const baseSeed = getSeedFromDate(today) + 9999;
       let localRng = mulberry32(baseSeed);
@@ -562,6 +880,13 @@ function App() {
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
         const chosen = pokemonData[idx];
+        
+        // Skip if this Pokemon was used recently
+        if (excludedIds.has(chosen.id)) {
+          attempts++;
+          continue;
+        }
+        
         // Try card types in the same way CardPage does (weekday vs weekend)
         // We can't know user debugDay, so use today's UTC day
         const now = new Date();
@@ -599,6 +924,49 @@ function App() {
         }
         attempts++;
       }
+      
+      // Fallback: if we can't find a non-repeating Pokemon with cards, allow repeats
+      console.warn('[Card] Could not find non-repeating Pokemon with card, allowing repeat');
+      localRng = mulberry32(baseSeed);
+      attempts = 0;
+      while (attempts < 200) {
+        const idx = Math.floor(localRng() * pokemonData.length);
+        const chosen = pokemonData[idx];
+        const now = new Date();
+        let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+        if (now.getUTCHours() >= RESET_HOUR_UTC) {
+          dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+        }
+        const utcDay = dayForCard.getUTCDay();
+        const cardType = getCardTypeByDay(utcDay, localRng);
+
+        const manifestList = cardManifest[cardType]?.[chosen.id];
+        if (manifestList && manifestList.length > 0) {
+          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
+          const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+          let cardObj = null;
+          if (cardType === 'normal' || cardType === 'shiny') {
+            cardObj = {
+              cropped: `${folder}/cropped/${cardFile}`,
+              resized: `${folder}/resized/${cardFile}`,
+              cardFile,
+              folder,
+              cardType
+            };
+          } else {
+            cardObj = {
+              cropped: `${folder}/${cardFile}`,
+              resized: `${folder}/${cardFile}`,
+              cardFile,
+              folder,
+              cardType
+            };
+          }
+          return { pokemon: chosen, card: cardObj };
+        }
+        attempts++;
+      }
+      
       return null;
     }
 
@@ -622,20 +990,8 @@ function App() {
         seedFor = getSeedFromDate(today) + meta.offset + (meta.letter ? meta.letter.charCodeAt(0) : 0);
       }
       
-      // Check for override
-      const override = getDailyOverride(todaySeed, p.key);
-      let daily;
-      if (override && typeof override === 'number') {
-        // Override with specific Pokemon ID
-        console.log('[Override]', p.key, 'page override for date', todaySeed, '- Pokemon ID:', override);
-        daily = pokemonData.find(poke => poke.id === override) || null;
-        console.log('[Override]', p.key, 'page - Found pokemon:', daily?.name, daily?.id);
-      } else {
-        // Use normal random selection
-        const rngFor = mulberry32(seedFor);
-        const idx = Math.floor(rngFor() * pokemonData.length);
-        daily = pokemonData[idx];
-      }
+      // Use the helper function to ensure consistency with debug grid
+      const daily = selectPokemonForDate(today, p.key);
       
       const pageGuesses = guessesByPage[p.key] || [];
       const solved = daily && pageGuesses.some(g => g.name === (daily.name));
@@ -867,6 +1223,192 @@ function App() {
           className="main-app"
           ref={mainAppRef}
         >
+          {/* Debug Panel
+          <div style={{
+            marginBottom: '20px',
+            padding: '12px',
+            background: '#f0f0f0',
+            borderRadius: '8px',
+            border: '2px solid #ddd'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: debugPanelOpen ? '12px' : '0' }}>
+              <strong style={{ fontSize: '14px' }}>🐛 Debug Mode</strong>
+              <button
+                onClick={() => setDebugPanelOpen(!debugPanelOpen)}
+                style={{
+                  padding: '4px 12px',
+                  background: '#fff',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontSize: '12px'
+                }}
+              >
+                {debugPanelOpen ? 'Hide' : 'Show'}
+              </button>
+            </div>
+            
+            {debugPanelOpen && (
+              <div>
+                <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <label style={{ fontSize: '13px', fontWeight: '500' }}>Day Offset:</label>
+                  <select
+                    value={debugDayOffset}
+                    onChange={(e) => setDebugDayOffset(parseInt(e.target.value, 10))}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: '4px',
+                      border: '1px solid #ccc',
+                      fontSize: '13px',
+                      background: '#fff'
+                    }}
+                  >
+                    {[-28, -27, -26, -25, -24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0].map(offset => {
+                      const testDate = new Date();
+                      testDate.setDate(testDate.getDate() + offset);
+                      const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][testDate.getDay()];
+                      const dateStr = testDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                      return (
+                        <option key={offset} value={offset}>
+                          {offset === 0 ? 'Today' : `${offset} days`} ({dayName} {dateStr})
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <span style={{ fontSize: '12px', color: '#666', marginLeft: '8px' }}>
+                    Seed: {getSeedFromDate(today)}
+                  </span>
+                </div>
+                
+                <div style={{ 
+                  marginBottom: '12px', 
+                  padding: '8px', 
+                  background: '#f8f9fa', 
+                  borderRadius: '4px',
+                  fontSize: '11px',
+                  display: 'flex',
+                  gap: '16px',
+                  flexWrap: 'wrap',
+                  alignItems: 'center'
+                }}>
+                  <div><strong>Legend:</strong></div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ display: 'inline-block', width: '16px', height: '16px', background: '#fff3cd', border: '1px solid #ccc' }}></span>
+                    <span>Selected Day</span>
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#666', fontStyle: 'italic' }}>
+                    Note: Grid shows selections with anti-repeat logic (no Pokemon repeats within 28 days per mode)
+                  </div>
+                </div>
+                
+                <div style={{ 
+                  background: '#fff', 
+                  padding: '10px', 
+                  borderRadius: '4px',
+                  fontSize: '11px',
+                  maxHeight: '500px',
+                  overflowY: 'auto',
+                  overflowX: 'auto'
+                }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '8px', fontSize: '13px' }}>
+                    Pokemon Selection Grid (Dates × Modes):
+                  </div>
+                  <table style={{ 
+                    borderCollapse: 'collapse',
+                    fontSize: '11px',
+                    minWidth: '100%'
+                  }}>
+                    <thead>
+                      <tr style={{ background: '#f8f9fa', borderBottom: '2px solid #dee2e6' }}>
+                        <th style={{ 
+                          padding: '8px', 
+                          textAlign: 'left', 
+                          fontWeight: '600',
+                          position: 'sticky',
+                          left: 0,
+                          background: '#f8f9fa',
+                          zIndex: 1,
+                          minWidth: '80px'
+                        }}>
+                          Mode
+                        </th>
+                        {[-28, -27, -26, -25, -24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0].map(offset => {
+                          const testDate = new Date();
+                          testDate.setDate(testDate.getDate() + offset);
+                          const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][testDate.getDay()];
+                          const dateStr = testDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                          return (
+                            <th key={offset} style={{ 
+                              padding: '6px 8px', 
+                              textAlign: 'center', 
+                              fontWeight: '600',
+                              minWidth: '85px',
+                              fontSize: '10px',
+                              background: offset === debugDayOffset ? '#fff3cd' : '#f8f9fa'
+                            }}>
+                              <div>{dayName}</div>
+                              <div style={{ fontWeight: '400', color: '#666' }}>{dateStr}</div>
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {PAGES.filter(p => p.key !== 'results').map(pageInfo => {
+                        return (
+                          <tr key={pageInfo.key} style={{ borderBottom: '1px solid #eee' }}>
+                            <td style={{ 
+                              padding: '8px',
+                              fontWeight: '500',
+                              position: 'sticky',
+                              left: 0,
+                              background: '#fff',
+                              zIndex: 1,
+                              borderRight: '1px solid #ddd'
+                            }}>
+                              {pageInfo.label}
+                            </td>
+                            {[-28, -27, -26, -25, -24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0].map(offset => {
+                              // Calculate Pokemon for this date and mode using the exact same selection logic
+                              const testDate = new Date();
+                              testDate.setDate(testDate.getDate() + offset);
+                              
+                              // Use the helper function to get the actual Pokemon that would be selected
+                              const pokemon = selectPokemonForDate(testDate, pageInfo.key);
+                              
+                              const isHighlighted = offset === debugDayOffset;
+                              
+                              return (
+                                <td key={offset} style={{ 
+                                  padding: '6px 8px',
+                                  textAlign: 'center',
+                                  fontFamily: 'monospace',
+                                  fontSize: '10px',
+                                  background: isHighlighted ? '#fff3cd' : '#fff',
+                                  borderLeft: '1px solid #f0f0f0',
+                                  position: 'relative'
+                                }}>
+                                  {pokemon ? (
+                                    <>
+                                      <div style={{ fontWeight: '500' }}>#{pokemon.id}</div>
+                                      <div style={{ color: '#666', fontSize: '9px' }}>{pokemon.name}</div>
+                                    </>
+                                  ) : (
+                                    <div style={{ color: '#999', fontSize: '9px' }}>N/A</div>
+                                  )}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div> */}
+          
           {/* Page Content */}
           {!pageTransition && renderPageByKey(page)}
           {pageTransition && (
