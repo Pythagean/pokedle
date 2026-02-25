@@ -1,3 +1,27 @@
+## Release Notes — February 25, 2026
+
+## What’s New
+
+- **Card Mode** <br>
+    - Full card is revealed after 3 guesses (instead of 4)
+- **Pokedex Mode** <br>
+    - Added Shape as the first hint given
+- **Locations Mode** <br>
+    - Added Footprint to the initial clue
+
+## Commits included (newest first)
+
+```text
+cc33c46 | 2026-02-25 | Card: Reveal the full card after 3 guesses instead of 4
+5e30abd | 2026-02-25 | Pokedex: Added shape as first hint
+52effd9 | 2026-02-25 | Locations: Added footprint clue to locations
+c13ece8 | 2026-02-25 | Fixed Mawile typo in pokedex entry
+ee4b9ed | 2026-02-25 | Added shapes from Bulbapedia
+717dd4f | 2026-02-25 | Added shape back into pokemon_data.json
+abf4521 | 2026-02-25 | Added footprint scraping scripts
+0963ece | 2026-02-18 | Patch notes for 18th Feb
+```
+
 ## Release Notes — February 18, 2026
 
 ## What’s New
