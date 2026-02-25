@@ -78,7 +78,7 @@ export const ColourHints = makeHintConfig(COLOURS_HINT_THRESHOLDS);
 
 // Card page thresholds:
 // [fullArtTypesThreshold, revealFullCardThreshold, normalTypesThreshold]
-export const CARD_HINT_THRESHOLDS = [4, 4, 8];
+export const CARD_HINT_THRESHOLDS = [3, 3, 6];
 export const CardHints = makeHintConfig(CARD_HINT_THRESHOLDS);
 
 // Eyes page thresholds:
