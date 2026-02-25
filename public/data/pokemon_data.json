@@ -76,7 +76,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 2,
@@ -158,7 +159,8 @@
     "secondary_colours": [
       "Green",
       "Pink"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 3,
@@ -238,7 +240,8 @@
     "secondary_colours": [
       "Green",
       "Pink"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 4,
@@ -318,7 +321,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 5,
@@ -400,7 +404,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 6,
@@ -490,7 +495,8 @@
     "secondary_colours": [
       "Yellow",
       "Green"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 7,
@@ -575,7 +581,8 @@
     "secondary_colours": [
       "Yellow",
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 8,
@@ -663,7 +670,8 @@
       "Yellow",
       "Brown",
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 9,
@@ -746,7 +754,8 @@
     "secondary_colours": [
       "Yellow",
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 10,
@@ -1022,7 +1031,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 11,
@@ -1503,7 +1513,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 12,
@@ -1926,7 +1937,8 @@
       "Purple",
       "Blue",
       "Red"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 13,
@@ -2188,7 +2200,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 14,
@@ -2651,7 +2664,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 15,
@@ -3043,7 +3057,8 @@
       "Black",
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 16,
@@ -3469,7 +3484,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 17,
@@ -4155,7 +4171,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 18,
@@ -4620,7 +4637,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 19,
@@ -5101,7 +5119,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 20,
@@ -5850,7 +5869,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 21,
@@ -6290,7 +6310,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 22,
@@ -6931,7 +6952,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 23,
@@ -7133,7 +7155,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 24,
@@ -7441,7 +7464,8 @@
       "Black",
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 25,
@@ -7596,7 +7620,8 @@
     "secondary_colours": [
       "Red",
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 26,
@@ -7766,7 +7791,8 @@
     "secondary_colours": [
       "Yellow",
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 27,
@@ -7974,7 +8000,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 28,
@@ -8243,7 +8270,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 29,
@@ -8416,7 +8444,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 30,
@@ -8662,7 +8691,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 31,
@@ -8874,7 +8904,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 32,
@@ -9043,7 +9074,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 33,
@@ -9281,7 +9313,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 34,
@@ -9491,7 +9524,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 35,
@@ -9612,7 +9646,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 36,
@@ -9732,7 +9767,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 37,
@@ -9874,7 +9910,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Red",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 38,
@@ -10018,7 +10055,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 39,
@@ -10219,7 +10257,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 40,
@@ -10421,7 +10460,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 41,
@@ -10851,7 +10891,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Purple"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 42,
@@ -11539,7 +11580,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Purple"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 43,
@@ -11852,7 +11894,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 44,
@@ -12321,7 +12364,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 45,
@@ -12640,7 +12684,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 46,
@@ -12753,7 +12798,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 47,
@@ -12915,7 +12961,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 48,
@@ -13155,7 +13202,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 49,
@@ -13527,7 +13575,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Bug Wings"
   },
   {
     "id": 50,
@@ -13611,7 +13660,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 51,
@@ -13723,7 +13773,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Heads"
   },
   {
     "id": 52,
@@ -13999,7 +14050,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 53,
@@ -14372,7 +14424,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 54,
@@ -14949,7 +15002,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 55,
@@ -15638,7 +15692,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 56,
@@ -15822,7 +15877,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 57,
@@ -16049,7 +16105,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 58,
@@ -16194,7 +16251,8 @@
     "secondary_colours": [
       "Yellow",
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 59,
@@ -16339,7 +16397,8 @@
     "secondary_colours": [
       "Yellow",
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 60,
@@ -16921,7 +16980,8 @@
     "secondary_colours": [
       "White",
       "Black"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 61,
@@ -17730,7 +17790,8 @@
     "secondary_colours": [
       "White",
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 62,
@@ -18315,7 +18376,8 @@
     "secondary_colours": [
       "White",
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 63,
@@ -18524,7 +18586,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 64,
@@ -18760,7 +18823,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 65,
@@ -18980,7 +19044,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 66,
@@ -19163,7 +19228,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 67,
@@ -19419,7 +19485,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 68,
@@ -19615,7 +19682,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 69,
@@ -19879,7 +19947,8 @@
     "secondary_colours": [
       "Brown",
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 70,
@@ -20275,7 +20344,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 71,
@@ -20552,7 +20622,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 72,
@@ -21592,7 +21663,8 @@
     "secondary_colours": [
       "Red",
       "Brown"
-    ]
+    ],
+    "shape": "Tentacles"
   },
   {
     "id": 73,
@@ -23051,7 +23123,8 @@
     "secondary_colours": [
       "Red",
       "Brown"
-    ]
+    ],
+    "shape": "Tentacles"
   },
   {
     "id": 74,
@@ -23369,7 +23442,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 75,
@@ -23827,7 +23901,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 76,
@@ -24161,7 +24236,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 77,
@@ -24333,7 +24409,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 78,
@@ -24561,7 +24638,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 79,
@@ -25104,7 +25182,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 80,
@@ -25757,7 +25836,8 @@
     "secondary_colours": [
       "Yellow",
       "Grey"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 81,
@@ -25927,7 +26007,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 82,
@@ -26136,7 +26217,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Heads"
   },
   {
     "id": 83,
@@ -26267,7 +26349,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 84,
@@ -26454,7 +26537,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Legs"
   },
   {
     "id": 85,
@@ -26734,7 +26818,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 86,
@@ -26845,7 +26930,8 @@
     },
     "fully_evolved": false,
     "main_colour": "White",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Fish"
   },
   {
     "id": 87,
@@ -26980,7 +27066,8 @@
     },
     "fully_evolved": true,
     "main_colour": "White",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Fish"
   },
   {
     "id": 88,
@@ -27141,7 +27228,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 89,
@@ -27378,7 +27466,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 90,
@@ -27665,7 +27754,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 91,
@@ -27955,7 +28045,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 92,
@@ -28108,7 +28199,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Purple"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 93,
@@ -28303,7 +28395,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 94,
@@ -28474,7 +28567,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 95,
@@ -28621,7 +28715,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 96,
@@ -28752,7 +28847,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 97,
@@ -28916,7 +29012,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 98,
@@ -29467,7 +29564,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 99,
@@ -30355,7 +30453,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 100,
@@ -30490,7 +30589,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 101,
@@ -30691,7 +30791,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 102,
@@ -30972,7 +31073,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Heads"
   },
   {
     "id": 103,
@@ -31252,7 +31354,8 @@
     "secondary_colours": [
       "Yellow",
       "Green"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 104,
@@ -31369,7 +31472,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 105,
@@ -31566,7 +31670,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 106,
@@ -31658,7 +31763,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 107,
@@ -31757,7 +31863,8 @@
     "secondary_colours": [
       "Purple",
       "Red"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 108,
@@ -31859,7 +31966,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 109,
@@ -31982,7 +32090,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 110,
@@ -32136,7 +32245,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Heads"
   },
   {
     "id": 111,
@@ -32252,7 +32362,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 112,
@@ -32408,7 +32519,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 113,
@@ -32547,7 +32659,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 114,
@@ -32698,7 +32811,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 115,
@@ -32793,7 +32907,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 116,
@@ -33244,7 +33359,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 117,
@@ -33954,7 +34070,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 118,
@@ -34620,7 +34737,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 119,
@@ -35510,7 +35628,8 @@
     "secondary_colours": [
       "White",
       "Black"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 120,
@@ -35798,7 +35917,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 121,
@@ -36087,7 +36207,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 122,
@@ -36185,7 +36306,8 @@
     "secondary_colours": [
       "White",
       "Blue"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 123,
@@ -36273,7 +36395,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 124,
@@ -36372,7 +36495,8 @@
     "secondary_colours": [
       "Yellow",
       "Purple"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 125,
@@ -36485,7 +36609,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 126,
@@ -36612,7 +36737,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 127,
@@ -36717,7 +36843,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 128,
@@ -36824,7 +36951,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 129,
@@ -38455,7 +38583,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 130,
@@ -40563,7 +40692,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 131,
@@ -40674,7 +40804,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 132,
@@ -40853,7 +40984,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 133,
@@ -40952,7 +41084,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 134,
@@ -41049,7 +41182,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 135,
@@ -41148,7 +41282,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 136,
@@ -41255,7 +41390,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 137,
@@ -41337,7 +41473,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 138,
@@ -41425,7 +41562,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Tentacles"
   },
   {
     "id": 139,
@@ -41505,7 +41643,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Tentacles"
   },
   {
     "id": 140,
@@ -41592,7 +41731,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 141,
@@ -41676,7 +41816,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 142,
@@ -41766,7 +41907,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Purple"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 143,
@@ -41877,7 +42019,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 144,
@@ -41955,7 +42098,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Wings"
   },
   {
     "id": 145,
@@ -42035,7 +42179,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Wings"
   },
   {
     "id": 146,
@@ -42128,7 +42273,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 147,
@@ -42237,7 +42383,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 148,
@@ -42383,7 +42530,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 149,
@@ -42498,7 +42646,8 @@
     "secondary_colours": [
       "Green",
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 150,
@@ -42575,7 +42724,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Purple"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 151,
@@ -42642,7 +42792,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 152,
@@ -42717,7 +42868,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 153,
@@ -42786,7 +42938,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 154,
@@ -42857,7 +43010,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 155,
@@ -42934,7 +43088,8 @@
       "Blue",
       "Yellow",
       "Orange"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 156,
@@ -43011,7 +43166,8 @@
       "Blue",
       "Yellow",
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 157,
@@ -43088,7 +43244,8 @@
       "Blue",
       "Yellow",
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 158,
@@ -43164,7 +43321,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 159,
@@ -43236,7 +43394,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 160,
@@ -43310,7 +43469,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 161,
@@ -43426,7 +43586,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 162,
@@ -43571,7 +43732,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 163,
@@ -43860,7 +44022,8 @@
     "secondary_colours": [
       "Black",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 164,
@@ -44308,7 +44471,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Wings"
   },
   {
     "id": 165,
@@ -44504,7 +44668,8 @@
     "secondary_colours": [
       "Yellow",
       "Black"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 166,
@@ -44712,7 +44877,8 @@
     "secondary_colours": [
       "Yellow",
       "Black"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 167,
@@ -44908,7 +45074,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 168,
@@ -45127,7 +45294,8 @@
       "Blue",
       "Yellow",
       "Purple"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 169,
@@ -45599,7 +45767,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 170,
@@ -45797,7 +45966,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 171,
@@ -46102,7 +46272,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 172,
@@ -46179,7 +46350,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 173,
@@ -46256,7 +46428,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 174,
@@ -46329,7 +46502,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 175,
@@ -46407,7 +46581,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 176,
@@ -46486,7 +46661,8 @@
     },
     "fully_evolved": false,
     "main_colour": "White",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 177,
@@ -46580,7 +46756,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 178,
@@ -46696,7 +46873,8 @@
       "Yellow",
       "Red",
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 179,
@@ -46794,7 +46972,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 180,
@@ -46913,7 +47092,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 181,
@@ -47012,7 +47192,8 @@
     "secondary_colours": [
       "White",
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 182,
@@ -47329,7 +47510,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 183,
@@ -47547,7 +47729,8 @@
     "secondary_colours": [
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 184,
@@ -47769,7 +47952,8 @@
     "secondary_colours": [
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 185,
@@ -47858,7 +48042,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 186,
@@ -48435,7 +48620,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 187,
@@ -48642,7 +48828,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 188,
@@ -48860,7 +49047,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 189,
@@ -49069,7 +49257,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 190,
@@ -49263,7 +49452,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 191,
@@ -49353,7 +49543,8 @@
     "secondary_colours": [
       "Brown",
       "Green"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 192,
@@ -49438,7 +49629,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 193,
@@ -49518,7 +49710,8 @@
     "secondary_colours": [
       "Green",
       "White"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 194,
@@ -49646,7 +49839,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Legs"
   },
   {
     "id": 195,
@@ -49922,7 +50116,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 196,
@@ -50009,7 +50204,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 197,
@@ -50102,7 +50298,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 198,
@@ -50215,7 +50412,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 199,
@@ -50756,7 +50954,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 200,
@@ -50845,7 +51044,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 201,
@@ -50914,7 +51114,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 202,
@@ -51042,7 +51243,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 203,
@@ -51123,7 +51325,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 204,
@@ -51369,7 +51572,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 205,
@@ -51618,7 +51822,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 206,
@@ -51706,7 +51911,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 207,
@@ -51785,7 +51991,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 208,
@@ -51916,7 +52123,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 209,
@@ -52055,7 +52263,8 @@
     "secondary_colours": [
       "Blue",
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 210,
@@ -52210,7 +52419,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 211,
@@ -52390,7 +52600,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 212,
@@ -52472,7 +52683,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 213,
@@ -52576,7 +52788,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 214,
@@ -52800,7 +53013,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 215,
@@ -52912,7 +53126,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 216,
@@ -52995,7 +53210,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 217,
@@ -53126,7 +53342,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 218,
@@ -53246,7 +53463,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Red",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 219,
@@ -53383,7 +53601,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 220,
@@ -53464,7 +53683,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 221,
@@ -53544,7 +53764,8 @@
     "secondary_colours": [
       "White",
       "Pink"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 222,
@@ -53735,7 +53956,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 223,
@@ -53911,7 +54133,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Fish"
   },
   {
     "id": 224,
@@ -54098,7 +54321,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Tentacles"
   },
   {
     "id": 225,
@@ -54182,7 +54406,8 @@
     "secondary_colours": [
       "White",
       "Yellow"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 226,
@@ -54284,7 +54509,8 @@
     "secondary_colours": [
       "Blue",
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 227,
@@ -54385,7 +54611,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 228,
@@ -54466,7 +54693,8 @@
     "secondary_colours": [
       "Red",
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 229,
@@ -54547,7 +54775,8 @@
     "secondary_colours": [
       "Red",
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 230,
@@ -55008,7 +55237,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 231,
@@ -55118,7 +55348,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 232,
@@ -55273,7 +55504,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 233,
@@ -55343,7 +55575,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 234,
@@ -55427,7 +55660,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 235,
@@ -55506,7 +55740,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 236,
@@ -55579,7 +55814,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 237,
@@ -55654,7 +55890,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 238,
@@ -55724,7 +55961,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 239,
@@ -55805,7 +56043,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 240,
@@ -55892,7 +56131,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 241,
@@ -55990,7 +56230,8 @@
     "secondary_colours": [
       "Yellow",
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 242,
@@ -56125,7 +56366,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 243,
@@ -56194,7 +56436,8 @@
       "Purple",
       "Black",
       "Blue"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 244,
@@ -56261,7 +56504,8 @@
       "White",
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 245,
@@ -56336,7 +56580,8 @@
     "secondary_colours": [
       "Purple",
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 246,
@@ -56417,7 +56662,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 247,
@@ -56507,7 +56753,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 248,
@@ -56586,7 +56833,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 249,
@@ -56660,7 +56908,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 250,
@@ -56742,7 +56991,8 @@
       "White",
       "Yellow",
       "Green"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 251,
@@ -56804,7 +57054,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 252,
@@ -56867,7 +57118,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 253,
@@ -56932,7 +57184,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 254,
@@ -56996,7 +57249,8 @@
     "secondary_colours": [
       "Pink",
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 255,
@@ -57061,7 +57315,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 256,
@@ -57125,7 +57380,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 257,
@@ -57189,7 +57445,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 258,
@@ -57252,7 +57509,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 259,
@@ -57317,7 +57575,8 @@
     "secondary_colours": [
       "Orange",
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 260,
@@ -57380,7 +57639,8 @@
     "secondary_colours": [
       "Orange",
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 261,
@@ -57547,7 +57807,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 262,
@@ -57747,7 +58008,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 263,
@@ -57954,7 +58216,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 264,
@@ -58215,7 +58478,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 265,
@@ -58324,7 +58588,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 266,
@@ -58440,7 +58705,8 @@
     },
     "fully_evolved": false,
     "main_colour": "White",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 267,
@@ -58548,7 +58814,8 @@
       "Yellow",
       "White",
       "Blue"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 268,
@@ -58664,7 +58931,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 269,
@@ -58771,7 +59039,8 @@
     "secondary_colours": [
       "Green",
       "Red"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 270,
@@ -58846,7 +59115,8 @@
     "secondary_colours": [
       "Green",
       "Yellow"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 271,
@@ -58932,7 +59202,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 272,
@@ -59006,7 +59277,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 273,
@@ -59108,7 +59380,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 274,
@@ -59213,7 +59486,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 275,
@@ -59311,7 +59585,8 @@
     "secondary_colours": [
       "White",
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 276,
@@ -59412,7 +59687,8 @@
     "secondary_colours": [
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 277,
@@ -59524,7 +59800,8 @@
     "secondary_colours": [
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 278,
@@ -59974,7 +60251,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 279,
@@ -60798,7 +61076,8 @@
     "secondary_colours": [
       "White",
       "Blue"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 280,
@@ -60868,7 +61147,8 @@
     "secondary_colours": [
       "Green",
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 281,
@@ -60938,7 +61218,8 @@
     "secondary_colours": [
       "Green",
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 282,
@@ -61008,7 +61289,8 @@
     "secondary_colours": [
       "Green",
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 283,
@@ -61123,7 +61405,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 284,
@@ -61239,7 +61522,8 @@
     "secondary_colours": [
       "Orange",
       "Pink"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 285,
@@ -61302,7 +61586,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Legs"
   },
   {
     "id": 286,
@@ -61367,7 +61652,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 287,
@@ -61430,7 +61716,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Quadruped"
   },
   {
     "id": 288,
@@ -61495,7 +61782,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 289,
@@ -61562,7 +61850,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 290,
@@ -61626,7 +61915,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 291,
@@ -61693,7 +61983,8 @@
     "secondary_colours": [
       "Yellow",
       "White"
-    ]
+    ],
+    "shape": "Bug Wings"
   },
   {
     "id": 292,
@@ -61759,7 +62050,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Blob"
   },
   {
     "id": 293,
@@ -61862,7 +62154,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 294,
@@ -61986,7 +62279,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 295,
@@ -62087,7 +62381,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 296,
@@ -62181,7 +62476,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 297,
@@ -62278,7 +62574,8 @@
     "secondary_colours": [
       "Orange",
       "Blue"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 298,
@@ -62337,7 +62634,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Legs"
   },
   {
     "id": 299,
@@ -62414,7 +62712,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 300,
@@ -62488,7 +62787,8 @@
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 301,
@@ -62553,7 +62853,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 302,
@@ -62644,7 +62945,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 303,
@@ -62730,7 +63032,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 304,
@@ -62812,7 +63115,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 305,
@@ -62907,7 +63211,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 306,
@@ -62989,7 +63294,8 @@
     "main_colour": "Black",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 307,
@@ -63067,7 +63373,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 308,
@@ -63159,7 +63466,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 309,
@@ -63238,7 +63546,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 310,
@@ -63330,7 +63639,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 311,
@@ -63401,7 +63711,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 312,
@@ -63464,7 +63775,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 313,
@@ -63531,7 +63843,8 @@
       "Blue",
       "Red",
       "Yellow"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 314,
@@ -63599,7 +63912,8 @@
     "secondary_colours": [
       "Purple",
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 315,
@@ -63671,7 +63985,8 @@
     "secondary_colours": [
       "Red",
       "Blue"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 316,
@@ -63734,7 +64049,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 317,
@@ -63797,7 +64113,8 @@
     "main_colour": "Purple",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 318,
@@ -63886,7 +64203,8 @@
     "secondary_colours": [
       "Blue",
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 319,
@@ -64155,7 +64473,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 320,
@@ -64576,7 +64895,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 321,
@@ -65010,7 +65330,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 322,
@@ -65102,7 +65423,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 323,
@@ -65193,7 +65515,8 @@
     "secondary_colours": [
       "Grey",
       "Blue"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 324,
@@ -65274,7 +65597,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 325,
@@ -65341,7 +65665,8 @@
     "main_colour": "Grey",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 326,
@@ -65409,7 +65734,8 @@
     "secondary_colours": [
       "Grey",
       "Pink"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 327,
@@ -65480,7 +65806,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 328,
@@ -65561,7 +65888,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Orange",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Armor"
   },
   {
     "id": 329,
@@ -65641,7 +65969,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Bug Wings"
   },
   {
     "id": 330,
@@ -65727,7 +66056,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 331,
@@ -65790,7 +66120,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 332,
@@ -65852,7 +66183,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 333,
@@ -65936,7 +66268,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 334,
@@ -66033,7 +66366,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 335,
@@ -66100,7 +66434,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 336,
@@ -66169,7 +66504,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 337,
@@ -66231,7 +66567,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Yellow",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 338,
@@ -66296,7 +66633,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 339,
@@ -66423,7 +66761,8 @@
     "secondary_colours": [
       "Blue",
       "Black"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 340,
@@ -66578,7 +66917,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 341,
@@ -66671,7 +67011,8 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 342,
@@ -66765,7 +67106,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 343,
@@ -66835,7 +67177,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 344,
@@ -66919,7 +67262,8 @@
     "secondary_colours": [
       "Pink",
       "White"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 345,
@@ -66992,7 +67336,8 @@
     "secondary_colours": [
       "Pink",
       "Yellow"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 346,
@@ -67065,7 +67410,8 @@
     "secondary_colours": [
       "Pink",
       "Yellow"
-    ]
+    ],
+    "shape": "Blob"
   },
   {
     "id": 347,
@@ -67140,7 +67486,8 @@
     "secondary_colours": [
       "Red",
       "White"
-    ]
+    ],
+    "shape": "Armor"
   },
   {
     "id": 348,
@@ -67214,7 +67561,8 @@
       "Yellow",
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 349,
@@ -67289,7 +67637,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Blue"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 350,
@@ -67365,7 +67714,8 @@
     "secondary_colours": [
       "Pink",
       "Blue"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 351,
@@ -67438,7 +67788,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 352,
@@ -67552,7 +67903,8 @@
     "secondary_colours": [
       "Yellow",
       "Red"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 353,
@@ -67643,7 +67995,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Purple",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Ball"
   },
   {
     "id": 354,
@@ -67746,7 +68099,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Upright"
   },
   {
     "id": 355,
@@ -67833,7 +68187,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Arms"
   },
   {
     "id": 356,
@@ -67929,7 +68284,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 357,
@@ -68001,7 +68357,8 @@
     "main_colour": "Green",
     "secondary_colours": [
       "Brown"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 358,
@@ -68070,7 +68427,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 359,
@@ -68151,7 +68509,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 360,
@@ -68226,7 +68585,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 361,
@@ -68303,7 +68663,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 362,
@@ -68380,7 +68741,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Black"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 363,
@@ -68452,7 +68814,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 364,
@@ -68524,7 +68887,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Yellow"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 365,
@@ -68594,7 +68958,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 366,
@@ -68673,7 +69038,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Pink"
-    ]
+    ],
+    "shape": "Ball"
   },
   {
     "id": 367,
@@ -68752,7 +69118,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Squiggle"
   },
   {
     "id": 368,
@@ -68829,7 +69196,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 369,
@@ -68915,7 +69283,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Brown",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Fish"
   },
   {
     "id": 370,
@@ -68996,7 +69365,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Pink",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Fish"
   },
   {
     "id": 371,
@@ -69073,7 +69443,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 372,
@@ -69148,7 +69519,8 @@
     "main_colour": "White",
     "secondary_colours": [
       "Grey"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 373,
@@ -69224,7 +69596,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "Red"
-    ]
+    ],
+    "shape": "Quadruped"
   },
   {
     "id": 374,
@@ -69300,7 +69673,8 @@
     },
     "fully_evolved": false,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Blob"
   },
   {
     "id": 375,
@@ -69380,7 +69754,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Arms"
   },
   {
     "id": 376,
@@ -69460,7 +69835,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Heads"
   },
   {
     "id": 377,
@@ -69525,7 +69901,8 @@
     "main_colour": "Brown",
     "secondary_colours": [
       "Orange"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 378,
@@ -69590,7 +69967,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Blue",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 379,
@@ -69653,7 +70031,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Grey",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Humanoid"
   },
   {
     "id": 380,
@@ -69727,7 +70106,8 @@
     "main_colour": "Red",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 381,
@@ -69801,7 +70181,8 @@
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Wings"
   },
   {
     "id": 382,
@@ -69865,7 +70246,8 @@
     "secondary_colours": [
       "White",
       "Red"
-    ]
+    ],
+    "shape": "Fish"
   },
   {
     "id": 383,
@@ -69933,7 +70315,8 @@
     "secondary_colours": [
       "Grey",
       "White"
-    ]
+    ],
+    "shape": "Upright"
   },
   {
     "id": 384,
@@ -69995,7 +70378,8 @@
     },
     "fully_evolved": true,
     "main_colour": "Green",
-    "secondary_colours": []
+    "secondary_colours": [],
+    "shape": "Squiggle"
   },
   {
     "id": 385,
@@ -70048,7 +70432,8 @@
     "main_colour": "Yellow",
     "secondary_colours": [
       "White"
-    ]
+    ],
+    "shape": "Humanoid"
   },
   {
     "id": 386,
@@ -70113,6 +70498,7 @@
     "main_colour": "Orange",
     "secondary_colours": [
       "Green"
-    ]
+    ],
+    "shape": "Humanoid"
   }
 ]
