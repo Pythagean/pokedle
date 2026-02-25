@@ -349,6 +349,45 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
 
             return (
                 <div style={{ marginBottom: 10 }}>
+                    {/* Footprint clue */}
+                    <div style={{ marginBottom: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                        <div style={{ fontWeight: 600, fontSize: 15 }}>This Pokémon can be found with this footprint:</div>
+                        <img 
+                            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/footprints/${dailyPokemon.id}.png`}
+                            alt="Pokemon footprint"
+                            style={{ 
+                                width: 'auto', 
+                                height: 'auto', 
+                                maxWidth: 40, 
+                                maxHeight: 40, 
+                                objectFit: 'contain',
+                                background: '#fafafa',
+                                borderRadius: 8,
+                                border: '2px solid #959595ff',
+                                padding: 12
+                            }}
+                            onError={(e) => { 
+                                e.target.style.display = 'none';
+                                const fallback = e.target.nextSibling;
+                                if (fallback) fallback.style.display = 'flex';
+                            }}
+                        />
+                        <div style={{ 
+                            display: 'none', 
+                            width: 40, 
+                            height: 40, 
+                            background: '#fafafa', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            color: '#666', 
+                            borderRadius: 8, 
+                            border: '1px dashed #ddd',
+                            fontSize: 13
+                        }}>
+                            No footprint available
+                        </div>
+                    </div>
+                    
                     {/* Gen-specific locations section */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
@@ -776,8 +815,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     marginTop={190}
                     content={
                         <div style={{ textAlign: 'left' }}>
-                            Guess the Pokémon from the in-game Locations.<br /><br />
-                            <strong>Initial Clue:</strong> Shows locations from the Pokémon's introduction generation (Gen 1: R/B/Y, Gen 2: G/S/C, Gen 3: R/S/E) with encounter methods.<br />
+                            Guess the Pokémon from its footprint and in-game Locations.<br /><br />
+                            <strong>Initial Clues:</strong> Shows the Pokémon's footprint and locations from its introduction generation (Gen 1: R/B/Y, Gen 2: G/S/C, Gen 3: R/S/E) with encounter methods.<br />
                             <strong>After 2 guesses:</strong> Reveals all other locations from different generations.<br />
                             <strong>After 4 guesses:</strong> Shows the Pokémon's type(s).<br />
                             <strong>After 6 guesses:</strong> Shows the evolution stage.<br /><br />
