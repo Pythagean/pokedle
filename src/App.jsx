@@ -750,7 +750,7 @@ function App() {
       const excludedIds = getRecentPokemonIds(today, 'details');
       
       // Check for override first
-      const override = getDailyOverride(todaySeed, 'eyes');
+      const override = getDailyOverride(todaySeed, 'details');
       if (override && typeof override === 'number') {
         const chosen = pokemonData.find(p => p.id === override);
         if (chosen) {
