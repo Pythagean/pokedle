@@ -82,6 +82,15 @@ export const DAILY_OVERRIDES = {
     colours: 4,
     map: 7
   },
+  //Pokedle #100
+  "20260303": {
+    classic: 100,
+    card: { pokemonId: 61 },
+    pokedex:  122,
+    details: 149,
+    colours: 298,
+    map: 251
+  },
   //St Patrick's Day
   "20260317": {
     classic: 251,
