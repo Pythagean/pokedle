@@ -494,12 +494,18 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                                 <span style={{ fontWeight: 400 }}>{prettyGames}</span>
                                                             </div>
                                                         )}
-                                                        {prettyMethod && (
-                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                <span style={{ fontWeight: 400 }}>{prettyMethod} ({loc.chance} chance)</span>
-                                                            </div>
-                                                        )}
+                                                        {prettyMethod && (() => {
+                                                            // Only show chance for certain methods
+                                                            const showChance = /walk|surf|headbutt|rod|rock\s*smash|roaming/i.test(prettyMethod);
+                                                            return (
+                                                                <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                    <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                    <span style={{ fontWeight: 400 }}>
+                                                                        {prettyMethod}{showChance && loc.chance ? ` (${loc.chance} chance)` : ''}
+                                                                    </span>
+                                                                </div>
+                                                            );
+                                                        })()}
                                                         {(
                                                             <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                 <span style={{ fontWeight: 700 }}>Levels:</span>
@@ -625,12 +631,18 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                                                         <span style={{ fontWeight: 400 }}>{prettyGames}</span>
                                                                     </div>
                                                                 )}
-                                                                {prettyMethod && (
-                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                        <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                        <span style={{ fontWeight: 400 }}>{prettyMethod} ({loc.chance} chance)</span>
-                                                                    </div>
-                                                                )}
+                                                                {prettyMethod && (() => {
+                                                                    // Only show chance for certain methods
+                                                                    const showChance = /walk|surf|headbutt|rod|rock\s*smash|roaming/i.test(prettyMethod);
+                                                                    return (
+                                                                        <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
+                                                                            <span style={{ fontWeight: 700 }}>Method:</span>
+                                                                            <span style={{ fontWeight: 400 }}>
+                                                                                {prettyMethod}{showChance && loc.chance ? ` (${loc.chance} chance)` : ''}
+                                                                            </span>
+                                                                        </div>
+                                                                    );
+                                                                })()}
                                                                 {(
                                                                     <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
                                                                         <span style={{ fontWeight: 700 }}>Levels:</span>
