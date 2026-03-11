@@ -48,15 +48,16 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             const storedUrl = localStorage.getItem('pokedle_card_preview_url');
             const storedName = localStorage.getItem('pokedle_card_name');
             
+            // Always load the stored name (persists across days)
+            if (storedName) setCardName(storedName);
+            
             if (storedDay && parseInt(storedDay, 10) === dayNumber) {
-                // Same day - restore the card
+                // Same day - restore the card preview
                 if (storedUrl) setCardPreviewUrl(storedUrl);
-                if (storedName) setCardName(storedName);
             } else {
-                // Different day - clear the stored card
+                // Different day - clear the stored card preview (but keep the name)
                 localStorage.removeItem('pokedle_card_day');
                 localStorage.removeItem('pokedle_card_preview_url');
-                localStorage.removeItem('pokedle_card_name');
             }
         } catch (e) {
             // ignore
@@ -803,18 +804,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     }, [cardPreviewUrl, dayNumber]);
 
-    useEffect(() => {
-        try {
-            if (cardName) {
-                localStorage.setItem('pokedle_card_name', cardName);
-                localStorage.setItem('pokedle_card_day', String(dayNumber));
-            } else {
-                localStorage.removeItem('pokedle_card_name');
-            }
-        } catch (e) {
-            // ignore
-        }
-    }, [cardName, dayNumber]);
+    // Note: cardName is now saved to localStorage only when Generate is clicked,
+    // not on every keystroke. See Generate button onClick handlers below.
 
     // Revoke object URL when component unmounts (but not when preview changes)
     useEffect(() => {
@@ -1076,6 +1067,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
+                                        // Save the name to localStorage when generating (persists across days)
+                                        try {
+                                            if (cardName) {
+                                                localStorage.setItem('pokedle_card_name', cardName);
+                                            }
+                                        } catch (e) {}
                                         if (res.status === 'clipboard') setExportStatus('copied');
                                         else if (res.status === 'downloaded') setExportStatus('downloaded');
                                         else setExportStatus(null);
@@ -1118,6 +1115,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
+                                        // Save the name to localStorage when generating (persists across days)
+                                        try {
+                                            if (cardName) {
+                                                localStorage.setItem('pokedle_card_name', cardName);
+                                            }
+                                        } catch (e) {}
                                         if (res.status === 'clipboard') setExportStatus('copied');
                                         else if (res.status === 'downloaded') setExportStatus('downloaded');
                                         else setExportStatus(null);
