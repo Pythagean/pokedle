@@ -1539,7 +1539,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             return (
                                 <div>
                                     {/* header row: empty cell then date columns then Total */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 5, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: 13 }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 5, alignItems: 'center', padding: '8px 6px', borderBottom: '1px solid #f6f6f6', fontSize: isMobile ? 10 : 13 }}>
                                         <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 6 }}>Mode</div>
                                         {dates.map((dLabel, i) => (
                                             <div key={i} style={{ fontWeight: 700, textAlign: 'center' }}>{dLabel}</div>
@@ -1565,7 +1565,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                         });
 
                                         return (
-                                            <div key={mi} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 2, alignItems: 'center', padding: '8px 6px', borderBottom: mi !== modes.length - 1 ? '1px solid #fafafa' : 'none', fontSize: 13 }}>
+                                            <div key={mi} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 2, alignItems: 'center', padding: '8px 6px', borderBottom: mi !== modes.length - 1 ? '1px solid #fafafa' : 'none', fontSize: isMobile ? 11 : 13 }}>
                                                 <div style={{ fontWeight: 500, textAlign: 'left', paddingLeft: 3 }}>{mode}</div>
                                                 {cells.map((v, i) => (
                                                     <div key={i} style={{ textAlign: 'center' }}>{v}</div>
