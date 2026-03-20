@@ -64,7 +64,19 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed })
     const pokledleNumber = getPokledleNumber();
 
     // Build per-mode score columns from actual guess array lengths
-    const result = { pokedle_number: pokledleNumber, anon_id: anonId, player: getPlayerName() };
+    const result = {
+      pokedle_number: pokledleNumber,
+      anon_id: anonId,
+      player: getPlayerName(),
+      client_version: typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : null,
+      device_info: {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        screenW: window.screen.width,
+        screenH: window.screen.height,
+      },
+    };
     let total = 0;
     for (const r of perPageResults) {
       const col = MODE_TO_COLUMN[r.key];

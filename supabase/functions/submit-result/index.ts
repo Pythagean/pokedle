@@ -28,6 +28,21 @@ serve(async (req) => {
     // Attach anon_id if provided
     result.anon_id = anon_id ?? null
 
+    // Hash the client IP server-side for abuse detection (never stored raw)
+    try {
+      const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+        || req.headers.get('cf-connecting-ip')
+        || req.headers.get('x-real-ip')
+        || null
+      if (ip) {
+        const encoded = new TextEncoder().encode(ip)
+        const hashBuf = await crypto.subtle.digest('SHA-256', encoded)
+        result.ip_hash = Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('')
+      }
+    } catch (_) {
+      // non-critical — leave ip_hash null if hashing fails
+    }
+
     // Call the server-side RPC to insert result + guesses atomically
     const { data, error } = await supabaseAdmin.rpc('insert_result_with_guesses', {
       result_row: result,
