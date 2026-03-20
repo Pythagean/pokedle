@@ -94,12 +94,13 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed })
       if (!col) continue;
       const modeGuesses = guessesByPage[r.key] || [];
       const dailyName = r.daily?.name ?? r.daily?.pokemon?.name ?? null;
+      const total = modeGuesses.length;
       modeGuesses.forEach((g, idx) => {
         const id = g.id ?? g.pokemon_id ?? null;
         if (id != null) guesses.push({
           mode: col,
           guess: id,
-          guess_number: idx + 1,
+          guess_number: total - idx, // array is newest-first, so invert to get chronological order
           correct: dailyName != null && g.name === dailyName,
         });
       });
