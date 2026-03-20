@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { RESET_HOUR_UTC } from './config/resetConfig';
+import { submitResult } from './utils/submitResult';
 // import pokemonData from '../data/pokemon_data.json';
 // import titleImg from '../data/title.png';
 
@@ -1125,6 +1126,13 @@ function App() {
     }
     prevAllCompletedRef.current = allCompleted;
   }, [allCompleted]);
+
+  // Submit result to Supabase once all modes are completed for the day
+  useEffect(() => {
+    if (!allCompleted) return;
+    const todaySeed = getSeedFromDate(new Date());
+    submitResult({ perPageResults, guessesByPage, todaySeed });
+  }, [allCompleted, perPageResults, guessesByPage]);
 
   if (!pokemonData) return <div>Loading data...</div>;
 
