@@ -119,6 +119,9 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed })
 
     if (response.ok) {
       localStorage.setItem(submittedKey, '1');
+      if (data.result_id != null) {
+        localStorage.setItem(`pokedle_result_id_${pokledleNumber}`, String(data.result_id));
+      }
       return { success: true, resultId: data.result_id };
     }
 

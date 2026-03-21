@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { PHRASES, POKEMON } from '../components/CongratsMessage';
+import { updateResult } from '../utils/updateResult';
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null }) {
     const [copied, setCopied] = useState(false);
@@ -16,6 +17,26 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [lightPos, setLightPos] = useState({ x: 50, y: 50 });
     const [sparkles, setSparkles] = useState([]);
     const [isInteracting, setIsInteracting] = useState(false);
+    const GROUP_POKEMON_IDS = [1, 4, 7, 25, 133, 152, 155, 158, 252, 255, 258];
+    const GROUP_POKEMON_NAMES = { 1: 'Bulbasaur', 4: 'Charmander', 7: 'Squirtle', 25: 'Pikachu', 133: 'Eevee', 152: 'Chikorita', 155: 'Cyndaquil', 158: 'Totodile', 252: 'Treecko', 255: 'Torchic', 258: 'Mudkip' };
+    const [groupPicks, setGroupPicks] = useState(() => {
+        try {
+            const saved = localStorage.getItem('pokedle_group_code');
+            if (saved) {
+                const ids = saved.split('-').map(Number);
+                if (ids.length === 3) {
+                    const indices = ids.map(id => GROUP_POKEMON_IDS.indexOf(id));
+                    if (indices.every(i => i !== -1)) return indices;
+                }
+            }
+        } catch (e) {}
+        return [0, 0, 0];
+    });
+    const groupClickTimes = useRef([0, 0, 0]);
+    const [groupResults, setGroupResults] = useState(null);
+    const [groupLoading, setGroupLoading] = useState(false);
+    const [groupError, setGroupError] = useState(null);
+    const [groupLoaded, setGroupLoaded] = useState(false);
     const cardRef = useRef(null);
     const sparkleIdCounter = useRef(0);
 
@@ -804,6 +825,22 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     }, [cardPreviewUrl, dayNumber]);
 
+    // Persist group code to localStorage whenever picks change
+    useEffect(() => {
+        try {
+            const code = groupPicks.map(i => GROUP_POKEMON_IDS[i]).join('-');
+            localStorage.setItem('pokedle_group_code', code);
+        } catch (e) {}
+    }, [groupPicks]);
+
+    // Prefetch all group sprite images so cycling is instant
+    useEffect(() => {
+        GROUP_POKEMON_IDS.forEach(id => {
+            const img = new Image();
+            img.src = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${id}-front.png`;
+        });
+    }, []);
+
     // Note: cardName is now saved to localStorage only when Generate is clicked,
     // not on every keystroke. See Generate button onClick handlers below.
 
@@ -1073,6 +1110,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                 localStorage.setItem('pokedle_card_name', cardName);
                                             }
                                         } catch (e) {}
+                                        updateResult({ player: cardName || undefined });
                                         if (res.status === 'clipboard') setExportStatus('copied');
                                         else if (res.status === 'downloaded') setExportStatus('downloaded');
                                         else setExportStatus(null);
@@ -1121,6 +1159,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                 localStorage.setItem('pokedle_card_name', cardName);
                                             }
                                         } catch (e) {}
+                                        updateResult({ player: cardName || undefined });
                                         if (res.status === 'clipboard') setExportStatus('copied');
                                         else if (res.status === 'downloaded') setExportStatus('downloaded');
                                         else setExportStatus(null);
@@ -1465,6 +1504,115 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         </div>
                     </div>
                 ) : null}
+            </div>
+            {/* Group Results */}
+            <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>Group Results</div>
+                {(!allCompleted || !groupLoaded) && (
+                    <div style={{ textAlign: 'center', fontSize: 13, color: '#666', marginBottom: 12 }}>{allCompleted ? 'Start by tapping the sprites below to create a unique code for your group' : "Complete all of today's modes to enable Group Results"}</div>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
+                    {groupPicks.map((pickIdx, slotIdx) => {
+                        const pokeId = GROUP_POKEMON_IDS[pickIdx];
+                        const pokeName = GROUP_POKEMON_NAMES[pokeId];
+                        const spriteUrl = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${pokeId}-front.png`;
+                        return (
+                            <div
+                                key={slotIdx}
+                                onPointerDown={(e) => {
+                                    if (!allCompleted) return;
+                                    e.preventDefault();
+                                    const now = Date.now();
+                                    if (now - groupClickTimes.current[slotIdx] < 300) return;
+                                    groupClickTimes.current[slotIdx] = now;
+                                    setGroupPicks(prev => {
+                                        const next = [...prev];
+                                        next[slotIdx] = (next[slotIdx] + 1) % GROUP_POKEMON_IDS.length;
+                                        return next;
+                                    });
+                                }}
+                                style={{ cursor: allCompleted ? 'pointer' : 'not-allowed', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, userSelect: 'none', opacity: allCompleted ? 1 : 0.35 }}
+                                title={allCompleted ? 'Click to cycle Pokémon' : 'Complete all modes to unlock'}
+                            >
+                                <img
+                                    src={spriteUrl}
+                                    alt={pokeName}
+                                    style={{ width: 40, height: 40, imageRendering: 'pixelated', borderRadius: 8, border: '2px solid #e0e0e0', background: '#fff', padding: 4, filter: allCompleted ? 'none' : 'grayscale(1)' }}
+                                />
+                            </div>
+                        );
+                    })}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 14 }}>
+                    <button
+                        onClick={async () => {
+                            const code = groupPicks.map(i => GROUP_POKEMON_IDS[i]).join('-');
+                            await updateResult({ groupCode: code });
+                            setGroupLoaded(true);
+                            setGroupLoading(true);
+                            setGroupError(null);
+                            setGroupResults(null);
+                            try {
+                                const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+                                const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+                                const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}&group_code=${encodeURIComponent(code)}`;
+                                const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+                                const data = await res.json();
+                                if (res.ok) {
+                                    setGroupResults(data.results ?? []);
+                                } else {
+                                    setGroupError(data.error ?? 'Failed to load results');
+                                }
+                            } catch (e) {
+                                setGroupError(e?.message ?? String(e));
+                            } finally {
+                                setGroupLoading(false);
+                            }
+                        }}
+                        style={{ height: 40, padding: '0 20px', borderRadius: 8, border: '1px solid #e0e0e0', background: (!allCompleted || groupLoading) ? '#f5f5f5' : '#efefef', cursor: (!allCompleted || groupLoading) ? 'not-allowed' : 'pointer', fontSize: 14, color: (!allCompleted || groupLoading) ? '#999' : '#111' }}
+                        disabled={!allCompleted || groupLoading}
+                    >
+                        {groupLoading ? 'Loading…' : 'Load Group Results'}
+                    </button>
+                </div>
+                {groupError && (
+                    <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13, marginTop: 8 }}>{groupError}</div>
+                )}
+                {groupResults && groupResults.length === 0 && (
+                    <div style={{ textAlign: 'center', color: '#888', fontSize: 13, marginTop: 8 }}>No results found for this group code today.</div>
+                )}
+                {groupResults && groupResults.length > 0 && (() => {
+                    const modes = [
+                        { key: 'classic',   label: 'Classic',  short: 'Cls' },
+                        { key: 'card',      label: 'Card',     short: 'Crd' },
+                        { key: 'pokedex',   label: 'Pokédex',  short: 'Dex' },
+                        { key: 'details',   label: 'Details',  short: 'Det' },
+                        { key: 'colours',   label: 'Colours',  short: 'Col' },
+                        { key: 'locations', label: 'Locations',short: 'Loc' },
+                    ];
+                    const colW = isMobile ? 'minmax(0,0.6fr)' : '36px';
+                    const gridCols = isMobile
+                        ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
+                        : `minmax(0, 1.5fr) repeat(${modes.length}, 36px) minmax(0,1fr)`;
+                    return (
+                        <div style={{ marginTop: 14 }}>
+                            {/* Header */}
+                            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
+                                <div>Player</div>
+                                {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
+                                <div style={{ textAlign: 'right' }}>Total</div>
+                            </div>
+                            {/* Rows */}
+                            {groupResults.map((row, i) => (
+                                <div key={i} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: i !== groupResults.length - 1 ? '1px solid #fafafa' : 'none', fontSize: isMobile ? 11 : 13, alignItems: 'center' }}>
+                                    <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.player || '—'}</div>
+                                    {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{row[m.key] ?? '—'}</div>)}
+                                    <div style={{ textAlign: 'right', fontWeight: 700 }}>{row.total ?? '—'}</div>
+                                </div>
+                            ))}
+                        </div>
+                    );
+                })()}
             </div>
             {/* Previous days history (last 10) - moved to its own container */}
                 {history && history.length > 0 ? (
