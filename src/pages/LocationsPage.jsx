@@ -322,7 +322,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             if (usingPreevolutionForGen) {
                 headerText = (
                     <span>
-                        This Pokémon <span style={{ color: '#eb3d3dff' }}>can't be found in the wild</span> - its pre-evolution(s) can be in these locations in Gen {genNumber}:
+                        This Pokémon <span style={{ color: '#eb3d3dff', fontSize: '1.15em', textDecoration: 'underline' }}>can't be found in the wild</span> - its pre-evolution(s) can be in these locations in Gen {genNumber}:
                     </span>
                 );
             } else if (!showAdditionalLocations) {
@@ -531,7 +531,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                     {usingPreevolutionForAdditional 
                                         ? (
                                             <>
-                                                This Pokémon <span style={{ color: '#eb3d3dff' }}>can't be found in the wild in ANY generation</span>. Its pre-evolution(s) can be found in these locations in {additionalGensText}:
+                                                This Pokémon <span style={{ color: '#eb3d3dff', fontSize: '1.1em', textDecoration: 'underline' }}>can't be found in the wild in ANY generation</span>. Its pre-evolution(s) can be found in these locations in {additionalGensText}:
                                             </>
                                         )
                                         : (
