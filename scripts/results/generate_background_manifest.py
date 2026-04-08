@@ -6,6 +6,7 @@ Scan a directory recursively for image files and produce a JSON manifest grouped
 
 Usage:
   python scripts/generate_background_manifest.py --input-dir path/to/backgrounds --output backgrounds_manifest.json
+  python .\scripts\results\generate_background_manifest.py --input-dir ..\pokedle_assets\results\backgrounds\ --output .\public\data\backgrounds_manifest.json
 
 Output format:
 {

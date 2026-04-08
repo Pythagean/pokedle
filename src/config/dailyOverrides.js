@@ -157,10 +157,10 @@ export const DAILY_OVERRIDES = {
   // Jordan's Birthday
   "20261016": {
     classic: 143,
-    card: { pokemonId: 330 },
+    card: { pokemonId: 141, cardFile: "141-11.jpg" },
     pokedex: 376,
-    details: 6,
-    colours: 212,
+    details: 124,
+    colours: 263,
     map: 160
   },
   // Halloween
