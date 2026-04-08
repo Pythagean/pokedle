@@ -37,6 +37,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [groupLoading, setGroupLoading] = useState(false);
     const [groupError, setGroupError] = useState(null);
     const [groupLoaded, setGroupLoaded] = useState(false);
+    const [leaderResults, setLeaderResults] = useState(null);
+    const [leaderLoading, setLeaderLoading] = useState(false);
+    const [leaderError, setLeaderError] = useState(null);
     const cardRef = useRef(null);
     const sparkleIdCounter = useRef(0);
 
@@ -825,6 +828,24 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     }, [cardPreviewUrl, dayNumber]);
 
+    // Auto-fetch today's leaderboard once all modes are completed
+    useEffect(() => {
+        if (!allCompleted) return;
+        setLeaderLoading(true);
+        setLeaderError(null);
+        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+        const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}`;
+        fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+            .then(res => res.json().then(data => ({ ok: res.ok, data })))
+            .then(({ ok, data }) => {
+                if (ok) setLeaderResults(data.results ?? []);
+                else setLeaderError(data.error ?? 'Failed to load leaderboard');
+            })
+            .catch(e => setLeaderError(e?.message ?? String(e)))
+            .finally(() => setLeaderLoading(false));
+    }, [allCompleted, dayNumber]);
+
     // Persist group code to localStorage whenever picks change
     useEffect(() => {
         try {
@@ -1504,6 +1525,52 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         </div>
                     </div>
                 ) : null}
+            </div>
+            {/* Today's Leaderboard */}
+            <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>🏆 Today's Leaderboard 🏆</div>
+                {!allCompleted && (
+                    <div style={{ textAlign: 'center', fontSize: 13, color: '#666' }}>Complete all of today's modes to see the leaderboard</div>
+                )}
+                {allCompleted && leaderLoading && (
+                    <div style={{ textAlign: 'center', fontSize: 13, color: '#666' }}>Loading…</div>
+                )}
+                {allCompleted && leaderError && (
+                    <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13 }}>{leaderError}</div>
+                )}
+                {allCompleted && !leaderLoading && leaderResults && leaderResults.length === 0 && (
+                    <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>No results submitted yet today.</div>
+                )}
+                {allCompleted && !leaderLoading && leaderResults && leaderResults.length > 0 && (() => {
+                    const modes = [
+                        { key: 'classic',   label: 'Classic',  short: 'Cls' },
+                        { key: 'card',      label: 'Card',     short: 'Crd' },
+                        { key: 'pokedex',   label: 'Pokédex',  short: 'Dex' },
+                        { key: 'details',   label: 'Details',  short: 'Det' },
+                        { key: 'colours',   label: 'Colours',  short: 'Col' },
+                        { key: 'locations', label: 'Locations',short: 'Loc' },
+                    ];
+                    const colW = isMobile ? 'minmax(0,0.6fr)' : '36px';
+                    const gridCols = isMobile
+                        ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
+                        : `minmax(0, 1.5fr) repeat(${modes.length}, 36px) minmax(0,1fr)`;
+                    return (
+                        <div style={{ marginTop: 14 }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
+                                <div>Player</div>
+                                {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
+                                <div style={{ textAlign: 'right' }}>Total</div>
+                            </div>
+                            {leaderResults.map((row, i) => (
+                                <div key={i} style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: i !== leaderResults.length - 1 ? '1px solid #fafafa' : 'none', fontSize: isMobile ? 11 : 13, alignItems: 'center' }}>
+                                    <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.player || '—'}</div>
+                                    {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{row[m.key] ?? '—'}</div>)}
+                                    <div style={{ textAlign: 'right', fontWeight: 700 }}>{row.total ?? '—'}</div>
+                                </div>
+                            ))}
+                        </div>
+                    );
+                })()}
             </div>
             {/* Group Results */}
             <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>

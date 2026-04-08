@@ -20,15 +20,18 @@ serve(async (req) => {
       const groupCode = url.searchParams.get('group_code') ?? ''
 
       if (!pokledleNumber || isNaN(pokledleNumber)) return json(400, { error: 'Missing or invalid pokedle_number' })
-      if (!groupCode || !/^\d+(-\d+)*$/.test(groupCode)) return json(400, { error: 'Missing or invalid group_code' })
+      if (groupCode && !/^\d+(-\d+)*$/.test(groupCode)) return json(400, { error: 'Invalid group_code' })
 
-      const { data, error } = await supabaseAdmin
+      let query = supabaseAdmin
         .from('results')
         .select('player, classic, card, pokedex, details, colours, locations, total')
         .eq('pokedle_number', pokledleNumber)
-        .eq('group_code', groupCode)
-        .order('total', { ascending: true })
-        .limit(50)
+
+      if (groupCode) {
+        query = query.eq('group_code', groupCode)
+      }
+
+      const { data, error } = await query.order('total', { ascending: true }).limit(50)
 
       if (error) return json(500, { error: error.message })
       return json(200, { results: data ?? [] })
