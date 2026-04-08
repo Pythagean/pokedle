@@ -128,7 +128,7 @@ import EyesPage from './pages/EyesPage';
 import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
-import { getDailyOverride } from './config/dailyOverrides';
+import { getDailyOverride, getDailyTheme } from './config/dailyOverrides';
 
 
 // Simple deterministic PRNG using a seed
@@ -231,7 +231,7 @@ function App() {
       keysToRemove.forEach(key => localStorage.removeItem(key));
       
       if (keysToRemove.length > 0) {
-        console.log(`Cleaned up ${keysToRemove.length} old daily entries`);
+        // console.log(`Cleaned up ${keysToRemove.length} old daily entries`);
       }
     } catch (e) {
       // Ignore localStorage errors
@@ -360,7 +360,7 @@ function App() {
         }
       }
     } catch (e) {
-      console.error('Failed to load guesses from localStorage:', e);
+      // console.error('Failed to load guesses from localStorage:', e);
     }
     // Return default empty guesses if nothing stored or data is old
     return {
@@ -387,7 +387,7 @@ function App() {
       };
       localStorage.setItem('pokedle_guesses', JSON.stringify(data));
     } catch (e) {
-      console.error('Failed to save guesses to localStorage:', e);
+      // console.error('Failed to save guesses to localStorage:', e);
     }
   }, [guessesByPage]);
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
@@ -434,6 +434,7 @@ function App() {
   })();
   const utcDayForCardType = seedDateForCardType.getUTCDay();
   const isShinyDay = getCardTypeByDay(utcDayForCardType, cardTypeRng) === 'shiny';
+  const todayTheme = getDailyTheme(getSeedFromDate(today));
   const seed = getSeedFromDate(today) + page.length * 1000 + page.charCodeAt(0);
   const rng = useMemo(() => mulberry32(seed), [seed]);
   // Pick daily pokemon for the current page
@@ -464,7 +465,7 @@ function App() {
     // Debug logging for Locations mode - show what we're building
     if (modeKey === 'map') {
       const currentDateStr = currentDate.toISOString().split('T')[0];
-      console.log(`[Locations Lookback START] Building exclusions for ${currentDateStr}, looking back ${lookbackDays} days`);
+      // console.log(`[Locations Lookback START] Building exclusions for ${currentDateStr}, looking back ${lookbackDays} days`);
     }
     
     // Build selections iteratively from oldest to newest to avoid recursion
@@ -480,7 +481,7 @@ function App() {
       // Debug logging for Locations mode - show each iteration
       if (modeKey === 'map' && daysBack <= lookbackDays) {
         const pastDateStr = pastDate.toISOString().split('T')[0];
-        console.log(`[Locations Lookback] Processing day -${daysBack}: ${pastDateStr}`);
+        // console.log(`[Locations Lookback] Processing day -${daysBack}: ${pastDateStr}`);
       }
       
       // Check for override first
@@ -508,7 +509,7 @@ function App() {
         // Debug logging for Locations mode
         if (modeKey === 'map' && daysBack <= lookbackDays) {
           const pastDateStr = pastDate.toISOString().split('T')[0];
-          console.log(`[Locations Lookback]   Building exclusions for ${pastDateStr}: ${pastExcludedIds.size} Pokemon excluded`);
+          // console.log(`[Locations Lookback]   Building exclusions for ${pastDateStr}: ${pastExcludedIds.size} Pokemon excluded`);
         }
         
         // Calculate seed for this past date
@@ -569,14 +570,14 @@ function App() {
         if (modeKey === 'map' && daysBack <= lookbackDays) {
           const dateStr = pastDate.toISOString().split('T')[0];
           const pokemon = pokemonData.find(p => p.id === selectedId);
-          console.log(`[Locations Lookback]   -> Selected: ${pokemon?.name || 'Unknown'} (ID: ${selectedId})`);
+          // console.log(`[Locations Lookback]   -> Selected: ${pokemon?.name || 'Unknown'} (ID: ${selectedId})`);
         }
       }
     }
     
     // Debug logging for Locations mode
     if (modeKey === 'map') {
-      console.log(`[Locations Lookback END] Total excluded: ${excludedIds.size} Pokemon`);
+      // console.log(`[Locations Lookback END] Total excluded: ${excludedIds.size} Pokemon`);
     }
     
     return excludedIds;
@@ -606,7 +607,7 @@ function App() {
     // Debug logging for Locations mode
     if (modeKey === 'map') {
       const dateStr = targetDate.toISOString().split('T')[0];
-      console.log(`[Locations SELECT] Selecting for ${dateStr}, excluded: ${excludedIds.size} Pokemon, IDs: [${Array.from(excludedIds).sort((a, b) => a - b).join(', ')}]`);
+      // console.log(`[Locations SELECT] Selecting for ${dateStr}, excluded: ${excludedIds.size} Pokemon, IDs: [${Array.from(excludedIds).sort((a, b) => a - b).join(', ')}]`);
     }
     
     // Determine seed based on mode - calculate SEED_OFFSETS locally
@@ -675,7 +676,7 @@ function App() {
       
       // Debug logging for Locations mode
       if (modeKey === 'map') {
-        console.log(`[Locations SELECT] Starting selection loop, excludedIds size: ${excludedIds.size}`);
+        // console.log(`[Locations SELECT] Starting selection loop, excludedIds size: ${excludedIds.size}`);
       }
       
       while (attempts < pokemonData.length) {
@@ -685,7 +686,7 @@ function App() {
         // Debug logging for Locations mode
         if (modeKey === 'map' && attempts < 10) {
           const isExcluded = excludedIds.has(candidate.id);
-          console.log(`[Locations SELECT]   Attempt ${attempts}: idx=${idx}, ${candidate.name} (ID: ${candidate.id}), excluded=${isExcluded}`);
+          // console.log(`[Locations SELECT]   Attempt ${attempts}: idx=${idx}, ${candidate.name} (ID: ${candidate.id}), excluded=${isExcluded}`);
         }
         
         if (!excludedIds.has(candidate.id)) {
@@ -693,7 +694,7 @@ function App() {
           
           // Debug logging for Locations mode
           if (modeKey === 'map') {
-            console.log(`[Locations SELECT]   ✓ Found non-excluded Pokemon after ${attempts} attempts: ${candidate.name} (ID: ${candidate.id})`);
+            // console.log(`[Locations SELECT]   ✓ Found non-excluded Pokemon after ${attempts} attempts: ${candidate.name} (ID: ${candidate.id})`);
           }
           
           break;
@@ -705,7 +706,7 @@ function App() {
       if (!selected) {
         // Debug logging for Locations mode
         if (modeKey === 'map') {
-          console.log(`[Locations SELECT]   ⚠ FALLBACK: Could not find non-excluded Pokemon, selecting random one`);
+          // console.log(`[Locations SELECT]   ⚠ FALLBACK: Could not find non-excluded Pokemon, selecting random one`);
         }
         
         const fallbackRng = mulberry32(seedFor);
@@ -714,7 +715,7 @@ function App() {
         
         // Debug logging for Locations mode
         if (modeKey === 'map') {
-          console.log(`[Locations SELECT]   ⚠ FALLBACK selected: ${selected.name} (ID: ${selected.id})`);
+          // console.log(`[Locations SELECT]   ⚠ FALLBACK selected: ${selected.name} (ID: ${selected.id})`);
         }
       }
     }
@@ -722,7 +723,7 @@ function App() {
     // Debug logging for Locations mode
     if (modeKey === 'map' && selected) {
       const dateStr = targetDate.toISOString().split('T')[0];
-      console.log(`[Locations SELECT]   -> FINAL: ${selected.name} (ID: ${selected.id})\n`);
+      // console.log(`[Locations SELECT]   -> FINAL: ${selected.name} (ID: ${selected.id})\n`);
     }
     
     return selected;
@@ -760,7 +761,7 @@ function App() {
             return chosen;
           }
           // If override doesn't have eyes image, fall through to random selection
-          console.log('[Override] Eyes override Pokemon ID', override, 'does not have eyes image in manifest, selecting random Pokemon');
+          // console.log('[Override] Eyes override Pokemon ID', override, 'does not have eyes image in manifest, selecting random Pokemon');
         }
       }
 
@@ -779,7 +780,7 @@ function App() {
       }
       
       // Fallback: if we can't find a non-repeating Pokemon, just pick any valid one
-      console.warn('[Eyes] Could not find non-repeating Pokemon, allowing repeat');
+      // console.warn('[Eyes] Could not find non-repeating Pokemon, allowing repeat');
       localRng = mulberry32(seedFor);
       attempts = 0;
       while (attempts < 200) {
@@ -792,7 +793,7 @@ function App() {
         attempts++;
       }
       
-      console.error('[Eyes] Failed to find Pokemon with eyes image after 200 attempts');
+      // console.error('[Eyes] Failed to find Pokemon with eyes image after 200 attempts');
       return null;
     }
 
@@ -802,17 +803,17 @@ function App() {
       
       // Check for override first
       const override = getDailyOverride(todaySeed, 'card');
-      console.log('[Override] Card override check for date', todaySeed, ':', override);
+      // console.log('[Override] Card override check for date', todaySeed, ':', override);
       
       if (override && typeof override === 'object' && override.pokemonId) {
         const chosen = pokemonData.find(p => p.id === override.pokemonId);
-        console.log('[Override] Found pokemon for card override:', chosen?.name, chosen?.id);
+        // console.log('[Override] Found pokemon for card override:', chosen?.name, chosen?.id);
         
         if (chosen && cardManifest) {
           let cardType = override.cardType;
           let cardFile = override.cardFile;
           
-          console.log('[Override] Card override config - cardType:', cardType, 'cardFile:', cardFile);
+          // console.log('[Override] Card override config - cardType:', cardType, 'cardFile:', cardFile);
           
           // If only cardFile is specified, search for it in all card types
           if (cardFile && !cardType) {
@@ -1417,6 +1418,30 @@ function App() {
             )}
           </div> */}
           
+          {/* Themed day banner */}
+          {todayTheme && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 10,
+              padding: '8px 18px',
+              marginBottom: 8,
+              marginTop: 8,
+              borderRadius: 10,
+              background: 'linear-gradient(90deg, #fffde7 0%, #fff9c4 100%)',
+              border: '1.5px solid #f9c74f',
+              boxShadow: '0 2px 8px rgba(249,199,79,0.18)',
+              fontSize: 16,
+              fontWeight: 600,
+              color: '#5a4800',
+              textAlign: 'center',
+            }}>
+              <span style={{ fontSize: 22 }}>✨</span>
+              <span>Today's Pokédle has a theme!</span>
+              <span style={{ fontSize: 22 }}>✨</span>
+            </div>
+          )}
           {/* Page Content */}
           {!pageTransition && renderPageByKey(page)}
           {pageTransition && (
