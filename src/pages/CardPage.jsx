@@ -191,8 +191,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const isCorrect = guesses.length > 0 && answer && guesses[0].name === answer.name;
   if (isCorrect) {
     blurLevel = 0;
-  } else if (cardType === 'full_art' || cardType === 'special') {
-    // Blur logic for full_art and special cards
+  } else if (cardType === 'full_art') {
+    // Blur logic for full_art cards
     switch (true) {
       case guesses.length === 0:
         blurLevel = 16; break;
@@ -223,15 +223,48 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       default:
         blurLevel = 2; break;
     }
+  }
+  else if (cardType === 'special') {
+    // Blur logic for special cards
+    switch (true) {
+      case guesses.length === 0:
+        blurLevel = 14; break;
+      case guesses.length === 1:
+        blurLevel = 12; break;
+      case guesses.length === 2:
+        blurLevel = 10; break;
+      case guesses.length === 3:
+        blurLevel = 9; break;
+      case guesses.length === 4:
+        blurLevel = 7; break;
+      case guesses.length === 5:
+        blurLevel = 6; break;
+      case guesses.length === 6:
+        blurLevel = 5; break;
+      case guesses.length === 7:
+        blurLevel = 4; break;
+      case guesses.length === 8:
+        blurLevel = 3; break;
+      case guesses.length === 9:
+        blurLevel = 2; break;
+      case guesses.length === 10:
+        blurLevel = 2; break;
+      case guesses.length === 11:
+        blurLevel = 2; break;
+      case guesses.length === 12:
+        blurLevel = 2; break;
+      default:
+        blurLevel = 2; break;
+    }
   } else {
     // Blur logic for normal and shiny cards
     switch (true) {
       case guesses.length === 0:
-        blurLevel = 16; break;
+        blurLevel = 15; break;
       case guesses.length === 1:
-        blurLevel = 14; break;
+        blurLevel = 13; break;
       case guesses.length === 2:
-        blurLevel = 12; break;
+        blurLevel = 11; break;
       case guesses.length === 3:
         blurLevel = 9; break;
       case guesses.length === 4:
@@ -245,9 +278,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       case guesses.length === 8:
         blurLevel = 4; break;
       case guesses.length === 9:
-        blurLevel = 5; break;
-      case guesses.length === 10:
         blurLevel = 3; break;
+      case guesses.length === 10:
+        blurLevel = 2; break;
       case guesses.length === 11:
         blurLevel = 2; break;
       case guesses.length === 12:
