@@ -1,3 +1,46 @@
+## Release Notes — April 8th, 2026
+
+## What’s New
+
+- **Overall** <br>
+    - Added banner when today is a themed day
+- **Results** <br>
+    - Added Today's Leaderboard and Group Results areas (results are now stored in Supabase db)
+    - Added new images to be selected for results tcg card
+- **Card Mode** <br>
+    - Split out blur level scales so that Full Art and Special cards are different (Special cards will be slightly less blurred)
+- **Locations Mode** <br>
+    - Made "can't be found in the wild" text bigger and underlined (as well as being bright red)
+    - Only include % chance for certain encounter methods
+- **Silhouette Mode** <br>
+    - Slightly zoomed out initial clue
+- **Pokedex Mode** <br>
+    - Remove duplicate pokedex entries so that the 2nd entry clue can't be the same as the 1st
+
+## Commits included (newest first)
+
+```text
+5199318 | 2026-04-08 | Results: Added an overall leaderboard for today
+8844835 | 2026-04-08 | Added banner when today is a themed day
+fa851ff | 2026-04-08 | Locations: Made "can't be found in the wild" text bigger and underlined (as well as being bright red)
+0e30335 | 2026-04-08 | Silhouette: Slightly zoomed out initial clue
+5c15f83 | 2026-04-08 | Card: Split out blur level scales so that Full Art and Special cards are different (Special cards will be slightly less blurred)
+ed987f6 | 2026-04-08 | Added more results images
+c8edfa1 | 2026-03-21 | Added Group Results section to results page
+6bf0d40 | 2026-03-21 | Started work on new logo (Slowpokle)
+601a971 | 2026-03-20 | Results: Invert guess numbering to reflect chronological order in submissions
+28aa4b9 | 2026-03-20 | Update version to 0.5.0 and enhance result submission with client version and device info
+dadb94e | 2026-03-20 | Adding Supabase db for tracking results
+c65f026 | 2026-03-18 | Pokedex: Remove duplicate pokedex entries so that the 2nd entry clue can't be the same as the 1st
+572ed1b | 2026-03-11 | Locations: Only include % chance for certain encounter methods
+223f65c | 2026-03-11 | Results: Name for card should persist between days now
+66fd660 | 2026-03-11 | Results: Fix overlapping pokedle numbers on mobile
+70502d7 | 2026-03-11 | Fixing some Pokemon Data entries
+7d79a6b | 2026-02-27 | Fixed issue with overriding pokemon on Fridays
+82a3a94 | 2026-02-27 | Adding new override
+3687636 | 2026-02-25 | Added more results images
+```
+
 ## Release Notes — February 25, 2026
 
 ## What’s New
@@ -12,6 +55,7 @@
 ## Commits included (newest first)
 
 ```text
+3b2f563 | 2026-02-25 | Patch notes for 25th Feb
 cc33c46 | 2026-02-25 | Card: Reveal the full card after 3 guesses instead of 4
 5e30abd | 2026-02-25 | Pokedex: Added shape as first hint
 52effd9 | 2026-02-25 | Locations: Added footprint clue to locations
