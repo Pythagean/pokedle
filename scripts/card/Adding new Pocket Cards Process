@@ -37,7 +37,7 @@ Navigate to this page: https://www.pokellector.com/
 
 Go into new sets, find the cards you want, right click > Save Image As > Save to .\scripts\card\pocket_download\
 
-Rename images to match pokemon ids (eg. 23-99)
+Rename images to match pokemon ids (eg. 23-99, 23-98, 23-97)
 
 Run script to convert to jpg:
 python scripts\image_tools\convert_webp_to_jpg.py .\scripts\card\pocket_download\
