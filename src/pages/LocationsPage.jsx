@@ -331,6 +331,20 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 headerText = `This Pokémon can be found in these locations in Gen ${genNumber}:`;
             }
 
+            const GAME_ABBREV = {
+                red: 'Red', blue: 'Blue', yellow: 'Yellow',
+                gold: 'Gold', silver: 'Silver', crystal: 'Crystal',
+                ruby: 'Ruby', sapphire: 'Sapphire', emerald: 'Emerald',
+                firered: 'FireRed', leafgreen: 'LeafGreen',
+            };
+            const GAME_COLOR = {
+                red: '#c03028', blue: '#1a6fb5', yellow: '#dbb60e',
+                gold: '#be9c00', silver: '#878787', crystal: '#7ab1d8',
+                ruby: '#a00000', sapphire: '#1a3ab5', emerald: '#007a30',
+                firered: '#c03010', leafgreen: '#3a8830',
+            };
+            const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald', 'firered', 'leafgreen'];
+
             const formatDisplay = (loc) => {
                 const raw = (getRawName(loc) || '').trim();
                 if (!raw) return raw;
@@ -343,8 +357,162 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 }
                 if (/\bSafari\b/i.test(pretty)) return pretty;
                 const parts = pretty.split(/\s+/);
-                if (parts.length > 1) return parts.slice(1).join(' ');
+                    // Preserve full location name; previously we dropped the first token
+                    // if (parts.length > 1) return parts.slice(1).join(' ');
                 return pretty;
+            };
+
+            // Group flat encounter list by location name, preserving first-seen order
+            const groupByLocName = (locs) => {
+                const map = new Map();
+                for (const loc of locs) {
+                    const name = getRawName(loc);
+                    if (!map.has(name)) map.set(name, []);
+                    map.get(name).push(loc);
+                }
+                return map;
+            };
+
+            const parseChance = (chance) => {
+                if (!chance) return null;
+                const m = String(chance).match(/morning:([^;]+);day:([^;]+);night:([^;]+)/i);
+                if (m) return { timeOfDay: true, morning: m[1], day: m[2], night: m[3] };
+                return { timeOfDay: false, value: chance };
+            };
+
+            const renderLocationsSection = (locs) => {
+                const filtered = locs.filter(loc => {
+                    if (!showAdditionalLocations && genNumber === 1 && loc && typeof loc === 'object' && loc.method) {
+                        return !/rock\s*smash/i.test(String(loc.method));
+                    }
+                    return true;
+                });
+                const grouped = groupByLocName(filtered);
+
+                // Detect if any entry in this section uses time-of-day chance format
+                const hasTimeOfDay = filtered.some(enc => /morning:/i.test(enc.chance || ''));
+
+                    const rows = [];
+                for (const [rawName, entries] of grouped.entries()) {
+                    const slug = (rawName || '').replace(/\s+/g, '_');
+                    let filename = null;
+                    if (locationFileMap) {
+                        filename = locationFileMap[slug] || locationFileMap[rawName] || locationFileMap[rawName && rawName.replace(/[-_]+/g, ' ')] || locationFileMap[rawName && rawName.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
+                    }
+                    const mapThumbUrl = filename
+                        ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}`
+                        : (rawName ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
+                    const mapFullUrl = filename
+                        ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}`
+                        : (rawName ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                    const displayName = formatDisplay({ name: rawName });
+                    entries.forEach((enc, ri) => {
+                        const games = Array.isArray(enc.games) ? enc.games : [];
+                        const sortedGames = [...games].sort((a, b) => {
+                            const ai = gameOrder.indexOf(String(a).toLowerCase());
+                            const bi = gameOrder.indexOf(String(b).toLowerCase());
+                            if (ai === -1 && bi === -1) return 0;
+                            if (ai === -1) return 1;
+                            if (bi === -1) return -1;
+                            return ai - bi;
+                        });
+                        const method = enc.method || '';
+                        const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
+                        const parsed = parseChance(enc.chance);
+
+                        let chanceCells;
+                        if (hasTimeOfDay) {
+                            if (parsed && parsed.timeOfDay) {
+                                chanceCells = (
+                                    <>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.morning}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.day}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.night}</td>
+                                    </>
+                                );
+                            } else {
+                                // Simple chance value in a time-of-day section — span all 3 columns
+                                chanceCells = (
+                                    <td className="loc-td loc-td--muted loc-td--chance" colSpan={3} style={{ textAlign: 'center' }}>
+                                        {(parsed && parsed.value) || '—'}
+                                    </td>
+                                );
+                            }
+                        } else {
+                            chanceCells = (
+                                <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>
+                                    {(parsed && parsed.value) || '—'}
+                                </td>
+                            );
+                        }
+
+                        rows.push(
+                            <tr key={rawName + ri}>
+                                {ri === 0 && (
+                                    <td rowSpan={entries.length} className="loc-map-td">
+                                        {mapThumbUrl ? (
+                                            <>
+                                                <img
+                                                    src={mapThumbUrl}
+                                                    alt={displayName}
+                                                    className="loc-map-img"
+                                                    onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
+                                                    onClick={() => setMapPopup({ visible: true, title: displayName, url: mapFullUrl })}
+                                                />
+                                                <div className="loc-map-no-img">No map</div>
+                                            </>
+                                        ) : (
+                                            <div className="loc-map-no-img loc-map-no-img--show">No map</div>
+                                        )}
+                                        <div className="loc-name-link" onClick={() => setMapPopup({ visible: true, title: displayName, url: mapFullUrl })}>
+                                            {displayName}
+                                        </div>
+                                    </td>
+                                )}
+                                <td className="loc-td loc-td--games">
+                                    <div className="loc-game-chips">
+                                        {sortedGames.map(g => {
+                                            const gl = String(g).toLowerCase();
+                                            const abbrev = GAME_ABBREV[gl] || String(g).charAt(0).toUpperCase();
+                                            const color = GAME_COLOR[gl] || '#888';
+                                            return <span key={gl} className="loc-chip" style={{ background: color }} title={String(g)}>{abbrev}</span>;
+                                        })}
+                                    </div>
+                                    </td>
+                                    <td className="loc-td loc-td--method">{prettyMethod || '—'}</td>
+                                    <td className="loc-td loc-td--levels loc-td--muted" style={{ textAlign: 'center' }}>{enc.level_range || '—'}</td>
+                                    {chanceCells}
+                            </tr>
+                        );
+                    });
+                }
+                return (
+                        <div className="loc-table-wrap">
+                        <table className="loc-table">
+                        <thead>
+                            <tr>
+                                <th className="loc-th loc-th--map" rowSpan={hasTimeOfDay ? 2 : 1}>Map</th>
+                                <th className="loc-th loc-th--games" rowSpan={hasTimeOfDay ? 2 : 1}>Games</th>
+                                <th className="loc-th loc-th--method" rowSpan={hasTimeOfDay ? 2 : 1}>Method</th>
+                                <th className="loc-th loc-th--levels" rowSpan={hasTimeOfDay ? 2 : 1}>Levels</th>
+                                {hasTimeOfDay ? (
+                                    <th className="loc-th loc-th--chance" colSpan={3}>% Chance</th>
+                                ) : (
+                                    <th className="loc-th loc-th--chance">% Chance</th>
+                                )}
+                            </tr>
+                            {hasTimeOfDay && (
+                                <tr>
+                                    <th className="loc-th loc-th--chance">Morning</th>
+                                    <th className="loc-th loc-th--chance">Day</th>
+                                    <th className="loc-th loc-th--chance">Night</th>
+                                </tr>
+                            )}
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </table>
+                    </div>
+                );
             };
 
             return (
@@ -388,8 +556,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         </div>
                     </div>
                     
-                    {/* Gen-specific locations section */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, justifyContent: 'center' }}>
+                    {/* Gen-specific locations header */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, justifyContent: 'center' }}>
                         <div style={{ fontWeight: 600, fontSize: 15 }}>{headerText}</div>
                     </div>
                     
@@ -406,127 +574,17 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             This Pokémon can only be obtained through breeding and cannot be found in the wild.
                         </div>
                     )}
-                    
-                    <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 30px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
-                        {/* Show gen locations */}
-                        {showGenLocations && genLocations.length > 0 && genLocations.filter(loc => {
-                            // Filter out locations with only Rock Smash method for Gen 1 (but only before All Locations threshold)
-                            if (!showAdditionalLocations && genNumber === 1 && loc && typeof loc === 'object' && loc.method) {
-                                return !/rock\s*smash/i.test(String(loc.method));
-                            }
-                            return true;
-                        }).map((loc, i) => {
-                            const raw = getRawName(loc);
-                            const slug = (raw || '').replace(/\s+/g, '_');
-                            let filename = null;
-                            if (locationFileMap) {
-                                filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
-                            }
-                            const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
-                            return (
-                                <div key={`${getRawName(loc) || String(i)}_${i}`} className="location-card">
-                                        {url ? (
-                                            <>
-                                                <img src={url} alt={formatDisplay(loc)}
-                                                    style={{ maxWidth: 220, maxHeight: 130, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'pointer', display: 'block' }}
-                                                    onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
-                                                    onClick={() => {
-                                                        const locationUrl = filename 
-                                                            ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
-                                                            : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
-                                                        setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
-                                                    }}
-                                                />
-                                                <div style={{ display: 'none', minWidth: 220, minHeight: 130, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                            </>
-                                        ) : (
-                                            <div style={{ width: 220, height: 130, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                        )}
-                                        <div 
-                                            style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
-                                            onClick={() => {
-                                                const locationUrl = filename 
-                                                    ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
-                                                    : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
-                                                setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
-                                            }}
-                                        >
-                                            {formatDisplay(loc)}
-                                        </div>
-                                        {showMethods && (() => {
-                                            let method = null;
-                                            let games = null;
-                                            if (loc && typeof loc === 'object') {
-                                                method = loc.method || null;
-                                                games = loc.games || null;
-                                            }
-                                            if (!method && typeof loc === 'string') method = null;
-                                            const hasInfo = method || (games && games.length > 0);
-                                            if (hasInfo) {
-                                                let prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
-                                                // Remove Rock Smash for Gen 1 Pokemon (but only before All Locations threshold)
-                                                if (!showAdditionalLocations && genNumber === 1 && prettyMethod && /rock\s*smash/i.test(prettyMethod)) {
-                                                    prettyMethod = null;
-                                                }
-                                                // Games are already filtered at this point
-                                                const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
-                                                const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
-                                                    const aLower = String(a).toLowerCase();
-                                                    const bLower = String(b).toLowerCase();
-                                                    const aIdx = gameOrder.indexOf(aLower);
-                                                    const bIdx = gameOrder.indexOf(bLower);
-                                                    if (aIdx === -1 && bIdx === -1) return 0;
-                                                    if (aIdx === -1) return 1;
-                                                    if (bIdx === -1) return -1;
-                                                    return aIdx - bIdx;
-                                                }) : [];
-                                                const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => {
-                                                    const gl = String(g).toLowerCase();
-                                                    if (gl === 'firered') return 'FireRed';
-                                                    if (gl === 'leafgreen') return 'LeafGreen';
-                                                    return String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                                                }).join(', ') : null;
-                                                return (
-                                                    <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                        {prettyGames && (
-                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                <span style={{ fontWeight: 700 }}>Games:</span>
-                                                                <span style={{ fontWeight: 400 }}>{prettyGames}</span>
-                                                            </div>
-                                                        )}
-                                                        {prettyMethod && (() => {
-                                                            // Only show chance for certain methods
-                                                            const showChance = /walk|surf|headbutt|rod|rock\s*smash|roaming/i.test(prettyMethod);
-                                                            return (
-                                                                <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                    <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                    <span style={{ fontWeight: 400 }}>
-                                                                        {prettyMethod}{showChance && loc.chance ? ` (${loc.chance} chance)` : ''}
-                                                                    </span>
-                                                                </div>
-                                                            );
-                                                        })()}
-                                                        {(
-                                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                <span style={{ fontWeight: 700 }}>Levels:</span>
-                                                                <span style={{ fontWeight: 400 }}>{loc.level_range}</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                );
-                                            }
-                                            return null;
-                                        })()}
-                                </div>
-                            );
-                        })}
-                        {!showGenLocations && genLocations.length === 0 && additionalLocations.length === 0 && 'No locations (only obtainable by evolution)'}
-                    </div>
+
+                    {/* Gen locations list */}
+                    {genLocations.length > 0
+                        ? renderLocationsSection(genLocations)
+                        : <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>No locations (only obtainable by evolution)</div>
+                    }
 
                     {/* Additional locations section */}
                     {showAdditionalLocations && (
                         <>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 6, justifyContent: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginBottom: 10, justifyContent: 'center' }}>
                                 <div style={{ fontWeight: 600, fontSize: 15 }}>
                                     {usingPreevolutionForAdditional 
                                         ? (
@@ -546,132 +604,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                     <strong>No additional locations found in other generations.</strong>
                                 </div>
                             ) : (
-                            <div className="locations-container" style={{ color: '#333', display: 'flex', flexWrap: 'wrap', gap: '20px 12px', justifyContent: 'center', fontSize: 14, maxWidth: '100%' }}>
-                                {additionalLocations.filter(loc => {
-                                    // Filter out locations with only Rock Smash method for Gen 1 (but only before All Locations threshold)
-                                    if (!showAdditionalLocations && genNumber === 1 && loc && typeof loc === 'object' && loc.method) {
-                                        return !/rock\s*smash/i.test(String(loc.method));
-                                    }
-                                    return true;
-                                }).map((loc, i) => {
-                                    const raw = getRawName(loc);
-                                    const slug = (raw || '').replace(/\s+/g, '_');
-                                    let filename = null;
-                                    if (locationFileMap) {
-                                        filename = locationFileMap[slug] || locationFileMap[raw] || locationFileMap[raw && raw.replace(/[-_]+/g, ' ')] || locationFileMap[raw && raw.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
-                                    }
-                                    const url = filename ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}` : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
-                                    return (
-                                        <div key={`${getRawName(loc) || String(i)}_additional_${i}`} className="location-card">
-                                                {url ? (
-                                                    <>
-                                                        <img src={url} alt={formatDisplay(loc)}
-                                                            style={{ maxWidth: 160, maxHeight: 120, width: 'auto', height: 'auto', objectFit: 'contain', background: '#fafafa', borderRadius: 6, border: '2px solid #959595ff', cursor: 'pointer', display: 'block' }}
-                                                            onError={(e) => { e.target.style.display = 'none'; const ph = e.target.nextSibling; if (ph) ph.style.display = 'flex'; }}
-                                                            onClick={() => {
-                                                                const locationUrl = filename 
-                                                                    ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
-                                                                    : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
-                                                                setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
-                                                            }}
-                                                        />
-                                                        <div style={{ display: 'none', minWidth: 160, minHeight: 120, background: '#fafafa', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                                    </>
-                                                ) : (
-                                                    <div style={{ minWidth: 160, minHeight: 120, background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', borderRadius: 6, border: '1px dashed #ddd' }}>No map</div>
-                                                )}
-                                                <div 
-                                                    style={{ marginTop: 6, fontSize: 13, textAlign: 'center', color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
-                                                    onClick={() => {
-                                                        const locationUrl = filename 
-                                                            ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}` 
-                                                            : (raw ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
-                                                        setMapPopup({ visible: true, title: formatDisplay(loc), url: locationUrl });
-                                                    }}
-                                                >
-                                                    {formatDisplay(loc)}
-                                                </div>
-                                                {showMethods && (() => {
-                                                    let method = null;
-                                                    let games = null;
-                                                    if (loc && typeof loc === 'object') {
-                                                        method = loc.method || null;
-                                                        games = loc.games || null;
-                                                    }
-                                                    if (!method && typeof loc === 'string') method = null;
-                                                    const hasInfo = method || (games && games.length > 0);
-                                                    if (hasInfo) {
-                                                        let prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : null;
-                                                        // Remove Rock Smash for Gen 1 Pokemon (but only before All Locations threshold)
-                                                        if (!showAdditionalLocations && genNumber === 1 && prettyMethod && /rock\s*smash/i.test(prettyMethod)) {
-                                                            prettyMethod = null;
-                                                        }
-                                                        const gameOrder = ['red', 'blue', 'yellow', 'gold', 'silver', 'crystal', 'ruby', 'sapphire', 'emerald'];
-                                                        const sortedGames = (games && games.length > 0) ? [...games].sort((a, b) => {
-                                                            const aLower = String(a).toLowerCase();
-                                                            const bLower = String(b).toLowerCase();
-                                                            const aIdx = gameOrder.indexOf(aLower);
-                                                            const bIdx = gameOrder.indexOf(bLower);
-                                                            if (aIdx === -1 && bIdx === -1) return 0;
-                                                            if (aIdx === -1) return 1;
-                                                            if (bIdx === -1) return -1;
-                                                            return aIdx - bIdx;
-                                                        }) : [];
-                                                        const prettyGames = sortedGames.length > 0 ? sortedGames.map(g => {
-                                                            const gl = String(g).toLowerCase();
-                                                            if (gl === 'firered') return 'FireRed';
-                                                            if (gl === 'leafgreen') return 'LeafGreen';
-                                                            return String(g).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-                                                        }).join(', ') : null;
-                                                        return (
-                                                            <div style={{ marginTop: 4, fontSize: 12, textAlign: 'center', color: '#666', display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                                {prettyGames && (
-                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                        <span style={{ fontWeight: 700 }}>Games:</span>
-                                                                        <span style={{ fontWeight: 400 }}>{prettyGames}</span>
-                                                                    </div>
-                                                                )}
-                                                                {prettyMethod && (() => {
-                                                                    // Only show chance for certain methods
-                                                                    const showChance = /walk|surf|headbutt|rod|rock\s*smash|roaming/i.test(prettyMethod);
-                                                                    return (
-                                                                        <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                            <span style={{ fontWeight: 700 }}>Method:</span>
-                                                                            <span style={{ fontWeight: 400 }}>
-                                                                                {prettyMethod}{showChance && loc.chance ? ` (${loc.chance} chance)` : ''}
-                                                                            </span>
-                                                                        </div>
-                                                                    );
-                                                                })()}
-                                                                {(
-                                                                    <div style={{ display: 'flex', gap: 6, justifyContent: 'center', alignItems: 'center' }}>
-                                                                        <span style={{ fontWeight: 700 }}>Levels:</span>
-                                                                        <span style={{ fontWeight: 400 }}>{loc.level_range}</span>
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        );
-                                                    }
-                                                    return null;
-                                                })()}
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                                renderLocationsSection(additionalLocations)
                             )}
                         </>
                     )}
-                    {/* Hint placeholders for what's coming next */}
-                    {/* {!isCorrect && !showAdditionalLocations && additionalLocations.length > 0 && (
-                        <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                            Additional locations from other regions revealed in {LOCATIONS_HINT_THRESHOLDS[0] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[0] - guesses.length === 1 ? '' : 'es'}
-                        </div>
-                    )}
-                    {!isCorrect && showAdditionalLocations && !showMethods && (
-                        <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                            Encounter methods revealed in {LOCATIONS_HINT_THRESHOLDS[1] - guesses.length} guess{LOCATIONS_HINT_THRESHOLDS[1] - guesses.length === 1 ? '' : 'es'}
-                        </div>
-                    )} */}
                 </div>
             );
         }
@@ -774,28 +710,117 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     return (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
             <style>{`
-                .location-card {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: calc(33.333% - 8px);
-                    min-width: 180px;
-                    max-width: 220px;
-                    flex: 0 1 auto;
+                .loc-table-wrap { width: 100%; overflow-x: visible; }
+                .loc-table {
+                    width: auto;
+                    border-collapse: collapse;
+                    font-size: 12px;
+                    border: 1px solid #cfcfcf;
+                    border-radius: 8px;
+                    overflow: visible;
+                    margin: 0 auto 12px auto;
+                    /* center table inside parent */
                 }
-                @media (max-width: 768px) {
-                    .location-card {
-                        width: calc(50% - 10px) !important;
-                        min-width: 0 !important;
-                        max-width: none !important;
-                    }
-                    .location-card img {
-                        max-width: 150px !important;
-                        max-height: 140px !important;
-                    }
-                    .locations-container {
-                        gap: 20px 20px !important;
-                    }
+                .loc-table th,
+                .loc-table td {
+                    border: 1px solid #d0d0d0;
+                }
+                .loc-th {
+                    background: #f6f6f6;
+                    padding: 8px 10px;
+                    font-size: 11px;
+                    font-weight: 700;
+                    text-align: center;
+                    vertical-align: middle;
+                    color: #444;
+                    text-transform: uppercase;
+                    letter-spacing: 0.04em;
+                    white-space: nowrap;
+                }
+                .loc-th--map { width: 140px; }
+                .loc-th--games { width: 120px; }
+                .loc-th--method { width: 180px; }
+                .loc-th--levels { width: 80px; }
+                .loc-th--chance { /* header for chance columns */ }
+                .loc-td {
+                    padding: 8px 10px;
+                    vertical-align: middle;
+                    color: #333;
+                    font-size: 12px;
+                    white-space: normal;
+                }
+                .loc-td--games { text-align: left; }
+                .loc-td--method { text-align: center; }
+                .loc-td--levels { text-align: center; }
+                .loc-td--chance { width: 60px; max-width: 80px; text-align: center; }
+                .loc-td--muted { color: #666; }
+                .loc-map-td {
+                    vertical-align: top;
+                    padding: 8px;
+                    text-align: center;
+                    width: 140px;
+                    min-width: 120px;
+                    border-right: 2px solid #d0d0d0;
+                    background: #fafafa;
+                }
+                .loc-map-img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 90px;
+                    object-fit: contain;
+                    background: #fafafa;
+                    border-radius: 5px;
+                    border: none;
+                    cursor: pointer;
+                    display: block;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+                }
+                .loc-map-no-img {
+                    display: none;
+                    width: 100%;
+                    height: 90px;
+                    background: #fafafa;
+                    align-items: center;
+                    justify-content: center;
+                    color: #999;
+                    border-radius: 5px;
+                    border: 1px dashed #ddd;
+                    font-size: 12px;
+                }
+                .loc-map-no-img--show { display: flex; }
+                .loc-name-link {
+                    margin-top: 5px;
+                    font-size: 11px;
+                    text-align: center;
+                    color: #1976d2;
+                    cursor: pointer;
+                    text-decoration: underline;
+                    word-break: break-word;
+                    line-height: 1.3;
+                }
+                .loc-game-chips { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+                .loc-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    font-size: 10px;
+                    font-weight: 700;
+                    padding: 1px 5px;
+                    border-radius: 3px;
+                    min-width: 18px;
+                    line-height: 16px;
+                    cursor: default;
+                }
+                tbody tr:nth-child(even) { background: #fbfbfb; }
+                @media (max-width: 600px) {
+                    .loc-table { font-size: 11px; }
+                    .loc-th, .loc-td { padding: 6px 8px; }
+                    .loc-map-img { max-height: 65px; }
+                    .loc-map-no-img { height: 65px; }
+                    .loc-map-td { width: 120px; min-width: 100px; }
+                    .loc-td--method { white-space: normal; }
+                    .loc-td { white-space: nowrap; }
                 }
             `}</style>
             {/* Map popup overlay */}
@@ -839,7 +864,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
-                {/* <button
+                <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -850,9 +875,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     disabled={resetCount >= 200}
                 >
                     Reset
-                </button> */}
+                </button>
             </div>
-            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
                 <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
                 <input
                     id="override-id"
@@ -865,8 +890,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {overridePokemon && (
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
-            </div> */}
-            <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+            </div>
+            <div style={{ margin: '24px auto', maxWidth: 'none', width: 'min(1200px, 95%)', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
                     <>

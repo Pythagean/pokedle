@@ -153,6 +153,11 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                 if version_name in VALID_VERSIONS:
                     if version_name not in matching_games:
                         matching_games.append(version_name)
+                    # Collect version-level max_chance
+                    version_max_chance = detail.get('max_chance')
+                    if version_max_chance is not None:
+                        chances.append(version_max_chance)
+
                     # Gather methods from encounter_details
                     for ed in detail.get('encounter_details', []) or []:
                         method_obj = ed.get('method') or {}
@@ -168,13 +173,11 @@ def get_pokemon_encounters(pokemon_id: int) -> List[str]:
                         if mnorm not in methods_seen:
                             methods_seen.append(mnorm)
                         
-                        # Collect level and chance data
+                        # Collect level data
                         if 'min_level' in ed and ed['min_level'] is not None:
                             min_levels.append(ed['min_level'])
                         if 'max_level' in ed and ed['max_level'] is not None:
                             max_levels.append(ed['max_level'])
-                        if 'chance' in ed and ed['chance'] is not None:
-                            chances.append(ed['chance'])
             
             if not matching_games:
                 continue
