@@ -174,8 +174,8 @@
   "Roaming Hoenn": "Hoenn_Roaming_Hoenn.png",
   "Roaming Johto": "Johto_Roaming_Johto.png",
   "Rock Tunnel": "Kanto_Rock_Tunnel.png",
-  "Ruins Of Alph": "Johto_Ruins_of_Alph.png",
-  "Ruins Of Alph Outside": "Johto_Ruins_of_Alph.png",
+  "Ruins Of Alph": "Johto_Ruins_Of_Alph.png",
+  "Ruins Of Alph Outside": "Johto_Ruins_Of_Alph.png",
   "Rustboro City": "Hoenn_Rustboro_City.png",
   "Rusturf Tunnel": "Hoenn_Rusturf_Tunnel.png",
   "Saffron City Fighting Dojo": "Kanto_Saffron_City.png",
@@ -217,5 +217,6 @@
   "Victory Road (Hoenn)": "Hoenn_Victory_Road.png",
   "Victory Road (Kanto)": "Kanto_Victory_Road.png",
   "Roaming Kanto": "Kanto_BASE.png",
-  "Weather Institute": "Hoenn_Weather_Institute.png"
+  "Weather Institute": "Hoenn_Weather_Institute.png",
+  "Sevault Canyon": "Kanto_Sevault_Canyon.png"
 }

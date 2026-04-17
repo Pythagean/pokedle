@@ -438,6 +438,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         });
                         const method = enc.method || '';
                         const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
+                        const methodIconUrl = method ? `/images/encounter_methods/${method.toLowerCase()}.png` : null;
                         const parsed = parseChance(enc.chance);
 
                         let chanceCells;
@@ -499,7 +500,19 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                         })}
                                     </div>
                                     </td>
-                                    <td className="loc-td loc-td--method loc-td--muted">{prettyMethod || '—'}</td>
+                                    <td className="loc-td loc-td--method loc-td--muted">
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                                            {methodIconUrl && (
+                                                <img
+                                                    src={methodIconUrl}
+                                                    alt=""
+                                                    style={{ width: 18, height: 18, objectFit: 'contain', flexShrink: 0 }}
+                                                    onError={e => { e.target.style.display = 'none'; }}
+                                                />
+                                            )}
+                                            {prettyMethod || '—'}
+                                        </div>
+                                    </td>
                                     <td className="loc-td loc-td--levels loc-td--muted" style={{ textAlign: 'center' }}>{enc.level_range || '—'}</td>
                                     {chanceCells}
                             </tr>
