@@ -64472,7 +64472,23 @@
     "types": [
       "Fighting"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Saffron City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "30",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [
       {
         "name": "Johto Route 34",
@@ -64551,7 +64567,23 @@
     "types": [
       "Fighting"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Saffron City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "30",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [
       {
         "name": "Johto Route 34",
@@ -85028,6 +85060,31 @@
     ],
     "location_area_encounters": [
       {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
         "name": "Goldenrod City",
         "region": "Johto",
         "generation": 2,
@@ -85113,6 +85170,31 @@
     "location_area_encounters": [],
     "preevolution_location_area_encounters": [
       {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
         "name": "Goldenrod City",
         "region": "Johto",
         "generation": 2,
@@ -85196,6 +85278,31 @@
     ],
     "location_area_encounters": [],
     "preevolution_location_area_encounters": [
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
       {
         "name": "Goldenrod City",
         "region": "Johto",
@@ -85374,7 +85481,26 @@
     "types": [
       "Normal"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "gold",
+          "silver",
+          "crystal",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "game corner",
+        "level_range": "18-26",
+        "chance": "100%"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "A Pokémon that consists entirely of programming code. Capable of moving freely in cyberspace.",
@@ -85943,7 +86069,51 @@
     "types": [
       "Normal"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Kanto Route 12",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Pokeflute",
+        "level_range": "30",
+        "chance": "One"
+      },
+      {
+        "name": "Kanto Route 16",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Pokeflute",
+        "level_range": "30",
+        "chance": "One"
+      },
+      {
+        "name": "Vermilion City",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "Pokegear",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes steadily more slothful.",
@@ -86012,7 +86182,23 @@
       "Ice",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Seafoam Islands",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "only one",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "A legendary bird Pokémon that is said to appear to doomed people who are lost in icy mountains.",
@@ -86067,7 +86253,23 @@
       "Electric",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Kanto Power Plant",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "only one",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "A legendary bird Pokémon that is said to appear from clouds while dropping enormous lightning bolts.",
@@ -86124,7 +86326,23 @@
       "Fire",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Victory Road (Kanto)",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "only one",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Known as the legendary bird of fire. Every flap of its wings creates a dazzling flash of flames.",
@@ -86983,7 +87201,23 @@
     "types": [
       "Psychic"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Cerulean Cave",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "only one",
+        "level_range": "70",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.",
@@ -87041,7 +87275,32 @@
     "types": [
       "Psychic"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Kanto Vermilion City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "Under the Truck",
+        "level_range": "5",
+        "chance": "100%"
+      },
+      {
+        "name": "Hoenn Faraway Island",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "Only One (requires Old Sea Map)",
+        "level_range": "30",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.",
@@ -92709,19 +92968,6 @@
         "chance": "40%"
       },
       {
-        "name": "Underwater",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "20-30",
-        "chance": "30%"
-      },
-      {
         "name": "Vermilion City",
         "region": "Johto",
         "generation": 2,
@@ -93241,19 +93487,6 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "40%"
-      },
-      {
-        "name": "Underwater",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "20-30",
-        "chance": "30%"
       },
       {
         "name": "Vermilion City",
@@ -95685,7 +95918,32 @@
     "types": [
       "Rock"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Johto Route 36",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "Squirtbottle",
+        "level_range": "20",
+        "chance": "One"
+      },
+      {
+        "name": "Battle Frontier",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "Wailmer Pail",
+        "level_range": "40",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Although it always pretends to be a tree, its composi tion appears to be closer to a rock than a plant.",
@@ -99286,6 +99544,31 @@
     "location_area_encounters": [],
     "preevolution_location_area_encounters": [
       {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
         "name": "Goldenrod City",
         "region": "Johto",
         "generation": 2,
@@ -99359,6 +99642,31 @@
     ],
     "location_area_encounters": [],
     "preevolution_location_area_encounters": [
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "gift",
+        "level_range": "25",
+        "chance": "One"
+      },
       {
         "name": "Goldenrod City",
         "region": "Johto",
@@ -102748,7 +103056,20 @@
       "Fire",
       "Rock"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Kanto Mt Ember",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Rock Smash",
+        "level_range": "25-45",
+        "chance": "10%"
+      }
+    ],
     "preevolution_location_area_encounters": [
       {
         "name": "Fiery Path",
@@ -105618,7 +105939,26 @@
       "Normal"
     ],
     "location_area_encounters": [],
-    "preevolution_location_area_encounters": [],
+    "preevolution_location_area_encounters": [
+      {
+        "name": "Celadon City",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow",
+          "gold",
+          "silver",
+          "crystal",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "game corner",
+        "level_range": "18-26",
+        "chance": "100%"
+      }
+    ],
     "flavor_text_entries": [
       "This upgraded version of [...] is designed for space exploration. It can't fly, though.",
       "Further research enhanced its abilities. Sometimes, it may exhibit motions that were not programmed.",
@@ -106584,7 +106924,33 @@
     "types": [
       "Electric"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Roaming Johto",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "grass",
+        "level_range": "40",
+        "chance": "only one"
+      },
+      {
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "generation": 2,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "50",
+        "chance": "only one"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "The rain clouds it carries let it fire thunderbolts at will. They say that it descended with lightning.",
@@ -106636,7 +107002,33 @@
     "types": [
       "Fire"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Roaming Johto",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "grass",
+        "level_range": "40",
+        "chance": "only one"
+      },
+      {
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "generation": 2,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "50",
+        "chance": "only one"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Volcanoes erupt when it barks. Unable to restrain its extreme power, it races headlong around the land.",
@@ -106688,7 +107080,43 @@
     "types": [
       "Water"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Roaming Johto",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "grass",
+        "level_range": "40",
+        "chance": "only one"
+      },
+      {
+        "name": "Roaming Kanto",
+        "region": "Kanto",
+        "generation": 2,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "50",
+        "chance": "only one"
+      },
+      {
+        "name": "Bell Tower",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "crystal"
+        ],
+        "method": "only one",
+        "level_range": "40",
+        "chance": "only one"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "It races around the world to purify fouled water. It dashes away with the north wind.",
@@ -107084,7 +107512,21 @@
       "Psychic",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Whirl Islands",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "only one",
+        "level_range": "40-60",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "It is said that it quietly spends its time deep at the bottom of the sea because its powers are too strong.",
@@ -107135,7 +107577,21 @@
       "Fire",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Bell Tower",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "only one",
+        "level_range": "40-60",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Legends claim this Pokémon flies the world's skies con tinuously on its magnificent seven- colored wings.",
@@ -107192,7 +107648,18 @@
       "Psychic",
       "Grass"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Johto Ilex Forest",
+        "region": "Johto",
+        "games": [
+          "crystal"
+        ],
+        "method": "Only One (requires GS Ball)",
+        "level_range": "30",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "This Pokémon wanders across time. Grass and trees flourish in the forests in which it has appeared.",
@@ -120067,7 +120534,21 @@
       "Rock",
       "Grass"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Hoenn Rustboro City",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "revive root fossil",
+        "level_range": "20",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] became extinct approximately a hundred million years ago. This ancient Pokémon attaches itself to a rock on the seafloor and catches approaching prey using tentacles  shaped like flower petals.",
@@ -120128,7 +120609,21 @@
       "Grass"
     ],
     "location_area_encounters": [],
-    "preevolution_location_area_encounters": [],
+    "preevolution_location_area_encounters": [
+      {
+        "name": "Hoenn Rustboro City",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "revive root fossil",
+        "level_range": "20",
+        "chance": "One"
+      }
+    ],
     "flavor_text_entries": [
       "[...] roams around the ocean floor in search of food. This Pokémon freely extends its tree trunk-like neck and captures unwary prey using its eight tentacles.",
       "[...]'s body serves as an anchor, preventing it from being washed away in rough seas. This Pokémon secretes a strong digestive fluid from its tentacles.",
@@ -120185,7 +120680,21 @@
       "Rock",
       "Bug"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Hoenn Rustboro City",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "revive claw fossil",
+        "level_range": "20",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] was regenerated from a prehistoric fossil. This primitive Pokémon once lived in warm seas. It grips its prey firmly between its two large claws.",
@@ -120246,7 +120755,21 @@
       "Bug"
     ],
     "location_area_encounters": [],
-    "preevolution_location_area_encounters": [],
+    "preevolution_location_area_encounters": [
+      {
+        "name": "Hoenn Rustboro City",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "revive claw fossil",
+        "level_range": "20",
+        "chance": "One"
+      }
+    ],
     "flavor_text_entries": [
       "[...]'s tough armor makes all attacks bounce off. This POKeMON's two enormous claws can be freely extended or contracted. They have the power to punch right through a steel slab.",
       "[...] is a Pokémon species that became extinct in prehistoric times. This Pokémon is said to have walked on its hind legs, which would have been more convenient for life on land.",
@@ -122177,19 +122700,6 @@
         "method": "seaweed",
         "level_range": "20-35",
         "chance": "65%"
-      },
-      {
-        "name": "Underwater",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "20-35",
-        "chance": "65%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -122262,19 +122772,6 @@
       },
       {
         "name": "Hoenn Route 126",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "20-35",
-        "chance": "65%"
-      },
-      {
-        "name": "Underwater",
         "region": "Hoenn",
         "generation": 3,
         "games": [
@@ -122364,19 +122861,6 @@
         "method": "seaweed",
         "level_range": "20-35",
         "chance": "65%"
-      },
-      {
-        "name": "Underwater",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "20-35",
-        "chance": "65%"
       }
     ],
     "flavor_text_entries": [
@@ -122444,19 +122928,6 @@
       },
       {
         "name": "Hoenn Route 126",
-        "region": "Hoenn",
-        "generation": 3,
-        "games": [
-          "ruby",
-          "sapphire",
-          "emerald"
-        ],
-        "method": "seaweed",
-        "level_range": "30-35",
-        "chance": "5%"
-      },
-      {
-        "name": "Underwater",
         "region": "Hoenn",
         "generation": 3,
         "games": [
@@ -123091,7 +123562,21 @@
     "types": [
       "Rock"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Desert Ruins",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "Only One",
+        "level_range": "40",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "Its entire body is made of rock. If any part chips off in battle, it attaches rocks to repair itself.",
@@ -123143,7 +123628,21 @@
     "types": [
       "Ice"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Island Cave",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "Only One",
+        "level_range": "40",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...]'s body was made during an ice age. The deep-frozen body can't be melted, even by fire. This Pokémon controls frigid air of minus 328 degrees F.",
@@ -123197,7 +123696,21 @@
     "types": [
       "Steel"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Ancient Tomb",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "Only One",
+        "level_range": "40",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] has a body that is harder than any kind of metal. Its body is apparently hollow. No one has any idea what this Pokémon eats.",
@@ -123248,7 +123761,32 @@
       "Dragon",
       "Psychic"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Roaming Hoenn",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "sapphire",
+          "emerald"
+        ],
+        "method": "Roaming",
+        "level_range": "40",
+        "chance": "One"
+      },
+      {
+        "name": "Hoenn Southern Island",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "emerald"
+        ],
+        "method": "Only One (requires Eon Ticket)",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] is highly sensitive to the emotions of people. If it senses any hostility, this Pokémon ruffles the feathers all over its body and cries shrilly to intimidate the foe.",
@@ -123297,7 +123835,32 @@
       "Dragon",
       "Psychic"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Roaming Hoenn",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "emerald"
+        ],
+        "method": "Roaming",
+        "level_range": "40",
+        "chance": "One"
+      },
+      {
+        "name": "Hoenn Southern Island",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "sapphire",
+          "emerald"
+        ],
+        "method": "Only One (requires Eon Ticket)",
+        "level_range": "50",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] has the ability to make its foe see an image of what it has seen or imagines in its head. This Pokémon is intelligent and understands human speech.",
@@ -123347,7 +123910,30 @@
     "types": [
       "Water"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Cave of Origin",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "sapphire"
+        ],
+        "method": "Only One",
+        "level_range": "45",
+        "chance": "One"
+      },
+      {
+        "name": "Marine Cave",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "Only One",
+        "level_range": "70",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] has the power to create massive rain clouds that cover the entire sky and bring about torrential downpours. This Pokémon saved people who were suffering from droughts.",
@@ -123400,7 +123986,30 @@
     "types": [
       "Ground"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Cave of Origin",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby"
+        ],
+        "method": "Only One",
+        "level_range": "45",
+        "chance": "One"
+      },
+      {
+        "name": "Terra Cave",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "Only One",
+        "level_range": "70",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] has long been described in  mythology as the Pokémon that raised lands and expanded continents. This Pokémon took to sleep after a cataclysmic battle with [...].",
@@ -123454,7 +124063,21 @@
       "Dragon",
       "Flying"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Hoenn Sky Pillar",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "ruby",
+          "sapphire"
+        ],
+        "method": "Only One",
+        "level_range": "70",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "[...] lived for hundreds of millions of years in the earth's ozone layer,  never descending to the ground. This Pokémon appears to feed on water and particles in the atmosphere.",
@@ -123557,7 +124180,21 @@
     "types": [
       "Psychic"
     ],
-    "location_area_encounters": [],
+    "location_area_encounters": [
+      {
+        "name": "Birth Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "emerald",
+          "firered",
+          "leafgreen"
+        ],
+        "method": "Only One (requires Aurora Ticket)",
+        "level_range": "30",
+        "chance": "One"
+      }
+    ],
     "preevolution_location_area_encounters": [],
     "flavor_text_entries": [
       "The DNA of a space virus underwent a sudden mutation upon exposure to a laser beam and resulted in [...]. The crystalline organ on this POKeMON's chest appears to be its brain.",

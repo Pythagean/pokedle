@@ -79,6 +79,19 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                     const j = await resp.json();
                     if (!cancelled) {
+                        // Build a normalized lookup map (case/underscore/hyphen/space insensitive)
+                        try {
+                            const normalized = {};
+                            Object.keys(j).forEach(k => {
+                                try {
+                                    const nk = String(k).toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+                                    if (nk && !(nk in normalized)) normalized[nk] = j[k];
+                                } catch (e) { /* ignore key errors */ }
+                            });
+                            j.normalized = normalized;
+                        } catch (e) {
+                            console.debug('[LocationsPage] could not build normalized mapping', e);
+                        }
                         setLocationFileMap(j);
                         console.debug('[LocationsPage] loaded location map from', url);
                     }
@@ -392,12 +405,18 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 // Detect if any entry in this section uses time-of-day chance format
                 const hasTimeOfDay = filtered.some(enc => /morning:/i.test(enc.chance || ''));
 
-                    const rows = [];
-                for (const [rawName, entries] of grouped.entries()) {
+                    const groups = [];
+                    for (const [rawName, entries] of grouped.entries()) {
                     const slug = (rawName || '').replace(/\s+/g, '_');
                     let filename = null;
                     if (locationFileMap) {
-                        filename = locationFileMap[slug] || locationFileMap[rawName] || locationFileMap[rawName && rawName.replace(/[-_]+/g, ' ')] || locationFileMap[rawName && rawName.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
+                        // Support normalized mapping keys (case-insensitive, hyphen/underscore variants)
+                        const norm = (rawName || '').toLowerCase().replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+                        if (locationFileMap.normalized && locationFileMap.normalized[norm]) {
+                            filename = locationFileMap.normalized[norm];
+                        } else {
+                            filename = locationFileMap[slug] || locationFileMap[rawName] || locationFileMap[rawName && rawName.replace(/[-_]+/g, ' ')] || locationFileMap[rawName && rawName.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
+                        }
                     }
                     const mapThumbUrl = filename
                         ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}`
@@ -406,6 +425,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}`
                         : (rawName ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
                     const displayName = formatDisplay({ name: rawName });
+                    const groupRows = [];
                     entries.forEach((enc, ri) => {
                         const games = Array.isArray(enc.games) ? enc.games : [];
                         const sortedGames = [...games].sort((a, b) => {
@@ -446,7 +466,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             );
                         }
 
-                        rows.push(
+                        groupRows.push(
                             <tr key={rawName + ri}>
                                 {ri === 0 && (
                                     <td rowSpan={entries.length} className="loc-map-td">
@@ -479,13 +499,20 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                         })}
                                     </div>
                                     </td>
-                                    <td className="loc-td loc-td--method">{prettyMethod || '—'}</td>
+                                    <td className="loc-td loc-td--method loc-td--muted">{prettyMethod || '—'}</td>
                                     <td className="loc-td loc-td--levels loc-td--muted" style={{ textAlign: 'center' }}>{enc.level_range || '—'}</td>
                                     {chanceCells}
                             </tr>
                         );
                     });
+
+                    groups.push(
+                        <tbody key={rawName} className="loc-group">
+                            {groupRows}
+                        </tbody>
+                    );
                 }
+
                 return (
                         <div className="loc-table-wrap">
                         <table className="loc-table">
@@ -509,7 +536,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                 </tr>
                             )}
                         </thead>
-                        <tbody>{rows}</tbody>
+                        {groups}
                     </table>
                     </div>
                 );
@@ -725,6 +752,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-table td {
                     border: 1px solid #d0d0d0;
                 }
+                /* Make the horizontal grid line under each location group a bit bolder */
+                .loc-group {
+                    border-bottom: 2px solid #d0d0d0;
+                }
                 .loc-th {
                     background: #f6f6f6;
                     padding: 8px 10px;
@@ -750,10 +781,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     white-space: normal;
                 }
                 .loc-td--games { text-align: left; }
-                .loc-td--method { text-align: center; }
-                .loc-td--levels { text-align: center; }
-                .loc-td--chance { width: 60px; max-width: 80px; text-align: center; }
-                .loc-td--muted { color: #666; }
+                .loc-td--method { text-align: center; font-size: 14px; font-weight: 700; }
+                .loc-td--levels { text-align: center; font-size: 14px; font-weight: 700; }
+                .loc-td--chance { width: 60px; max-width: 80px; text-align: center; font-size: 14px; font-weight: 700; }
+                .loc-td--muted { color: #414141; }
                 .loc-map-td {
                     vertical-align: top;
                     padding: 8px;
@@ -819,7 +850,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     .loc-map-img { max-height: 65px; }
                     .loc-map-no-img { height: 65px; }
                     .loc-map-td { width: 120px; min-width: 100px; }
-                    .loc-td--method { white-space: normal; }
+                    .loc-td--method { white-space: normal; font-size: 13px; }
+                    .loc-td--levels { font-size: 13px; }
+                    .loc-td--chance { font-size: 13px; }
                     .loc-td { white-space: nowrap; }
                 }
             `}</style>

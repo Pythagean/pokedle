@@ -12,6 +12,7 @@ import argparse
 import os
 import sys
 import csv
+import json
 
 def main():
     parser = argparse.ArgumentParser(
@@ -26,6 +27,10 @@ def main():
         '--map-dir',
         required=True,
         help='Directory containing map PNG files'
+    )
+    parser.add_argument(
+        '--mapping-file',
+        help='Optional JSON mapping file (location -> filename) to consult before heuristics'
     )
     parser.add_argument(
         '--output-csv',
@@ -51,21 +56,133 @@ def main():
     
     print(f"Found {len(locations)} locations to process")
     print(f"Searching in: {args.map_dir}\n")
+
+    # Load optional mapping file (location name -> filename) if provided
+    mapping = {}
+    if args.mapping_file:
+        if not os.path.exists(args.mapping_file):
+            print(f"Warning: mapping file not found: {args.mapping_file} (continuing without it)")
+        else:
+            try:
+                with open(args.mapping_file, 'r', encoding='utf-8') as mf:
+                    mapping = json.load(mf)
+                print(f"Loaded mapping file: {args.mapping_file} ({len(mapping)} entries)")
+            except Exception as e:
+                print(f"Warning: error loading mapping file: {e} (continuing without it)")
+    # Build a normalized mapping: normalized_key -> filename
+    normalized_mapping = {}
+    if mapping:
+        for k, v in mapping.items():
+            nk = str(k).lower().replace('-', ' ').replace('_', ' ').strip()
+            nk = ' '.join(nk.split())
+            if nk not in normalized_mapping:
+                normalized_mapping[nk] = v
     
     found = []
     not_found = []
-    
     for location in locations:
-        # Convert spaces to underscores
-        filename = location.replace(' ', '_') + '.png'
-        filepath = os.path.join(args.map_dir, filename)
-        
-        if os.path.exists(filepath):
-            found.append((location, filename))
-            print(f"✓ Found: {location} -> {filename}")
-        else:
-            not_found.append((location, filename))
-            print(f"✗ Missing: {location} -> {filename}")
+        loc_raw = location.strip()
+
+        # 1) If mapping provided, try mapping keys similar to LocationsPage.jsx
+        mapped_filename = None
+        if mapping:
+            # try normalized lookup first
+            nk = loc_raw.lower().replace('-', ' ').replace('_', ' ').strip()
+            nk = ' '.join(nk.split())
+            if nk in normalized_mapping:
+                candidate = normalized_mapping[nk]
+                candidate_path = os.path.join(args.map_dir, candidate)
+                if os.path.exists(candidate_path):
+                    found.append((location, candidate))
+                    print(f"✓ Found via normalized mapping: {location} -> {candidate} (key: '{nk}')")
+                    mapped_filename = candidate
+                else:
+                    print(f"Mapping maps '{nk}' -> '{candidate}', but file not found in map-dir")
+                    mapped_filename = candidate
+            else:
+                # Try some direct variants as a fallback
+                keys_to_try = []
+                slug = "_".join(loc_raw.split())
+                keys_to_try.extend([slug, loc_raw, loc_raw.replace('-', ' '), loc_raw.lower(), slug.lower()])
+                keys_to_try.append(loc_raw.replace('_', ' '))
+                seenk = set()
+                uniq_keys = []
+                for k in keys_to_try:
+                    if not k:
+                        continue
+                    if k not in seenk:
+                        seenk.add(k)
+                        uniq_keys.append(k)
+                for key in uniq_keys:
+                    if key in mapping:
+                        candidate = mapping[key]
+                        candidate_path = os.path.join(args.map_dir, candidate)
+                        if os.path.exists(candidate_path):
+                            found.append((location, candidate))
+                            print(f"✓ Found via mapping: {location} -> {candidate} (key: '{key}')")
+                            mapped_filename = candidate
+                            break
+                        else:
+                            print(f"Mapping maps '{key}' -> '{candidate}', but file not found in map-dir")
+                            mapped_filename = candidate
+                            break
+
+        if mapped_filename:
+            # if mapped_filename was found (exists) we've already appended to found; if mapping pointed to file that doesn't exist,
+            # treat as missing below using the mapped filename
+            if os.path.exists(os.path.join(args.map_dir, mapped_filename)):
+                continue
+            else:
+                not_found.append((location, mapped_filename))
+                continue
+
+        # 2) No mapping match — fall back to heuristics (slug/raw/lowercase variants)
+        # Generate candidate filename bases to match LocationsPage.jsx lookup logic
+        candidates = []
+        slug = "_".join(loc_raw.split())
+        candidates.append(slug)
+        candidates.append(loc_raw)
+        candidates.append(loc_raw.lower())
+        candidates.append(slug.lower())
+        candidates.append(loc_raw.replace('-', ' '))
+        candidates.append(loc_raw.replace('-', '_'))
+        candidates.append(loc_raw.replace('_', ' '))
+
+        # normalize and dedupe while preserving order
+        seen = set()
+        unique_candidates = []
+        for c in candidates:
+            if not c:
+                continue
+            if c not in seen:
+                seen.add(c)
+                unique_candidates.append(c)
+
+        matched = False
+        for base in unique_candidates:
+            for ext in ('.png', '.PNG'):
+                filename = base + ext
+                filepath = os.path.join(args.map_dir, filename)
+                if os.path.exists(filepath):
+                    found.append((location, filename))
+                    print(f"✓ Found: {location} -> {filename} (via '{base}')")
+                    matched = True
+                    break
+            if matched:
+                break
+
+        if not matched:
+            # Fallback: try simple slug with underscores for any remaining variants
+            fallback = slug + '.png'
+            filepath = os.path.join(args.map_dir, fallback)
+            if os.path.exists(filepath):
+                found.append((location, os.path.basename(fallback)))
+                print(f"✓ Found (fallback): {location} -> {os.path.basename(fallback)}")
+            else:
+                # If still not found, record the primary expected filename (slug.png)
+                expected = slug + '.png'
+                not_found.append((location, expected))
+                print(f"✗ Missing: {location} -> {expected}")
     
     # Print summary
     print("\n" + "="*60)
