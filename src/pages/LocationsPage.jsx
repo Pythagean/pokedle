@@ -441,20 +441,28 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         const methodIconUrl = method ? `/images/encounter_methods/${method.toLowerCase()}.png` : null;
                         const parsed = parseChance(enc.chance);
 
+                        // Background colours for time-of-day cells (morning/day/night)
+                        const TOD_BG = {
+                            morning: '#fff6ca',
+                            day: '#deefff',
+                            night: '#f0e5fe',
+                            neutral: '#f5f5f5'
+                        };
+
                         let chanceCells;
                         if (hasTimeOfDay) {
                             if (parsed && parsed.timeOfDay) {
                                 chanceCells = (
                                     <>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.morning}</td>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.day}</td>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center' }}>{parsed.night}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.morning }}>{parsed.morning}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.day }}>{parsed.day}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.night }}>{parsed.night}</td>
                                     </>
                                 );
                             } else {
                                 // Simple chance value in a time-of-day section — span all 3 columns
                                 chanceCells = (
-                                    <td className="loc-td loc-td--muted loc-td--chance" colSpan={3} style={{ textAlign: 'center' }}>
+                                    <td className="loc-td loc-td--muted loc-td--chance" colSpan={3} style={{ textAlign: 'center', background: TOD_BG.neutral }}>
                                         {(parsed && parsed.value) || '—'}
                                     </td>
                                 );
@@ -582,17 +590,20 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         />
                         <div style={{ 
                             display: 'none', 
-                            width: 40, 
-                            height: 40, 
+                            width: 60, 
+                            height: 60, 
                             background: '#fafafa', 
                             alignItems: 'center', 
                             justifyContent: 'center', 
                             color: '#666', 
                             borderRadius: 8, 
                             border: '1px dashed #ddd',
-                            fontSize: 13
+                            fontSize: 13,
+                            padding: 8,
+                            textAlign: 'center',
+                            lineHeight: '1.1em'
                         }}>
-                            No footprint available
+                            No Footprint Available
                         </div>
                     </div>
                     
