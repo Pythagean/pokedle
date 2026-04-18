@@ -9836,7 +9836,7 @@
           "red",
           "blue"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "20, 24",
         "chance": "25%"
       },
@@ -9848,7 +9848,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 24, 26",
         "chance": "25%"
       },
@@ -10033,7 +10033,7 @@
         "games": [
           "blue"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "33, 36",
         "chance": "5%"
       }
@@ -10071,7 +10071,7 @@
           "red",
           "blue"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "20, 24",
         "chance": "25%"
       },
@@ -10083,7 +10083,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 24, 26",
         "chance": "25%"
       },
@@ -36520,7 +36520,7 @@
           "blue",
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "21, 23, 30, 35",
         "chance": "30-40%"
       },
@@ -36532,7 +36532,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 25",
         "chance": "30%"
       },
@@ -36712,7 +36712,7 @@
           "blue",
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "32-33, 35, 38",
         "chance": "10-20%"
       },
@@ -36735,7 +36735,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "31, 34",
         "chance": "10-15%"
       },
@@ -36776,7 +36776,7 @@
           "blue",
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "21, 23, 30, 35",
         "chance": "30-40%"
       },
@@ -36788,7 +36788,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 25",
         "chance": "30%"
       },
@@ -37991,7 +37991,7 @@
         "games": [
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "33, 37",
         "chance": "15%"
       },
@@ -38203,7 +38203,7 @@
         "games": [
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "33, 37",
         "chance": "5%"
       },
@@ -38341,7 +38341,7 @@
         "games": [
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "33, 37",
         "chance": "15%"
       },
@@ -43212,7 +43212,7 @@
           "blue",
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "21, 23, 33, 37",
         "chance": "20-30%"
       },
@@ -43224,7 +43224,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 25",
         "chance": "30%"
       },
@@ -43303,6 +43303,32 @@
         "method": "trade",
         "level_range": "The same as the traded Pokémon",
         "chance": "One"
+      },
+      {
+        "name": "Kanto Power Plant",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "fake item",
+        "level_range": "40",
+        "chance": "Only Six"
+      },
+      {
+        "name": "New Mauville",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "fake item",
+        "level_range": "25",
+        "chance": "Only Three"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -43429,6 +43455,44 @@
         "method": "basement",
         "level_range": "26",
         "chance": "1%"
+      },
+      {
+        "name": "Kanto Power Plant",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "fake item",
+        "level_range": "43",
+        "chance": "Only Two"
+      },
+      {
+        "name": "New Mauville",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "fake item",
+        "level_range": "30",
+        "chance": "Only Two"
+      },
+      {
+        "name": "Kanto Power Plant",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "fake item",
+        "level_range": "34",
+        "chance": "Only Two"
       }
     ],
     "preevolution_location_area_encounters": [
@@ -43441,7 +43505,7 @@
           "blue",
           "yellow"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "21, 23, 33, 37",
         "chance": "20-30%"
       },
@@ -43453,7 +43517,7 @@
           "firered",
           "leafgreen"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "22, 25",
         "chance": "30%"
       },
@@ -43532,6 +43596,32 @@
         "method": "trade",
         "level_range": "The same as the traded Pokémon",
         "chance": "One"
+      },
+      {
+        "name": "Kanto Power Plant",
+        "region": "Kanto",
+        "generation": 1,
+        "games": [
+          "red",
+          "blue",
+          "yellow"
+        ],
+        "method": "fake item",
+        "level_range": "40",
+        "chance": "Only Six"
+      },
+      {
+        "name": "New Mauville",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "ruby",
+          "sapphire",
+          "emerald"
+        ],
+        "method": "fake item",
+        "level_range": "25",
+        "chance": "Only Three"
       }
     ],
     "flavor_text_entries": [
@@ -52417,7 +52507,7 @@
         "games": [
           "red"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "33, 36",
         "chance": "5%"
       },
@@ -52428,7 +52518,7 @@
         "games": [
           "firered"
         ],
-        "method": "grass",
+        "method": "walking",
         "level_range": "32, 35",
         "chance": "5%"
       },
@@ -57244,6 +57334,19 @@
         "chance": "30%"
       },
       {
+        "name": "Lake of Rage",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "only one",
+        "level_range": "30",
+        "chance": "One"
+      },
+      {
         "name": "Pallet Town",
         "region": "Kanto",
         "generation": 3,
@@ -61367,6 +61470,19 @@
         ],
         "method": "gift",
         "level_range": "25",
+        "chance": "One"
+      },
+      {
+        "name": "Union Cave",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "only one",
+        "level_range": "20",
         "chance": "One"
       }
     ],
