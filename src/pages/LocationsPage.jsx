@@ -454,9 +454,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             if (parsed && parsed.timeOfDay) {
                                 chanceCells = (
                                     <>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.morning }}>{parsed.morning}</td>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.day }}>{parsed.day}</td>
-                                        <td className="loc-td loc-td--muted loc-td--chance" style={{ textAlign: 'center', background: TOD_BG.night }}>{parsed.night}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance-split" style={{ textAlign: 'center', background: TOD_BG.morning }}>{parsed.morning}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance-split" style={{ textAlign: 'center', background: TOD_BG.day }}>{parsed.day}</td>
+                                        <td className="loc-td loc-td--muted loc-td--chance-split" style={{ textAlign: 'center', background: TOD_BG.night }}>{parsed.night}</td>
                                     </>
                                 );
                             } else {
@@ -542,18 +542,27 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                 <th className="loc-th loc-th--map" rowSpan={hasTimeOfDay ? 2 : 1}>Map</th>
                                 <th className="loc-th loc-th--games" rowSpan={hasTimeOfDay ? 2 : 1}>Games</th>
                                 <th className="loc-th loc-th--method" rowSpan={hasTimeOfDay ? 2 : 1}>Method</th>
-                                <th className="loc-th loc-th--levels" rowSpan={hasTimeOfDay ? 2 : 1}>Levels</th>
+                                <th className="loc-th loc-th--levels" rowSpan={hasTimeOfDay ? 2 : 1}>
+                                    <span className="label-full">Levels</span>
+                                    <span className="label-short">Lvls</span>
+                                </th>
                                 {hasTimeOfDay ? (
-                                    <th className="loc-th loc-th--chance" colSpan={3}>% Chance</th>
+                                    <th className="loc-th loc-th--chance" colSpan={3}>
+                                        <span className="label-full">% Chance</span>
+                                        <span className="label-short">%</span>
+                                    </th>
                                 ) : (
-                                    <th className="loc-th loc-th--chance">% Chance</th>
+                                    <th className="loc-th loc-th--chance">
+                                        <span className="label-full">% Chance</span>
+                                        <span className="label-short">%</span>
+                                    </th>
                                 )}
                             </tr>
                             {hasTimeOfDay && (
                                 <tr>
-                                    <th className="loc-th loc-th--chance">Morning</th>
-                                    <th className="loc-th loc-th--chance">Day</th>
-                                    <th className="loc-th loc-th--chance">Night</th>
+                                    <th className="loc-th loc-th--chance"><span className="label-full">Morning</span><span className="label-short">AM</span></th>
+                                    <th className="loc-th loc-th--chance"><span className="label-full">Day</span><span className="label-short">Day</span></th>
+                                    <th className="loc-th loc-th--chance"><span className="label-full">Night</span><span className="label-short">PM</span></th>
                                 </tr>
                             )}
                         </thead>
@@ -808,6 +817,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-td--method { text-align: center; font-size: 14px; font-weight: 700; }
                 .loc-td--levels { text-align: center; font-size: 14px; font-weight: 700; }
                 .loc-td--chance { width: 60px; max-width: 80px; text-align: center; font-size: 14px; font-weight: 700; }
+                .loc-td--chance-split { width: 60px; max-width: 80px; text-align: center; font-size: 14px; font-weight: 700; }
                 .loc-td--muted { color: #414141; }
                 .loc-map-td {
                     vertical-align: top;
@@ -867,17 +877,31 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     line-height: 16px;
                     cursor: default;
                 }
+                /* Default: show full labels */
+                .loc-th .label-full { display: inline; }
+                .loc-th .label-short { display: none; }
                 tbody tr:nth-child(even) { background: #fbfbfb; }
                 @media (max-width: 600px) {
-                    .loc-table { font-size: 11px; }
-                    .loc-th, .loc-td { padding: 6px 8px; }
+                    .loc-table { font-size: 9px; }
+                    .loc-th, .loc-td { padding: 5px 6px; }
+                    .loc-th { font-size: 9px; }
+                    .loc-td { font-size: 9px; white-space: normal; }
                     .loc-map-img { max-height: 65px; }
                     .loc-map-no-img { height: 65px; }
-                    .loc-map-td { width: 120px; min-width: 100px; }
-                    .loc-td--method { white-space: normal; font-size: 13px; }
-                    .loc-td--levels { font-size: 13px; }
-                    .loc-td--chance { font-size: 13px; }
-                    .loc-td { white-space: nowrap; }
+                    /* Reduce padding around the map cell on mobile without changing map column width */
+                    .loc-map-td { width: 140px; min-width: 90px; padding: 4px; }
+                    /* Narrow non-map columns to save horizontal space */
+                    .loc-th--games { width: 90px; }
+                    .loc-th--method { width: 140px; }
+                    .loc-th--levels { width: 60px; }
+                    .loc-td--method { white-space: normal; font-size: 9px; }
+                    .loc-td--levels { font-size: 9px; }
+                    .loc-td--chance { font-size: 9px; width: 50px; }
+                    .loc-td--chance-split { font-size: 9px; width: 28px; max-width: 28px; }
+                    .loc-chip { font-size: 9px; padding: 1px 4px; min-width: 14px; }
+                    /* Header label visibility: show short labels on mobile */
+                    .loc-th .label-full { display: none; }
+                    .loc-th .label-short { display: inline; }
                 }
             `}</style>
             {/* Map popup overlay */}
