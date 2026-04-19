@@ -7,29 +7,29 @@
 - **Locations** <br>
     - Location data has now been pulled from Bulbapedia
     - Re-designed the Locations page to display data at a more granular level
+- **Card** <br>
+    - Added button which will blur/un-blur the card after mode has been completed (to compare how dumb we are)
+    - Added cards from Paldean Wonders, Mega Shine, Perfect Order sets
+- **Details** <br> 
+    - Added button which will zoom/un-zoom the image after mode has been completed (to compare how dumb we are)
 
 ## Commits included (newest first)
 
 ```text
-5199318 | 2026-04-08 | Results: Added an overall leaderboard for today
-8844835 | 2026-04-08 | Added banner when today is a themed day
-fa851ff | 2026-04-08 | Locations: Made "can't be found in the wild" text bigger and underlined (as well as being bright red)
-0e30335 | 2026-04-08 | Silhouette: Slightly zoomed out initial clue
-5c15f83 | 2026-04-08 | Card: Split out blur level scales so that Full Art and Special cards are different (Special cards will be slightly less blurred)
-ed987f6 | 2026-04-08 | Added more results images
-c8edfa1 | 2026-03-21 | Added Group Results section to results page
-6bf0d40 | 2026-03-21 | Started work on new logo (Slowpokle)
-601a971 | 2026-03-20 | Results: Invert guess numbering to reflect chronological order in submissions
-28aa4b9 | 2026-03-20 | Update version to 0.5.0 and enhance result submission with client version and device info
-dadb94e | 2026-03-20 | Adding Supabase db for tracking results
-c65f026 | 2026-03-18 | Pokedex: Remove duplicate pokedex entries so that the 2nd entry clue can't be the same as the 1st
-572ed1b | 2026-03-11 | Locations: Only include % chance for certain encounter methods
-223f65c | 2026-03-11 | Results: Name for card should persist between days now
-66fd660 | 2026-03-11 | Results: Fix overlapping pokedle numbers on mobile
-70502d7 | 2026-03-11 | Fixing some Pokemon Data entries
-7d79a6b | 2026-02-27 | Fixed issue with overriding pokemon on Fridays
-82a3a94 | 2026-02-27 | Adding new override
-3687636 | 2026-02-25 | Added more results images
+1d14b72 | 2026-04-19 | SilhouettePage & ZoomPage: Add toggle buttons to show silhouette and zoomed images on correct guesses
+df89ed1 | 2026-04-19 | Card: Add blur effect toggle for correct guesses and compute blur level based on guess count
+7f63c34 | 2026-04-19 | Getting the new locations grid working on mobile
+2345738 | 2026-04-19 | Results Page: Added refresh button to Leaderboard
+2ec0b16 | 2026-04-19 | More pokemon locations work
+23525f8 | 2026-04-18 | Enhance LocationsPage: Update chance cell styles and improve mobile responsiveness for table headers
+ab3ea63 | 2026-04-18 | Enhance LocationsPage: Add background colors for time-of-day cells and improve footprint display
+d908565 | 2026-04-17 | More work on locations
+1eb22d7 | 2026-04-17 | Working on locations
+4eef1a9 | 2026-04-16 | Add scripts for merging and scraping Pokemon encounter data
+7658d82 | 2026-04-10 | Update card manifest: Remove duplicate images and add new entries
+6f4e46e | 2026-04-10 | New Cards: Perfect Order
+84efe4d | 2026-04-10 | New Cards: Mega Shine
+0f437ef | 2026-04-10 | New Cards: Paldean Wonders
 ```
 
 ## Release Notes — April 8th, 2026
@@ -490,3 +490,7 @@ fc6d1bc | #72 - Refactor emoji selection and phrase generation in CongratsMessag
 c9ca6eb | #70 - Refactor blur level logic in CardPage: adjust values for improved visual feedback based on guesses
 ca912ea | #69 - Enhance confetti display logic: manage pending state and trigger based on CongratsMessage visibility
 ```
+
+
+Use this command to get git commits:
+git log --oneline --since="2026-04-09" --until="2026-04-19" --pretty=format:"%h | %ad | %s" --date=short
