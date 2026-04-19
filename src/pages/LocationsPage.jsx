@@ -884,10 +884,10 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-th .label-short { display: none; }
                 tbody tr:nth-child(even) { background: #fbfbfb; }
                 @media (max-width: 600px) {
-                    .loc-table { font-size: 8px; }
+                    .loc-table { font-size: 10px; }
                     .loc-th, .loc-td { padding: 3px 4px; }
-                    .loc-th { font-size: 8px; }
-                    .loc-td { font-size: 8px; white-space: normal; }
+                    .loc-th { font-size: 10px; }
+                    .loc-td { font-size: 10px; white-space: normal; }
                     .loc-map-img { max-height: 65px; }
                     .loc-map-no-img { height: 65px; }
                     /* Reduce padding around the map cell on mobile without changing map column width */
@@ -896,11 +896,11 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     .loc-th--games { width: 90px; }
                     .loc-th--method { width: 90px; }
                     .loc-th--levels { width: 60px; }
-                    .loc-td--method { white-space: normal; font-size: 8px; }
-                    .loc-td--levels { font-size: 8px; }
-                    .loc-td--chance { font-size: 8px; width: 50px; }
-                    .loc-td--chance-split { font-size: 8px; width: 28px; max-width: 28px; }
-                    .loc-chip { font-size: 8px; padding: 1px 4px; min-width: 14px; }
+                    .loc-td--method { white-space: normal; font-size: 10px; }
+                    .loc-td--levels { font-size: 10px; }
+                    .loc-td--chance { font-size: 10px; width: 50px; }
+                    .loc-td--chance-split { font-size: 10px; width: 28px; max-width: 28px; }
+                    .loc-chip { font-size: 10px; padding: 1px 4px; min-width: 14px; }
                     /* Header label visibility: show short labels on mobile */
                     .loc-th .label-full { display: none; }
                     .loc-th .label-short { display: inline; }
