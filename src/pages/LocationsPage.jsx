@@ -68,6 +68,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
         let cancelled = false;
         async function loadMap() {
             const tryUrls = [
+                `${import.meta.env.BASE_URL}data/location_to_file_map.json`,
+                'data/location_to_file_map.json',
                 '../../data/location_to_file_map.json',
             ];
             for (const url of tryUrls) {
@@ -438,7 +440,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         });
                         const method = enc.method || '';
                         const prettyMethod = method ? String(method).replace(/[-_]+/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
-                        const methodIconUrl = method ? `/images/encounter_methods/${method.toLowerCase()}.png` : null;
+                        const methodIconUrl = method ? `${import.meta.env.BASE_URL}images/encounter_methods/${method.toLowerCase()}.png` : null;
                         const parsed = parseChance(enc.chance);
 
                         // Background colours for time-of-day cells (morning/day/night)
