@@ -508,17 +508,17 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                         })}
                                     </div>
                                     </td>
-                                    <td className="loc-td loc-td--method loc-td--muted">
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                                            {methodIconUrl && (
+                                    <td >
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                            {methodIconUrl ? (
                                                 <img
                                                     src={methodIconUrl}
                                                     alt=""
                                                     style={{ width: 18, height: 18, objectFit: 'contain', flexShrink: 0 }}
                                                     onError={e => { e.target.style.display = 'none'; }}
                                                 />
-                                            )}
-                                            {prettyMethod || '—'}
+                                            ) : null}
+                                            <div className="loc-td loc-td--method loc-td--muted" style={{ textAlign: 'center', lineHeight: 1 }}>{prettyMethod || '—'}</div>
                                         </div>
                                     </td>
                                     <td className="loc-td loc-td--levels loc-td--muted" style={{ textAlign: 'center' }}>{enc.level_range || '—'}</td>
@@ -863,7 +863,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     word-break: break-word;
                     line-height: 1.3;
                 }
-                .loc-game-chips { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; }
+                .loc-game-chips { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
                 .loc-chip {
                     display: inline-flex;
                     align-items: center;
@@ -882,23 +882,23 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-th .label-short { display: none; }
                 tbody tr:nth-child(even) { background: #fbfbfb; }
                 @media (max-width: 600px) {
-                    .loc-table { font-size: 9px; }
-                    .loc-th, .loc-td { padding: 5px 6px; }
-                    .loc-th { font-size: 9px; }
-                    .loc-td { font-size: 9px; white-space: normal; }
+                    .loc-table { font-size: 8px; }
+                    .loc-th, .loc-td { padding: 3px 4px; }
+                    .loc-th { font-size: 8px; }
+                    .loc-td { font-size: 8px; white-space: normal; }
                     .loc-map-img { max-height: 65px; }
                     .loc-map-no-img { height: 65px; }
                     /* Reduce padding around the map cell on mobile without changing map column width */
                     .loc-map-td { width: 140px; min-width: 90px; padding: 4px; }
                     /* Narrow non-map columns to save horizontal space */
                     .loc-th--games { width: 90px; }
-                    .loc-th--method { width: 140px; }
+                    .loc-th--method { width: 90px; }
                     .loc-th--levels { width: 60px; }
-                    .loc-td--method { white-space: normal; font-size: 9px; }
-                    .loc-td--levels { font-size: 9px; }
-                    .loc-td--chance { font-size: 9px; width: 50px; }
-                    .loc-td--chance-split { font-size: 9px; width: 28px; max-width: 28px; }
-                    .loc-chip { font-size: 9px; padding: 1px 4px; min-width: 14px; }
+                    .loc-td--method { white-space: normal; font-size: 8px; }
+                    .loc-td--levels { font-size: 8px; }
+                    .loc-td--chance { font-size: 8px; width: 50px; }
+                    .loc-td--chance-split { font-size: 8px; width: 28px; max-width: 28px; }
+                    .loc-chip { font-size: 8px; padding: 1px 4px; min-width: 14px; }
                     /* Header label visibility: show short labels on mobile */
                     .loc-th .label-full { display: none; }
                     .loc-th .label-short { display: inline; }
@@ -945,7 +945,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
-                <button
+                {/* <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -956,9 +956,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     disabled={resetCount >= 200}
                 >
                     Reset
-                </button>
+                </button> */}
             </div>
-            <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
                 <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
                 <input
                     id="override-id"
@@ -971,7 +971,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {overridePokemon && (
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
-            </div>
+            </div> */}
             <div style={{ margin: '24px auto', maxWidth: 'none', width: 'min(1200px, 95%)', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
