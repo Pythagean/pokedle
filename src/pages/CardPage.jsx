@@ -67,6 +67,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const dropdownRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showBlurred, setShowBlurred] = useState(false);
   const prevCorrectRef = useRef(false);
 
 
@@ -289,6 +290,23 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         blurLevel = 2; break;
     }
   }
+  // Helper: compute blur level from guess count + card type (mirrors the switch logic above)
+  function computeBlurLevel(count, type) {
+    if (type === 'full_art') {
+      const levels = [16, 14, 12, 9, 7, 5, 4, 3, 2, 2, 2, 2, 2];
+      return levels[Math.min(count, levels.length - 1)];
+    } else if (type === 'special') {
+      const levels = [14, 12, 10, 9, 7, 6, 5, 4, 3, 2, 2, 2, 2];
+      return levels[Math.min(count, levels.length - 1)];
+    } else {
+      const levels = [15, 13, 11, 9, 8, 7, 6, 5, 4, 3, 2, 2, 2];
+      return levels[Math.min(count, levels.length - 1)];
+    }
+  }
+  // When correct, prevBlurLevel is what was shown just before the correct guess
+  const prevBlurLevel = computeBlurLevel(Math.max(0, guesses.length - 1), cardType);
+  const effectiveBlur = isCorrect && showBlurred ? prevBlurLevel : blurLevel;
+
   // If correct, always show resized image
   const forceReveal = isCorrect;
   useEffect(() => {
@@ -454,7 +472,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                   onContextMenu={e => e.preventDefault()}
                   style={{
                     borderRadius: 8,
-                    filter: `blur(${blurLevel}px)`,
+                    filter: `blur(${effectiveBlur}px)`,
                     transition: 'filter 0.4s',
                   }}
                 />
@@ -473,7 +491,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                       style={{
                         zIndex: 1,
                         borderRadius: 8,
-                        filter: `blur(${blurLevel}px)`,
+                        filter: `blur(${effectiveBlur}px)`,
                         transition: 'filter 0.4s',
                       }}
                     />
@@ -491,7 +509,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                         zIndex: 2,
                         borderRadius: 8,
                         background: 'transparent',
-                        filter: `blur(${blurLevel}px)`,
+                        filter: `blur(${effectiveBlur}px)`,
                         transition: 'filter 0.4s',
                         /* Display the cropped image smaller and inset within the viewport
                            so only a portion is visible (like a magnified crop). */
@@ -511,6 +529,17 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
           )}
         </div>
         {/* Blur debug line removed */}
+        {/* Toggle button to preview the card as it was blurred before the correct guess */}
+        {isCorrect && (
+          <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <button
+              onClick={() => setShowBlurred(b => !b)}
+              style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+            >
+              {showBlurred ? 'Show Un-Blurred' : 'Show Blurred'}
+            </button>
+          </div>
+        )}
         {/* Only show hint text if not guessed correctly */}
         {!isCorrect && (
           <>
