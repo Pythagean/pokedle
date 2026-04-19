@@ -32,6 +32,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showSilhouette, setShowSilhouette] = useState(false);
   const prevCorrectRef = useRef(false);
 
 
@@ -173,10 +174,15 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const maxZoom = 2.7;
   const minZoom = 1.1;
   const maxSteps = 8;
-  const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const easePower = 1.1;
+  function computeZoomFromCount(count) {
+    const tt = Math.min(count, maxSteps - 1) / (maxSteps - 1);
+    return maxZoom - (maxZoom - minZoom) * Math.pow(tt, easePower);
+  }
+  const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
   const eased = Math.pow(t, easePower);
   let zoom = maxZoom - (maxZoom - minZoom) * eased;
+  const prevZoomLevel = computeZoomFromCount(Math.max(0, guesses.length - 1));
   // Only use the debug override when the debug overlay is enabled
   if (debugOverlay && debugZoom !== null) zoom = debugZoom;
 
@@ -325,14 +331,13 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // (No explicit translate) The image is scaled around a computed transform-origin
 
   if (isCorrect) {
-    zoom = 1.0;
-
+    zoom = showSilhouette ? prevZoomLevel : 1.0;
   }
   // Combine mirroring and zoom — use scale with transformOrigin anchored at the
   // interpolated focal center so the silhouette zooms out from the chosen point.
   let scaleX = shouldMirror ? -1 : 1;
   // Only animate transform when the puzzle is correct; otherwise keep transforms instantaneous
-  imgStyle.transition = isCorrect ? 'transform 3000ms cubic-bezier(.2,.8,.2,1)' : 'none';
+  imgStyle.transition = (isCorrect && !showSilhouette) ? 'transform 3000ms cubic-bezier(.2,.8,.2,1)' : 'none';
   // Compute a transformOrigin that maps the logical target (targetX/targetY)
   // into the rendered image coordinates inside the container. This keeps the
   // chosen focus point visually stationary during scaling even with letterboxing.
@@ -543,7 +548,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               onDragStart={e => e.preventDefault()}
               onContextMenu={e => e.preventDefault()}
               // Hide until loaded to prevent flash of unzoomed image
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: (!isCorrect && silhouetteLoaded) ? 1 : 0, transition: combinedTransition }}
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 1, opacity: ((!isCorrect || showSilhouette) && silhouetteLoaded) ? 1 : 0, transition: combinedTransition }}
               onLoad={e => {
                 setSilhouetteLoaded(true);
                 try { setImgNatural({ w: e.target.naturalWidth, h: e.target.naturalHeight }); } catch (err) { }
@@ -557,7 +562,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
               draggable={false}
               onDragStart={e => e.preventDefault()}
               onContextMenu={e => e.preventDefault()}
-              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && realLoaded) ? 1 : 0, transition: combinedTransition, filter: 'none', transform: isCorrect ? 'scale(1.0,1.0)' : imgStyle.transform }}
+              style={{ ...imgStyle, position: 'absolute', inset: 0, zIndex: 2, opacity: (isCorrect && !showSilhouette && realLoaded) ? 1 : 0, transition: combinedTransition, filter: 'none', transform: (isCorrect && !showSilhouette) ? 'scale(1.0,1.0)' : imgStyle.transform }}
               onLoad={e => { setRealLoaded(true); }}
               onError={e => { setRealLoaded(false); }}
             />
@@ -629,6 +634,16 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             )}
           </div>
         </div>
+        {isCorrect && (
+          <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <button
+              onClick={() => setShowSilhouette(s => !s)}
+              style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+            >
+              {showSilhouette ? 'Show Answer' : 'Show Silhouette'}
+            </button>
+          </div>
+        )}
       </div>
       {!isCorrect && (
         <form

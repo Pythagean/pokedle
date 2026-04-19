@@ -33,6 +33,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const lastGuessRef = useRef(null);
   const imgContainerRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showZoomed, setShowZoomed] = useState(false);
   const prevCorrectRef = useRef(false);
  
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
@@ -147,11 +148,17 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const maxZoom = 11.0;
   const minZoom = 0.9;
   const maxSteps = 12;
+  const easePower = 1.15;
+  function computeZoomFromCount(count) {
+    const tt = Math.min(count, maxSteps - 1) / (maxSteps - 1);
+    return maxZoom - (maxZoom - minZoom) * Math.pow(tt, easePower);
+  }
   const t = Math.min(guesses.length, maxSteps - 1) / (maxSteps - 1);
-  const easePower = 1.15; // cubic easing; increase to make initial steps even gentler
   const eased = Math.pow(t, easePower);
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
-  const zoom = isCorrect ? 0.9 : (debugZoom !== null ? debugZoom : computedZoom);
+  // Zoom level just before the correct guess (guesses.length includes the correct one)
+  const prevZoomLevel = computeZoomFromCount(Math.max(0, guesses.length - 1));
+  const zoom = (isCorrect && !showZoomed) ? 0.9 : (isCorrect && showZoomed ? prevZoomLevel : (debugZoom !== null ? debugZoom : computedZoom));
   // console.log('ZoomPage: zoom=', zoom, 't=', t, 'eased=', eased, 'guesses=', guesses.length);
   let edgeX = 0.5, edgeY = 0.5;
   let transformOrigin = '50% 50%';
@@ -186,8 +193,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   // We translate so the focal point moves to 50%, then scale from center
   let scaleX = shouldMirror ? -1 : 1;
   
-  if (isCorrect) {
-    // When correct, remove all transformations to show the image naturally
+  if (isCorrect && !showZoomed) {
+    // When correct (and not previewing zoomed), remove all transformations
     imgStyle.transform = 'none';
     // Smoothly animate to the unzoomed state on correct guess
     imgStyle.transition = 'transform 3000ms cubic-bezier(.2,.8,.2,1)';
@@ -494,6 +501,16 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             )}
            </div>
          </div>
+        {isCorrect && (
+          <div style={{ textAlign: 'center', marginTop: 10 }}>
+            <button
+              onClick={() => setShowZoomed(z => !z)}
+              style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+            >
+              {showZoomed ? 'Show Answer' : 'Show Zoomed'}
+            </button>
+          </div>
+        )}
       </div>
       {!isCorrect && (
         <form
