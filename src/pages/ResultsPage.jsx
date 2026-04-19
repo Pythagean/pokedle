@@ -40,6 +40,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [leaderResults, setLeaderResults] = useState(null);
     const [leaderLoading, setLeaderLoading] = useState(false);
     const [leaderError, setLeaderError] = useState(null);
+    const [leaderLoaded, setLeaderLoaded] = useState(false);
     const cardRef = useRef(null);
     const sparkleIdCounter = useRef(0);
 
@@ -828,22 +829,34 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     }, [cardPreviewUrl, dayNumber]);
 
-    // Auto-fetch today's leaderboard once all modes are completed
-    useEffect(() => {
-        if (!allCompleted) return;
+    // Auto-fetch today's leaderboard once all modes are completed.
+    // Extracted into a named function so it can be triggered manually (refresh).
+    const fetchLeaderResults = async () => {
         setLeaderLoading(true);
         setLeaderError(null);
-        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-        const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}`;
-        fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
-            .then(res => res.json().then(data => ({ ok: res.ok, data })))
-            .then(({ ok, data }) => {
-                if (ok) setLeaderResults(data.results ?? []);
-                else setLeaderError(data.error ?? 'Failed to load leaderboard');
-            })
-            .catch(e => setLeaderError(e?.message ?? String(e)))
-            .finally(() => setLeaderLoading(false));
+        try {
+            const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+            const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+            const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}`;
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) {
+                // support both possible shapes
+                setLeaderResults(Array.isArray(data) ? data : (data.results ?? data.data ?? []));
+            } else {
+                setLeaderError(data.error ?? data.message ?? 'Failed to load leaderboard');
+            }
+        } catch (e) {
+            setLeaderError(e?.message ?? String(e));
+        } finally {
+            setLeaderLoading(false);
+            setLeaderLoaded(true);
+        }
+    };
+
+    useEffect(() => {
+        if (!allCompleted) return;
+        fetchLeaderResults();
     }, [allCompleted, dayNumber]);
 
     // Persist group code to localStorage whenever picks change
@@ -1049,10 +1062,6 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden', maxWidth: summaryMax, alignContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
                 <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '65px' }} />
                 {/* Small section header for today's summary */}
-                <div style={{ textAlign: 'center', marginBottom: 8 }}>
-                    <div style={{ fontWeight: 700, textAlign: 'center' }}>Today ({pokedleLabel})</div>
-                </div>
-
                 {!showDetails ? (
                     entries.map((e, i) => (
                         <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '10px 0', lineHeight: '1.1', borderBottom: i !== entries.length - 1 ? '1px solid #fafafa' : 'none' }}>
@@ -1063,11 +1072,6 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 ) : (
                     <div>
                         {results.map((r, i) => {
-                            const guesses = (guessesByPage && guessesByPage[r.key]) || [];
-                            const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
-                            const count = guesses.length;
-                            const countDisplay = r.solved ? count : '-';
-                            // Determine the correct name for this page (card page stores pokemon under daily.pokemon)
                             let correctName = null;
                             try {
                                 if (r && r.daily) {
@@ -1529,6 +1533,28 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             {/* Today's Leaderboard */}
             <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
                 <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>🏆 Today's Leaderboard 🏆</div>
+                {allCompleted && leaderLoaded ? (
+                    <div style={{ textAlign: 'center', marginTop: 6 }}>
+                        <button
+                            onClick={() => { if (!allCompleted || leaderLoading) return; fetchLeaderResults(); }}
+                            disabled={!allCompleted || leaderLoading}
+                            title="Refresh leaderboard"
+                            style={{
+                                height: 40,
+                                minWidth: isMobile ? '100%' : 120,
+                                borderRadius: 8,
+                                border: '1px solid #e0e0e0',
+                                background: (!allCompleted || leaderLoading) ? '#f5f5f5' : '#efefef',
+                                cursor: (!allCompleted || leaderLoading) ? 'not-allowed' : 'pointer',
+                                padding: '0 12px',
+                                fontSize: 14,
+                                color: (!allCompleted || leaderLoading) ? '#999' : '#111'
+                            }}
+                        >
+                            {leaderLoading ? 'Refreshing…' : '🔄 Refresh'}
+                        </button>
+                    </div>
+                ) : null}
                 {!allCompleted && (
                     <div style={{ textAlign: 'center', fontSize: 13, color: '#666' }}>Complete all of today's modes to see the leaderboard</div>
                 )}
@@ -1550,10 +1576,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         { key: 'colours',   label: 'Colours',  short: 'Col' },
                         { key: 'locations', label: 'Locations',short: 'Loc' },
                     ];
-                    const colW = isMobile ? 'minmax(0,0.6fr)' : '36px';
+                    const colW = isMobile ? 'minmax(0,0.6fr)' : '56px';
                     const gridCols = isMobile
                         ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
-                        : `minmax(0, 1.5fr) repeat(${modes.length}, 36px) minmax(0,1fr)`;
+                        : `minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
                     return (
                         <div style={{ marginTop: 14 }}>
                             <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
@@ -1657,10 +1683,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         { key: 'colours',   label: 'Colours',  short: 'Col' },
                         { key: 'locations', label: 'Locations',short: 'Loc' },
                     ];
-                    const colW = isMobile ? 'minmax(0,0.6fr)' : '36px';
+                    const colW = isMobile ? 'minmax(0,0.6fr)' : '56px';
                     const gridCols = isMobile
                         ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
-                        : `minmax(0, 1.5fr) repeat(${modes.length}, 36px) minmax(0,1fr)`;
+                        : `minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
                     return (
                         <div style={{ marginTop: 14 }}>
                             {/* Header */}
