@@ -1080,6 +1080,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             } catch (e) {
                                 correctName = null;
                             }
+                            const guesses = (guessesByPage && guessesByPage[r.key]) || [];
+                            const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
+                            const countDisplay = r.solved ? guesses.length : '-';
                             return (
                                 <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '8px 0', lineHeight: '1.3', borderBottom: i !== results.length - 1 ? '1px solid #fafafa' : 'none' }}>
                                     <span style={{ fontWeight: 500, fontSize: 15, color: '#222', justifySelf: 'start', textAlign: 'left' }}>
