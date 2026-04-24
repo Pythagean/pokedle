@@ -1653,7 +1653,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 })()}
             </div>
             {/* Group Results */}
-            <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+            {/* <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
                 <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>Group Results</div>
                 {(!allCompleted || !groupLoaded) && (
                     <div style={{ textAlign: 'center', fontSize: 13, color: '#666', marginBottom: 12 }}>{allCompleted ? 'Start by tapping the sprites below to create a unique code for your group' : "Complete all of today's modes to enable Group Results"}</div>
@@ -1721,81 +1721,84 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     >
                         {groupLoading ? 'Loading…' : 'Load Group Results'}
                     </button>
-                </div>
-                {groupError && (
+                </div> */}
+
+                {/* {groupError && (
                     <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13, marginTop: 8 }}>{groupError}</div>
                 )}
                 {groupResults && groupResults.length === 0 && (
                     <div style={{ textAlign: 'center', color: '#888', fontSize: 13, marginTop: 8 }}>No results found for this group code today.</div>
-                )}
+                )} */}
+
                 {groupResults && groupResults.length > 0 && (() => {
-                    const modes = [
-                        { key: 'classic',   label: 'Classic',  short: 'Cls' },
-                        { key: 'card',      label: 'Card',     short: 'Crd' },
-                        { key: 'pokedex',   label: 'Pokédex',  short: 'Dex' },
-                        { key: 'details',   label: 'Details',  short: 'Det' },
-                        { key: 'colours',   label: 'Colours',  short: 'Col' },
-                        { key: 'locations', label: 'Locations',short: 'Loc' },
-                    ];
-                    const colW = isMobile ? 'minmax(0,0.6fr)' : '56px';
-                    const gridCols = isMobile
-                        ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
-                        : `minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
-                    // compute distinct totals for group results as well
-                    const groupTotals = (groupResults || []).map(r => Number(r.total ?? 0));
-                    const groupDistinct = Array.from(new Set(groupTotals)).sort((a,b) => a - b);
-                    const gGold = groupDistinct[0];
-                    const gSilver = groupDistinct[1];
-                    const gBronze = groupDistinct[2];
+                    // const modes = [
+                    //     { key: 'classic',   label: 'Classic',  short: 'Cls' },
+                    //     { key: 'card',      label: 'Card',     short: 'Crd' },
+                    //     { key: 'pokedex',   label: 'Pokédex',  short: 'Dex' },
+                    //     { key: 'details',   label: 'Details',  short: 'Det' },
+                    //     { key: 'colours',   label: 'Colours',  short: 'Col' },
+                    //     { key: 'locations', label: 'Locations',short: 'Loc' },
+                    // ];
+                    // const colW = isMobile ? 'minmax(0,0.6fr)' : '56px';
+                    // const gridCols = isMobile
+                    //     ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
+                    //     : `minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
+                    // // compute distinct totals for group results as well
+                    // const groupTotals = (groupResults || []).map(r => Number(r.total ?? 0));
+                    // const groupDistinct = Array.from(new Set(groupTotals)).sort((a,b) => a - b);
+                    // const gGold = groupDistinct[0];
+                    // const gSilver = groupDistinct[1];
+                    // const gBronze = groupDistinct[2];
 
-                    return (
-                        <div style={{ marginTop: 14 }}>
-                            {/* Header */}
-                            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
-                                <div>Player</div>
-                                {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
-                                <div style={{ textAlign: 'right' }}>Total</div>
-                            </div>
-                            {/* Rows */}
-                            {groupResults.map((row, i) => {
-                                const t = Number(row.total ?? 0);
-                                let medal = null;
-                                if (t === gGold) {
-                                    medal = '🥇';
-                                } else if (t === gSilver) {
-                                    medal = '🥈';
-                                } else if (t === gBronze) {
-                                    medal = '🥉';
-                                }
+                    // return (
+                    //     <div style={{ marginTop: 14 }}>
+                    //         {/* Header */}
+                    //         <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
+                    //             <div>Player</div>
+                    //             {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
+                    //             <div style={{ textAlign: 'right' }}>Total</div>
+                    //         </div>
+                    //         {/* Rows */}
+                    //         {groupResults.map((row, i) => {
+                    //             const t = Number(row.total ?? 0);
+                    //             let medal = null;
+                    //             if (t === gGold) {
+                    //                 medal = '🥇';
+                    //             } else if (t === gSilver) {
+                    //                 medal = '🥈';
+                    //             } else if (t === gBronze) {
+                    //                 medal = '🥉';
+                    //             }
 
-                                return (
-                                    <div
-                                        key={i}
-                                        style={{
-                                            display: 'grid',
-                                            gridTemplateColumns: gridCols,
-                                            gap: isMobile ? 2 : 4,
-                                            padding: '6px 4px',
-                                            borderBottom: i !== groupResults.length - 1 ? '1px solid #fafafa' : 'none',
-                                            fontSize: isMobile ? 11 : 13,
-                                            alignItems: 'center'
-                                        }}
-                                    >
-                                        <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
-                                            {medal ? <span style={{ fontSize: isMobile ? 14 : 16 }}>{medal}</span> : null}
-                                            {row.player || '—'}
-                                        </div>
-                                        {modes.map(m => (
-                                            <div key={m.key} style={{ textAlign: 'center' }}>{row[m.key] ?? '—'}</div>
-                                        ))}
-                                        <div style={{ textAlign: 'right', fontWeight: 700 }}>{row.total ?? '—'}</div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    );
+                    //             return (
+                    //                 <div
+                    //                     key={i}
+                    //                     style={{
+                    //                         display: 'grid',
+                    //                         gridTemplateColumns: gridCols,
+                    //                         gap: isMobile ? 2 : 4,
+                    //                         padding: '6px 4px',
+                    //                         borderBottom: i !== groupResults.length - 1 ? '1px solid #fafafa' : 'none',
+                    //                         fontSize: isMobile ? 11 : 13,
+                    //                         alignItems: 'center'
+                    //                     }}
+                    //                 >
+                    //                     <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
+                    //                         {medal ? <span style={{ fontSize: isMobile ? 14 : 16 }}>{medal}</span> : null}
+                    //                         {row.player || '—'}
+                    //                     </div>
+                    //                     {modes.map(m => (
+                    //                         <div key={m.key} style={{ textAlign: 'center' }}>{row[m.key] ?? '—'}</div>
+                    //                     ))}
+                    //                     <div style={{ textAlign: 'right', fontWeight: 700 }}>{row.total ?? '—'}</div>
+                    //                 </div>
+                    //             );
+                    //         })}
+                    //     </div>
+                    // );
                 })()}
-            </div>
+            {/* </div> */}
+            
             {/* Previous days history (last 10) - moved to its own container */}
                 {history && history.length > 0 ? (
                 <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
