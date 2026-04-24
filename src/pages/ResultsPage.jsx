@@ -10,6 +10,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [exportStatus, setExportStatus] = useState(null);
     const [exportError, setExportError] = useState(null);
     const [cardPreviewUrl, setCardPreviewUrl] = useState(null);
+    const [previewType, setPreviewType] = useState('card');
     const [cardName, setCardName] = useState('');
     const [generatedDisabled, setGeneratedDisabled] = useState(false);
     const [holoRotate, setHoloRotate] = useState({ x: 0, y: 0 });
@@ -77,12 +78,15 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             if (storedName) setCardName(storedName);
             
             if (storedDay && parseInt(storedDay, 10) === dayNumber) {
-                // Same day - restore the card preview
-                if (storedUrl) setCardPreviewUrl(storedUrl);
+                if (storedUrl) {
+                    setCardPreviewUrl(storedUrl);
+                    setPreviewType('card');
+                }
             } else {
-                // Different day - clear the stored card preview (but keep the name)
-                localStorage.removeItem('pokedle_card_day');
-                localStorage.removeItem('pokedle_card_preview_url');
+                // clear outdated preview
+                if (storedUrl) {
+                    try { localStorage.removeItem('pokedle_card_preview_url'); } catch (e) {}
+                }
             }
         } catch (e) {
             // ignore
@@ -166,10 +170,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 return { status: 'error', message: 'no_guesses' };
             }
 
-            // Calculate canvas size
+            // Calculate canvas size (reserve space for title + optional player name)
+            const hasTitleName = userName && String(userName).trim().length > 0;
+            const titleBlockHeight = hasTitleName ? 64 : 32;
             const maxSprites = Math.max(...rows.map(row => row.ids.length));
             const canvasWidth = leftMargin * 2 + maxSprites * spriteSize + (maxSprites - 1) * 8;
-            const canvasHeight = topMargin * 2 + rows.length * (headerHeight + spriteSize + rowGap);
+            const canvasHeight = topMargin * 2 + titleBlockHeight + rows.length * (headerHeight + spriteSize + rowGap);
 
             const canvas = document.createElement('canvas');
             canvas.width = Math.round(canvasWidth * dpi);
@@ -219,7 +225,6 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             }
 
             // Leave extra vertical space when player name is present
-            const titleBlockHeight = titleName ? 64 : 32;
             let y = topMargin + titleBlockHeight;
 
             // Draw each mode row
@@ -324,10 +329,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         // Try clipboard
                         try {
                             if (navigator.clipboard && window.ClipboardItem) {
-                                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                                resolve({ status: 'clipboard', url: dataUrl });
-                                return;
-                            }
+                                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                                    resolve({ status: 'clipboard', url: dataUrl, type: 'guesses' });
+                                    return;
+                                }
                         } catch (e) {}
                         // Fallback download
                         try {
@@ -338,7 +343,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             a.click();
                             a.remove();
                         } catch (e) {}
-                        resolve({ status: 'downloaded', url: dataUrl });
+                        resolve({ status: 'downloaded', url: dataUrl, type: 'guesses' });
                     };
                     reader.onerror = () => resolve({ status: 'error', message: 'read_fail' });
                     reader.readAsDataURL(blob);
@@ -759,7 +764,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         try {
                             if (navigator.clipboard && window.ClipboardItem) {
                                 await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                                resolve({ status: 'clipboard', url: dataUrl });
+                                resolve({ status: 'clipboard', url: dataUrl, type: 'card' });
                                 return;
                             }
                         } catch (e) {
@@ -777,7 +782,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         } catch (e) {
                             // ignore download errors
                         }
-                        resolve({ status: 'downloaded', url: dataUrl });
+                        resolve({ status: 'downloaded', url: dataUrl, type: 'card' });
                     };
                     reader.onerror = () => resolve({ status: 'error', message: 'read_fail' });
                     reader.readAsDataURL(blob);
@@ -895,7 +900,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
 
     // Generate sparkle particles when holo is active
     useEffect(() => {
-        if (!holoEnabled || !cardPreviewUrl) return;
+        if (!holoEnabled || !cardPreviewUrl || previewType === 'guesses') return;
         
         const generateSparkle = () => {
             const id = sparkleIdCounter.current++;
@@ -928,7 +933,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }, 600);
         
         return () => clearInterval(interval);
-    }, [holoEnabled, cardPreviewUrl]);
+    }, [holoEnabled, cardPreviewUrl, previewType]);
 
     // Mouse and touch tracking for holographic effect
     const updateHoloRotation = (clientX, clientY, isTouch = false) => {
@@ -1140,6 +1145,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
+                                        setPreviewType(res.type || (newShow ? 'guesses' : 'card'));
                                         // Save the name to localStorage when generating (persists across days)
                                         try {
                                             if (cardName) {
@@ -1189,6 +1195,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     if (res && typeof res === 'object' && res.url) {
                                         try { if (cardPreviewUrl) URL.revokeObjectURL(cardPreviewUrl); } catch (e) {}
                                         setCardPreviewUrl(res.url);
+                                        setPreviewType(res.type || (showDetails ? 'guesses' : 'card'));
                                         // Save the name to localStorage when generating (persists across days)
                                         try {
                                             if (cardName) {
@@ -1271,7 +1278,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center' }}>
                             <div style={{ position: 'relative', width: isMobile ? '100%' : 350, maxWidth: '100%' }}>
                                 {/* Dynamic 3D drop shadow - positioned behind card */}
-                                {holoEnabled && (
+                                {holoEnabled && previewType !== 'guesses' && (
                                     <div
                                         style={{
                                             position: 'absolute',
@@ -1310,12 +1317,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             position: 'relative',
                                             //padding: 8,
                                             background: '#fff',
-                                            transform: holoEnabled 
+                                            transform: (holoEnabled && previewType !== 'guesses') 
                                                 ? `rotateX(${holoRotate.x}deg) rotateY(${holoRotate.y}deg)`
                                                 : 'none',
                                             transition: `transform ${isMobile ? '0.15s' : '0.3s'} ease-out`,
                                             transformStyle: 'preserve-3d',
-                                            animation: holoEnabled && !isInteracting && holoRotate.x === 0 && holoRotate.y === 0
+                                            animation: (holoEnabled && previewType !== 'guesses' && !isInteracting && holoRotate.x === 0 && holoRotate.y === 0)
                                                 ? 'idle-float 4s ease-in-out infinite'
                                                 : 'none'
                                         }}
@@ -1332,7 +1339,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                 zIndex: 1
                                             }} 
                                         />
-                                    {holoEnabled && (
+                                    {holoEnabled && previewType !== 'guesses' && (
                                         <>
                                             {/* Rainbow gradient overlay */}
                                             <div
