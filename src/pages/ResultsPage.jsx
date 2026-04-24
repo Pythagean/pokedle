@@ -204,15 +204,23 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-            // Draw title
-            const titleSuffix = userName && String(userName).trim().length > 0 ? String(userName).trim() : 'Guesses';
-            ctx.font = '700 24px "Montserrat", Arial, sans-serif';
+            // Draw title: pokedle label on first line, optional player name below it
+            const titleName = userName && String(userName).trim().length > 0 ? String(userName).trim() : null;
+            ctx.font = '700 22px "Montserrat", Arial, sans-serif';
             ctx.fillStyle = '#111';
             ctx.textAlign = 'left';
             ctx.textBaseline = 'top';
-            ctx.fillText(`${pokedleLabel} - ${titleSuffix}`, leftMargin, topMargin - 8);
+            ctx.fillText(pokedleLabel, leftMargin, topMargin - 8);
+            if (titleName) {
+                ctx.font = '600 20px "Montserrat", Arial, sans-serif';
+                ctx.fillStyle = '#333';
+                ctx.textBaseline = 'top';
+                ctx.fillText(titleName, leftMargin, topMargin + 18);
+            }
 
-            let y = topMargin + 32;
+            // Leave extra vertical space when player name is present
+            const titleBlockHeight = titleName ? 64 : 32;
+            let y = topMargin + titleBlockHeight;
 
             // Draw each mode row
             for (const row of rows) {
