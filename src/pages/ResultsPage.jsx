@@ -42,6 +42,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [leaderLoading, setLeaderLoading] = useState(false);
     const [leaderError, setLeaderError] = useState(null);
     const [leaderLoaded, setLeaderLoaded] = useState(false);
+    const [breakdownMode, setBreakdownMode] = useState('classic');
+    const [allBreakdownGuesses, setAllBreakdownGuesses] = useState(null);
+    const [breakdownLoading, setBreakdownLoading] = useState(false);
+    const [breakdownError, setBreakdownError] = useState(null);
     const cardRef = useRef(null);
     const sparkleIdCounter = useRef(0);
 
@@ -871,6 +875,32 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         if (!allCompleted) return;
         fetchLeaderResults();
     }, [allCompleted, dayNumber]);
+
+    const fetchBreakdownData = async () => {
+        setBreakdownLoading(true);
+        setBreakdownError(null);
+        try {
+            const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+            const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+            const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}&include_guesses=true`;
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error ?? 'Failed to load breakdown data');
+            setAllBreakdownGuesses({
+                resultMap: data.resultMap ?? {},
+                guesses: Array.isArray(data.guesses) ? data.guesses : [],
+            });
+        } catch (e) {
+            setBreakdownError(e?.message ?? String(e));
+        } finally {
+            setBreakdownLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (!leaderResults || leaderResults.length === 0) return;
+        fetchBreakdownData();
+    }, [leaderResults]);
 
     // Persist group code to localStorage whenever picks change
     useEffect(() => {
@@ -1798,7 +1828,127 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     // );
                 })()}
             {/* </div> */}
-            
+
+            {/* Guess Breakdown */}
+            {allCompleted && !leaderLoading && leaderResults && leaderResults.length > 0 && (() => {
+                const BREAKDOWN_MODES = [
+                    { key: 'classic',   label: 'Classic' },
+                    { key: 'card',      label: 'Card' },
+                    { key: 'pokedex',   label: 'Pokédex' },
+                    { key: 'details',   label: 'Details' },
+                    { key: 'colours',   label: 'Colours' },
+                    { key: 'locations', label: 'Locations' },
+                ];
+
+                let displayRows = null;
+                if (allBreakdownGuesses) {
+                    const { resultMap, guesses } = allBreakdownGuesses;
+                    const modeGuesses = guesses.filter(g => g.mode === breakdownMode);
+                    const byResult = {};
+                    modeGuesses.forEach(g => {
+                        if (!byResult[g.result_id]) byResult[g.result_id] = [];
+                        byResult[g.result_id].push(g);
+                    });
+                    displayRows = Object.entries(byResult)
+                        .map(([resultId, gs]) => ({
+                            player: resultMap[resultId] || '—',
+                            guesses: gs.slice().sort((a, b) => a.guess_number - b.guess_number),
+                        }))
+                        .sort((a, b) => a.guesses.length - b.guesses.length);
+                }
+
+                return (
+                    <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                        <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 10 }}>Guess Breakdown</div>
+
+                        {/* Mode selector buttons */}
+                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 12 }}>
+                            {BREAKDOWN_MODES.map(m => (
+                                <button
+                                    key={m.key}
+                                    onClick={() => setBreakdownMode(m.key)}
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        border: '1px solid #e0e0e0',
+                                        background: breakdownMode === m.key ? '#1976d2' : '#efefef',
+                                        color: breakdownMode === m.key ? '#fff' : '#111',
+                                        cursor: 'pointer',
+                                        fontSize: 13,
+                                        fontWeight: breakdownMode === m.key ? 700 : 400,
+                                    }}
+                                >
+                                    {m.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {breakdownLoading && (
+                            <div style={{ textAlign: 'center', color: '#666', fontSize: 13 }}>Loading…</div>
+                        )}
+                        {breakdownError && (
+                            <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13 }}>{breakdownError}</div>
+                        )}
+                        {!breakdownLoading && !breakdownError && displayRows && displayRows.length === 0 && (
+                            <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>No guesses recorded for this mode.</div>
+                        )}
+                        {!breakdownLoading && !breakdownError && displayRows && displayRows.length > 0 && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                {displayRows.map((row, ri) => (
+                                    <div
+                                        key={ri}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 8,
+                                            padding: '6px 4px',
+                                            borderBottom: ri !== displayRows.length - 1 ? '1px solid #f5f5f5' : 'none',
+                                            flexWrap: 'wrap',
+                                        }}
+                                    >
+                                        <span style={{ fontWeight: 600, fontSize: isMobile ? 12 : 13, minWidth: 64, flexShrink: 0 }}>
+                                            {row.player}:
+                                        </span>
+                                        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+                                            {row.guesses.map((g, gi) => (
+                                                <div
+                                                    key={gi}
+                                                    title={`Guess ${g.guess_number}${g.correct ? ' ✓' : ''}`}
+                                                    style={{
+                                                        width: isMobile ? 48 : 64,
+                                                        height: isMobile ? 48 : 64,
+                                                        borderRadius: 6,
+                                                        border: g.correct ? '2px solid #4caf50' : '2px solid #e0e0e0',
+                                                        background: g.correct ? '#f0fff0' : '#fafafa',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        overflow: 'hidden',
+                                                        flexShrink: 0,
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.guess}-front.png`}
+                                                        alt={`#${g.guess}`}
+                                                        style={{
+                                                            width: 30,
+                                                            height: 30,
+                                                            objectFit: 'contain',
+                                                            transform: isMobile ? 'scale(1.5)' : 'scale(2.0)',
+                                                        }}
+                                                        onError={e => { e.target.style.display = 'none'; }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                );
+            })()}
+
             {/* Previous days history (last 10) - moved to its own container */}
                 {history && history.length > 0 ? (
                 <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>

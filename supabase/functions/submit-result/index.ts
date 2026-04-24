@@ -18,13 +18,14 @@ serve(async (req) => {
       const url = new URL(req.url)
       const pokledleNumber = parseInt(url.searchParams.get('pokedle_number') ?? '', 10)
       const groupCode = url.searchParams.get('group_code') ?? ''
+      const includeGuesses = url.searchParams.get('include_guesses') === 'true'
 
       if (!pokledleNumber || isNaN(pokledleNumber)) return json(400, { error: 'Missing or invalid pokedle_number' })
       if (groupCode && !/^\d+(-\d+)*$/.test(groupCode)) return json(400, { error: 'Invalid group_code' })
 
       let query = supabaseAdmin
         .from('results')
-        .select('player, classic, card, pokedex, details, colours, locations, total')
+        .select('id, player, classic, card, pokedex, details, colours, locations, total')
         .eq('pokedle_number', pokledleNumber)
 
       if (groupCode) {
@@ -34,7 +35,37 @@ serve(async (req) => {
       const { data, error } = await query.order('total', { ascending: true }).limit(50)
 
       if (error) return json(500, { error: error.message })
-      return json(200, { results: data ?? [] })
+      const results = data ?? []
+
+      if (!includeGuesses) {
+        // Strip internal `id` field before returning to keep existing response shape
+        return json(200, { results: results.map(({ id: _id, ...rest }) => rest) })
+      }
+
+      // Fetch all guesses for these result IDs
+      const resultIds = results.map(r => r.id as number)
+      let guesses: any[] = []
+      if (resultIds.length > 0) {
+        const { data: gData, error: gError } = await supabaseAdmin
+          .from('guesses')
+          .select('result_id, mode, guess, guess_number, correct')
+          .in('result_id', resultIds)
+          .order('result_id', { ascending: true })
+          .order('guess_number', { ascending: true })
+          .limit(5000)
+        if (gError) return json(500, { error: gError.message })
+        guesses = gData ?? []
+      }
+
+      // Build resultMap: id -> player name
+      const resultMap: Record<number, string> = {}
+      results.forEach(r => { resultMap[r.id as number] = (r.player as string) || '—' })
+
+      return json(200, {
+        results: results.map(({ id: _id, ...rest }) => rest),
+        guesses,
+        resultMap,
+      })
     } catch (err: any) {
       return json(500, { error: err?.message ?? String(err) })
     }
