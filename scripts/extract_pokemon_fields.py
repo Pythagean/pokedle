@@ -10,7 +10,7 @@ def extract_fields(input_json, output_json):
         output_json: Path to output JSON file
     """
     # Fields to extract
-    fields_to_extract = ['id', 'name', 'generation', 'habitat', 'height', 'weight', 'types']
+    fields_to_extract = ['id', 'name', 'generation', 'habitat', 'height', 'weight', 'types', 'bulbapedia_shape']
     
     # Read input file
     with open(input_json, 'r', encoding='utf-8') as f:
