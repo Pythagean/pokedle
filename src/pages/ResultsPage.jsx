@@ -1432,57 +1432,56 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                 }}
                                             />
                                             {/* Sparkle particles */}
-                                            {displayRows.map((row, ri) => (
+                                            {sparkles.map(sparkle => (
                                                 <div
-                                                    key={ri}
+                                                    key={sparkle.id}
                                                     style={{
-                                                        display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: 'center',
-                                                        gap: 8,
-                                                        padding: '6px 4px',
-                                                        borderBottom: ri !== displayRows.length - 1 ? '1px solid #f5f5f5' : 'none',
+                                                        position: 'absolute',
+                                                        left: `${sparkle.x}%`,
+                                                        top: `${sparkle.y}%`,
+                                                        width: `${sparkle.size}px`,
+                                                        height: `${sparkle.size}px`,
+                                                        borderRadius: '50%',
+                                                        background: `radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, transparent ${sparkle.opacity * 100}%)`,
+                                                        boxShadow: `0 0 ${sparkle.size * 2}px rgba(255, 255, 255, 0.8), 0 0 ${sparkle.size}px rgba(200, 200, 255, 0.6)`,
+                                                        pointerEvents: 'none',
+                                                        animation: `sparkle-fade ${sparkle.duration}ms ease-in-out forwards`,
+                                                        zIndex: 4
                                                     }}
-                                                >
-                                                    <span style={{ fontWeight: 600, fontSize: isMobile ? 12 : 13, textAlign: 'center' }}>
-                                                        {row.player}
-                                                    </span>
-                                                    <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
-                                                        {row.guesses.map((g, gi) => (
-                                                            <div
-                                                                key={gi}
-                                                                title={`Guess ${g.guess_number}${g.correct ? ' ✓' : ''}`}
-                                                                style={{
-                                                                    width: isMobile ? 48 : 64,
-                                                                    height: isMobile ? 48 : 64,
-                                                                    borderRadius: 6,
-                                                                    border: g.correct ? '2px solid #4caf50' : '2px solid #e0e0e0',
-                                                                    background: g.correct ? '#f0fff0' : '#fafafa',
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    justifyContent: 'center',
-                                                                    overflow: 'hidden',
-                                                                    flexShrink: 0,
-                                                                }}
-                                                            >
-                                                                <img
-                                                                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.guess}-front.png`}
-                                                                    alt={`#${g.guess}`}
-                                                                    style={{
-                                                                        width: 30,
-                                                                        height: 30,
-                                                                        objectFit: 'contain',
-                                                                        transform: isMobile ? 'scale(1.5)' : 'scale(2.0)',
-                                                                    }}
-                                                                    onError={e => {/* Line 1939 omitted */}}
-                                                                />
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
+                                                />
                                             ))}
+                                            {/* Layer 1: Blue/Cyan sweep */}
+                                            <div
+                                                style={{
                                                     position: 'absolute',
                                                     top: 8,
+                                                    left: 8,
+                                                    right: 8,
+                                                    bottom: 8,
+                                                    borderRadius: 4,
+                                                    background: `
+                                                        linear-gradient(
+                                                            ${45 - holoRotate.x * (isMobile ? 2 : 1.5)}deg,
+                                                            transparent 0%,
+                                                            rgba(0, 150, 255, 0.2) 30%,
+                                                            rgba(0, 255, 255, 0.25) 50%,
+                                                            rgba(100, 200, 255, 0.2) 70%,
+                                                            transparent 100%
+                                                        )
+                                                    `,
+                                                    pointerEvents: 'none',
+                                                    mixBlendMode: 'color-dodge',
+                                                    opacity: 0.3 + Math.abs(holoRotate.x) * 0.015,
+                                                    transition: `opacity ${isMobile ? '0.15s' : '0.3s'} ease-out`,
+                                                    zIndex: 5
+                                                }}
+                                            />
+                                            {/* Layer 2: Purple/Magenta sweep */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 8,
+                                            
                                                     left: 8,
                                                     right: 8,
                                                     bottom: 8,
