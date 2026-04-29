@@ -420,12 +420,16 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             filename = locationFileMap[slug] || locationFileMap[rawName] || locationFileMap[rawName && rawName.replace(/[-_]+/g, ' ')] || locationFileMap[rawName && rawName.toLowerCase()] || locationFileMap[slug && slug.toLowerCase()];
                         }
                     }
+                    // Only use a URL when we have a confirmed filename from the manifest.
+                    // Falling back to a guessed slug produces wrong filenames (e.g. Cerulean_City
+                    // instead of Kanto_Cerulean_City) and causes a 404 whose onError hides the
+                    // img permanently via imperative style — so just use null until we know.
                     const mapThumbUrl = filename
                         ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${filename}`
-                        : (rawName ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/maps/${slug}.png` : null);
+                        : null;
                     const mapFullUrl = filename
                         ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${filename}`
-                        : (rawName ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/locations/${slug}.png` : null);
+                        : null;
                     const displayName = formatDisplay({ name: rawName });
                     const groupRows = [];
                     entries.forEach((enc, ri) => {
