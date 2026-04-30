@@ -68,6 +68,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showBlurred, setShowBlurred] = useState(false);
+  const [blurredAtGuessIdx, setBlurredAtGuessIdx] = useState(null);
   const prevCorrectRef = useRef(false);
 
 
@@ -305,7 +306,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   }
   // When correct, prevBlurLevel is what was shown just before the correct guess
   const prevBlurLevel = computeBlurLevel(Math.max(0, guesses.length - 1), cardType);
-  const effectiveBlur = isCorrect && showBlurred ? prevBlurLevel : blurLevel;
+  const effectiveBlur = isCorrect && showBlurred
+    ? (blurredAtGuessIdx !== null ? computeBlurLevel(guesses.length - blurredAtGuessIdx - 1, cardType) : prevBlurLevel)
+    : blurLevel;
 
   // If correct, always show resized image
   const forceReveal = isCorrect;
@@ -533,7 +536,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         {isCorrect && (
           <div style={{ textAlign: 'center', marginTop: 10 }}>
             <button
-              onClick={() => setShowBlurred(b => !b)}
+              onClick={() => { setShowBlurred(b => !b); setBlurredAtGuessIdx(null); }}
               style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
             >
               {showBlurred ? 'Show Un-Blurred' : 'Show Blurred'}
@@ -680,9 +683,11 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
       {/* Guess boxes like AbilityPage */}
       {guesses.length > 0 && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div ref={lastGuessRef} style={{
+          <div ref={lastGuessRef}
+            onClick={isCorrect && showBlurred ? () => setBlurredAtGuessIdx(blurredAtGuessIdx === 0 ? null : 0) : undefined}
+            style={{
             background: guesses[0].name === (answer && answer.name) ? '#a5d6a7' : '#ef9a9a',
-            border: `2px solid ${guesses[0].name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
+            border: blurredAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${guesses[0].name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
             minWidth: 100,
@@ -693,8 +698,10 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
             justifyContent: 'center',
             fontSize: 15,
             fontWeight: 600,
-            boxShadow: '0 2px 8px #0001',
+            boxShadow: blurredAtGuessIdx === 0 ? '0 0 0 3px #90caf9' : '0 2px 8px #0001',
             marginBottom: guesses.length > 1 ? 16 : 0,
+            cursor: isCorrect && showBlurred ? 'pointer' : 'default',
+            transition: 'box-shadow 0.15s, border-color 0.15s',
           }}>
             <img
               src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${guesses[0].id}-front.png`}
@@ -707,9 +714,11 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
           {guesses.length > 1 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               {guesses.slice(1).map((g, i) => (
-                <div key={g.name + i} style={{
+                <div key={g.name + i}
+                  onClick={isCorrect && showBlurred ? () => setBlurredAtGuessIdx(blurredAtGuessIdx === i + 1 ? null : i + 1) : undefined}
+                  style={{
                   background: g.name === (answer && answer.name) ? '#a5d6a7' : '#ef9a9a',
-                  border: `2px solid ${g.name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
+                  border: blurredAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,
                   minWidth: 60,
@@ -720,6 +729,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
                   justifyContent: 'center',
                   fontSize: 12,
                   fontWeight: 600,
+                  boxShadow: blurredAtGuessIdx === i + 1 ? '0 0 0 3px #90caf9' : 'none',
+                  cursor: isCorrect && showBlurred ? 'pointer' : 'default',
+                  transition: 'box-shadow 0.15s, border-color 0.15s',
                 }}>
                   <img
                     src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.id}-front.png`}
