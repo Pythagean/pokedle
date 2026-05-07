@@ -187,16 +187,18 @@ function getDetailsModeForDate(date) {
     effective = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
   }
   const utcDay = effective.getUTCDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-  // Silhouette days: 1 (Mon), 6 (Sat)
-  if (utcDay === 1 || utcDay === 6) {
+  // Silhouette days: 1 (Mon), 4 (Thu)
+  if (utcDay === 1 || utcDay === 4) {
     return 'silhouette';
   }
-  // Features days: 3 (Wed), 5 (Fri)
-  if (utcDay === 3 || utcDay === 5) {
+  // Zoom days: 2 (Tue), 5 (Friday), 0 (Sun)
+  if (utcDay === 2 || utcDay === 5 || utcDay === 0) {
+    return 'zoom';
+  }
+  // Features days: 3 (Wed), 6 (Sat)
+  if (utcDay === 3 || utcDay === 6) {
     return 'features';
   }
-  // Zoom days: 0 (Sun), 2 (Tue), 4 (Thu)
-  return 'zoom';
 }
 
 function App() {

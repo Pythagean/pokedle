@@ -34,6 +34,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const imgContainerRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showZoomed, setShowZoomed] = useState(false);
+  const [zoomedAtGuessIdx, setZoomedAtGuessIdx] = useState(null);
   const prevCorrectRef = useRef(false);
  
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
@@ -147,7 +148,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   // Use a cubic ease-in so the first zoom-outs are small and the reveal increases gradually.
   const maxZoom = 11.0;
   const minZoom = 0.9;
-  const maxSteps = 12;
+  const maxSteps = 9;
   const easePower = 1.15;
   function computeZoomFromCount(count) {
     const tt = Math.min(count, maxSteps - 1) / (maxSteps - 1);
@@ -158,7 +159,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const computedZoom = maxZoom - (maxZoom - minZoom) * eased;
   // Zoom level just before the correct guess (guesses.length includes the correct one)
   const prevZoomLevel = computeZoomFromCount(Math.max(0, guesses.length - 1));
-  const zoom = (isCorrect && !showZoomed) ? 0.9 : (isCorrect && showZoomed ? prevZoomLevel : (debugZoom !== null ? debugZoom : computedZoom));
+  const zoom = (isCorrect && !showZoomed) ? 0.9 : (isCorrect && showZoomed ? (zoomedAtGuessIdx !== null ? computeZoomFromCount(guesses.length - zoomedAtGuessIdx - 1) : prevZoomLevel) : (debugZoom !== null ? debugZoom : computedZoom));
   // console.log('ZoomPage: zoom=', zoom, 't=', t, 'eased=', eased, 'guesses=', guesses.length);
   let edgeX = 0.5, edgeY = 0.5;
   let transformOrigin = '50% 50%';
@@ -334,9 +335,9 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                     <div style={{ textAlign: 'left' }}>
                       Details mode consists of 3 different game types, chosen based on the day of the week:
                       <ul>
-                        <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Wednesday and Saturday)</li>
-                        <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
-                        <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's eyes (Fr-eyes-day... get it?)</li>
+                        <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Thursday)</li>
+                        <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Friday and Sunday)</li>
+                        <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's features (Wednesday, Saturday)</li>
                       </ul>
                     </div>
                   }
@@ -548,9 +549,11 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div ref={lastGuessRef} style={{
+          <div ref={lastGuessRef}
+            onClick={isCorrect && showZoomed ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === 0 ? null : 0) : undefined}
+            style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
-            border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
+            border: zoomedAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
             minWidth: 100,
@@ -561,8 +564,10 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             justifyContent: 'center',
             fontSize: 15,
             fontWeight: 600,
-            boxShadow: '0 2px 8px #0001',
+            boxShadow: zoomedAtGuessIdx === 0 ? '0 0 0 3px #90caf9' : '0 2px 8px #0001',
             marginBottom: guesses.length > 1 ? 16 : 0,
+            cursor: isCorrect && showZoomed ? 'pointer' : 'default',
+            transition: 'box-shadow 0.15s, border-color 0.15s',
           }}>
             <img
               src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${lastGuess.id}-front.png`}
@@ -575,9 +580,11 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           {guesses.length > 1 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               {guesses.slice(1).map((g, i) => (
-                <div key={g.name + i} style={{
+                <div key={g.name + i}
+                  onClick={isCorrect && showZoomed ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === i + 1 ? null : i + 1) : undefined}
+                  style={{
                   background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
-                  border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
+                  border: zoomedAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,
                   minWidth: 60,
@@ -588,6 +595,9 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                   justifyContent: 'center',
                   fontSize: 12,
                   fontWeight: 600,
+                  boxShadow: zoomedAtGuessIdx === i + 1 ? '0 0 0 3px #90caf9' : 'none',
+                  cursor: isCorrect && showZoomed ? 'pointer' : 'default',
+                  transition: 'box-shadow 0.15s, border-color 0.15s',
                 }}>
                   <img
                     src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.id}-front.png`}

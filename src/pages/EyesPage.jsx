@@ -231,9 +231,9 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
                         <div style={{ textAlign: 'left' }}>
                             Details mode consists of 3 different game types, chosen based on the day of the week:
                             <ul>
-                                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday and Saturday)</li>
-                                <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
-                                <li><strong>Features</strong> - Guess the Pokémon from a close-up of one of its features (Wednesday and Friday)</li>
+                                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Thursday)</li>
+                                <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Friday and Sunday)</li>
+                                <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's features (Wednesday, Saturday)</li>
                             </ul>
                         </div>
                     }

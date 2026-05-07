@@ -33,6 +33,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showSilhouette, setShowSilhouette] = useState(false);
+  const [zoomedAtGuessIdx, setZoomedAtGuessIdx] = useState(null);
   const prevCorrectRef = useRef(false);
 
 
@@ -331,7 +332,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // (No explicit translate) The image is scaled around a computed transform-origin
 
   if (isCorrect) {
-    zoom = showSilhouette ? prevZoomLevel : 1.0;
+    zoom = showSilhouette
+      ? (zoomedAtGuessIdx !== null ? computeZoomFromCount(guesses.length - zoomedAtGuessIdx - 1) : prevZoomLevel)
+      : 1.0;
   }
   // Combine mirroring and zoom — use scale with transformOrigin anchored at the
   // interpolated focal center so the silhouette zooms out from the chosen point.
@@ -437,9 +440,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             <div style={{ textAlign: 'left' }}>
               Details mode consists of 3 different game types, chosen based on the day of the week:
               <ul>
-                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Wednesday and Saturday)</li>
-                <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
-                <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's eyes (Fr-eyes-day... get it?)</li>
+                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Thursday)</li>
+                <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Friday and Sunday)</li>
+                <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's features (Wednesday, Saturday)</li>
               </ul>
             </div>
           }
@@ -680,9 +683,11 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       )}
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
-          <div ref={lastGuessRef} style={{
+          <div ref={lastGuessRef}
+            onClick={isCorrect && showSilhouette ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === 0 ? null : 0) : undefined}
+            style={{
             background: isCorrect ? '#a5d6a7' : '#ef9a9a',
-            border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
+            border: zoomedAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
             minWidth: 100,
@@ -693,8 +698,10 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             justifyContent: 'center',
             fontSize: 15,
             fontWeight: 600,
-            boxShadow: '0 2px 8px #0001',
+            boxShadow: zoomedAtGuessIdx === 0 ? '0 0 0 3px #90caf9' : '0 2px 8px #0001',
             marginBottom: guesses.length > 1 ? 16 : 0,
+            cursor: isCorrect && showSilhouette ? 'pointer' : 'default',
+            transition: 'box-shadow 0.15s, border-color 0.15s',
           }}>
             <img
               src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${lastGuess.id}-front.png`}
@@ -707,9 +714,11 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           {guesses.length > 1 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               {guesses.slice(1).map((g, i) => (
-                <div key={g.name + i} style={{
+                <div key={g.name + i}
+                  onClick={isCorrect && showSilhouette ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === i + 1 ? null : i + 1) : undefined}
+                  style={{
                   background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
-                  border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
+                  border: zoomedAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,
                   minWidth: 60,
@@ -720,6 +729,9 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                   justifyContent: 'center',
                   fontSize: 12,
                   fontWeight: 600,
+                  boxShadow: zoomedAtGuessIdx === i + 1 ? '0 0 0 3px #90caf9' : 'none',
+                  cursor: isCorrect && showSilhouette ? 'pointer' : 'default',
+                  transition: 'box-shadow 0.15s, border-color 0.15s',
                 }}>
                   <img
                     src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${g.id}-front.png`}
