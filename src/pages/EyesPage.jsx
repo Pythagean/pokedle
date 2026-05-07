@@ -3,10 +3,12 @@ import GuessInput from '../components/GuessInput';
 import CongratsMessage from '../components/CongratsMessage';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
-import { EyesHints } from '../config/hintConfig';
-import { TYPE_COLORS } from '../config/typeColors';
+import { FeaturesHints } from '../config/hintConfig';
 import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
+
+// Seed offset used by App.jsx for the 'eyes'/Features detail mode
+const FEATURES_SEED_OFFSET = 14 * 1000 + 'e'.charCodeAt(0);
 
 // Get a YYYYMMDD string from UTC date
 function getSeedFromUTCDate(date) {
@@ -29,12 +31,12 @@ function mulberry32(a) {
     }
 }
 
-export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyesManifest, useShinySprites = false }) {
+export default function EyesPage({ pokemonData, guesses, setGuesses, daily, bodyPartsManifest, useShinySprites = false }) {
     const inputRef = useRef(null);
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const prevCorrectRef = useRef(false);
-    const [eyesLoaded, setEyesLoaded] = useState(false);
+    const [loadedFeatures, setLoadedFeatures] = useState({});
     const [realLoaded, setRealLoaded] = useState(false);
 
     // Use the daily pokemon passed from parent (already filtered for manifest availability)
@@ -43,13 +45,36 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
     // Debug log to verify correct pokemon is being used
     useEffect(() => {
         if (dailyPokemon) {
-            console.log('[EyesPage] Received daily Pokemon:', dailyPokemon.name, dailyPokemon.id);
+            console.log('[FeaturesPage] Received daily Pokemon:', dailyPokemon.name, dailyPokemon.id);
         }
     }, [dailyPokemon]);
 
-    // Calculate seed for confetti localStorage key
+    // Calculate seed for confetti localStorage key and body part selection
     const today = new Date();
-    const seed = getSeedFromUTCDate(today) + 14 * 1000 + 'e'.charCodeAt(0);
+    const seed = getSeedFromUTCDate(today) + FEATURES_SEED_OFFSET;
+
+    // Pick up to 4 deterministic unique body part images for this daily pokemon
+    const featuresImages = useMemo(() => {
+        if (!dailyPokemon || !bodyPartsManifest) return [];
+        const parts = bodyPartsManifest?.trimmed?.[String(dailyPokemon.id)];
+        if (!parts || parts.length === 0) return [];
+        const rng = mulberry32(seed + dailyPokemon.id);
+        const selected = [];
+        const usedIndices = new Set();
+        let attempts = 0;
+        while (selected.length < Math.min(4, parts.length) && attempts < 200) {
+            const idx = Math.floor(rng() * parts.length);
+            if (!usedIndices.has(idx)) {
+                usedIndices.add(idx);
+                selected.push({
+                    trimmed: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/body_parts/trimmed/${parts[idx]}`,
+                    full: `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/body_parts/full/${parts[idx]}`,
+                });
+            }
+            attempts++;
+        }
+        return selected;
+    }, [dailyPokemon, bodyPartsManifest, seed]);
 
     // Guessing state (controlled input for GuessInput)
     const [guess, setGuess] = useState('');
@@ -106,45 +131,34 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
     const lastGuess = guesses[0];
     const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
 
-    // Determine which image to show based on guess count
     // Use thresholds from hintConfig
-    const [fullImageThreshold, generationHintThreshold, typesHintThreshold] = EyesHints.thresholds;
+    const [fullImageThreshold, secondFeatureThreshold, thirdFeatureThreshold, fourthFeatureThreshold, fifthFeatureThreshold] = FeaturesHints.thresholds;
     const showFullImage = guesses.length >= fullImageThreshold;
-    const eyesImagePath = showFullImage
-        ? `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/eyes/full/${dailyPokemon.id}.png`
-        : `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/eyes/trimmed/${dailyPokemon.id}.png`;
+    const showSecondFeature = guesses.length >= secondFeatureThreshold;
+    const showThirdFeature = guesses.length >= thirdFeatureThreshold;
+    const showFourthFeature = guesses.length >= fourthFeatureThreshold;
+    const showFifthFeature = guesses.length >= fifthFeatureThreshold;
     const realImagePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
 
-    // Preload both images
+    // Preload all feature images
     useEffect(() => {
-        if (!dailyPokemon) return;
+        if (!dailyPokemon || featuresImages.length === 0) return;
         try {
-            const eyesImg = new Image();
-            eyesImg.src = eyesImagePath;
+            featuresImages.forEach(feat => {
+                [feat.trimmed, feat.full].forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+            });
             const realImg = new Image();
             realImg.src = realImagePath;
-            eyesImg.onload = () => { /* cached */ };
-            eyesImg.onerror = () => { /* ignore */ };
-            realImg.onload = () => { /* cached */ };
-            realImg.onerror = () => { /* ignore */ };
-            return () => {
-                eyesImg.onload = null;
-                eyesImg.onerror = null;
-                realImg.onload = null;
-                realImg.onerror = null;
-            };
         } catch (e) {
             // ignore
         }
-    }, [dailyPokemon && dailyPokemon.id, eyesImagePath, realImagePath]);
-
-    // Show generation hint after threshold
-    const showGenerationHint = guesses.length >= generationHintThreshold;
-    // Show types hint after threshold
-    const showTypesHint = guesses.length >= typesHintThreshold;
+    }, [dailyPokemon?.id, featuresImages]);
 
     useEffect(() => {
-        const key = `pokedle_confetti_eyes_${seed}`;
+        const key = `pokedle_confetti_features_${seed}`;
         let alreadyShown = false;
         try { alreadyShown = !!localStorage.getItem(key); } catch (e) { alreadyShown = false; }
         if (isCorrect && !prevCorrectRef.current && !alreadyShown) {
@@ -217,9 +231,9 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                         <div style={{ textAlign: 'left' }}>
                             Details mode consists of 3 different game types, chosen based on the day of the week:
                             <ul>
-                                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday, Wednesday and Saturday)</li>
+                                <li><strong>Silhouette</strong> - Guess the Pokémon from its silhouette (Monday and Saturday)</li>
                                 <li><strong>Zoom</strong> - Guess the Pokémon from a zoomed in image (Tuesday, Thursday and Sunday)</li>
-                                <li><strong>Eyes</strong> - Guess the Pokémon from just the Pokémon's eyes (Fr-eyes-day... get it?)</li>
+                                <li><strong>Features</strong> - Guess the Pokémon from a close-up of one of its features (Wednesday and Friday)</li>
                             </ul>
                         </div>
                     }
@@ -227,7 +241,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                <h3 style={{ margin: 0 }}>Today is Eyes Day!</h3>
+                <h3 style={{ margin: 0 }}>Today is Features Day!</h3>
                 <InfoButton
                     ariaLabel="How to Play"
                     placement="right"
@@ -236,49 +250,53 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                     fontSize={12}
                     content={
                         <div style={{ textAlign: 'left' }}>
-                            Guess the Pokémon from just its eyes!<br /><br />
-                            After {fullImageThreshold} incorrect guesses, the full face is revealed.<br /><br />
-                            After {generationHintThreshold} incorrect guesses, the generation is revealed as a hint.<br /><br />
-                            After {typesHintThreshold} incorrect guesses, the types are revealed as a hint.
+                            Guess the Pokémon from a close-up of one of its features!<br /><br />
+                            After {fullImageThreshold} incorrect guesses, the full feature is revealed.<br /><br />
+                            After {secondFeatureThreshold} incorrect guesses, a second feature is revealed.<br /><br />
+                            After {thirdFeatureThreshold} incorrect guesses, a third feature is revealed.<br /><br />
+                            After {fourthFeatureThreshold} incorrect guesses, a fourth feature is revealed.
                         </div>
                     }
                 />
             </div>
 
             <div className="eyes-main">
-                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Whose eyes are these?</div>}
+                {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon's feature is this?</div>}
                 {isCorrect && (
                     <>
-                        <CongratsMessage guessCount={guesses.length} mode="Eyes" />
+                        <CongratsMessage guessCount={guesses.length} mode="Features" />
                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                     </>
                 )}
                 <div className="eyes-img-container" style={{ position: 'relative' }}>
-                    {/* Eyes image (trimmed or full) */}
-                    <img
-                        src={eyesImagePath}
-                        alt="Pokemon eyes"
-                        draggable={false}
-                        onDragStart={e => e.preventDefault()}
-                        onContextMenu={e => e.preventDefault()}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                            position: 'absolute',
-                            inset: 0,
-                            zIndex: 1,
-                            opacity: (!isCorrect && eyesLoaded) ? 1 : 0,
-                            transition: 'opacity 300ms ease',
-                        }}
-                        onLoad={e => {
-                            setEyesLoaded(true);
-                        }}
-                        onError={e => {
-                            setEyesLoaded(false);
-                            console.error('Failed to load eyes image for ID:', dailyPokemon.id);
-                        }}
-                    />
+                    {/* Feature images — stacked with transparent PNGs */}
+                    {featuresImages.map((feat, i) => {
+                        const show = i === 0 || (i === 1 && showSecondFeature) || (i === 2 && showThirdFeature) || (i === 3 && showFourthFeature) || (i === 4 && showFifthFeature);
+                        if (!show) return null;
+                        const src = (i === 0 && !showFullImage) ? feat.trimmed : feat.full;
+                        return (
+                            <img
+                                key={src}
+                                src={src}
+                                alt={`Pokemon feature ${i + 1}`}
+                                draggable={false}
+                                onDragStart={e => e.preventDefault()}
+                                onContextMenu={e => e.preventDefault()}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'contain',
+                                    position: 'absolute',
+                                    inset: 0,
+                                    zIndex: i + 1,
+                                    opacity: (!isCorrect && loadedFeatures[src]) ? 1 : 0,
+                                    transition: 'opacity 300ms ease',
+                                }}
+                                onLoad={() => setLoadedFeatures(prev => ({ ...prev, [src]: true }))}
+                                onError={() => console.error('Failed to load feature image:', src)}
+                            />
+                        );
+                    })}
                     {/* Real pokemon image (shown when correct) */}
                     <img
                         src={realImagePath}
@@ -305,100 +323,30 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, eyes
                     />
                 </div>
 
-                {/* Show generation hint after 6 guesses */}
-                {!isCorrect && showGenerationHint && dailyPokemon && dailyPokemon.generation && (
-                    <div style={{
-                        color: '#333',
-                        borderTop: '1px dashed #bbb',
-                        paddingTop: 10,
-                        marginTop: 16,
-                        fontSize: 16,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 8
-                    }}>
-                        <span style={{ fontWeight: 700 }}>Generation:</span>
-                        <span>{dailyPokemon.generation}</span>
-                        {(() => {
-                            // Map generation to starter sprite ID (using first starter for each gen)
-                            const genStarterMap = {
-                                1: 1,   // Bulbasaur
-                                2: 152, // Chikorita
-                                3: 252, // Treecko
-                                4: 387, // Turtwig
-                                5: 495, // Snivy
-                                6: 650, // Chespin
-                                7: 722, // Rowlet
-                                8: 810, // Grookey
-                                9: 906  // Sprigatito
-                            };
-                            const gen = parseInt(String(dailyPokemon.generation).match(/\d+/)?.[0], 10);
-                            const starterId = genStarterMap[gen];
-                            if (!starterId) return null;
-                            return (
-                                <img
-                                    src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${starterId}-front.png`}
-                                    alt={`Gen ${gen} starter`}
-                                    style={{ width: 32, height: 32, objectFit: 'contain', transform: 'scale(1.2)' }}
-                                    onError={e => { e.target.style.display = 'none'; }}
-                                />
-                            );
-                        })()}
-                    </div>
-                )}
-
-                {/* Show types hint after 9 guesses */}
-                {!isCorrect && showTypesHint && dailyPokemon && dailyPokemon.types && (
-                    <div style={{
-                        color: '#333',
-                        borderTop: '1px dashed #bbb',
-                        paddingTop: 10,
-                        marginTop: 16,
-                        fontSize: 16
-                    }}>
-                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Type{dailyPokemon.types.length > 1 ? 's' : ''}:</div>
-                        <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
-                            {dailyPokemon.types.map(t => {
-                                const tLower = String(t).toLowerCase();
-                                const bgColor = TYPE_COLORS[tLower] || '#777';
-                                return (
-                                    <div
-                                        key={t}
-                                        style={{
-                                            background: bgColor,
-                                            color: '#fff',
-                                            padding: '6px 16px',
-                                            borderRadius: 6,
-                                            fontWeight: 700,
-                                            fontSize: 15,
-                                            textTransform: 'capitalize',
-                                            boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                                        }}
-                                    >
-                                        {t}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-
-
                 {/* Show hint about upcoming reveals */}
                 {!isCorrect && !showFullImage && (
                     <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                        The position of the eyes in the image will be revealed in {fullImageThreshold - guesses.length} guess{fullImageThreshold - guesses.length === 1 ? '' : 'es'}!
+                        The full feature will be revealed in {fullImageThreshold - guesses.length} guess{fullImageThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
-                {!isCorrect && showFullImage && !showGenerationHint && (
+                {!isCorrect && showFullImage && !showSecondFeature && featuresImages.length > 1 && (
                     <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                        Generation will be revealed in {generationHintThreshold - guesses.length} guess{generationHintThreshold - guesses.length === 1 ? '' : 'es'}!
+                        Another feature will be revealed in {secondFeatureThreshold - guesses.length} guess{secondFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
-                {!isCorrect && showFullImage && showGenerationHint && !showTypesHint && (
+                {!isCorrect && showSecondFeature && !showThirdFeature && featuresImages.length > 2 && (
                     <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
-                        Types will be revealed in {typesHintThreshold - guesses.length} guess{typesHintThreshold - guesses.length === 1 ? '' : 'es'}!
+                        Another feature will be revealed in {thirdFeatureThreshold - guesses.length} guess{thirdFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
+                    </div>
+                )}
+                {!isCorrect && showThirdFeature && !showFourthFeature && featuresImages.length > 3 && (
+                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                        Another feature will be revealed in {fourthFeatureThreshold - guesses.length} guess{fourthFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
+                    </div>
+                )}
+                {!isCorrect && showFourthFeature && !showFifthFeature && featuresImages.length > 4 && (
+                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                        Another feature will be revealed in {fifthFeatureThreshold - guesses.length} guess{fifthFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
             </div>

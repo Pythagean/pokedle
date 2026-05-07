@@ -110,6 +110,24 @@ function useEyesManifest() {
   return eyesManifest;
 }
 
+// Load body parts manifest (object keyed by pokemon ID listing part image filenames)
+function useBodyPartsManifest() {
+  const [bodyPartsManifest, setBodyPartsManifest] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('data/body_parts_manifest.json')
+      .then(res => res.json())
+      .then(data => {
+        if (!cancelled) setBodyPartsManifest(data);
+      })
+      .catch(() => {
+        if (!cancelled) setBodyPartsManifest(null);
+      });
+    return () => { cancelled = true; };
+  }, []);
+  return bodyPartsManifest;
+}
+
 function useTitleImg() {
   // Just return the public path
   return 'data/title.png';
@@ -169,13 +187,13 @@ function getDetailsModeForDate(date) {
     effective = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + 1, 0, 0, 0));
   }
   const utcDay = effective.getUTCDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-  // Silhouette days: 1 (Mon), 3 (Wed), 6 (Sat)
-  if (utcDay === 1 || utcDay === 3 || utcDay === 6) {
+  // Silhouette days: 1 (Mon), 6 (Sat)
+  if (utcDay === 1 || utcDay === 6) {
     return 'silhouette';
   }
-  // Eyes days: 5 (Fri)
-  if (utcDay === 5) {
-    return 'eyes';
+  // Features days: 3 (Wed), 5 (Fri)
+  if (utcDay === 3 || utcDay === 5) {
+    return 'features';
   }
   // Zoom days: 0 (Sun), 2 (Tue), 4 (Thu)
   return 'zoom';
@@ -188,6 +206,7 @@ function App() {
   const silhouetteMeta = useSilhouetteMeta();
   const zoomMeta = useZoomMeta();
   const eyesManifest = useEyesManifest();
+  const bodyPartsManifest = useBodyPartsManifest();
   const titleImg = useTitleImg();
   
   // Clean up old confetti localStorage entries on mount
@@ -524,16 +543,15 @@ function App() {
         }
         
         // Replay selection logic for this past date
-        if (modeKey === 'details' && pastDetailsMode === 'eyes' && eyesManifest) {
-          // Eyes mode: manifest-based selection
+        if (modeKey === 'details' && pastDetailsMode === 'eyes' && bodyPartsManifest) {
+          // Features mode: manifest-based selection
           const rngFor = mulberry32(seedFor);
           let found = false;
           let attempts = 0;
           while (attempts < 200 && !found) {
             const idx = Math.floor(rngFor() * pokemonData.length);
             const candidate = pokemonData[idx];
-            const filename = `${candidate.id}.png`;
-            if (eyesManifest.includes(filename) && !pastExcludedIds.has(candidate.id)) {
+            if (bodyPartsManifest?.trimmed?.[String(candidate.id)]?.length > 0 && !pastExcludedIds.has(candidate.id)) {
               selectedId = candidate.id;
               found = true;
             }
@@ -581,7 +599,7 @@ function App() {
     }
     
     return excludedIds;
-  }, [pokemonData, eyesManifest]);
+  }, [pokemonData, bodyPartsManifest]);
 
   // Helper function to select the Pokemon for a specific date and mode
   // This replicates the exact selection logic including anti-repeat filtering
@@ -639,15 +657,14 @@ function App() {
     // Select Pokemon based on mode
     let selected = null;
     
-    if (modeKey === 'details' && targetDetailsMode === 'eyes' && eyesManifest) {
-      // Eyes mode: manifest-based selection
+    if (modeKey === 'details' && targetDetailsMode === 'eyes' && bodyPartsManifest) {
+      // Features mode: manifest-based selection
       const rngFor = mulberry32(seedFor);
       let attempts = 0;
       while (attempts < 200) {
         const idx = Math.floor(rngFor() * pokemonData.length);
         const candidate = pokemonData[idx];
-        const filename = `${candidate.id}.png`;
-        if (eyesManifest.includes(filename) && !excludedIds.has(candidate.id)) {
+        if (bodyPartsManifest?.trimmed?.[String(candidate.id)]?.length > 0 && !excludedIds.has(candidate.id)) {
           selected = candidate;
           break;
         }
@@ -661,8 +678,7 @@ function App() {
         while (fallbackAttempts < 200) {
           const idx = Math.floor(fallbackRng() * pokemonData.length);
           const candidate = pokemonData[idx];
-          const filename = `${candidate.id}.png`;
-          if (eyesManifest.includes(filename)) {
+          if (bodyPartsManifest?.trimmed?.[String(candidate.id)]?.length > 0) {
             selected = candidate;
             break;
           }
@@ -727,7 +743,7 @@ function App() {
     }
     
     return selected;
-  }, [pokemonData, eyesManifest, getRecentPokemonIds]);
+  }, [pokemonData, bodyPartsManifest, getRecentPokemonIds]);
 
   // Compute per-page daily pokemon and solved status (run this hook unconditionally)
   const perPageResults = useMemo(() => {
@@ -745,8 +761,8 @@ function App() {
     };
 
     function getEyesAnswer() {
-      // Select a pokemon that has eyes images in the manifest
-      if (!eyesManifest) return null;
+      // Select a pokemon that has body part images in the manifest
+      if (!bodyPartsManifest) return null;
       
       // Get recently used Pokemon IDs to exclude
       const excludedIds = getRecentPokemonIds(today, 'details');
@@ -755,45 +771,36 @@ function App() {
       const override = getDailyOverride(todaySeed, 'details');
       if (override && typeof override === 'number') {
         const chosen = pokemonData.find(p => p.id === override);
-        if (chosen) {
-          const filename = `${chosen.id}.png`;
-          if (eyesManifest.includes(filename)) {
-            return chosen;
-          }
-          // If override doesn't have eyes image, fall through to random selection
-          // console.log('[Override] Eyes override Pokemon ID', override, 'does not have eyes image in manifest, selecting random Pokemon');
+        if (chosen && bodyPartsManifest?.trimmed?.[String(chosen.id)]?.length > 0) {
+          return chosen;
         }
       }
 
-      // Randomly select a pokemon that has eyes images in the manifest and is not recently used
+      // Randomly select a pokemon that has body part images in the manifest and is not recently used
       const seedFor = getSeedFromDate(today) + 14 * 1000 + 'e'.charCodeAt(0);
       let localRng = mulberry32(seedFor);
       let attempts = 0;
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
         const chosen = pokemonData[idx];
-        const filename = `${chosen.id}.png`;
-        if (eyesManifest.includes(filename) && !excludedIds.has(chosen.id)) {
+        if (bodyPartsManifest?.trimmed?.[String(chosen.id)]?.length > 0 && !excludedIds.has(chosen.id)) {
           return chosen;
         }
         attempts++;
       }
       
       // Fallback: if we can't find a non-repeating Pokemon, just pick any valid one
-      // console.warn('[Eyes] Could not find non-repeating Pokemon, allowing repeat');
       localRng = mulberry32(seedFor);
       attempts = 0;
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
         const chosen = pokemonData[idx];
-        const filename = `${chosen.id}.png`;
-        if (eyesManifest.includes(filename)) {
+        if (bodyPartsManifest?.trimmed?.[String(chosen.id)]?.length > 0) {
           return chosen;
         }
         attempts++;
       }
       
-      // console.error('[Eyes] Failed to find Pokemon with eyes image after 200 attempts');
       return null;
     }
 
@@ -999,7 +1006,7 @@ function App() {
       const solved = daily && pageGuesses.some(g => g.name === (daily.name));
       return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
     });
-  }, [pokemonData, guessesByPage, today, cardManifest, eyesManifest]);
+  }, [pokemonData, guessesByPage, today, cardManifest, bodyPartsManifest]);
 
   // Map of daily pokemon objects by page key for easy access and prop passing
   const dailyByPage = useMemo(() => {
@@ -1185,7 +1192,7 @@ function App() {
       } else if (detailsMode === 'zoom') {
         return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} useShinySprites={false} />;
       } else {
-        return <EyesPage pokemonData={pokemonData} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} eyesManifest={eyesManifest} useShinySprites={false} />;
+        return <EyesPage pokemonData={pokemonData} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} />;
       }
     }
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={false} />;

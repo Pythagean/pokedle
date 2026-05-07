@@ -83,5 +83,5 @@ export const CardHints = makeHintConfig(CARD_HINT_THRESHOLDS);
 
 // Eyes page thresholds:
 // [fullImageThreshold, generationHintThreshold]
-export const EYES_HINT_THRESHOLDS = [2, 4, 6];
-export const EyesHints = makeHintConfig(EYES_HINT_THRESHOLDS);
+export const FEATURES_HINT_THRESHOLDS = [1, 2, 3, 4, 5];
+export const FeaturesHints = makeHintConfig(FEATURES_HINT_THRESHOLDS);
