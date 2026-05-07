@@ -41,7 +41,7 @@ def scan_directory(dir_path):
     for pokemon_id in grouped:
         grouped[pokemon_id].sort()
     
-    return dict(sorted(grouped.items(), key=lambda x: int(x[0]) if x[0].isdigit() else x[0]))
+    return dict(sorted(grouped.items(), key=lambda x: (0, int(x[0])) if x[0].isdigit() else (1, x[0])))
 
 
 def build_manifest(input_dir):
@@ -50,7 +50,8 @@ def build_manifest(input_dir):
     
     # Folders to scan (in desired output order)
     # normal and shiny need to look in the /resized subdirectory
-    folder_names = ['normal', 'full_art', 'shiny', 'special']
+    # folder_names = ['normal', 'full_art', 'shiny', 'special']
+    folder_names = ['trimmed']
     
     for folder_name in folder_names:
         # For normal and shiny, look in the resized subdirectory
