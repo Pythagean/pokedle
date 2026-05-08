@@ -19368,6 +19368,28 @@
         "method": "super rod",
         "level_range": "15-35",
         "chance": "5%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "1%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "surfing",
+        "level_range": "5-35",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -30872,6 +30894,18 @@
         "method": "surfing",
         "level_range": "20-24",
         "chance": "60%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-40",
+        "chance": "95%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -31376,6 +31410,18 @@
         "method": "surfing",
         "level_range": "20-24",
         "chance": "10-30%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "35-40",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [
@@ -33597,6 +33643,18 @@
         "method": "surfing",
         "level_range": "20-24",
         "chance": "60%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-40",
+        "chance": "95%"
       }
     ],
     "flavor_text_entries": [
@@ -35778,6 +35836,28 @@
         "method": "super rod",
         "level_range": "15-35",
         "chance": "5%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "1%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-35",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -38951,6 +39031,17 @@
         "method": "super rod",
         "level_range": "15-25",
         "chance": "40%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -39432,6 +39523,17 @@
       },
       {
         "name": "Vermilion City",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "One Island",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -41867,6 +41969,28 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "40%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -42164,6 +42288,17 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "20%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "4%"
       }
     ],
     "preevolution_location_area_encounters": [
@@ -43142,6 +43277,17 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "40%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
       }
     ],
     "flavor_text_entries": [
@@ -46798,6 +46944,28 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "30%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -47001,6 +47169,17 @@
         "method": "surfing",
         "level_range": "20-24",
         "chance": "10%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "4%"
       }
     ],
     "preevolution_location_area_encounters": [
@@ -47552,6 +47731,28 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "30%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
       }
     ],
     "flavor_text_entries": [
@@ -51579,6 +51780,17 @@
         "method": "super rod",
         "level_range": "15-25",
         "chance": "40%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -52037,6 +52249,17 @@
       },
       {
         "name": "Vermilion City",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "One Island",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -56975,6 +57198,30 @@
         "method": "good rod",
         "level_range": "20",
         "chance": "35%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "old rod",
+        "level_range": "5",
+        "chance": "100%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "20%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -57397,6 +57644,18 @@
       },
       {
         "name": "Viridian City",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "15%"
+      },
+      {
+        "name": "One Island",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -69727,6 +69986,17 @@
         "method": "surfing",
         "level_range": "5-35",
         "chance": "100%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "70%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -69962,6 +70232,17 @@
         "method": "surfing",
         "level_range": "5-35",
         "chance": "100%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "70%"
       }
     ],
     "flavor_text_entries": [
@@ -71626,6 +71907,18 @@
         "method": "grass",
         "level_range": "22, 24-25, 27",
         "chance": "morning:15-19%;day:19%;night:0%"
+      },
+      {
+        "name": "Five Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -71963,6 +72256,18 @@
         "method": "grass",
         "level_range": "22, 24-25, 27",
         "chance": "morning:15-19%;day:19%;night:0%"
+      },
+      {
+        "name": "Five Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
       }
     ],
     "flavor_text_entries": [
@@ -72519,6 +72824,17 @@
         "method": "surfing",
         "level_range": "15-19",
         "chance": "60%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "70%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -73647,6 +73963,28 @@
         "method": "super rod",
         "level_range": "15-35",
         "chance": "5%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "1%"
+      },
+      {
+        "name": "Four Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-35",
+        "chance": "30%"
       }
     ],
     "flavor_text_entries": [
@@ -77627,6 +77965,39 @@
         "method": "super rod",
         "level_range": "23",
         "chance": "25%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "good rod",
+        "level_range": "5-15",
+        "chance": "80%"
+      },
+      {
+        "name": "One Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "25-35",
+        "chance": "4%"
       }
     ],
     "flavor_text_entries": [
