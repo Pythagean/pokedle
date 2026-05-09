@@ -64285,6 +64285,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -64352,6 +64363,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "flavor_text_entries": [
@@ -64414,6 +64436,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "flavor_text_entries": [
@@ -64471,6 +64504,17 @@
           "gold",
           "silver",
           "crystal"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
         ],
         "method": "gift",
         "level_range": "5",
@@ -64544,6 +64588,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "flavor_text_entries": [
@@ -64606,6 +64661,17 @@
           "gold",
           "silver",
           "crystal"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
         ],
         "method": "gift",
         "level_range": "5",
@@ -64677,6 +64743,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -64743,6 +64820,17 @@
         "method": "gift",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "flavor_text_entries": [
@@ -64804,6 +64892,17 @@
           "gold",
           "silver",
           "crystal"
+        ],
+        "method": "gift",
+        "level_range": "5",
+        "chance": "One"
+      },
+      {
+        "name": "Littleroot Town",
+        "region": "Hoenn",
+        "generation": 3,
+        "games": [
+          "emerald"
         ],
         "method": "gift",
         "level_range": "5",
@@ -64898,6 +64997,42 @@
         "method": "grass",
         "level_range": "3",
         "chance": "morning:20%;day:20%;night:0%"
+      },
+      {
+        "name": "Kanto Canyon Entrance",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "30%"
+      },
+      {
+        "name": "Kanto Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "30%"
+      },
+      {
+        "name": "Kanto Water Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -66190,6 +66325,28 @@
         "method": "grass",
         "level_range": "14",
         "chance": "morning:20%;day:0%;night:0%"
+      },
+      {
+        "name": "Pattern Bush",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "grass",
+        "level_range": "9, 14",
+        "chance": "5%"
+      },
+      {
+        "name": "Pattern Bush",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "9, 14",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -66676,6 +66833,28 @@
         "method": "grass",
         "level_range": "14",
         "chance": "morning:0%;day:0%;night:20%"
+      },
+      {
+        "name": "Pattern Bush",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "9, 14",
+        "chance": "5%"
+      },
+      {
+        "name": "Pattern Bush",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "grass",
+        "level_range": "9, 14",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -68741,6 +68920,18 @@
         "method": "egg",
         "level_range": "5",
         "chance": "One"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "egg",
+        "level_range": "5",
+        "chance": "One"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -68807,6 +68998,18 @@
           "gold",
           "silver",
           "crystal"
+        ],
+        "method": "egg",
+        "level_range": "5",
+        "chance": "One"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
         ],
         "method": "egg",
         "level_range": "5",
@@ -68890,6 +69093,18 @@
         "method": "grass",
         "level_range": "18,20,22,24",
         "chance": "90%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "15, 20",
+        "chance": "25%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -68999,6 +69214,18 @@
         "method": "grass",
         "level_range": "18,20,22,24",
         "chance": "90%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "15, 20",
+        "chance": "25%"
       }
     ],
     "flavor_text_entries": [
@@ -69997,6 +70224,28 @@
         "method": "surfing",
         "level_range": "5-25",
         "chance": "70%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "5%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "100%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -70243,6 +70492,28 @@
         "method": "surfing",
         "level_range": "5-25",
         "chance": "70%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "5%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "100%"
       }
     ],
     "flavor_text_entries": [
@@ -71919,6 +72190,78 @@
         "method": "surfing",
         "level_range": "5-15",
         "chance": "30%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "15%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "6, 8, 10, 12, 14, 16",
+        "chance": "100%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -72095,6 +72438,78 @@
         "method": "grass",
         "level_range": "22, 24-25, 27",
         "chance": "morning:15-19%;day:19%;night:0%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "15%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "6, 8, 10, 12, 14, 16",
+        "chance": "100%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
       }
     ],
     "flavor_text_entries": [
@@ -72259,6 +72674,78 @@
       },
       {
         "name": "Five Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "15%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "30%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "6, 8, 10, 12, 14, 16",
+        "chance": "100%"
+      },
+      {
+        "name": "Memorial Pillar",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72695,6 +73182,18 @@
         "method": "grass",
         "level_range": "12",
         "chance": "1%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "18",
+        "chance": "10%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -72835,6 +73334,39 @@
         "method": "surfing",
         "level_range": "5-25",
         "chance": "70%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "surfing",
+        "level_range": "5-15",
+        "chance": "5%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "grass",
+        "level_range": "15",
+        "chance": "10%"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "surfing",
+        "level_range": "5-25",
+        "chance": "100%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -73433,6 +73965,17 @@
         "method": "grass",
         "level_range": "17, 19",
         "chance": "morning:0%;day:0%;night:30-35%"
+      },
+      {
+        "name": "Lost Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "cave",
+        "level_range": "22",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -74058,6 +74601,17 @@
         "method": "cave",
         "level_range": "45",
         "chance": "morning:0%;day:0%;night:5-30%"
+      },
+      {
+        "name": "Lost Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "22",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -74137,6 +74691,18 @@
         ],
         "method": "cave",
         "level_range": "5",
+        "chance": "100%"
+      },
+      {
+        "name": "Tanoby Ruins",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "25",
         "chance": "100%"
       }
     ],
@@ -74244,6 +74810,18 @@
         "method": "game corner",
         "level_range": "15",
         "chance": "1500 Coins"
+      },
+      {
+        "name": "Ruin Valley",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "25",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [
@@ -74592,6 +75170,18 @@
         "method": "cave",
         "level_range": "4",
         "chance": "1%"
+      },
+      {
+        "name": "Three Isle Port",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "5, 10, 15, 20, 25, 30, 35",
+        "chance": "100%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -75266,6 +75856,105 @@
         "method": "super rod",
         "level_range": "40",
         "chance": "10%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Green Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Outcast Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Tanoby Ruins",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Trainer Tower",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -75570,6 +76259,116 @@
     ],
     "location_area_encounters": [
       {
+        "name": "Azalea Town",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "crystal"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 33",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 42",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 44",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver",
+          "crystal"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 29",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 30",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 31",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 32",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
+        "name": "Johto Route 43",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "headbutt",
+        "level_range": "10",
+        "chance": "30%"
+      },
+      {
         "name": "Hoenn Safari Zone",
         "region": "Hoenn",
         "generation": 3,
@@ -75581,6 +76380,18 @@
         "method": "grass",
         "level_range": "27, 29",
         "chance": "5%"
+      },
+      {
+        "name": "Pattern Bush",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "15, 20, 25, 30",
+        "chance": "20%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -75688,6 +76499,17 @@
         "method": "grass",
         "level_range": "38, 42",
         "chance": "morning:0%;day:0%;night:10%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "30",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -76053,6 +76875,30 @@
         "method": "grass",
         "level_range": "27, 29",
         "chance": "morning:0%;day:5%;night:0%"
+      },
+      {
+        "name": "Mt. Ember",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "18, 20, 22, 24, 26, 28, 30, 32, 34, 36",
+        "chance": "30-100%"
+      },
+      {
+        "name": "Mt. Ember",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "rock smash",
+        "level_range": "15-35",
+        "chance": "90%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -76180,6 +77026,30 @@
         "method": "grass",
         "level_range": "27, 29",
         "chance": "morning:0%;day:5%;night:0%"
+      },
+      {
+        "name": "Mt. Ember",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "rock smash",
+        "level_range": "15-35",
+        "chance": "90%"
+      },
+      {
+        "name": "Mt. Ember",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "18, 20, 22, 24, 26, 28, 30, 32, 34, 36",
+        "chance": "30-100%"
       }
     ],
     "flavor_text_entries": [
@@ -76250,6 +77120,18 @@
         "method": "cave",
         "level_range": "21-26",
         "chance": "morning:40%;day:40%;night:0%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "23, 25, 27, 29, 31",
+        "chance": "50%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -76322,6 +77204,18 @@
         "method": "cave",
         "level_range": "21-26",
         "chance": "morning:40%;day:40%;night:0%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "cave",
+        "level_range": "23, 25, 27, 29, 31",
+        "chance": "50%"
       }
     ],
     "flavor_text_entries": [
@@ -76777,6 +77671,105 @@
         "method": "good rod",
         "level_range": "20",
         "chance": "65%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Green Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Outcast Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Tanoby Ruins",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Trainer Tower",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -76911,6 +77904,105 @@
         "method": "good rod",
         "level_range": "20",
         "chance": "65%"
+      },
+      {
+        "name": "Five Island Meadow",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Green Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Memorial Pillar",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Outcast Island",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Resort Gorgeous",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Tanoby Ruins",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Trainer Tower",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Labyrinth",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
+      },
+      {
+        "name": "Water Path",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "super rod",
+        "level_range": "15-25",
+        "chance": "40%"
       }
     ],
     "flavor_text_entries": [
@@ -76988,6 +78080,17 @@
         "method": "cave",
         "level_range": "21-26",
         "chance": "morning:0%;day:0%;night:40%"
+      },
+      {
+        "name": "Icefall Cave",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "cave",
+        "level_range": "30",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -77065,6 +78168,28 @@
         "method": "surfing",
         "level_range": "20-24",
         "chance": "10%"
+      },
+      {
+        "name": "Tanoby Ruins",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "35-40",
+        "chance": "5%"
+      },
+      {
+        "name": "Trainer Tower",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "leafgreen"
+        ],
+        "method": "surfing",
+        "level_range": "35-40",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -77157,6 +78282,17 @@
         "method": "grass",
         "level_range": "27",
         "chance": "morning:5%;day:5%;night:0%"
+      },
+      {
+        "name": "Sevault Canyon",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered"
+        ],
+        "method": "grass",
+        "level_range": "30",
+        "chance": "5%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -78091,6 +79227,30 @@
         "method": "grass",
         "level_range": "2",
         "chance": "morning:5%;day:0%;night:0%"
+      },
+      {
+        "name": "Sevault Canyon",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "15",
+        "chance": "20%"
+      },
+      {
+        "name": "Canyon Entrance",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "15%"
       }
     ],
     "preevolution_location_area_encounters": [],
@@ -78239,6 +79399,30 @@
         "method": "grass",
         "level_range": "2",
         "chance": "morning:5%;day:0%;night:0%"
+      },
+      {
+        "name": "Sevault Canyon",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "15",
+        "chance": "20%"
+      },
+      {
+        "name": "Canyon Entrance",
+        "region": "Kanto",
+        "generation": 3,
+        "games": [
+          "firered",
+          "leafgreen"
+        ],
+        "method": "grass",
+        "level_range": "10, 15",
+        "chance": "15%"
       }
     ],
     "flavor_text_entries": [
