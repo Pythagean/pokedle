@@ -50,22 +50,31 @@ def build_manifest(input_dir):
     
     # Folders to scan (in desired output order)
     # normal and shiny need to look in the /resized subdirectory
-    # folder_names = ['normal', 'full_art', 'shiny', 'special']
-    folder_names = ['trimmed']
+    folder_names = ['normal', 'full_art', 'shiny', 'special']
+    # folder_names = ['trimmed']
     
     for folder_name in folder_names:
-        # For normal and shiny, look in the resized subdirectory
-        if folder_name in ['normal', 'shiny']:
+        if folder_name == 'normal':
             folder_path = os.path.join(input_dir, folder_name, 'resized')
+            folder_data = scan_directory(folder_path)
+        elif folder_name == 'shiny':
+            # Keep regular and full lists separate under each Pokemon ID
+            folder_data = {}
+            for sub in ['regular', 'full']:
+                sub_path = os.path.join(input_dir, folder_name, sub)
+                sub_data = scan_directory(sub_path)
+                for pokemon_id, files in sub_data.items():
+                    if pokemon_id not in folder_data:
+                        folder_data[pokemon_id] = {}
+                    folder_data[pokemon_id][sub] = files
         else:
             folder_path = os.path.join(input_dir, folder_name)
-        
-        folder_data = scan_directory(folder_path)
+            folder_data = scan_directory(folder_path)
         
         if folder_data:
             manifest[folder_name] = folder_data
         else:
-            print(f"Warning: No files found in {folder_path}")
+            print(f"Warning: No files found in {os.path.join(input_dir, folder_name)}")
     
     return manifest
 
