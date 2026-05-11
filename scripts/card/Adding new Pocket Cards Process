@@ -28,6 +28,9 @@ Commit and Sync pokedle_assets
 Run this script to re-build the card manifest file
 python .\scripts\card\build_card_manifest_from_dirs.py --input-dir D:\Github\pokedle_assets\cards --output-json .\public\data\card_manifest.json
 
+Run this script to summarize cards
+python .\scripts\card\summarize_card_manifest.py --input-json .\public\data\card_manifest.json --output-csv .\scripts\card\card_summary.csv --pokemon-data .\public\data\pokemon_data.json
+
 
 ------------------
 ---ACTUAL CARDS---

@@ -62,8 +62,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 61,Poliwhirl,13,1,0,0,1
 62,Poliwrath,12,1,0,1,1
 63,Abra,9,1,0,0,0
-64,Kadabra,6,1,0,0,0
-65,Alakazam,10,1,1,3,3
+64,Kadabra,9,1,0,0,0
+65,Alakazam,9,1,1,3,3
 66,Machop,19,1,0,0,0
 67,Machoke,16,1,0,0,1
 68,Machamp,21,1,1,2,5
@@ -97,7 +97,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 96,Drowzee,20,1,0,0,1
 97,Hypno,19,1,0,0,0
 98,Krabby,7,1,0,0,0
-99,Kingler,6,1,0,1,0
+99,Kingler,9,1,0,1,0
 100,Voltorb,23,3,0,0,1
 101,Electrode,22,2,1,1,1
 102,Exeggcute,21,1,0,0,1
@@ -136,9 +136,9 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 135,Jolteon,22,2,1,4,5
 136,Flareon,21,2,1,3,5
 137,Porygon,19,1,0,0,1
-138,Omanyte,6,1,0,0,1
+138,Omanyte,10,1,0,0,1
 139,Omastar,8,1,0,2,0
-140,Kabuto,6,1,0,0,0
+140,Kabuto,10,1,0,0,0
 141,Kabutops,8,1,0,0,0
 142,Aerodactyl,8,1,1,5,2
 143,Snorlax,21,1,1,2,5
@@ -151,7 +151,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 150,Mewtwo,23,0,1,7,7
 151,Mew,21,2,2,4,8
 152,Chikorita,8,0,0,0,0
-153,Bayleef,6,0,0,0,0
+153,Bayleef,10,0,0,0,0
 154,Meganium,11,0,0,0,0
 155,Cyndaquil,12,0,0,0,0
 156,Quilava,9,0,0,0,0
@@ -172,7 +172,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 171,Lanturn,20,0,0,1,1
 172,Pichu,10,1,0,0,1
 173,Cleffa,8,1,0,0,1
-174,Igglybuff,4,0,0,0,0
+174,Igglybuff,7,0,0,0,0
 175,Togepi,10,0,0,0,1
 176,Togetic,10,0,0,0,0
 177,Natu,13,1,0,0,1
@@ -186,7 +186,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 185,Sudowoodo,10,1,0,0,2
 186,Politoed,8,0,0,0,0
 187,Hoppip,7,1,0,0,0
-188,Skiploom,5,1,0,0,0
+188,Skiploom,10,1,0,0,0
 189,Jumpluff,9,1,0,1,1
 190,Aipom,15,0,0,0,1
 191,Sunkern,9,0,0,0,0
@@ -234,10 +234,10 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 233,Porygon2,14,1,0,0,0
 234,Stantler,7,0,0,0,1
 235,Smeargle,11,0,0,0,2
-236,Tyrogue,4,1,0,0,0
+236,Tyrogue,8,1,0,0,0
 237,Hitmontop,7,0,0,0,1
-238,Smoochum,4,0,0,0,0
-239,Elekid,6,0,0,0,0
+238,Smoochum,8,0,0,0,0
+239,Elekid,10,0,0,0,0
 240,Magby,7,1,0,0,1
 241,Miltank,12,0,0,0,1
 242,Blissey,12,1,0,2,3
@@ -267,7 +267,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 266,Silcoon,7,0,0,0,0
 267,Beautifly,9,0,0,0,2
 268,Cascoon,7,0,0,0,0
-269,Dustox,5,0,0,0,1
+269,Dustox,8,0,0,0,2
 270,Lotad,12,0,0,0,0
 271,Lombre,12,0,0,0,0
 272,Ludicolo,12,0,0,0,3
@@ -290,13 +290,13 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 289,Slaking,12,0,0,3,0
 290,Nincada,10,0,0,0,0
 291,Ninjask,9,0,0,0,1
-292,Shedinja,6,0,0,0,1
+292,Shedinja,8,0,0,0,1
 293,Whismur,10,0,0,0,0
 294,Loudred,7,0,0,0,1
-295,Exploud,6,0,0,0,0
+295,Exploud,9,0,0,0,0
 296,Makuhita,16,0,0,0,1
 297,Hariyama,15,0,0,0,0
-298,Azurill,3,0,0,0,1
+298,Azurill,5,0,0,0,1
 299,Nosepass,17,0,0,0,0
 300,Skitty,16,0,0,0,0
 301,Delcatty,11,0,0,0,0
@@ -314,8 +314,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 313,Volbeat,7,0,0,0,0
 314,Illumise,7,0,0,0,0
 315,Roselia,14,0,0,0,0
-316,Gulpin,4,0,0,0,1
-317,Swalot,4,0,0,0,0
+316,Gulpin,8,0,0,0,1
+317,Swalot,8,0,0,0,0
 318,Carvanha,18,0,0,0,0
 319,Sharpedo,14,0,0,0,0
 320,Wailmer,14,0,0,0,0
@@ -346,7 +346,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 345,Lileep,7,0,0,0,1
 346,Cradily,7,0,0,0,0
 347,Anorith,7,0,0,0,0
-348,Armaldo,6,0,0,0,0
+348,Armaldo,8,0,0,0,0
 349,Feebas,14,0,0,0,1
 350,Milotic,15,0,0,2,3
 351,Castform,17,0,0,0,3
@@ -358,7 +358,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 357,Tropius,15,0,0,0,1
 358,Chimecho,11,0,0,0,1
 359,Absol,19,1,0,1,1
-360,Wynaut,3,0,0,0,0
+360,Wynaut,5,0,0,0,0
 361,Snorunt,13,0,0,0,1
 362,Glalie,7,0,0,1,0
 363,Spheal,14,0,0,0,1
