@@ -31,8 +31,6 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-import { getCardTypeByDay } from '../utils/cardType';
-
 function CardPage({ pokemonData, guesses, setGuesses, daily }) {
 
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
@@ -129,8 +127,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   // local selection when necessary.
   // Rely on `daily` supplied by App. `daily` may be either a pokemon object or
   // an object { pokemon, card } where `card` contains `cropped` and `resized` URLs.
-  const { cardPath, answer, folder, cardFile, cardType } = useMemo(() => {
-    if (!pokemonData) return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
+  const { cardPath, answer, folder, cardFile, cardType, shinyVariant } = useMemo(() => {
+    if (!pokemonData) return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null, shinyVariant: null };
     if (daily) {
       const providedPokemon = daily.pokemon ? daily.pokemon : daily;
       const providedCard = daily.card ? daily.card : null;
@@ -140,16 +138,20 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
           answer: providedPokemon,
           folder: providedCard.folder || null,
           cardFile: providedCard.cardFile || providedCard.card_file || null,
-          cardType: providedCard.cardType || providedCard.card_type || null
+          cardType: providedCard.cardType || providedCard.card_type || null,
+          shinyVariant: providedCard.shinyVariant || null
         };
       }
       // If no card metadata provided, we can't reliably select a card without the manifest.
       // Fall back to using the provided pokemon as the answer and no cardPath.
-      return { cardPath: null, answer: providedPokemon, folder: null, cardFile: null, cardType: null };
+      return { cardPath: null, answer: providedPokemon, folder: null, cardFile: null, cardType: null, shinyVariant: null };
     }
     // No `daily` provided yet (maybe loading) — show nothing.
-    return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null };
+    return { cardPath: null, answer: null, folder: null, cardFile: null, cardType: null, shinyVariant: null };
   }, [daily, pokemonData]);
+
+  // shiny/full cards use full_art-style rendering (no cropped phase)
+  const isFullTypeCard = cardType === 'full_art' || cardType === 'special' || (cardType === 'shiny' && shinyVariant === 'full');
 
 
 
@@ -193,7 +195,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   const isCorrect = guesses.length > 0 && answer && guesses[0].name === answer.name;
   if (isCorrect) {
     blurLevel = 0;
-  } else if (cardType === 'full_art') {
+  } else if (cardType === 'full_art' || (cardType === 'shiny' && shinyVariant === 'full')) {
     // Blur logic for full_art cards
     switch (true) {
       case guesses.length === 0:
@@ -293,7 +295,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
   }
   // Helper: compute blur level from guess count + card type (mirrors the switch logic above)
   function computeBlurLevel(count, type) {
-    if (type === 'full_art') {
+    if (type === 'full_art' || (type === 'shiny' && shinyVariant === 'full')) {
       const levels = [16, 14, 12, 9, 7, 5, 4, 3, 2, 2, 2, 2, 2];
       return levels[Math.min(count, levels.length - 1)];
     } else if (type === 'special') {
@@ -352,9 +354,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
               <div style={{ marginBottom: 8 }}>
                 The type of card picked is based on the day of the week:
                 <ul style={{ marginTop: 6, marginBottom: 6, paddingLeft: 18 }}>
-                  <li><b>Weekdays:</b> Normal cards</li>
-                  <li><b>Saturdays:</b> Full Art or Shiny cards</li>
-                  <li><b>Sundays:</b> Illustration cards</li>
+                  <li><b>Weekdays:</b> Normal cards (rare chance of Full Art or Shiny!)</li>
+                  <li><b>Saturdays & Sundays:</b> Illustration cards</li>
                 </ul>
               </div>
 
@@ -407,49 +408,45 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
           <div style={{ marginBottom: 8 }}>
             <div style={{ fontWeight: 600 }}>Which Pokémon is on this card?</div>
             {(() => {
-              // Show weekend/event label when Saturday or Sunday selection changes the card type
-              try {
-                const todaysType = getCardTypeByDay(effectiveDay, rng);
-                let eventLabel = null;
-                if (todaysType === 'full_art') eventLabel = 'Full-Art Saturday';
-                else if (todaysType === 'shiny') eventLabel = 'Shiny Saturday';
-                else if (todaysType === 'special') eventLabel = 'Illustration Sunday';
-                if (eventLabel) {
-                  // Build a single-example content based on today's type
-                  let example = null;
-                  if (todaysType === 'full_art') {
-                    example = (
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Full-Art Saturday</div>
-                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/full_art/3-42.jpg" alt="Full-Art example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                      </div>
-                    );
-                  } else if (todaysType === 'shiny') {
-                    example = (
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Shiny Saturday</div>
-                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/shiny/resized/1-99.jpg" alt="Shiny example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                      </div>
-                    );
-                  } else if (todaysType === 'special') {
-                    example = (
-                      <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontWeight: 700, marginBottom: 8 }}>Illustration Sunday</div>
-                        <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
-                      </div>
-                    );
+              // Show an event label when a special/full_art/shiny card is selected
+              let eventLabel = null;
+              let example = null;
+              if (cardType === 'shiny') {
+                eventLabel = 'Shiny!';
+                example = (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, marginBottom: 8 }}>✨ Today the card chosen is Shiny! ✨</div>
+                    <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/shiny/regular/1-99.jpg" alt="Shiny example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                  </div>
+                );
+              } else if (cardType === 'special') {
+                const nowForLabel = new Date();
+                const seedDateForLabel = (() => {
+                  const y = nowForLabel.getUTCFullYear();
+                  const m = nowForLabel.getUTCMonth();
+                  const d = nowForLabel.getUTCDate();
+                  if (nowForLabel.getUTCHours() >= RESET_HOUR_UTC) {
+                    return new Date(Date.UTC(y, m, d + 1, 0, 0, 0));
                   }
-                  return (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
-                      <div style={{ color: '#666', fontSize: 13 }}>Today is <strong>{eventLabel}</strong>!</div>
-                      {example && (
-                        <InfoButton ariaLabel="Card examples" placement="right" marginTop={130} content={example} />
-                      )}
-                    </div>
-                  );
-                }
-              } catch (e) {
-                // ignore
+                  return new Date(Date.UTC(y, m, d, 0, 0, 0));
+                })();
+                eventLabel = seedDateForLabel.getUTCDay() === 0 ? 'Illustration Sunday' : 'Illustration Saturday';
+                example = (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, marginBottom: 8 }}>{eventLabel}</div>
+                    <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
+                  </div>
+                );
+              }
+              if (eventLabel) {
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
+                    <div style={{ color: '#666', fontSize: 13 }}>Today is <strong>{eventLabel}</strong>!</div>
+                    {example && (
+                      <InfoButton ariaLabel="Card examples" placement="right" marginTop={130} content={example} />
+                    )}
+                  </div>
+                );
               }
               return null;
             })()}
@@ -464,8 +461,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
           {cardFile ? (
             <>
-              {/* For full_art or special: always show resized image */}
-              {(cardType === 'full_art' || cardType === 'special') ? (
+              {/* For full_art, special, or shiny/full: always show resized image */}
+              {isFullTypeCard ? (
                 <img
                   src={cardPath.resized}
                   alt={answer ? answer.name : 'Pokemon Card'}
@@ -546,7 +543,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         {/* Only show hint text if not guessed correctly */}
         {!isCorrect && (
           <>
-            {(cardType === 'full_art' || cardType === 'special') ? (
+            {isFullTypeCard ? (
               <>
                 {/* For full_art/special: Types revealed at fullArtTypesT guesses */}
                 {guesses.length < fullArtTypesT && (

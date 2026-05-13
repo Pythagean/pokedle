@@ -441,20 +441,7 @@ function App() {
     }
     return base;
   }, [debugDayOffset]);
-  // Determine whether this UTC-based day is a 'shiny' Saturday using same seed as Card selection
-  const baseSeedForCardType = getSeedFromDate(today) + 9999;
-  const cardTypeRng = mulberry32(baseSeedForCardType);
-  const seedDateForCardType = (function () {
-    const y = today.getUTCFullYear();
-    const m = today.getUTCMonth();
-    const d = today.getUTCDate();
-    if (today.getUTCHours() >= RESET_HOUR_UTC) {
-      return new Date(Date.UTC(y, m, d + 1, 0, 0, 0));
-    }
-    return new Date(Date.UTC(y, m, d, 0, 0, 0));
-  })();
-  const utcDayForCardType = seedDateForCardType.getUTCDay();
-  const isShinyDay = getCardTypeByDay(utcDayForCardType, cardTypeRng) === 'shiny';
+  // isShinyDay is derived from the actual card selected for today (computed after dailyByPage)
   const todayTheme = getDailyTheme(getSeedFromDate(today));
   const seed = getSeedFromDate(today) + page.length * 1000 + page.charCodeAt(0);
   const rng = useMemo(() => mulberry32(seed), [seed]);
@@ -887,6 +874,73 @@ function App() {
       if (!cardManifest) return null;
       const baseSeed = getSeedFromDate(today) + 9999;
       let localRng = mulberry32(baseSeed);
+
+      // Determine the day type once (Sun & Sat = special, Mon-Fri = normal with possible upgrades)
+      const now = new Date();
+      let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+      if (now.getUTCHours() >= RESET_HOUR_UTC) {
+        dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+      }
+      const utcDay = dayForCard.getUTCDay();
+      const isWeekend = utcDay === 0 || utcDay === 6;
+      const BASE_URL = 'https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards';
+
+      // Helper: build card object for a chosen pokemon given the current RNG state
+      function buildCardForPokemon(chosen) {
+        if (isWeekend) {
+          const manifestList = cardManifest['special']?.[chosen.id];
+          if (!manifestList || manifestList.length === 0) return null;
+          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
+          const folder = `${BASE_URL}/special`;
+          return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'special' };
+        }
+        // Weekday: require a normal card, then optionally upgrade to full_art (5%) or shiny (5%)
+        const normalList = cardManifest['normal']?.[chosen.id];
+        if (!normalList || normalList.length === 0) return null;
+
+        // Use a per-pokemon seed for type upgrade rolls so pokemon selection RNG is undisturbed
+        const typeRng = mulberry32(baseSeed + chosen.id * 7777);
+        const fullArtRoll = typeRng();
+        const shinyRoll = typeRng();
+
+        const hasFullArt = cardManifest['full_art']?.[chosen.id]?.length > 0;
+        const shinyData = cardManifest['shiny']?.[chosen.id];
+        const shinyRegularFiles = shinyData?.regular || [];
+        const shinyFullFiles = shinyData?.full || [];
+        const hasShinySomething = shinyRegularFiles.length > 0 || shinyFullFiles.length > 0;
+
+        if (fullArtRoll < 0.05 && hasFullArt) {
+          const fullArtList = cardManifest['full_art'][chosen.id];
+          const cardFile = fullArtList[Math.floor(localRng() * fullArtList.length)];
+          const folder = `${BASE_URL}/full_art`;
+          return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'full_art' };
+        } else if (shinyRoll < 0.05 && hasShinySomething) {
+          const allShinyFiles = [
+            ...shinyRegularFiles.map(f => ({ file: f, variant: 'regular' })),
+            ...shinyFullFiles.map(f => ({ file: f, variant: 'full' }))
+          ];
+          const entry = allShinyFiles[Math.floor(localRng() * allShinyFiles.length)];
+          const baseShinyFolder = `${BASE_URL}/shiny`;
+          if (entry.variant === 'regular') {
+            return {
+              cropped: `${baseShinyFolder}/regular/cropped/${entry.file}`,
+              resized: `${baseShinyFolder}/regular/${entry.file}`,
+              cardFile: entry.file, folder: `${baseShinyFolder}/regular`, cardType: 'shiny', shinyVariant: 'regular'
+            };
+          } else {
+            return {
+              cropped: `${baseShinyFolder}/full/${entry.file}`,
+              resized: `${baseShinyFolder}/full/${entry.file}`,
+              cardFile: entry.file, folder: `${baseShinyFolder}/full`, cardType: 'shiny', shinyVariant: 'full'
+            };
+          }
+        } else {
+          const cardFile = normalList[Math.floor(localRng() * normalList.length)];
+          const folder = `${BASE_URL}/normal`;
+          return { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}`, cardFile, folder, cardType: 'normal' };
+        }
+      }
+
       let attempts = 0;
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
@@ -897,42 +951,9 @@ function App() {
           attempts++;
           continue;
         }
-        
-        // Try card types in the same way CardPage does (weekday vs weekend)
-        // We can't know user debugDay, so use today's UTC day
-        const now = new Date();
-        let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
-        if (now.getUTCHours() >= RESET_HOUR_UTC) {
-          dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-        }
-        const utcDay = dayForCard.getUTCDay();
-        const cardType = getCardTypeByDay(utcDay, localRng);
 
-        const manifestList = cardManifest[cardType]?.[chosen.id];
-        if (manifestList && manifestList.length > 0) {
-          // pick a file deterministically
-          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-          const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-          let cardObj = null;
-          if (cardType === 'normal' || cardType === 'shiny') {
-            cardObj = {
-              cropped: `${folder}/cropped/${cardFile}`,
-              resized: `${folder}/resized/${cardFile}`,
-              cardFile,
-              folder,
-              cardType
-            };
-          } else {
-            cardObj = {
-              cropped: `${folder}/${cardFile}`,
-              resized: `${folder}/${cardFile}`,
-              cardFile,
-              folder,
-              cardType
-            };
-          }
-          return { pokemon: chosen, card: cardObj };
-        }
+        const cardObj = buildCardForPokemon(chosen);
+        if (cardObj) return { pokemon: chosen, card: cardObj };
         attempts++;
       }
       
@@ -943,38 +964,9 @@ function App() {
       while (attempts < 200) {
         const idx = Math.floor(localRng() * pokemonData.length);
         const chosen = pokemonData[idx];
-        const now = new Date();
-        let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
-        if (now.getUTCHours() >= RESET_HOUR_UTC) {
-          dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-        }
-        const utcDay = dayForCard.getUTCDay();
-        const cardType = getCardTypeByDay(utcDay, localRng);
 
-        const manifestList = cardManifest[cardType]?.[chosen.id];
-        if (manifestList && manifestList.length > 0) {
-          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-          const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-          let cardObj = null;
-          if (cardType === 'normal' || cardType === 'shiny') {
-            cardObj = {
-              cropped: `${folder}/cropped/${cardFile}`,
-              resized: `${folder}/resized/${cardFile}`,
-              cardFile,
-              folder,
-              cardType
-            };
-          } else {
-            cardObj = {
-              cropped: `${folder}/${cardFile}`,
-              resized: `${folder}/${cardFile}`,
-              cardFile,
-              folder,
-              cardType
-            };
-          }
-          return { pokemon: chosen, card: cardObj };
-        }
+        const cardObj = buildCardForPokemon(chosen);
+        if (cardObj) return { pokemon: chosen, card: cardObj };
         attempts++;
       }
       
@@ -1199,7 +1191,7 @@ function App() {
     }
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={false} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={false} />;
-    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={isShinyDay} />;
+    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={dailyByPage?.card?.card?.cardType === 'shiny'} />;
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={false} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
     return null;

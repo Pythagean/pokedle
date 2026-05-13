@@ -1,8 +1,6 @@
 // Shared helper to decide card type based on UTC weekday and a PRNG
 export function getCardTypeByDay(utcDay, rng) {
   // utcDay: 0=Sunday, 6=Saturday
-  if (utcDay === 0) return 'special'; // Sunday -> illustration/special
-  //if (utcDay === 6) return rng() < 0.9 ? 'full_art' : 'shiny'; // Saturday -> 90/10
-  if (utcDay === 6) return 'full_art';
-  return 'normal'; // Mon-Fri
+  if (utcDay === 0 || utcDay === 6) return 'special'; // Sunday & Saturday -> illustration/special
+  return 'normal'; // Mon-Fri (5% full_art / 5% shiny upgrades handled in card selection)
 }
