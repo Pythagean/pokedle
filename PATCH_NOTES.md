@@ -1,3 +1,55 @@
+## Release Notes — May 15th, 2026
+
+## What’s New
+
+- **Results** <br>
+    - Added Guess Breakdown feature
+- **Locations** <br>
+    - Bug fixes around map loading
+    - Changing some data, fixing incorrect locations, adding Firered/Leafgreen locations to Gen II Pokemon data
+- **Card** <br>
+    - Saturdays and Sundays are both now Illustration days. Weekdays have a 5% chance of being shiny cards, 5% chance of being Full Art cards
+    - After you have clicked 'show blurred' you can click each previous guess box to see how blurry the card was when you guessed that pokemon
+    - Added new cards from sets: Pulsing Aura, Ninja Spinner
+- **Details** <br>
+    - Added 'Features' sub-mode
+    - User can now click on previous guesses to return the zoom level to previous steps.
+    - Added some hints in Silhouette mode (Generation after 5 guesses, Pokemon types after 7 guesses)
+
+## Commits included (newest first)
+
+```text
+dfd7253 | 2026-05-15 | Reverted accidental commit
+f26a764 | 2026-05-15 | Silhouette: Add hints for generation and types in SilhouettePage; update thresholds and zoom behavior
+1d66ae8 | 2026-05-14 | Update SilhouettePage.jsx
+31a7fbd | 2026-05-13 | Saturdays and Sundays are both now Illustration days. Weekdays have a 5% chance of being shiny cards, 5% chance of being Full Art cards
+ea7aa42 | 2026-05-11 | Updating card manifest
+0851c5a | 2026-05-10 | Building up Shiny Cards
+ec4ea38 | 2026-05-09 | Adding Firered/Leafgreen locations to Gen 2 Pokemon
+bca64bc | 2026-05-08 | Details: User can now click on previous guesses to return the zoom level to previous steps.
+9fe6e94 | 2026-05-08 | Details: Added Features sub-mode
+c338cca | 2026-05-08 | Building Body Part manifest
+28a6a21 | 2026-05-01 | Locations; Adding some Sevii Islands locations
+3ac46ca | 2026-05-01 | Card: After you have clicked 'show blurred' you can click each previous guess box to see how blurry the card was when you guessed that pokemon
+98a6e8d | 2026-04-29 | Added Metang and Claydol special illustration cards from Japenese set Ninja Spinner
+1cf4455 | 2026-04-29 | Fix: Update map URL handling to prevent 404 errors by using null until confirmed filename is available
+728289f | 2026-04-29 | Fixing syntax error in Results Page
+5504823 | 2026-04-29 | New Cards: Pulsing Aura
+d94baa4 | 2026-04-29 | ResultsPage: Refactor display of guesses and player information for improved layout
+f286b12 | 2026-04-29 | Some script work
+f2005e8 | 2026-04-29 | Fixing aron shape
+a5f232e | 2026-04-24 | Results: Created Guess Breakdown section
+7aeb391 | 2026-04-24 | Results: Hiding Group Results
+e77d485 | 2026-04-24 | ResultsPage: Add medal display for leader and group results based on totals
+5a7f614 | 2026-04-24 | ResultsPage: Add preview type state and adjust canvas size calculations for card and guesses
+6bbb311 | 2026-04-24 | ResultsPage: Enhance title display with player name and adjust spacing
+53f101f | 2026-04-22 | Removing Galarian Slowking card from pool
+f14fe9a | 2026-04-20 | ResultsPage: Add display for guesses count and names in results
+eaf5b06 | 2026-04-19 | LocationsPage: Increase font size for mobile layout to improve readability
+6911b28 | 2026-04-19 | LocationsPage: Update map loading URLs to support environment variables and improve path resolution
+ef557e3 | 2026-04-19 | Patch notes for 19th April
+```
+
 ## Release Notes — April 19th, 2026
 
 ## What’s New
