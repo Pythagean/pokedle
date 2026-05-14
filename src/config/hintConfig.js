@@ -85,3 +85,8 @@ export const CardHints = makeHintConfig(CARD_HINT_THRESHOLDS);
 // [fullImageThreshold, generationHintThreshold]
 export const FEATURES_HINT_THRESHOLDS = [1, 2, 3, 4, 5];
 export const FeaturesHints = makeHintConfig(FEATURES_HINT_THRESHOLDS);
+
+// Silhouette page thresholds:
+// [generationThreshold, typeThreshold]
+export const SILHOUETTE_HINT_THRESHOLDS = [5, 7];
+export const SilhouetteHints = makeHintConfig(SILHOUETTE_HINT_THRESHOLDS);

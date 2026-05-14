@@ -5,6 +5,8 @@ import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 import ResetCountdown from '../components/ResetCountdown';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
+import { SILHOUETTE_HINT_THRESHOLDS } from '../config/hintConfig';
+import { TYPE_COLORS } from '../config/typeColors';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -173,7 +175,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Zoom logic: start at maxZoom, go to minZoom over maxSteps guesses.
   // Use cubic easing so initial zoom-outs are smaller and reveal grows gradually.
   const maxZoom = 2.7;
-  const minZoom = 1.05;
+  const minZoom = 1.01;
   const maxSteps = 10;
   const easePower = 1.1;
   function computeZoomFromCount(count) {
@@ -425,6 +427,77 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Combine opacity transition with the conditional transform transition
   const combinedTransition = `opacity 300ms ease, ${imgStyle.transition}`;
 
+  // --- Hints logic (generation, types) ---
+  const [genT, typesT] = SILHOUETTE_HINT_THRESHOLDS;
+  const pokemonTypes = dailyPokemon.types || [];
+  const pokemonGeneration = dailyPokemon.generation || 'N/A';
+
+  let generationHint = null;
+  let generationHintPlaceholder = null;
+  let typeHint = null;
+  let typeHintPlaceholder = null;
+
+  if (guesses.length >= genT) {
+    const gen = parseInt(String(pokemonGeneration).match(/\d+/)?.[0], 10);
+    const genStarterMap = { 1: 1, 2: 152, 3: 252, 4: 387, 5: 495, 6: 650, 7: 722, 8: 810, 9: 906 };
+    const starterId = genStarterMap[gen];
+    generationHint = (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+        <span style={{ fontWeight: 700 }}>Generation:</span>
+        <span>{pokemonGeneration}</span>
+        {starterId && (
+          <img
+            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${starterId}-front.png`}
+            alt={`Gen ${gen} starter`}
+            style={{ width: 32, height: 32, objectFit: 'contain', transform: 'scale(1.2)' }}
+            onError={e => { e.target.style.display = 'none'; }}
+          />
+        )}
+      </div>
+    );
+  }
+
+  if (guesses.length >= typesT) {
+    typeHint = (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <span style={{ fontWeight: 700 }}>Type{pokemonTypes.length > 1 ? 's' : ''}:</span>
+        {pokemonTypes.map(t => {
+          const tLower = String(t).toLowerCase();
+          const bgColor = TYPE_COLORS[tLower] || '#777';
+          return (
+            <div
+              key={t}
+              style={{
+                background: bgColor,
+                color: '#fff',
+                padding: '4px 12px',
+                borderRadius: 6,
+                fontWeight: 700,
+                fontSize: 14,
+                textTransform: 'capitalize',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}
+            >
+              {t}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (guesses.length > 0 && guesses.length < genT) {
+    generationHintPlaceholder = `Generation revealed in ${genT - guesses.length} guess${genT - guesses.length === 1 ? '' : 'es'}`;
+  }
+  if (guesses.length >= genT && guesses.length < typesT) {
+    typeHintPlaceholder = `Type${pokemonTypes.length > 1 ? 's' : ''} revealed in ${typesT - guesses.length} guess${typesT - guesses.length === 1 ? '' : 'es'}`;
+  }
+
+  if (isCorrect) {
+    generationHintPlaceholder = null;
+    typeHintPlaceholder = null;
+  }
+
   return (
     <div style={{ textAlign: 'center', marginTop: 10 }}>
       <Confetti active={showConfetti} centerRef={isCorrect ? lastGuessRef : null} />
@@ -647,6 +720,26 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             </button>
           </div>
         )}
+        {/* Generation hint or placeholder */}
+        {generationHint ? (
+          <div style={{ color: '#333', marginBottom: (typeHint || typeHintPlaceholder) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {generationHint}
+          </div>
+        ) : (!isCorrect && generationHintPlaceholder && (
+          <div style={{ color: '#aaa', marginBottom: 12, borderTop: '1px dashed #eee', paddingTop: 10 }}>
+            {generationHintPlaceholder}
+          </div>
+        ))}
+        {/* Types hint or placeholder */}
+        {typeHint ? (
+          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {typeHint}
+          </div>
+        ) : (!isCorrect && typeHintPlaceholder && (
+          <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
+            {typeHintPlaceholder}
+          </div>
+        ))}
       </div>
       {!isCorrect && (
         <form

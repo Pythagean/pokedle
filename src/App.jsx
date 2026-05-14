@@ -188,11 +188,11 @@ function getDetailsModeForDate(date) {
   }
   const utcDay = effective.getUTCDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
   // Silhouette days: 1 (Mon), 4 (Thu)
-  if (utcDay === 1 || utcDay === 4) {
+  if (utcDay === 1 || utcDay === 4|| utcDay === 5) {
     return 'silhouette';
   }
   // Zoom days: 2 (Tue), 5 (Friday), 0 (Sun)
-  if (utcDay === 2 || utcDay === 5 || utcDay === 0) {
+  if (utcDay === 2  || utcDay === 0) {
     return 'zoom';
   }
   // Features days: 3 (Wed), 6 (Sat)
