@@ -14,9 +14,9 @@ export default function AboutPage({ onPrivacyClick }) {
         <div style={{ maxWidth: 700, margin: '0 auto', padding: '8px 4px 40px' }}>
             {/* Header */}
             <div style={{ textAlign: 'center', marginBottom: 32 }}>
-                <h1 style={{ fontSize: 28, fontWeight: 800, color: '#1976d2', margin: '0 0 10px' }}>
+                <h2 style={{ margin: '0 0 10px' }}>
                     About Pokédle
-                </h1>
+                </h2>
                 <p style={{ fontSize: 16, color: '#444', lineHeight: 1.6, margin: 0 }}>
                     Pokédle is a daily Pokémon guessing game featuring <strong>6 different modes</strong>, each
                     offering a unique way to test your Pokémon knowledge. A new Pokémon is chosen for each mode
@@ -51,21 +51,23 @@ export default function AboutPage({ onPrivacyClick }) {
             <h2 style={{ fontSize: 19, fontWeight: 700, color: '#1976d2', margin: '0 0 14px' }}>
                 Game Modes
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 36 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
                 {MODES.map(m => (
                     <div key={m.key} style={{
                         display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: 14,
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 8,
                         background: '#fff',
                         border: '1.5px solid #e0e7ef',
                         borderRadius: 10,
                         padding: '12px 16px',
+                        textAlign: 'center',
                     }}>
                         <img
                             src={`icons/${m.key}.png`}
                             alt=""
-                            style={{ width: 36, height: 36, objectFit: 'contain', flexShrink: 0, marginTop: 2 }}
+                            style={{ width: 36, height: 36, objectFit: 'contain', flexShrink: 0 }}
                         />
                         <div>
                             <div style={{ fontWeight: 700, fontSize: 15, color: '#1976d2', marginBottom: 3 }}>
@@ -92,13 +94,24 @@ export default function AboutPage({ onPrivacyClick }) {
                 color: '#444',
                 lineHeight: 1.6,
             }}>
-                Got a suggestion, found a bug, or just want to say hi? Feel free to reach out at{' '}
+                All suggestions, bug reports, and friendly messages are always welcome at{' '}
                 <a
                     href="mailto:slowpokle.game@gmail.com"
                     style={{ color: '#1976d2', fontWeight: 600, textDecoration: 'none' }}
                 >
                     slowpokle.game@gmail.com
                 </a>
+                <br /><br />
+                If you'd like to help support ongoing development, you can{' '}
+                <a
+                    href="https://ko-fi.com/pythagean"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#1976d2', fontWeight: 600, textDecoration: 'none' }}
+                >
+                    buy me a coffee
+                </a>
+                ! ☕
             </div>
 
             {/* Disclaimer */}
