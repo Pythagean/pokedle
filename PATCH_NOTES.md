@@ -62,7 +62,7 @@ ef557e3 | 2026-04-19 | Patch notes for 19th April
 - **Card** <br>
     - Added button which will blur/un-blur the card after mode has been completed (to compare how dumb we are)
     - Added cards from Paldean Wonders, Mega Shine, Perfect Order sets
-- **Details** <br> 
+- **Details** <br>
     - Added button which will zoom/un-zoom the image after mode has been completed (to compare how dumb we are)
 
 ## Commits included (newest first)
@@ -244,13 +244,13 @@ f92eb43 | 2026-01-21 | Fixing locations mode for Pokemon that can't be found in 
 
 ## What’s New
 
-- **Classic Mode**<br>
+- **Classic Mode** <br>
     - Added arrows to congrats message for Height/Weight
-- **Silhouette Mode**<br>
+- **Silhouette Mode** <br>
     - Made this mode a bit easier by decreasing the intital zoom-in value. And the image zooms out a bit more with each guess
 - **Locations Mode** <br>
-    - Removed "Rock Smash" when only showing Gen 1 locations. <br>
-    - Fixed issue with Ruins of Alph map not displaying<br>
+    - Removed "Rock Smash" when only showing Gen 1 locations.
+    - Fixed issue with Ruins of Alph map not displaying
     - Display header and text even if there are no extra locations to show beyond Pokemon's generation
 
 ## Commits included (newest first)
@@ -269,9 +269,12 @@ c39252c | 2025-12-21 | Pokemon location tidy up, ensure mobile shows 2 maps per 
 
 ## What’s New
 
-- **Card Mode** - Re-classified some cards from Full Art to Special Illustration. Removed some regional variant cards
-- **Locations Mode** - Re-worded messaging around when a Pokemon can't be found in the wild to make it more obvious
-- **Results Page** - Tweak logic around results message appearing on card
+- **Card Mode** <br>
+    - Re-classified some cards from Full Art to Special Illustration. Removed some regional variant cards
+- **Locations Mode** <br>
+    - Re-worded messaging around when a Pokemon can't be found in the wild to make it more obvious
+- **Results Page** <br>
+    - Tweak logic around results message appearing on card
 
 ## Commits included (newest first)
 
@@ -292,10 +295,14 @@ c3c047a | 2025-12-20 | Re-classified some cards from Full Art to Special Illustr
 
 ## What’s New
 
-- **Classic Mode** - Added sprites, type styling and habitat images
-- **Card Mode** - Added latest TCG Pocket expansion (Crimson Blaze) to card list
-- **Colours Mode** - Fixed some bugs around the hints and hint placeholders
-- **Locations Mode** - Updated tooltip to contain all known encounter methods
+- **Classic Mode** <br>
+    - Added sprites, type styling and habitat images
+- **Card Mode** <br>
+    - Added latest TCG Pocket expansion (Crimson Blaze) to card list
+- **Colours Mode** <br>
+    - Fixed some bugs around the hints and hint placeholders
+- **Locations Mode** <br>
+    - Updated tooltip to contain all known encounter methods
 
 ## Commits included (newest first)
 
@@ -312,10 +319,14 @@ cc373c4 | 2025-12-18 | Zoom Page - use combined transition approach to fix zoom 
 
 ## What’s New
 
-- **Locations Mode** - Re-working Locations Mode to include game names in the clues, tweaked logic behind hints to provide extra clues
-- **Results Mode** - Truncate name textfield to prevent overflow on generated card image, added message down bottom based on score
-- **Pokedex Mode** - 2nd hint is now the Pokemon Genus, before moving onto the other pokedex entries
-- **Colours Mode** - Added a pixelated mosaic as the first hint given, to help certain people who aren't very good at this mode
+- **Locations Mode** <br>
+    - Re-working Locations Mode to include game names in the clues, tweaked logic behind hints to provide extra clues
+- **Results Mode** <br>
+    - Truncate name textfield to prevent overflow on generated card image, added message down bottom based on score
+- **Pokedex Mode** <br>
+    - 2nd hint is now the Pokemon Genus, before moving onto the other pokedex entries
+- **Colours Mode** <br>
+    - Added a pixelated mosaic as the first hint given, to help certain people who aren't very good at this mode
 
 ## Commits included (newest first)
 
@@ -344,12 +355,18 @@ Major version release - Combined Silhoutte/Zoom mode into Details mode (and adde
 
 ## What’s New
 
-- **Eyes Mode** - Added new Eyes Mode, guess the pokemon based on their eyes!
-- **Details Mode** - Added a new 'Details Mode' which will alternate between Zoom and Silhouette Modes (with Eyes mode on Friday)
-- **Card Mode** - Slightly reduced blur level for Full Art and Illustration cards
-- **Colours Mode** - Hints given are now the Pokemon's Types, and then the Generation (after 3 then 6 guess respectively). Re-generated Colour blocks with different parameters
-- **Locations Mode** - Added new Locations Mode (replacing Game Info), shows the maps where the Pokemon is found straight away
-- **Results Page** - Allow user to generate a TCG Card with their results on it, and generate a Guesses Image with all of their guesses in it. Changed 'Last 7 Days' section to use Pokedle numbers instead of weekdays
+- **Eyes Mode** <br>
+    - Added new Eyes Mode, guess the pokemon based on their eyes!
+- **Details Mode** <br>
+    - Added a new 'Details Mode' which will alternate between Zoom and Silhouette Modes (with Eyes mode on Friday)
+- **Card Mode** <br>
+    - Slightly reduced blur level for Full Art and Illustration cards
+- **Colours Mode** <br>
+    - Hints given are now the Pokemon's Types, and then the Generation (after 3 then 6 guess respectively). Re-generated Colour blocks with different parameters
+- **Locations Mode** <br>
+    - Added new Locations Mode (replacing Game Info), shows the maps where the Pokemon is found straight away
+- **Results Page** <br>
+    - Allow user to generate a TCG Card with their results on it, and generate a Guesses Image with all of their guesses in it. Changed 'Last 7 Days' section to use Pokedle numbers instead of weekdays
 
 ## Commits included (newest first)
 
@@ -385,12 +402,18 @@ Small maintenance and debugging polish focused on the Zoom and Silhouette modes,
 
 ## What’s New
 
-- **Silhouette Page** - Reworked the translate logic to use the new center-based approach
-- **Zoom Page** - Reworked the translate logic to use the new center-based approach
-- **Card Page** - Fixed issue where full art example image wasn't showing
-- **Results Page** - Fixed issue where Game Data score wasn't displaying in 'Last 7 Days' section
-- **Game Data** - Trim effects text to remove fullstop
-- **All Pages** - Removed restriction on number of pokemon displayed in GuessInput box
+- **Silhouette Page** <br>
+    - Reworked the translate logic to use the new center-based approach
+- **Zoom Page** <br>
+    - Reworked the translate logic to use the new center-based approach
+- **Card Page** <br>
+    - Fixed issue where full art example image wasn't showing
+- **Results Page** <br>
+    - Fixed issue where Game Data score wasn't displaying in 'Last 7 Days' section
+- **Game Data** <br>
+    - Trim effects text to remove fullstop
+- **All Pages** <br>
+    - Removed restriction on number of pokemon displayed in GuessInput box
 
 ## Commits included (newest first)
 
@@ -411,9 +434,10 @@ Small but focused polish across Game Data, UI, and repository metadata. Game Inf
 
 ## What’s New
 
-- **Game Data** — Abilities now include short effect descriptions so the Abilities clue is more informative.
-- **Game Data** — The first clue will never be `shape` or `Base Stats`; `locations` and `held_items` are now prevented from being chosen first when their arrays are empty.
-- **Game Data** — Location tidy-ups (removed incorrect/obsolete entries such as the burned tower mapping for some Kanto Pokémon).
+- **Game Data** <br>
+    - Abilities now include short effect descriptions so the Abilities clue is more informative.
+    - The first clue will never be `shape` or `Base Stats`; `locations` and `held_items` are now prevented from being chosen first when their arrays are empty.
+    - Location tidy-ups (removed incorrect/obsolete entries such as the burned tower mapping for some Kanto Pokémon).
 
 ## Commits included (newest first)
 
@@ -437,11 +461,16 @@ Polished gameplay and tooling: Game Info now shows grouped Gen‑3 level‑up mo
 
 ## What’s New
 
-- **Game Info Page** - Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
-- **Results Page** - Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
-- **Zoom Page** - Zoom Page should now only select zoom-in point if it contains more than one colour
-- **Shiny Saturday** - Reduced 'Shiny Saturday' chance to be 10% (changed from 50%)
-- **Card Page** - Slightly reduce blur levels for Full Art / Illustration cards
+- **Game Info Page** <br>
+    - Moves learnt are now pulled from Gen 3, they are also now grouped and displayed by level (eg. "Lvl 1 - Vine Whip, Tackle").
+- **Results Page** <br>
+    - Fixed issue where scrolling in 'Last 7 Days' section causes page swipe to trigger
+- **Zoom Page** <br>
+    - Zoom Page should now only select zoom-in point if it contains more than one colour
+- **Shiny Saturday** <br>
+    - Reduced 'Shiny Saturday' chance to be 10% (changed from 50%)
+- **Card Page** <br>
+    - Slightly reduce blur levels for Full Art / Illustration cards
 
 ## Commits included (newest first)
 
@@ -464,10 +493,18 @@ cd0f4a5 | Slightly reduce blur levels for Full Art / Illustration cards
 
 ## What’s New
 
-- **Game Info Page** — Added animation to some map locations; fixed extra space in locations list; clues are given every 2 guesses; tweaked stats bars to be max of 255 for Health and 180 for all other stats.
-- **Results Page** — Use Pokedle # rather than a local date when copying/sharing results.
-- **Zoom Page** — Added animation to zoom out after a correct guess so the user has a chance to see the full image.
-- **Silhouette Page** — Added animation to zoom out after a correct guess so the user has a chance to see the full image; slightly increased the maximum zoom level for an improved reveal effect.
+- **Game Info Page** <br>
+    - Added animation to some map locations
+    - Fixed extra space in locations list
+    - Clues are given every 2 guesses
+    - Tweaked stats bars to be max of 255 for Health and 180 for all other stats
+- **Results Page** <br>
+    - Use Pokedle # rather than a local date when copying/sharing results.
+- **Zoom Page** <br>
+    - Added animation to zoom out after a correct guess so the user has a chance to see the full image.
+- **Silhouette Page** <br>
+    - Added animation to zoom out after a correct guess so the user has a chance to see the full image
+    - Slightly increased the maximum zoom level for an improved reveal effect
 
 ## Commits included (newest first)
 
@@ -490,12 +527,18 @@ h8c9d0e | Silhouette Page: Slightly increase max zoom level
 
 ## What’s New
 
-- **Game Info Mode** — Location names in Game Info are now links that open a popup showing the corresponding map image (when available) from the assets repo.
-- **Zoom Mode** — The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly.
-- **Silhouette Mode** — Transform-origin behavior now holds for early guesses and then eases toward the center over subsequent guesses to produce more intuitive reveals.
-- **Card Mode** - Continue to un-blur card beyond 8 guesses
-- **Pokemon Data Cleanup** - Removed Altering Cave from pokemon_data.json, changed "Deoxys Normal" to "Deoxys" and fixed Pokedex entry
-- **Map Tooling (developer)** — New scripts to download Bulbapedia maps, generate a todo/overrides file for unmapped locations, and fuzzy-match existing map files to in-game location names. The downloader skips existing files by default and records missing/failed items for easy follow-up.
+- **Game Info Mode** <br>
+    - Location names in Game Info are now links that open a popup showing the corresponding map image (when available) from the assets repo.
+- **Zoom Mode** <br>
+    - The chosen zoom focus centers reliably (hopefully), mirroring is handled correctly.
+- **Silhouette Mode** <br>
+    - Transform-origin behavior now holds for early guesses and then eases toward the center over subsequent guesses to produce more intuitive reveals.
+- **Card Mode** <br>
+    - Continue to un-blur card beyond 8 guesses
+- **Pokemon Data Cleanup** <br>
+    - Removed Altering Cave from pokemon_data.json, changed "Deoxys Normal" to "Deoxys" and fixed Pokedex entry
+- **Map Tooling (developer)** <br>
+    - New scripts to download Bulbapedia maps, generate a todo/overrides file for unmapped locations, and fuzzy-match existing map files to in-game location names. The downloader skips existing files by default and records missing/failed items for easy follow-up.
 
 ## Commits included (newest first)
 
@@ -521,14 +564,22 @@ g7b8c9d | download script: skip existing files by default, add --overwrite flag
 
 ## What’s New
 
-- **Improved Card Reveal** — Reduced initial blur and tuned progressive reveal so card hints feel more informative and consistent as you guess.
-- **Smoother Silhouette Zooming** — The silhouette zoom focuses more intuitively as you guess: the focal area stays useful earlier and drifts toward center later in the guess sequence, producing less confusing reveals.
-- **No More Image Drags** — Images (silhouette, zoom, colour hints, card images) can no longer be dragged or opened in a new tab by accident.
-- **Clearer Celebration Message** — The congrats message now emphasizes your guess count for a more satisfying win display.
-- **Better Confetti Timing** — Confetti triggers are timed to the visible congrats message to reduce jarring or mistimed celebrations.
-- **Celebration Text** — Fixed day/number calculations and added per-user persistent emoji and prefix choices for consistent celebrations.
-- **Game Reset Time** — Game reset time standardized to **6:00 PM UTC** (equivalent local times: 5:00 AM AET/Melbourne, 7:00 AM NZT, 7:00 PM GMT).
-- **Colours Mode Tweaks** — Changed grouping threshold for colour mode and re-generated images
+- **Improved Card Reveal** <br>
+    - Reduced initial blur and tuned progressive reveal so card hints feel more informative and consistent as you guess.
+- **Smoother Silhouette Zooming** <br>
+    - The silhouette zoom focuses more intuitively as you guess: the focal area stays useful earlier and drifts toward center later in the guess sequence, producing less confusing reveals.
+- **No More Image Drags** <br>
+    - Images (silhouette, zoom, colour hints, card images) can no longer be dragged or opened in a new tab by accident.
+- **Clearer Celebration Message** <br>
+    - The congrats message now emphasizes your guess count for a more satisfying win display.
+- **Better Confetti Timing** <br>
+    - Confetti triggers are timed to the visible congrats message to reduce jarring or mistimed celebrations.
+- **Celebration Text** <br>
+    - Fixed day/number calculations and added per-user persistent emoji and prefix choices for consistent celebrations.
+- **Game Reset Time** <br>
+    - Game reset time standardized to **6:00 PM UTC** (equivalent local times: 5:00 AM AET/Melbourne, 7:00 AM NZT, 7:00 PM GMT).
+- **Colours Mode Tweaks** <br>
+    - Changed grouping threshold for colour mode and re-generated images
 
 ## Commits included (newest first)
 

@@ -146,6 +146,7 @@ import EyesPage from './pages/EyesPage';
 import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
+import PatchNotesPage from './pages/PatchNotesPage';
 import { getDailyOverride, getDailyTheme } from './config/dailyOverrides';
 
 
@@ -279,6 +280,7 @@ function App() {
   }, []);
   const [page, setPage] = useState('classic');
   const [compactNav, setCompactNav] = useState(() => (typeof window !== 'undefined') ? window.innerWidth <= 1080 : false);
+  const [menuOpen, setMenuOpen] = useState(false);
   // Mobile swipe navigation: track small viewport and attach touch handlers
   const mainAppRef = useRef(null);
   const [isMobileView, setIsMobileView] = useState(() => (typeof window !== 'undefined' && window.matchMedia) ? window.matchMedia('(max-width:700px)').matches : false);
@@ -1194,6 +1196,7 @@ function App() {
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={dailyByPage?.card?.card?.cardType === 'shiny'} />;
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={false} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
+    if (key === 'patchnotes') return <PatchNotesPage />;
     return null;
   }
 
@@ -1225,7 +1228,7 @@ function App() {
       {
         (() => {
           const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}

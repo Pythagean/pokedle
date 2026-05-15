@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null }) {
+    const hamburgerRef = useRef(null);
+    const dropdownRef = useRef(null);
+    const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
 
-    return ReactDOM.createPortal(
+    // Recompute dropdown position whenever it opens
+    useEffect(() => {
+        if (!menuOpen || !hamburgerRef.current) return;
+        const rect = hamburgerRef.current.getBoundingClientRect();
+        setDropdownPos({
+            top: rect.bottom + 6,
+            right: window.innerWidth - rect.right,
+        });
+    }, [menuOpen]);
+
+    useEffect(() => {
+        if (!menuOpen) return;
+        function handleClick(e) {
+            const inHamburger = hamburgerRef.current && hamburgerRef.current.contains(e.target);
+            const inDropdown = dropdownRef.current && dropdownRef.current.contains(e.target);
+            if (!inHamburger && !inDropdown) {
+                onMenuClick && onMenuClick();
+            }
+        }
+        document.addEventListener('mousedown', handleClick);
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [menuOpen, onMenuClick]);
+
+    const headerPortal = ReactDOM.createPortal(
         <>
                         <style>{`
                 /* Desktop defaults: show both icon and label */
                 .main-header nav button .nav-icon { display: inline-block !important; }
                 .main-header nav button .nav-label { display: inline-block !important; }
+                .header-dropdown-item + .header-dropdown-item { border-top: 1px solid #e8edf3; }
 
                 /* Completion highlight and badge */
                 /* Prevent page-level horizontal scroll when the header pulses */
@@ -52,7 +79,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     .main-header { height: 60px !important; padding: 4px 4px !important; }
                     .main-header img { height: 30px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
                                         /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
-                                        .main-header nav { gap: 3px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
+                                        .main-header nav { gap: 2px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
                                         .main-header nav button { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
                                         /* On small mobile screens show icon-only */
                                         .main-header nav button .nav-label { display: inline !important; }
@@ -120,7 +147,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 const isCompleted = !!completedPages[p.key];
                                 const isDisabled = !isSelected && isCompleted;
                                 const baseBtnStyle = {
-                                    padding: compactNav ? '6px' : '7px 9px',
+                                    padding: compactNav ? '2px' : '7px 9px',
                                     borderRadius: 12,
                                     background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
                                     color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
@@ -130,7 +157,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     cursor: isDisabled ? 'pointer' : 'pointer',
                                     boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
-                                    marginLeft: p.key === 'results' ? 2 : 0,
+                                    //marginLeft: p.key === 'results' ? 2 : 0,
+                                    marginLeft: 0,
                                     marginRight: 0,
                                     minWidth: compactNav ? 44 : 90,
                                     whiteSpace: 'nowrap',
@@ -142,7 +170,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 };
                                 const imgStyle = { display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: compactNav ? 0 : 8, objectFit: 'contain', opacity: isDisabled ? 0.6 : 1 };
                                 return (
-                                    <div key={p.key} style={{ position: 'relative', display: 'inline-block', marginLeft: p.key === 'results' ? 8 : 0 }}>
+                                    <div key={p.key} style={{ position: 'relative', display: 'inline-block', marginLeft: 0 }}>
                                         <button
                                             onClick={() => setPage(p.key)}
                                             aria-label={p.label}
@@ -176,6 +204,43 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     </div>
                                 );
                             })}
+                            {/* Hamburger menu button */}
+                            <div key="hamburger" ref={hamburgerRef} style={{ position: 'relative', display: 'inline-block', marginLeft: 8 }}>
+                                <button
+                                    key="hamburger"
+                                    onClick={() => onMenuClick && onMenuClick()}
+                                    aria-label="Menu"
+                                    title="Menu"
+                                    aria-expanded={menuOpen}
+                                    style={{
+                                        padding: compactNav ? '6px' : '7px 9px',
+                                        borderRadius: 12,
+                                        background: menuOpen ? '#1976d2' : '#f4f4f4ff',
+                                        color: menuOpen ? '#fff' : '#1976d2',
+                                        border: menuOpen ? 'none' : '2px solid #1976d2',
+                                        fontWeight: 700,
+                                        fontSize: 15,
+                                        cursor: 'pointer',
+                                        boxShadow: menuOpen ? '0 2px 8px #1976d233' : 'none',
+                                        transition: 'background 0.2s, color 0.2s',
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        minWidth: compactNav ? 44 : 44,
+                                        whiteSpace: 'nowrap',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        flex: '0 0 auto',
+                                    }}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={compactNav ? 24 : 28} height={compactNav ? 24 : 28} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+                                        <line x1="3" y1="6" x2="21" y2="6" />
+                                        <line x1="3" y1="12" x2="21" y2="12" />
+                                        <line x1="3" y1="18" x2="21" y2="18" />
+                                    </svg>
+                                </button>
+                            </div>
+                            
                             {/* <button
                                 key="completion-summary"
                                 onClick={() => onCompletionClick && onCompletionClick()}
@@ -213,5 +278,57 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
             </div>
         </>,
         document.body
+    );
+
+    return (
+        <>
+            {headerPortal}
+            {menuOpen && ReactDOM.createPortal(
+                <div
+                    ref={dropdownRef}
+                    role="menu"
+                    style={{
+                        position: 'fixed',
+                        top: dropdownPos.top,
+                        right: dropdownPos.right,
+                        background: '#fff',
+                        border: '2px solid #1976d2',
+                        borderRadius: 12,
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                        minWidth: 180,
+                        zIndex: 20000,
+                        overflow: 'hidden',
+                    }}
+                >
+                    {[['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['⚙️', 'Placeholder 2', () => onMenuClick && onMenuClick()], ['ℹ️', 'Placeholder 3', () => onMenuClick && onMenuClick()]].map(([icon, label, handler], i) => (
+                        <button
+                            key={label}
+                            role="menuitem"
+                            onClick={handler}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 10,
+                                width: '100%',
+                                padding: '12px 16px',
+                                background: 'none',
+                                border: 'none',
+                                borderTop: i > 0 ? '1px solid #e8edf3' : 'none',
+                                fontSize: 15,
+                                fontWeight: 600,
+                                color: '#1976d2',
+                                cursor: 'pointer',
+                                textAlign: 'left',
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#e3f0fc'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                        >
+                            {icon} {label}
+                        </button>
+                    ))}
+                </div>,
+                document.body
+            )}
+        </>
     );
 }
