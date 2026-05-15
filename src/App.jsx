@@ -147,6 +147,8 @@ import { getCardTypeByDay } from './utils/cardType';
 import Header from './components/Header';
 import ResultsPage from './pages/ResultsPage';
 import PatchNotesPage from './pages/PatchNotesPage';
+import AboutPage from './pages/AboutPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import { getDailyOverride, getDailyTheme } from './config/dailyOverrides';
 
 
@@ -1197,6 +1199,8 @@ function App() {
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={false} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
     if (key === 'patchnotes') return <PatchNotesPage />;
+    if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} />;
+    if (key === 'privacy') return <PrivacyPolicyPage onBack={() => setPage('about')} />;
     return null;
   }
 
@@ -1228,7 +1232,7 @@ function App() {
       {
         (() => {
           const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}

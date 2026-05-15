@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null }) {
     const hamburgerRef = useRef(null);
     const dropdownRef = useRef(null);
     const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
@@ -276,6 +276,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     </div>
                 </div>
             </div>
+            {/* Preload menu icons */}
+            <img src="icons/pokegrid.png" alt="" aria-hidden="true" style={{ display: 'none' }} />
         </>,
         document.body
     );
@@ -300,7 +302,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         overflow: 'hidden',
                     }}
                 >
-                    {[['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['⚙️', 'Placeholder 2', () => onMenuClick && onMenuClick()], ['ℹ️', 'Placeholder 3', () => onMenuClick && onMenuClick()]].map(([icon, label, handler], i) => (
+                    {[[<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 20, height: 20, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
                         <button
                             key={label}
                             role="menuitem"
