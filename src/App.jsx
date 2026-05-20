@@ -1199,7 +1199,7 @@ function App() {
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={false} />;
     if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
     if (key === 'patchnotes') return <PatchNotesPage />;
-    if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} />;
+    if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} setPage={setPage} />;
     if (key === 'privacy') return <PrivacyPolicyPage onBack={() => setPage('about')} />;
     return null;
   }

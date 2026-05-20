@@ -9,7 +9,7 @@ const MODES = [
     { key: 'map',       label: 'Locations',   desc: 'Guess the Pokémon from its footprint and in-game Locations.' },
 ];
 
-export default function AboutPage({ onPrivacyClick }) {
+export default function AboutPage({ onPrivacyClick, setPage }) {
     return (
         <div style={{ maxWidth: 700, margin: '0 auto', padding: '8px 4px 40px' }}>
             {/* Header */}
@@ -48,7 +48,7 @@ export default function AboutPage({ onPrivacyClick }) {
             </div>
 
             {/* Modes */}
-            <h2 style={{ fontSize: 19, fontWeight: 700, color: '#1976d2', margin: '0 0 14px' }}>
+            <h2 style={{ fontSize: 19, fontWeight: 700, margin: '0 0 14px' }}>
                 Game Modes
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 36 }}>
@@ -71,7 +71,14 @@ export default function AboutPage({ onPrivacyClick }) {
                         />
                         <div>
                             <div style={{ fontWeight: 700, fontSize: 15, color: '#1976d2', marginBottom: 3 }}>
-                                {m.label}
+                                {setPage ? (
+                                    <button
+                                        onClick={() => setPage(m.key)}
+                                        style={{ background: 'none', border: 'none', padding: 0, margin: 0, color: '#1976d2', fontWeight: 700, fontSize: 15, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
+                                    >
+                                        {m.label}
+                                    </button>
+                                ) : m.label}
                             </div>
                             <div style={{ fontSize: 14, color: '#555', lineHeight: 1.55 }}>
                                 {m.desc}
@@ -82,7 +89,7 @@ export default function AboutPage({ onPrivacyClick }) {
             </div>
 
             {/* Feedback */}
-            <h2 style={{ fontSize: 19, fontWeight: 700, color: '#1976d2', margin: '0 0 10px' }}>
+            <h2 style={{ fontSize: 19, fontWeight: 700, margin: '0 0 10px' }}>
                 Feedback
             </h2>
             <div style={{
