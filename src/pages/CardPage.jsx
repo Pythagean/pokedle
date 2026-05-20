@@ -546,8 +546,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
             {isFullTypeCard ? (
               <>
                 {/* For full_art/special: Types revealed at fullArtTypesT guesses */}
-                {guesses.length < fullArtTypesT && (
-                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                {guesses.length > 0 && guesses.length < fullArtTypesT && (
+                  <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                     Pokémon Types will be revealed in {Math.max(0, fullArtTypesT - guesses.length)} guess{fullArtTypesT - guesses.length === 1 ? '' : 'es'}!
                   </div>
                 )}
@@ -592,13 +592,13 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
             ) : (
               <>
                 {/* For normal/shiny: Full card at 4 guesses, Types at 8 guesses */}
-                {!revealFullCard && (
-                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                {guesses.length > 0 && !revealFullCard && (
+                  <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                     The full card will be revealed in {Math.max(0, revealFullCardT - guesses.length)} guess{revealFullCardT - guesses.length === 1 ? '' : 'es'}!
                   </div>
                 )}
                 {revealFullCard && guesses.length < normalTypesT && (
-                  <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                  <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                     Pokémon Types will be revealed in {normalTypesT - guesses.length} guess{normalTypesT - guesses.length === 1 ? '' : 'es'}!
                   </div>
                 )}

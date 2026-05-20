@@ -241,8 +241,8 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             </div>
           </div>
         ) : (!isCorrect && guesses.length > 0 && guesses.length < shapeT && (
-          <div style={{ color: '#aaa', marginBottom: 12, borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Shape revealed in {shapeT - guesses.length} guess{shapeT - guesses.length === 1 ? '' : 'es'}
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+            The shape will be revealed in {shapeT - guesses.length} guess{shapeT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Genus hint or placeholder */}
@@ -252,8 +252,8 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             <span>{dailyPokemon.genus || 'Unknown'}</span>
           </div>
         ) : (!isCorrect && guesses.length >= shapeT && guesses.length < genusT && (
-          <div style={{ color: '#aaa', marginBottom: 12, borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Genus revealed in {genusT - guesses.length} guess{genusT - guesses.length === 1 ? '' : 'es'}
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+            The genus will be revealed in {genusT - guesses.length} guess{genusT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Second hint or placeholder */}
@@ -262,8 +262,8 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             {flavorEntries[secondFlavorIdx]}
           </div>
         ) : (!isCorrect && guesses.length >= genusT && guesses.length < secondT && flavorEntries.length > 1 && (
-          <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Second Pokedex entry in {secondT - guesses.length} guess{secondT - guesses.length === 1 ? '' : 'es'}
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+            The second Pokédex entry will be revealed in {secondT - guesses.length} guess{secondT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Types hint or placeholder */}
@@ -297,8 +297,8 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             )}
           </div>
         ) : (!isCorrect && guesses.length >= secondT && guesses.length < typesT && (
-          <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
-            Types revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+            The Pokémon's types will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
       </div>

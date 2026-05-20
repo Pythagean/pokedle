@@ -988,7 +988,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 )}
                 {shownClues.map(type => renderClue(type))}
                 {/* Hint placeholder text for next clue - custom logic for Locations page */}
-                {!isCorrect && (() => {
+                {!isCorrect && guesses.length > 0 && (() => {
                     // Determine what hint will be revealed next based on current guess count
                     const showAdditionalLocs = guesses.length >= LOCATIONS_HINT_THRESHOLDS[0];
                     const showTypes = guesses.length >= LOCATIONS_HINT_THRESHOLDS[1];
@@ -999,7 +999,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[0] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>All Locations</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                                All Locations will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
                     } else if (!showTypes) {
@@ -1007,7 +1007,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[1] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>Types</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                                The Pokémon's types will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
                     } else if (!showEvolution) {
@@ -1015,7 +1015,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[2] - guesses.length;
                         return (
                             <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
-                                <span>Next clue (<b>Evolution Stage</b>) in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!</span>
+                                The evolution stage will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
                     }

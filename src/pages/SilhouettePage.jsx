@@ -487,10 +487,10 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   }
 
   if (guesses.length > 0 && guesses.length < genT) {
-    generationHintPlaceholder = `Generation revealed in ${genT - guesses.length} guess${genT - guesses.length === 1 ? '' : 'es'}`;
+    generationHintPlaceholder = `The generation will be revealed in ${genT - guesses.length} guess${genT - guesses.length === 1 ? '' : 'es'}!`;
   }
   if (guesses.length >= genT && guesses.length < typesT) {
-    typeHintPlaceholder = `Type${pokemonTypes.length > 1 ? 's' : ''} revealed in ${typesT - guesses.length} guess${typesT - guesses.length === 1 ? '' : 'es'}`;
+    typeHintPlaceholder = `The Pokémon's type${pokemonTypes.length > 1 ? 's' : ''} will be revealed in ${typesT - guesses.length} guess${typesT - guesses.length === 1 ? '' : 'es'}!`;
   }
 
   if (isCorrect) {
@@ -726,7 +726,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             {generationHint}
           </div>
         ) : (!isCorrect && generationHintPlaceholder && (
-          <div style={{ color: '#aaa', marginBottom: 12, borderTop: '1px dashed #eee', paddingTop: 10 }}>
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
             {generationHintPlaceholder}
           </div>
         ))}
@@ -736,7 +736,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             {typeHint}
           </div>
         ) : (!isCorrect && typeHintPlaceholder && (
-          <div style={{ color: '#aaa', borderTop: '1px dashed #eee', paddingTop: 10 }}>
+          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
             {typeHintPlaceholder}
           </div>
         ))}

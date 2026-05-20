@@ -324,28 +324,28 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
                 </div>
 
                 {/* Show hint about upcoming reveals */}
-                {!isCorrect && !showFullImage && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                {!isCorrect && guesses.length > 0 && !showFullImage && (
+                    <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                         The full feature will be revealed in {fullImageThreshold - guesses.length} guess{fullImageThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
                 {!isCorrect && showFullImage && !showSecondFeature && featuresImages.length > 1 && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                         Another feature will be revealed in {secondFeatureThreshold - guesses.length} guess{secondFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
                 {!isCorrect && showSecondFeature && !showThirdFeature && featuresImages.length > 2 && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                         Another feature will be revealed in {thirdFeatureThreshold - guesses.length} guess{thirdFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
                 {!isCorrect && showThirdFeature && !showFourthFeature && featuresImages.length > 3 && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                         Another feature will be revealed in {fourthFeatureThreshold - guesses.length} guess{fourthFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
                 {!isCorrect && showFourthFeature && !showFifthFeature && featuresImages.length > 4 && (
-                    <div style={{ color: '#888', fontSize: 15, marginTop: 12 }}>
+                    <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                         Another feature will be revealed in {fifthFeatureThreshold - guesses.length} guess{fifthFeatureThreshold - guesses.length === 1 ? '' : 'es'}!
                     </div>
                 )}
