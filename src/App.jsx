@@ -1141,6 +1141,13 @@ function App() {
     submitResult({ perPageResults, guessesByPage, todaySeed });
   }, [allCompleted, perPageResults, guessesByPage]);
 
+  // Submit yesterday's result to Supabase when all yesterday modes are completed
+  const yesterdayAllCompleted = yesterdayPerPageResults.length > 0 && yesterdayPerPageResults.every(r => r.solved);
+  useEffect(() => {
+    if (!yesterdayAllCompleted) return;
+    submitResult({ perPageResults: yesterdayPerPageResults, guessesByPage: yesterdayGuessesByPage, todaySeed: yesterdaySeed, date: yesterdayDate });
+  }, [yesterdayAllCompleted, yesterdayPerPageResults, yesterdayGuessesByPage, yesterdaySeed]);
+
   if (!pokemonData) return <div>Loading data...</div>;
 
   // Helper to get/set guesses for current page
@@ -1239,7 +1246,7 @@ function App() {
       {
         (() => {
           const completedPages = (yesterdayMode ? yesterdayPerPageResults : perPageResults).reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(m => !m); setMenuOpen(false); }} yesterdayMode={yesterdayMode} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(m => !m); }} yesterdayMode={yesterdayMode} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}

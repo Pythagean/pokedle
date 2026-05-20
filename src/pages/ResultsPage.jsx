@@ -1577,9 +1577,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     </div>
                 ) : null}
             </div>
-            {/* Today's Leaderboard */}
+            {/* Today's / Yesterday's Leaderboard */}
             <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
-                <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>🏆 Today's Leaderboard 🏆</div>
+                <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>🏆 {date ? "Yesterday's Leaderboard" : "Today's Leaderboard"} 🏆</div>
                 {allCompleted && leaderLoaded ? (
                     <div style={{ textAlign: 'center', marginTop: 6 }}>
                         <button

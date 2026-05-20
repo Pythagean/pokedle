@@ -15,8 +15,8 @@ function getEffectiveUTCMidnight(date) {
   return d;
 }
 
-function getPokledleNumber() {
-  const today = getEffectiveUTCMidnight(new Date());
+function getPokledleNumber(date) {
+  const today = getEffectiveUTCMidnight(date || new Date());
   return Math.floor((today.getTime() - EPOCH_MS) / MS_PER_DAY) + 1;
 }
 
@@ -53,15 +53,15 @@ const MODE_TO_COLUMN = {
  * Submits the player's daily result to Supabase via the Edge Function.
  * Safe to call multiple times — uses localStorage to prevent duplicate submissions.
  *
- * @param {{ perPageResults: Array, guessesByPage: Object, todaySeed: number }} params
+ * @param {{ perPageResults: Array, guessesByPage: Object, todaySeed: number, date?: Date }} params
  */
-export async function submitResult({ perPageResults, guessesByPage, todaySeed }) {
+export async function submitResult({ perPageResults, guessesByPage, todaySeed, date = null }) {
   try {
     const submittedKey = `pokedle_submitted_${todaySeed}`;
     if (localStorage.getItem(submittedKey)) return { alreadySubmitted: true };
 
     const anonId = getOrCreateAnonId();
-    const pokledleNumber = getPokledleNumber();
+    const pokledleNumber = getPokledleNumber(date);
 
     // Build per-mode score columns from actual guess array lengths
     const result = {
