@@ -589,8 +589,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             style={{ 
                                 width: 'auto', 
                                 height: 'auto', 
-                                maxWidth: 40, 
-                                maxHeight: 40, 
+                                maxWidth: 60, 
+                                maxHeight: 60, 
                                 objectFit: 'contain',
                                 background: '#fafafa',
                                 borderRadius: 8,
