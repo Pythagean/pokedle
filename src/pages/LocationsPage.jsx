@@ -76,7 +76,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 try {
                     const resp = await fetch(url);
                     if (!resp.ok) {
-                        console.debug('[LocationsPage] mapping not found at', url, 'status', resp.status);
+                        // console.debug('[LocationsPage] mapping not found at', url, 'status', resp.status);
                         continue;
                     }
                     const j = await resp.json();
@@ -92,18 +92,18 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             });
                             j.normalized = normalized;
                         } catch (e) {
-                            console.debug('[LocationsPage] could not build normalized mapping', e);
+                            // console.debug('[LocationsPage] could not build normalized mapping', e);
                         }
                         setLocationFileMap(j);
-                        console.debug('[LocationsPage] loaded location map from', url);
+                        // console.debug('[LocationsPage] loaded location map from', url);
                     }
                     return;
                 } catch (e) {
-                    console.debug('[LocationsPage] error fetching mapping from', url, e);
+                    // console.debug('[LocationsPage] error fetching mapping from', url, e);
                     continue;
                 }
             }
-            console.debug('[LocationsPage] no location mapping file found in any known location');
+            // console.debug('[LocationsPage] no location mapping file found in any known location');
         }
         loadMap();
         return () => { cancelled = true; };
@@ -951,7 +951,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
-                {/* <button
+                <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
                         if (resetCount >= 2) return;
@@ -962,9 +962,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     disabled={resetCount >= 200}
                 >
                     Reset
-                </button> */}
+                </button>
             </div>
-            {/* <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ margin: '12px auto', maxWidth: 500, display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'center' }}>
                 <label htmlFor="override-id" style={{ fontSize: 14, fontWeight: 600 }}>Test Pokémon ID:</label>
                 <input
                     id="override-id"
@@ -977,7 +977,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 {overridePokemon && (
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
-            </div> */}
+            </div>
             <div style={{ margin: '24px auto', maxWidth: 'none', width: 'min(1200px, 95%)', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
