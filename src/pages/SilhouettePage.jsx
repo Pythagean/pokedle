@@ -30,7 +30,7 @@ function mulberry32(a) {
   }
 }
 
-export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily, useShinySprites = false }) {
+export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -42,7 +42,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Countdown state moved to reusable ResetCountdown component
 
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
-  const today = new Date();
+  const today = date || new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 7 * 1000 + 's'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);

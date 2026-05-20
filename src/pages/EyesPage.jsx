@@ -31,7 +31,7 @@ function mulberry32(a) {
     }
 }
 
-export default function EyesPage({ pokemonData, guesses, setGuesses, daily, bodyPartsManifest, useShinySprites = false }) {
+export default function EyesPage({ pokemonData, guesses, setGuesses, daily, bodyPartsManifest, useShinySprites = false, date = null }) {
     const inputRef = useRef(null);
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -50,7 +50,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
     }, [dailyPokemon]);
 
     // Calculate seed for confetti localStorage key and body part selection
-    const today = new Date();
+    const today = date || new Date();
     const seed = getSeedFromUTCDate(today) + FEATURES_SEED_OFFSET;
 
     // Pick up to 4 deterministic unique body part images for this daily pokemon

@@ -1185,7 +1185,7 @@ function App() {
       : (pageKey, newGuesses) => setGuessesByPage(g => ({ ...g, [pageKey]: newGuesses }));
 
     if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={activeDaily.classic} guesses={activeGuesses.classic} setGuesses={newGuesses => setActiveGuesses('classic', newGuesses)} useShinySprites={false} />;
-    if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={activeDaily.pokedex} guesses={activeGuesses.pokedex} setGuesses={newGuesses => setActiveGuesses('pokedex', newGuesses)} />;
+    if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={activeDaily.pokedex} guesses={activeGuesses.pokedex} setGuesses={newGuesses => setActiveGuesses('pokedex', newGuesses)} date={yesterdayMode ? yesterdayDate : undefined} />;
     if (key === 'stats') return <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />;
     if (key === 'ability') return <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />;
     if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} useShinySprites={false} />;
@@ -1193,11 +1193,11 @@ function App() {
     if (key === 'details') {
       const detailsMode = yesterdayMode ? getDetailsModeForDate(yesterdayDate) : getDetailsModeForDate(new Date());
       if (detailsMode === 'silhouette') {
-        return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} />;
+        return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} date={yesterdayMode ? yesterdayDate : undefined} />;
       } else if (detailsMode === 'zoom') {
-        return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} />;
+        return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} date={yesterdayMode ? yesterdayDate : undefined} />;
       } else {
-        return <EyesPage pokemonData={pokemonData} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} />;
+        return <EyesPage pokemonData={pokemonData} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} date={yesterdayMode ? yesterdayDate : undefined} />;
       }
     }
     if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={activeDaily.colours} guesses={activeGuesses.colours} setGuesses={newGuesses => setActiveGuesses('colours', newGuesses)} useShinySprites={false} />;

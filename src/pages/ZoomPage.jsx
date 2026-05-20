@@ -28,7 +28,7 @@ function mulberry32(a) {
   }
 }
 
-export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false }) {
+export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false, date = null }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const imgContainerRef = useRef(null);
@@ -38,7 +38,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   const prevCorrectRef = useRef(false);
  
   // Deterministic daily pokemon selection for this page, but allow reset for debugging
-  const today = new Date();
+  const today = date || new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 8 * 1000 + 'z'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);

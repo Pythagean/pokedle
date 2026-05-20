@@ -45,11 +45,11 @@ const SHAPE_ICON_MAP = {
   "Pokémon with two or more pairs of wings": "two_or_more_wings"
 };
 
-export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
+export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   
-  const today = new Date();
+  const today = date || new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 7 * 1000 + 'p'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);
