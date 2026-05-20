@@ -3,7 +3,7 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { PHRASES, POKEMON } from '../components/CongratsMessage';
 import { updateResult } from '../utils/updateResult';
 
-export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null }) {
+export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null, date = null }) {
     const [copied, setCopied] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -54,7 +54,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         results = window.__pokedle_results__;
     }
 
-    const d = new Date();
+    const d = date ? new Date(date) : new Date();
     const dateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
     // Compute the canonical Pokedle day number using the same method as `CongratsMessage`.
     const effectiveUTCDate = (dt) => {
@@ -66,7 +66,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         return day;
     };
     const MS_PER_DAY = 24 * 60 * 60 * 1000;
-    const todayEffective = effectiveUTCDate(new Date());
+    const todayEffective = effectiveUTCDate(date || new Date());
     const epoch = effectiveUTCDate(new Date('2025-11-24T00:00:00Z'));
     const dayNumber = Math.floor((todayEffective.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
     const pokedleLabel = `Pokédle #${dayNumber}`;

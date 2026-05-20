@@ -411,19 +411,66 @@ function App() {
         guesses: guessesByPage
       };
       localStorage.setItem('pokedle_guesses', JSON.stringify(data));
+      // Also save under a dated key so yesterday-mode can retrieve them after the day rolls over
+      localStorage.setItem(`pokedle_guesses_${todaySeed}`, JSON.stringify(data));
     } catch (e) {
       // console.error('Failed to save guesses to localStorage:', e);
     }
   }, [guessesByPage]);
+
+  // Debug state for testing different days
+  const [debugDayOffset, setDebugDayOffset] = useState(0);
+  const [debugPanelOpen, setDebugPanelOpen] = useState(false);
+
+  // Yesterday mode
+  const [yesterdayMode, setYesterdayMode] = useState(false);
+
+  // yesterdayDate and yesterdaySeed must be declared here so the persist effect below can use them.
+  // They depend on debugDayOffset (via today logic), but today is declared after this block.
+  // We compute them independently from new Date() + debugDayOffset to avoid the TDZ issue.
+  const yesterdayDate = useMemo(() => {
+    const base = new Date();
+    if (debugDayOffset !== 0) base.setDate(base.getDate() + debugDayOffset);
+    base.setDate(base.getDate() - 1);
+    return base;
+  }, [debugDayOffset]);
+
+  const yesterdaySeed = useMemo(() => getSeedFromDate(yesterdayDate), [yesterdayDate]);
+
+  const [yesterdayGuessesByPage, setYesterdayGuessesByPage] = useState(() => {
+    try {
+      const now = new Date();
+      const yDate = new Date(now);
+      yDate.setDate(yDate.getDate() - 1);
+      const ySeed = getSeedFromDate(yDate);
+      // Try dated key first (populated after playing today, or carried over)
+      const datedStored = localStorage.getItem(`pokedle_guesses_${ySeed}`);
+      if (datedStored) {
+        const data = JSON.parse(datedStored);
+        if (data.date === ySeed) return data.guesses || {};
+      }
+      // Fallback: main key still has yesterday's data (user hasn't played today yet)
+      const stored = localStorage.getItem('pokedle_guesses');
+      if (stored) {
+        const data = JSON.parse(stored);
+        if (data.date === ySeed) return data.guesses || {};
+      }
+    } catch (e) {}
+    return { classic: [], pokedex: [], details: [], colours: [], map: [], card: [] };
+  });
+
+  // Persist yesterday guesses under their dated key
+  useEffect(() => {
+    try {
+      localStorage.setItem(`pokedle_guesses_${yesterdaySeed}`, JSON.stringify({ date: yesterdaySeed, guesses: yesterdayGuessesByPage }));
+    } catch (e) {}
+  }, [yesterdayGuessesByPage, yesterdaySeed]);
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
   // Page transition state for animated mobile swipes
   const [pageTransition, setPageTransition] = useState(null);
-  // Debug state for testing different days
-  const [debugDayOffset, setDebugDayOffset] = useState(0);
-  const [debugPanelOpen, setDebugPanelOpen] = useState(false);
 
   function startPageTransition(toKey, direction) {
     if (!toKey || toKey === page) return;
@@ -445,6 +492,8 @@ function App() {
     }
     return base;
   }, [debugDayOffset]);
+
+  // yesterdayDate and yesterdaySeed are declared earlier (before yesterdayGuessesByPage) to avoid TDZ issues.
   // isShinyDay is derived from the actual card selected for today (computed after dailyByPage)
   const todayTheme = getDailyTheme(getSeedFromDate(today));
   const seed = getSeedFromDate(today) + page.length * 1000 + page.charCodeAt(0);
@@ -738,6 +787,112 @@ function App() {
     return selected;
   }, [pokemonData, bodyPartsManifest, getRecentPokemonIds]);
 
+  // Compute the daily card selection for a given date (extracted so it can be reused for yesterday mode)
+  const getCardAnswerForDate = useCallback((targetDate) => {
+    if (!cardManifest || !pokemonData) return null;
+    const targetSeed = getSeedFromDate(targetDate);
+    const excludedIds = getRecentPokemonIds(targetDate, 'card');
+
+    // Check for override first
+    const override = getDailyOverride(targetSeed, 'card');
+    if (override && typeof override === 'object' && override.pokemonId) {
+      const chosen = pokemonData.find(p => p.id === override.pokemonId);
+      if (chosen && cardManifest) {
+        let cardType = override.cardType;
+        let cardFile = override.cardFile;
+        if (cardFile && !cardType) {
+          for (const type of ['normal', 'full_art', 'shiny', 'special']) {
+            const manifestList = cardManifest[type]?.[chosen.id];
+            if (manifestList && manifestList.includes(cardFile)) { cardType = type; break; }
+          }
+        }
+        if (!cardType) cardType = 'normal';
+        const manifestList = cardManifest[cardType]?.[chosen.id];
+        if (manifestList && manifestList.length > 0) {
+          if (!cardFile || !manifestList.includes(cardFile)) cardFile = manifestList[0];
+          const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
+          const cardObj = (cardType === 'normal' || cardType === 'shiny')
+            ? { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}`, cardFile, folder, cardType }
+            : { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType };
+          return { pokemon: chosen, card: cardObj };
+        }
+      }
+    }
+
+    const baseSeed = targetSeed + 9999;
+    let localRng = mulberry32(baseSeed);
+    const BASE_URL = 'https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards';
+
+    // Use targetDate for day-of-week to correctly determine weekend vs weekday card type
+    let dayForCard = new Date(Date.UTC(targetDate.getUTCFullYear(), targetDate.getUTCMonth(), targetDate.getUTCDate(), 0, 0, 0));
+    if (targetDate.getUTCHours() >= RESET_HOUR_UTC) {
+      dayForCard = new Date(Date.UTC(targetDate.getUTCFullYear(), targetDate.getUTCMonth(), targetDate.getUTCDate() + 1, 0, 0, 0));
+    }
+    const isWeekend = dayForCard.getUTCDay() === 0 || dayForCard.getUTCDay() === 6;
+
+    function buildCardForPokemon(chosen) {
+      if (isWeekend) {
+        const manifestList = cardManifest['special']?.[chosen.id];
+        if (!manifestList || manifestList.length === 0) return null;
+        const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
+        const folder = `${BASE_URL}/special`;
+        return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'special' };
+      }
+      const normalList = cardManifest['normal']?.[chosen.id];
+      if (!normalList || normalList.length === 0) return null;
+      const typeRng = mulberry32(baseSeed + chosen.id * 7777);
+      const fullArtRoll = typeRng();
+      const shinyRoll = typeRng();
+      const hasFullArt = cardManifest['full_art']?.[chosen.id]?.length > 0;
+      const shinyData = cardManifest['shiny']?.[chosen.id];
+      const shinyRegularFiles = shinyData?.regular || [];
+      const shinyFullFiles = shinyData?.full || [];
+      const hasShinySomething = shinyRegularFiles.length > 0 || shinyFullFiles.length > 0;
+      if (fullArtRoll < 0.05 && hasFullArt) {
+        const fullArtList = cardManifest['full_art'][chosen.id];
+        const cardFile = fullArtList[Math.floor(localRng() * fullArtList.length)];
+        const folder = `${BASE_URL}/full_art`;
+        return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'full_art' };
+      } else if (shinyRoll < 0.05 && hasShinySomething) {
+        const allShinyFiles = [
+          ...shinyRegularFiles.map(f => ({ file: f, variant: 'regular' })),
+          ...shinyFullFiles.map(f => ({ file: f, variant: 'full' }))
+        ];
+        const entry = allShinyFiles[Math.floor(localRng() * allShinyFiles.length)];
+        const baseShinyFolder = `${BASE_URL}/shiny`;
+        return entry.variant === 'regular'
+          ? { cropped: `${baseShinyFolder}/regular/cropped/${entry.file}`, resized: `${baseShinyFolder}/regular/${entry.file}`, cardFile: entry.file, folder: `${baseShinyFolder}/regular`, cardType: 'shiny', shinyVariant: 'regular' }
+          : { cropped: `${baseShinyFolder}/full/${entry.file}`, resized: `${baseShinyFolder}/full/${entry.file}`, cardFile: entry.file, folder: `${baseShinyFolder}/full`, cardType: 'shiny', shinyVariant: 'full' };
+      } else {
+        const cardFile = normalList[Math.floor(localRng() * normalList.length)];
+        const folder = `${BASE_URL}/normal`;
+        return { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}`, cardFile, folder, cardType: 'normal' };
+      }
+    }
+
+    let attempts = 0;
+    while (attempts < 200) {
+      const idx = Math.floor(localRng() * pokemonData.length);
+      const chosen = pokemonData[idx];
+      if (!excludedIds.has(chosen.id)) {
+        const cardObj = buildCardForPokemon(chosen);
+        if (cardObj) return { pokemon: chosen, card: cardObj };
+      }
+      attempts++;
+    }
+    // Fallback: allow repeats
+    localRng = mulberry32(baseSeed);
+    attempts = 0;
+    while (attempts < 200) {
+      const idx = Math.floor(localRng() * pokemonData.length);
+      const chosen = pokemonData[idx];
+      const cardObj = buildCardForPokemon(chosen);
+      if (cardObj) return { pokemon: chosen, card: cardObj };
+      attempts++;
+    }
+    return null;
+  }, [cardManifest, pokemonData, getRecentPokemonIds]);
+
   // Compute per-page daily pokemon and solved status (run this hook unconditionally)
   const perPageResults = useMemo(() => {
     if (!pokemonData) return [];
@@ -798,183 +953,7 @@ function App() {
     }
 
     function getCardAnswer() {
-      // Get recently used Pokemon IDs to exclude
-      const excludedIds = getRecentPokemonIds(today, 'card');
-      
-      // Check for override first
-      const override = getDailyOverride(todaySeed, 'card');
-      // console.log('[Override] Card override check for date', todaySeed, ':', override);
-      
-      if (override && typeof override === 'object' && override.pokemonId) {
-        const chosen = pokemonData.find(p => p.id === override.pokemonId);
-        // console.log('[Override] Found pokemon for card override:', chosen?.name, chosen?.id);
-        
-        if (chosen && cardManifest) {
-          let cardType = override.cardType;
-          let cardFile = override.cardFile;
-          
-          // console.log('[Override] Card override config - cardType:', cardType, 'cardFile:', cardFile);
-          
-          // If only cardFile is specified, search for it in all card types
-          if (cardFile && !cardType) {
-            console.log('[Override] Searching for cardFile across all types...');
-            const cardTypes = ['normal', 'full_art', 'shiny', 'special'];
-            for (const type of cardTypes) {
-              const manifestList = cardManifest[type]?.[chosen.id];
-              if (manifestList && manifestList.includes(cardFile)) {
-                cardType = type;
-                console.log('[Override] Found cardFile in type:', type);
-                break;
-              }
-            }
-            if (!cardType) {
-              console.log('[Override] Card file not found in any manifest, available files:', 
-                Object.keys(cardManifest).map(type => ({
-                  type,
-                  files: cardManifest[type]?.[chosen.id] || []
-                }))
-              );
-            }
-          }
-          
-          // Default to normal if no cardType found
-          if (!cardType) cardType = 'normal';
-          
-          const manifestList = cardManifest[cardType]?.[chosen.id];
-          if (manifestList && manifestList.length > 0) {
-            // Use specified card file if valid, otherwise pick first one
-            if (!cardFile || !manifestList.includes(cardFile)) {
-              console.log('[Override] Card file not in manifest or not specified, using first available:', manifestList[0]);
-              cardFile = manifestList[0];
-            }
-            const folder = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/${cardType}`;
-            let cardObj = null;
-            if (cardType === 'normal' || cardType === 'shiny') {
-              cardObj = {
-                cropped: `${folder}/cropped/${cardFile}`,
-                resized: `${folder}/resized/${cardFile}`,
-                cardFile,
-                folder,
-                cardType
-              };
-            } else {
-              cardObj = {
-                cropped: `${folder}/${cardFile}`,
-                resized: `${folder}/${cardFile}`,
-                cardFile,
-                folder,
-                cardType
-              };
-            }
-            console.log('[Override] Successfully created card override:', { pokemon: chosen.name, cardType, cardFile });
-            return { pokemon: chosen, card: cardObj };
-          } else {
-            console.log('[Override] No manifest list found for cardType:', cardType, 'pokemon:', chosen.id);
-          }
-        }
-      }
-
-      // Replicate CardPage selection logic to pick a pokemon that has a card manifest entry and is not recently used
-      if (!cardManifest) return null;
-      const baseSeed = getSeedFromDate(today) + 9999;
-      let localRng = mulberry32(baseSeed);
-
-      // Determine the day type once (Sun & Sat = special, Mon-Fri = normal with possible upgrades)
-      const now = new Date();
-      let dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
-      if (now.getUTCHours() >= RESET_HOUR_UTC) {
-        dayForCard = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
-      }
-      const utcDay = dayForCard.getUTCDay();
-      const isWeekend = utcDay === 0 || utcDay === 6;
-      const BASE_URL = 'https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards';
-
-      // Helper: build card object for a chosen pokemon given the current RNG state
-      function buildCardForPokemon(chosen) {
-        if (isWeekend) {
-          const manifestList = cardManifest['special']?.[chosen.id];
-          if (!manifestList || manifestList.length === 0) return null;
-          const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-          const folder = `${BASE_URL}/special`;
-          return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'special' };
-        }
-        // Weekday: require a normal card, then optionally upgrade to full_art (5%) or shiny (5%)
-        const normalList = cardManifest['normal']?.[chosen.id];
-        if (!normalList || normalList.length === 0) return null;
-
-        // Use a per-pokemon seed for type upgrade rolls so pokemon selection RNG is undisturbed
-        const typeRng = mulberry32(baseSeed + chosen.id * 7777);
-        const fullArtRoll = typeRng();
-        const shinyRoll = typeRng();
-
-        const hasFullArt = cardManifest['full_art']?.[chosen.id]?.length > 0;
-        const shinyData = cardManifest['shiny']?.[chosen.id];
-        const shinyRegularFiles = shinyData?.regular || [];
-        const shinyFullFiles = shinyData?.full || [];
-        const hasShinySomething = shinyRegularFiles.length > 0 || shinyFullFiles.length > 0;
-
-        if (fullArtRoll < 0.05 && hasFullArt) {
-          const fullArtList = cardManifest['full_art'][chosen.id];
-          const cardFile = fullArtList[Math.floor(localRng() * fullArtList.length)];
-          const folder = `${BASE_URL}/full_art`;
-          return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'full_art' };
-        } else if (shinyRoll < 0.05 && hasShinySomething) {
-          const allShinyFiles = [
-            ...shinyRegularFiles.map(f => ({ file: f, variant: 'regular' })),
-            ...shinyFullFiles.map(f => ({ file: f, variant: 'full' }))
-          ];
-          const entry = allShinyFiles[Math.floor(localRng() * allShinyFiles.length)];
-          const baseShinyFolder = `${BASE_URL}/shiny`;
-          if (entry.variant === 'regular') {
-            return {
-              cropped: `${baseShinyFolder}/regular/cropped/${entry.file}`,
-              resized: `${baseShinyFolder}/regular/${entry.file}`,
-              cardFile: entry.file, folder: `${baseShinyFolder}/regular`, cardType: 'shiny', shinyVariant: 'regular'
-            };
-          } else {
-            return {
-              cropped: `${baseShinyFolder}/full/${entry.file}`,
-              resized: `${baseShinyFolder}/full/${entry.file}`,
-              cardFile: entry.file, folder: `${baseShinyFolder}/full`, cardType: 'shiny', shinyVariant: 'full'
-            };
-          }
-        } else {
-          const cardFile = normalList[Math.floor(localRng() * normalList.length)];
-          const folder = `${BASE_URL}/normal`;
-          return { cropped: `${folder}/cropped/${cardFile}`, resized: `${folder}/resized/${cardFile}`, cardFile, folder, cardType: 'normal' };
-        }
-      }
-
-      let attempts = 0;
-      while (attempts < 200) {
-        const idx = Math.floor(localRng() * pokemonData.length);
-        const chosen = pokemonData[idx];
-        
-        // Skip if this Pokemon was used recently
-        if (excludedIds.has(chosen.id)) {
-          attempts++;
-          continue;
-        }
-
-        const cardObj = buildCardForPokemon(chosen);
-        if (cardObj) return { pokemon: chosen, card: cardObj };
-        attempts++;
-      }
-      
-      // Fallback: if we can't find a non-repeating Pokemon with cards, allow repeats
-      console.warn('[Card] Could not find non-repeating Pokemon with card, allowing repeat');
-      localRng = mulberry32(baseSeed);
-      attempts = 0;
-      while (attempts < 200) {
-        const idx = Math.floor(localRng() * pokemonData.length);
-        const chosen = pokemonData[idx];
-
-        const cardObj = buildCardForPokemon(chosen);
-        if (cardObj) return { pokemon: chosen, card: cardObj };
-        attempts++;
-      }
-      
-      return null;
+      return getCardAnswerForDate(today);
     }
 
     return PAGES.filter(p => p.key !== 'results').map(p => {
@@ -1004,7 +983,7 @@ function App() {
       const solved = daily && pageGuesses.some(g => g.name === (daily.name));
       return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
     });
-  }, [pokemonData, guessesByPage, today, cardManifest, bodyPartsManifest]);
+  }, [pokemonData, guessesByPage, today, cardManifest, bodyPartsManifest, getCardAnswerForDate, selectPokemonForDate]);
 
   // Map of daily pokemon objects by page key for easy access and prop passing
   const dailyByPage = useMemo(() => {
@@ -1012,6 +991,28 @@ function App() {
     perPageResults.forEach(r => { map[r.key] = r.daily || null; });
     return map;
   }, [perPageResults]);
+
+  const yesterdayPerPageResults = useMemo(() => {
+    if (!pokemonData) return [];
+    return PAGES.filter(p => p.key !== 'results').map(p => {
+      let daily;
+      if (p.key === 'card') {
+        daily = getCardAnswerForDate(yesterdayDate);
+      } else {
+        daily = selectPokemonForDate(yesterdayDate, p.key);
+      }
+      const pokemonForComparison = p.key === 'card' ? daily?.pokemon : daily;
+      const pageGuesses = yesterdayGuessesByPage[p.key] || [];
+      const solved = pokemonForComparison && pageGuesses.some(g => g.name === pokemonForComparison.name);
+      return { key: p.key, label: p.label, daily, solved, guessCount: solved ? pageGuesses.length : null };
+    });
+  }, [pokemonData, yesterdayGuessesByPage, yesterdayDate, getCardAnswerForDate, selectPokemonForDate]);
+
+  const yesterdayDailyByPage = useMemo(() => {
+    const map = {};
+    yesterdayPerPageResults.forEach(r => { map[r.key] = r.daily || null; });
+    return map;
+  }, [yesterdayPerPageResults]);
 
   // Console-log a compact summary of the selected pokemon for debugging/visibility
   useEffect(() => {
@@ -1177,27 +1178,33 @@ function App() {
 
   // Render a page component by key (keeps JSX mapping in one place)
   function renderPageByKey(key) {
-    if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={dailyByPage.classic} guesses={guessesByPage.classic} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, classic: newGuesses }))} useShinySprites={false} />;
-    if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={dailyByPage.pokedex} guesses={guessesByPage.pokedex} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, pokedex: newGuesses }))} />;
+    const activeDaily = yesterdayMode ? yesterdayDailyByPage : dailyByPage;
+    const activeGuesses = yesterdayMode ? yesterdayGuessesByPage : guessesByPage;
+    const setActiveGuesses = yesterdayMode
+      ? (pageKey, newGuesses) => setYesterdayGuessesByPage(g => ({ ...g, [pageKey]: newGuesses }))
+      : (pageKey, newGuesses) => setGuessesByPage(g => ({ ...g, [pageKey]: newGuesses }));
+
+    if (key === 'classic') return <ClassicPage pokemonData={pokemonData} daily={activeDaily.classic} guesses={activeGuesses.classic} setGuesses={newGuesses => setActiveGuesses('classic', newGuesses)} useShinySprites={false} />;
+    if (key === 'pokedex') return <PokedexPage pokemonData={pokemonData} daily={activeDaily.pokedex} guesses={activeGuesses.pokedex} setGuesses={newGuesses => setActiveGuesses('pokedex', newGuesses)} />;
     if (key === 'stats') return <StatsPage pokemonData={pokemonData} guesses={guessesByPage.stats} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, stats: newGuesses }))} />;
     if (key === 'ability') return <AbilityPage pokemonData={pokemonData} guesses={guessesByPage.ability} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, ability: newGuesses }))} />;
     if (key === 'moves') return <MovesPage pokemonData={pokemonData} guesses={guessesByPage.moves} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, moves: newGuesses }))} useShinySprites={false} />;
     if (key === 'category') return <CategoryPage pokemonData={pokemonData} guesses={guessesByPage.category} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, category: newGuesses }))} useShinySprites={false} />;
     if (key === 'details') {
-      const detailsMode = getDetailsModeForDate(new Date());
+      const detailsMode = yesterdayMode ? getDetailsModeForDate(yesterdayDate) : getDetailsModeForDate(new Date());
       if (detailsMode === 'silhouette') {
-        return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} useShinySprites={false} />;
+        return <SilhouettePage pokemonData={pokemonData} silhouetteMeta={silhouetteMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} />;
       } else if (detailsMode === 'zoom') {
-        return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} useShinySprites={false} />;
+        return <ZoomPage pokemonData={pokemonData} zoomMeta={zoomMeta} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} useShinySprites={false} />;
       } else {
-        return <EyesPage pokemonData={pokemonData} daily={dailyByPage.details} guesses={guessesByPage.details || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, details: newGuesses }))} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} />;
+        return <EyesPage pokemonData={pokemonData} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} />;
       }
     }
-    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={dailyByPage.colours} guesses={guessesByPage.colours} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, colours: newGuesses }))} useShinySprites={false} />;
+    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={activeDaily.colours} guesses={activeGuesses.colours} setGuesses={newGuesses => setActiveGuesses('colours', newGuesses)} useShinySprites={false} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={false} />;
-    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={dailyByPage.card} guesses={guessesByPage.card} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, card: newGuesses }))} useShinySprites={dailyByPage?.card?.card?.cardType === 'shiny'} />;
-    if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={dailyByPage.map} guesses={guessesByPage.map || []} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, map: newGuesses }))} useShinySprites={false} />;
-    if (key === 'results') return <ResultsPage results={perPageResults} guessesByPage={guessesByPage} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} />;
+    if (key === 'card') return <CardPage pokemonData={pokemonData} daily={activeDaily.card} guesses={activeGuesses.card} setGuesses={newGuesses => setActiveGuesses('card', newGuesses)} useShinySprites={activeDaily?.card?.card?.cardType === 'shiny'} />;
+    if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={activeDaily.map} guesses={activeGuesses.map || []} setGuesses={newGuesses => setActiveGuesses('map', newGuesses)} useShinySprites={false} />;
+    if (key === 'results') return <ResultsPage results={yesterdayMode ? yesterdayPerPageResults : perPageResults} guessesByPage={activeGuesses} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} date={yesterdayMode ? yesterdayDate : undefined} />;
     if (key === 'patchnotes') return <PatchNotesPage />;
     if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} setPage={setPage} />;
     if (key === 'privacy') return <PrivacyPolicyPage onBack={() => setPage('about')} />;
@@ -1231,8 +1238,8 @@ function App() {
       `}</style>
       {
         (() => {
-          const completedPages = perPageResults.reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} />;
+          const completedPages = (yesterdayMode ? yesterdayPerPageResults : perPageResults).reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(true); setMenuOpen(false); }} yesterdayMode={yesterdayMode} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}
@@ -1240,6 +1247,12 @@ function App() {
           className="main-app"
           ref={mainAppRef}
         >
+          {yesterdayMode && (
+            <div style={{ background: '#fff3cd', border: '1px solid #ffc107', borderRadius: 8, padding: '8px 16px', marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 14 }}>
+              <span>📅 Viewing <strong>Yesterday's Pokédle</strong></span>
+              <button onClick={() => setYesterdayMode(false)} style={{ background: 'none', border: 'none', color: '#1976d2', fontWeight: 600, cursor: 'pointer', fontSize: 14 }}>Back to Today</button>
+            </div>
+          )}
           {/* Debug Panel
           <div style={{
             marginBottom: '20px',

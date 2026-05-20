@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null, onYesterdayClick = null, yesterdayMode = false }) {
     const hamburgerRef = useRef(null);
     const dropdownRef = useRef(null);
     const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
@@ -302,7 +302,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         overflow: 'hidden',
                     }}
                 >
-                    {[[<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
+                    {[['📅', "Yesterday's Pokédle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
                         <button
                             key={label}
                             role="menuitem"
