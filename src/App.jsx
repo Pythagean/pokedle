@@ -1239,7 +1239,7 @@ function App() {
       {
         (() => {
           const completedPages = (yesterdayMode ? yesterdayPerPageResults : perPageResults).reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(true); setMenuOpen(false); }} yesterdayMode={yesterdayMode} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(m => !m); setMenuOpen(false); }} yesterdayMode={yesterdayMode} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}
