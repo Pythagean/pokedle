@@ -456,12 +456,12 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
                 <div style={{ marginBottom: 8 }}>Each guess shows feedback across columns (Generation, Types, Evolution Stage, Habitat, Height, Weight).</div>
                 <div style={{ fontWeight: 700, marginTop: 6, marginBottom: 6 }}>Example hints</div>
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                  <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>A partial type match (Poison/Flying) - today’s Pokémon is includes either Poison or Flying:</div>
-                  <img src="images/classic_hint_1.png" alt="Hint 1" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                  <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>A partial type match (Normal/Flying) - today’s Pokémon is includes either Normal or Flying:</div>
+                  <img src="images/classic_hint_4.png" alt="Hint 1" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
                 </div>
                 <div style={{ width: '100%', textAlign: 'center' }}>
                   <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>Generation and Evolution Stage match - this shows the correct generation and that the Pokémon is at that evolution stage:</div>
-                  <img src="images/classic_hint_2.png" alt="Hint 2" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
+                  <img src="images/classic_hint_5.png" alt="Hint 2" style={{ maxWidth: '100%', height: 'auto', borderRadius: 6, border: '1px solid #ddd' }} />
                 </div>
                 <div style={{ width: '100%', textAlign: 'center' }}>
                   <div style={{ fontSize: 13, color: '#333', marginTop: 6 }}>Height/Weight Arrows - Height and Weight arrows will scale based on how close the guessed pokemon's Height/Weight is:</div>

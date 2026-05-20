@@ -73,29 +73,30 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                 }
 
                 @media (max-width: 600px) {
+                    .header-title-img { display: none !important; }
                     .main-header { height: 60px !important; padding: 0 4px !important; }
                     .main-header img { height: 36px !important; margin-right: 8px !important; }
-                    .main-header nav button { font-size: 13px !important; padding: 6px 4px !important; }
+                    .main-header nav button, .nav-hamburger-btn { font-size: 13px !important; padding: 6px 4px !important; }
                     .main-header { height: 60px !important; padding: 4px 4px !important; }
                     .main-header img { height: 30px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
                                         /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
                                         .main-header nav { gap: 2px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
-                                        .main-header nav button { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
+                                        .main-header nav button, .nav-hamburger-btn { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
                                         /* On small mobile screens show icon-only */
                                         .main-header nav button .nav-label { display: inline !important; }
                                         .main-header nav button .nav-icon { display: inline-block !important; }
                     /* Left-align header content on narrow screens by removing the auto-centering margin */
-                    .main-header .main-header-inner { margin: 0 !important; max-width: none !important; padding-left: 4px !important; }
+                    .main-header .main-header-inner { margin: 0 !important; max-width: none !important; padding-left: 4px !important; padding-right: 4px !important; }
                 }
                                         @media (max-width: 480px) {
-                                                .main-header nav button { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
+                                                .main-header nav button, .nav-hamburger-btn { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
                                                 .main-header nav button .nav-label { display: none !important; }
                                                 .main-header nav button .nav-icon { display: inline-block !important; width: 40px !important; height: 40px !important; margin-right: 0 !important; }
-                                                        .main-header nav button { height: 44px !important; border-radius: 8px !important; border: 2px solid #1976d2 !important; box-shadow: none !important; outline: none !important; }
-                                                        .main-header nav button:focus { outline: none !important; box-shadow: none !important; }
+                                                        .main-header nav button, .nav-hamburger-btn { height: 44px !important; border-radius: 8px !important; border: 2px solid #1976d2 !important; box-shadow: none !important; outline: none !important; }
+                                                        .main-header nav button:focus, .nav-hamburger-btn:focus { outline: none !important; box-shadow: none !important; }
                                                         .main-header nav button .nav-label { display: none !important; }
                                                         .main-header nav button .nav-icon { display: inline-block !important; width: 28px !important; height: 44px !important; margin-right: 0 !important; }
-                                                        .main-header nav button[style*="background: #1976d2"] { border: none !important; }
+                                                        .main-header nav button[style*="background: #1976d2"], .nav-hamburger-btn[style*="background: #1976d2"] { border: none !important; }
                                         }
             `}</style>
             <div className="main-header" style={{
@@ -116,11 +117,11 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
+                    width: '100%',
                     maxWidth: 1300,
                        margin: '0 auto',
-                       padding: '0 12px',
+                       padding: '0 8px',
                        paddingLeft: '0px',
-                       paddingRight: 48,
                     height: 76,
                     gap: 0,
                 }}>
@@ -128,6 +129,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         <img
                             src={titleImg}
                             alt="Pokédle"
+                            className="header-title-img"
                             style={{
                                 height: 72,
                                 width: 'auto',
@@ -204,75 +206,41 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     </div>
                                 );
                             })}
-                            {/* Hamburger menu button */}
-                            <div key="hamburger" ref={hamburgerRef} style={{ position: 'relative', display: 'inline-block', marginLeft: 8 }}>
-                                <button
-                                    key="hamburger"
-                                    onClick={() => onMenuClick && onMenuClick()}
-                                    aria-label="Menu"
-                                    title="Menu"
-                                    aria-expanded={menuOpen}
-                                    style={{
-                                        padding: compactNav ? '6px' : '7px 9px',
-                                        borderRadius: 12,
-                                        background: menuOpen ? '#1976d2' : '#f4f4f4ff',
-                                        color: menuOpen ? '#fff' : '#1976d2',
-                                        border: menuOpen ? 'none' : '2px solid #1976d2',
-                                        fontWeight: 700,
-                                        fontSize: 15,
-                                        cursor: 'pointer',
-                                        boxShadow: menuOpen ? '0 2px 8px #1976d233' : 'none',
-                                        transition: 'background 0.2s, color 0.2s',
-                                        marginLeft: 0,
-                                        marginRight: 0,
-                                        minWidth: compactNav ? 44 : 44,
-                                        whiteSpace: 'nowrap',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        flex: '0 0 auto',
-                                    }}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width={compactNav ? 24 : 28} height={compactNav ? 24 : 28} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-                                        <line x1="3" y1="6" x2="21" y2="6" />
-                                        <line x1="3" y1="12" x2="21" y2="12" />
-                                        <line x1="3" y1="18" x2="21" y2="18" />
-                                    </svg>
-                                </button>
-                            </div>
-                            
-                            {/* <button
-                                key="completion-summary"
-                                onClick={() => onCompletionClick && onCompletionClick()}
-                                aria-label="Results"
-                                title={compactNav ? undefined : 'Results'}
-                                className={highlightCompletion ? 'completion-highlight' : undefined}
-                                style={{
-                                    padding: compactNav ? '6px' : '7px 9px',
-                                    borderRadius: 12,
-                                    background: completionActive ? '#1976d2' : '#f4f4f4ff',
-                                    color: completionActive ? '#fff' : '#1976d2',
-                                    border: completionActive ? 'none' : '2px solid #3573b1ff',
-                                    fontWeight: 700,
-                                    fontSize: 20,
-                                    cursor: 'pointer',
-                                    boxShadow: completionActive ? '0 2px 8px #1976d233' : 'none',
-                                    transition: 'background 0.2s, color 0.2s',
-                                    marginLeft: 8,
-                                    marginRight: 0,
-                                    minWidth: compactNav ? 44 : 55,
-                                    whiteSpace: 'nowrap',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flex: '0 0 auto',
-                                }}
-                            >
-                                <img src={`icons/results.png`} alt="" className="nav-icon" style={{ display: 'inline-block', width: compactNav ? 24 : 32, height: compactNav ? 24 : 32, marginRight: 0, objectFit: 'contain' }} />
-                                {!compactNav ? <span className="nav-label" style={{fontSize: 15}}></span> : null}
-                                {highlightCompletion ? <span className="completion-badge" aria-hidden="true" /> : null}
-                            </button> */}
                         </nav>
+                    </div>
+                    {/* Hamburger menu button - pinned to right */}
+                    <div ref={hamburgerRef} style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginLeft: 4 }}>
+                        <button
+                            onClick={() => onMenuClick && onMenuClick()}
+                            aria-label="Menu"
+                            title="Menu"
+                            aria-expanded={menuOpen}
+                            className="nav-hamburger-btn"
+                            style={{
+                                padding: compactNav ? '2px' : '7px 9px',
+                                borderRadius: 12,
+                                background: menuOpen ? '#1976d2' : '#f4f4f4ff',
+                                color: menuOpen ? '#fff' : '#1976d2',
+                                border: menuOpen ? 'none' : '2px solid #1976d2',
+                                fontWeight: 700,
+                                fontSize: 15,
+                                cursor: 'pointer',
+                                boxShadow: menuOpen ? '0 2px 8px #1976d233' : 'none',
+                                transition: 'background 0.2s, color 0.2s',
+                                minWidth: compactNav ? 44 : 44,
+                                whiteSpace: 'nowrap',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flex: '0 0 auto',
+                            }}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width={compactNav ? 24 : 32} height={compactNav ? 24 : 32} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+                                <line x1="3" y1="6" x2="21" y2="6" />
+                                <line x1="3" y1="12" x2="21" y2="12" />
+                                <line x1="3" y1="18" x2="21" y2="18" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
