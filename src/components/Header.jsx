@@ -61,7 +61,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     top: 6px;
                     right: 10px;
                     display: inline-block;
-                    width: 12px;
+                    width: 6px;
                     height: 12px;
                     background: #ff5252;
                     border-radius: 999px;
@@ -73,14 +73,15 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                 }
 
                 @media (max-width: 600px) {
+                    .slowpoke-icon { height: 64px !important; }
                     .header-title-img { display: none !important; }
                     .main-header { height: 60px !important; padding: 0 4px !important; }
                     .main-header img { height: 36px !important; margin-right: 8px !important; }
                     .main-header nav button, .nav-hamburger-btn { font-size: 13px !important; padding: 6px 4px !important; }
                     .main-header { height: 60px !important; padding: 4px 4px !important; }
-                    .main-header img { height: 30px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
+                    .main-header img { height: 40px !important; margin-right: 6px !important; max-width: 120px !important; max-height: 60px !important; }
                                         /* Keep nav items on one horizontal row on mobile; allow horizontal scrolling if needed */
-                                        .main-header nav { gap: 2px !important; flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; }
+                                        .main-header nav { gap: 4px !important; flex-wrap: nowrap !important; justify-content: center !important; overflow-x: auto !important; }
                                         .main-header nav button, .nav-hamburger-btn { font-size: 13px !important; padding: 4px !important; min-width: 44px !important; width: 44px !important; height: 44px !important; margin-bottom: 0 !important; flex: 0 0 auto !important; }
                                         /* On small mobile screens show icon-only */
                                         .main-header nav button .nav-label { display: inline !important; }
@@ -135,15 +136,30 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 width: 'auto',
                                 display: 'block',
                                 objectFit: 'contain',
-                                marginRight: 12,
+                                marginRight: 6,
                                 marginLeft: 0,
                                 maxWidth: 120,
                                 maxHeight: 80,
                             }}
                         />
                     </div>
-                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%', overflowX: 'auto', minWidth: 0 }}>
-                                <nav style={{ display: 'flex', gap: 6, flexWrap: 'nowrap', width: '100%', paddingRight: 8, overflowX: 'auto', whiteSpace: 'nowrap' }}>
+                    <div className="slowpoke-icon-wrap" style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: 'auto', paddingRight: 5, marginBottom: 2 }}>
+                        <img
+                            src="data/slowpoke_icon.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="slowpoke-icon"
+                            style={{
+                                height: 54,
+                                width: 'auto',
+                                display: 'block',
+                                objectFit: 'contain',
+                                marginRight: 8,
+                            }}
+                        />
+                    </div>
+                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', overflowX: 'auto', minWidth: 0 }}>
+                                <nav style={{ display: 'flex', gap: 6, flexWrap: 'nowrap', justifyContent: 'center', paddingRight: 8, overflowX: 'auto', whiteSpace: 'nowrap' }}>
                                 {pages.map(p => {
                                 const isSelected = page === p.key;
                                 const isCompleted = !!completedPages[p.key];
@@ -209,7 +225,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         </nav>
                     </div>
                     {/* Hamburger menu button - pinned to right */}
-                    <div ref={hamburgerRef} style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginLeft: 4 }}>
+                    <div ref={hamburgerRef} style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginLeft: 4, paddingRight: 10 }}>
                         <button
                             onClick={() => onMenuClick && onMenuClick()}
                             aria-label="Menu"
