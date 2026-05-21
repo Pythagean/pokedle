@@ -98,6 +98,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                                         .main-header nav button .nav-label { display: none !important; }
                                                         .main-header nav button .nav-icon { display: inline-block !important; width: 28px !important; height: 44px !important; margin-right: 0 !important; }
                                                         .main-header nav button[style*="background: #ffaab5"], .nav-hamburger-btn[style*="background: #ffaab5"] { border: none !important; }
+                                        .nav-hamburger-wrap { margin-bottom: 5px !important; }
                                         }
             `}</style>
             <div className="main-header" style={{
@@ -132,18 +133,18 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             alt="Pokédle"
                             className="header-title-img"
                             style={{
-                                height: 72,
+                                height: 100,
                                 width: 'auto',
                                 display: 'block',
                                 objectFit: 'contain',
                                 marginRight: 6,
                                 marginLeft: 0,
-                                maxWidth: 120,
-                                maxHeight: 80,
+                                maxWidth: 160,
+                                maxHeight: 100,
                             }}
                         />
                     </div>
-                    <div className="slowpoke-icon-wrap" style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: 'auto', paddingRight: 5, marginBottom: 2 }}>
+                    <div className="slowpoke-icon-wrap" style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: 'auto', paddingLeft: 5, marginBottom: 2 }}>
                         <img
                             src="data/slowpoke_icon.png"
                             alt=""
@@ -155,6 +156,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 display: 'block',
                                 objectFit: 'contain',
                                 marginRight: 8,
+                                marginBottom: 3
                             }}
                         />
                     </div>
@@ -168,8 +170,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                     padding: compactNav ? '2px' : '7px 9px',
                                     borderRadius: 12,
                                     background: isSelected ? '#ffaab5' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
-                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#ffaab5'),
-                                    border: isSelected ? 'none' : (isDisabled ? '2px solid #929292ff' : '2px solid #ff0d2d'),
+                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#DE627B'),
+                                    border: isSelected ? '2px solid transparent' : (isDisabled ? '2px solid #929292ff' : '2px solid #DE627B'),
                                     fontWeight: 700,
                                     fontSize: 15,
                                     cursor: isDisabled ? 'pointer' : 'pointer',
@@ -196,7 +198,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                             aria-pressed={isSelected}
                                             style={baseBtnStyle}
                                         >
-                                            <img src={`icons/${p.key}.png`} alt="" className="nav-icon" style={imgStyle} />
+                                            <img src={`icons/${p.key}${isSelected ? '_selected' : ''}.png`} alt="" className="nav-icon" style={imgStyle} />
                                             {!compactNav ? <span className="nav-label" style={{fontSize: 15}}>{p.label}</span> : null}
                                         </button>
                                         {isCompleted ? (
@@ -225,7 +227,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         </nav>
                     </div>
                     {/* Hamburger menu button - pinned to right */}
-                    <div ref={hamburgerRef} style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginLeft: 4, paddingRight: 10 }}>
+                    <div ref={hamburgerRef} className="nav-hamburger-wrap" style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginLeft: 4, paddingRight: 10 }}>
                         <button
                             onClick={() => onMenuClick && onMenuClick()}
                             aria-label="Menu"
@@ -236,8 +238,8 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 padding: compactNav ? '2px' : '7px 9px',
                                 borderRadius: 12,
                                 background: menuOpen ? '#ffaab5' : '#f4f4f4ff',
-                                color: menuOpen ? '#fff' : '#ffaab5',
-                                border: menuOpen ? 'none' : '2px solid #fc7083',
+                                color: menuOpen ? '#fff' : '#DE627B',
+                                border: menuOpen ? '2px solid transparent' : '2px solid #fc7083',
                                 fontWeight: 700,
                                 fontSize: 15,
                                 cursor: 'pointer',
@@ -302,7 +304,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 borderTop: i > 0 ? '1px solid #e8edf3' : 'none',
                                 fontSize: 15,
                                 fontWeight: 600,
-                                color: '#ffaab5',
+                                color: '#DE627B',
                                 cursor: 'pointer',
                                 textAlign: 'left',
                             }}
