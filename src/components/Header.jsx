@@ -93,11 +93,11 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                                 .main-header nav button, .nav-hamburger-btn { padding: 0px !important; min-width: 34px !important; width: 34px !important; height: 44px !important; border-radius: 4px !important; }
                                                 .main-header nav button .nav-label { display: none !important; }
                                                 .main-header nav button .nav-icon { display: inline-block !important; width: 40px !important; height: 40px !important; margin-right: 0 !important; }
-                                                        .main-header nav button, .nav-hamburger-btn { height: 44px !important; border-radius: 8px !important; border: 2px solid #1976d2 !important; box-shadow: none !important; outline: none !important; }
+                                                        .main-header nav button, .nav-hamburger-btn { height: 44px !important; border-radius: 8px !important; border: 2px solid #ff8a9a !important; box-shadow: none !important; outline: none !important; }
                                                         .main-header nav button:focus, .nav-hamburger-btn:focus { outline: none !important; box-shadow: none !important; }
                                                         .main-header nav button .nav-label { display: none !important; }
                                                         .main-header nav button .nav-icon { display: inline-block !important; width: 28px !important; height: 44px !important; margin-right: 0 !important; }
-                                                        .main-header nav button[style*="background: #1976d2"], .nav-hamburger-btn[style*="background: #1976d2"] { border: none !important; }
+                                                        .main-header nav button[style*="background: #ffaab5"], .nav-hamburger-btn[style*="background: #ffaab5"] { border: none !important; }
                                         }
             `}</style>
             <div className="main-header" style={{
@@ -167,13 +167,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 const baseBtnStyle = {
                                     padding: compactNav ? '2px' : '7px 9px',
                                     borderRadius: 12,
-                                    background: isSelected ? '#1976d2' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
-                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#1976d2'),
-                                    border: isSelected ? 'none' : (isDisabled ? '2px solid #929292ff' : '2px solid #1976d2'),
+                                    background: isSelected ? '#ffaab5' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
+                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#ffaab5'),
+                                    border: isSelected ? 'none' : (isDisabled ? '2px solid #929292ff' : '2px solid #ff0d2d'),
                                     fontWeight: 700,
                                     fontSize: 15,
                                     cursor: isDisabled ? 'pointer' : 'pointer',
-                                    boxShadow: isSelected ? '0 2px 8px #1976d233' : 'none',
+                                    boxShadow: isSelected ? '0 2px 8px #ffaab533' : 'none',
                                     transition: 'background 0.2s, color 0.2s',
                                     //marginLeft: p.key === 'results' ? 2 : 0,
                                     marginLeft: 0,
@@ -235,13 +235,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             style={{
                                 padding: compactNav ? '2px' : '7px 9px',
                                 borderRadius: 12,
-                                background: menuOpen ? '#1976d2' : '#f4f4f4ff',
-                                color: menuOpen ? '#fff' : '#1976d2',
-                                border: menuOpen ? 'none' : '2px solid #1976d2',
+                                background: menuOpen ? '#ffaab5' : '#f4f4f4ff',
+                                color: menuOpen ? '#fff' : '#ffaab5',
+                                border: menuOpen ? 'none' : '2px solid #fc7083',
                                 fontWeight: 700,
                                 fontSize: 15,
                                 cursor: 'pointer',
-                                boxShadow: menuOpen ? '0 2px 8px #1976d233' : 'none',
+                                boxShadow: menuOpen ? '0 2px 8px #ffaab533' : 'none',
                                 transition: 'background 0.2s, color 0.2s',
                                 minWidth: compactNav ? 44 : 44,
                                 whiteSpace: 'nowrap',
@@ -278,7 +278,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         top: dropdownPos.top,
                         right: dropdownPos.right,
                         background: '#fff',
-                        border: '2px solid #1976d2',
+                        border: '2px solid #ffaab5',
                         borderRadius: 12,
                         boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
                         minWidth: 180,
@@ -302,7 +302,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 borderTop: i > 0 ? '1px solid #e8edf3' : 'none',
                                 fontSize: 15,
                                 fontWeight: 600,
-                                color: '#1976d2',
+                                color: '#ffaab5',
                                 cursor: 'pointer',
                                 textAlign: 'left',
                             }}
