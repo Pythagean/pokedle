@@ -9,11 +9,11 @@ export default function CompletionPopup({ open, onClose, results, guessesByPage 
     const dateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
     const entries = results.map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
-    const summaryLines = [`I've completed all the modes of Pokédle for ${dateStr}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
+    const summaryLines = [`I've completed all the modes of Slowpokle for ${dateStr}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
     const summaryText = summaryLines.join('\n');
 
     // Build detailed text when details view is active: include guesses per mode (reversed order)
-    const detailedLines = [ `I've completed all the modes of Pokédle for ${dateStr}! \n` ];
+    const detailedLines = [ `I've completed all the modes of Slowpokle for ${dateStr}! \n` ];
     results.forEach(r => {
         const guesses = (guessesByPage && guessesByPage[r.key]) || [];
         const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);

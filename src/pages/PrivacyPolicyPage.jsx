@@ -2,7 +2,7 @@ import React from 'react';
 
 const LAST_UPDATED = 'May 15, 2026';
 const CONTACT_EMAIL = 'slowpokle.game@gmail.com';
-const SITE_NAME = 'Pokédle';
+const SITE_NAME = 'Slowpokle';
 const SITE_URL = 'https://pythagean.github.io/pokedle/';
 
 function Section({ title, children }) {

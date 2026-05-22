@@ -1256,7 +1256,7 @@ function App() {
         >
           {yesterdayMode && (
             <div style={{ background: '#fff3cd', border: '1px solid #ffc107', borderRadius: 8, padding: '8px 16px', marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 14 }}>
-              <span>📅 Viewing <strong>Yesterday's Pokédle</strong></span>
+              <span>📅 Viewing <strong>Yesterday's Slowpokle</strong></span>
               <button onClick={() => setYesterdayMode(false)} style={{ background: 'none', border: 'none', color: '#1976d2', fontWeight: 600, cursor: 'pointer', fontSize: 14 }}>Back to Today</button>
             </div>
           )}
@@ -1466,7 +1466,7 @@ function App() {
               textAlign: 'center',
             }}>
               <span style={{ fontSize: 22 }}>✨</span>
-              <span>Today's Pokédle has a theme!</span>
+              <span>Today's Slowpokle has a theme!</span>
               <span style={{ fontSize: 22 }}>✨</span>
             </div>
           )}

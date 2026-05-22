@@ -69,7 +69,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const todayEffective = effectiveUTCDate(date || new Date());
     const epoch = effectiveUTCDate(new Date('2025-11-24T00:00:00Z'));
     const dayNumber = Math.floor((todayEffective.getTime() - epoch.getTime()) / MS_PER_DAY) + 1;
-    const pokedleLabel = `Pokédle #${dayNumber}`;
+    const pokedleLabel = `Slowpokle #${dayNumber}`;
     
     // Initialize card preview from localStorage (but only if it's for the current day)
     useEffect(() => {

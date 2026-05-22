@@ -15,10 +15,10 @@ export default function AboutPage({ onPrivacyClick, setPage }) {
             {/* Header */}
             <div style={{ textAlign: 'center', marginBottom: 32 }}>
                 <h2 style={{ margin: '0 0 10px' }}>
-                    About Pokédle
+                    About Slowpokle
                 </h2>
                 <p style={{ fontSize: 16, color: '#444', lineHeight: 1.6, margin: 0 }}>
-                    Pokédle is a daily Pokémon guessing game featuring <strong>6 different modes</strong>, each
+                    Slowpokle is a daily Pokémon guessing game featuring <strong>6 different modes</strong>, each
                     offering a unique way to test your Pokémon knowledge. A new Pokémon is chosen for each mode
                     every day!
                 </p>

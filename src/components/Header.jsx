@@ -130,7 +130,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                     <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', height: '100%' }}>
                         <img
                             src={titleImg}
-                            alt="Pokédle"
+                            alt="Slowpokle"
                             className="header-title-img"
                             style={{
                                 height: 100,
@@ -288,7 +288,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         overflow: 'hidden',
                     }}
                 >
-                    {[[yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Pokédle" : "Yesterday's Pokédle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
+                    {[[yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Slowpokle" : "Yesterday's Slowpokle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
                         <button
                             key={label}
                             role="menuitem"
