@@ -5,16 +5,20 @@
 - **Overall** <br>
     - Changed name from Pokedle to Slowpokle
     - Changed colour scheme of header to better suit new name / logo
-    - Added hamburger button to header containing the following items:
-        - Yesterday's Slowpokle - New feature allowing users to play yesterday's puzzles
-        - Pokegrid - Link to another app to view a grid of pokemon
-        - Patch Notes - Any changes to the game
-        - Donate - Link to Ko-fi page
-        - About - About page describing the game
     - Rewrote some hint placeholders so they are consistent across all modes
+    - Added hamburger button to header containing the following items
 - **Yesterday's Slowpokle (WIP)** <br>
     - New feature allowing users to play yesterday's puzzles
     - Probably still needs some work, especially around the results
+- **Pokegrid** <br>
+    - Link to another app to view a grid of pokemon
+- **Patch Notes** <br>
+    - Page showing any changes to the game
+- **Donate** <br>
+    - Link to Ko-fi page
+- **About** <br>
+    - About page describing the game
+    
 - **Location** <br>
     - Fixed Kanto Route 2 map 
 
