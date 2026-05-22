@@ -1,3 +1,44 @@
+## Release Notes — May 22nd, 2026
+
+## What’s New
+
+- **Overall** <br>
+    - Changed name from Pokedle to Slowpokle
+    - Changed colour scheme of header to better suit new name / logo
+    - Added hamburger button to header containing the following items:
+        - Yesterday's Slowpokle - New feature allowing users to play yesterday's puzzles
+        - Pokegrid - Link to another app to view a grid of pokemon
+        - Patch Notes - Any changes to the game
+        - Donate - Link to Ko-fi page
+        - About - About page describing the game
+    - Rewrote some hint placeholders so they are consistent across all modes
+- **Yesterday's Slowpokle (WIP)** <br>
+    - New feature allowing users to play yesterday's puzzles
+    - Probably still needs some work, especially around the results
+- **Location** <br>
+    - Fixed Kanto Route 2 map 
+
+## Commits included (newest first)
+
+```text
+18758dc | 2026-05-22 | Header styling
+ae473cb | 2026-05-21 | WIP: Pink buttons
+6c5ab41 | 2026-05-21 | Adding Slowpoke icon and styling the header
+b4a58f6 | 2026-05-20 | Refactor code structure for improved readability and maintainability
+844414a | 2026-05-20 | Implement yesterday mode result submission and update leaderboard display
+8147de0 | 2026-05-20 | Toggle yesterday mode in header button for improved user experience
+ff69450 | 2026-05-20 | Add date prop to page components for yesterday's mode support
+0da9724 | 2026-05-20 | Initial commit of 'Yesterday's Pokedle' feature
+75775ca | 2026-05-20 | Remove debug mode
+de49fd9 | 2026-05-20 | Locations: Fixed Kanto Route 2 map, commented console debug lines
+34dda76 | 2026-05-20 | Make hint placeholders consistent across game modes
+2a5f9c9 | 2026-05-20 | Enhance AboutPage and Header components: add setPage prop and improve button styling
+27a49e5 | 2026-05-20 | Locations: Scale up Footprint image slightly
+9f0022b | 2026-05-15 | 'About page' changes
+6bd2cd8 | 2026-05-15 | Adding About page, Privacy Policy and a link to the Pokegrid app
+042282c | 2026-05-15 | Adding hamburger menu to nav bar, containing a new in-app Patch Notes page
+```
+
 ## Release Notes — May 15th, 2026
 
 ## What’s New
