@@ -103,7 +103,7 @@ export default function PatchNotesPage() {
           </div>
 
           {/* Mode sections */}
-          <div style={{ padding: '12px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ padding: '12px 18px', display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left' }}>
             {release.items.map((item, ii) => (
               <div key={ii}>
                 {item.mode && (
