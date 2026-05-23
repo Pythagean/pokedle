@@ -431,17 +431,25 @@ function App() {
   const yesterdayDate = useMemo(() => {
     const base = new Date();
     if (debugDayOffset !== 0) base.setDate(base.getDate() + debugDayOffset);
-    base.setDate(base.getDate() - 1);
-    return base;
+    // Derive "yesterday" from the current game-day seed so that UTC-hour-based advancement
+    // in getSeedFromDate doesn't produce the wrong previous-day seed.
+    const currentSeed = getSeedFromDate(base);
+    const y = Math.floor(currentSeed / 10000);
+    const mo = Math.floor((currentSeed % 10000) / 100) - 1; // 0-indexed
+    const d = currentSeed % 100;
+    // Noon UTC on the previous calendar day is always within the previous game-day window.
+    return new Date(Date.UTC(y, mo, d - 1, 12, 0, 0));
   }, [debugDayOffset]);
 
   const yesterdaySeed = useMemo(() => getSeedFromDate(yesterdayDate), [yesterdayDate]);
 
   const [yesterdayGuessesByPage, setYesterdayGuessesByPage] = useState(() => {
     try {
-      const now = new Date();
-      const yDate = new Date(now);
-      yDate.setDate(yDate.getDate() - 1);
+      const currentSeed = getSeedFromDate(new Date());
+      const y = Math.floor(currentSeed / 10000);
+      const mo = Math.floor((currentSeed % 10000) / 100) - 1;
+      const d = currentSeed % 100;
+      const yDate = new Date(Date.UTC(y, mo, d - 1, 12, 0, 0));
       const ySeed = getSeedFromDate(yDate);
       // Try dated key first (populated after playing today, or carried over)
       const datedStored = localStorage.getItem(`pokedle_guesses_${ySeed}`);
