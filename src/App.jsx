@@ -1215,7 +1215,7 @@ function App() {
         return <EyesPage pokemonData={pokemonData} daily={activeDaily.details} guesses={activeGuesses.details || []} setGuesses={newGuesses => setActiveGuesses('details', newGuesses)} bodyPartsManifest={bodyPartsManifest} useShinySprites={false} date={yesterdayMode ? yesterdayDate : undefined} />;
       }
     }
-    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={activeDaily.colours} guesses={activeGuesses.colours} setGuesses={newGuesses => setActiveGuesses('colours', newGuesses)} useShinySprites={false} />;
+    if (key === 'colours') return <ColoursPage pokemonData={pokemonData} daily={activeDaily.colours} guesses={activeGuesses.colours} setGuesses={newGuesses => setActiveGuesses('colours', newGuesses)} useShinySprites={false} date={yesterdayMode ? yesterdayDate : undefined} />;
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={false} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={activeDaily.card} guesses={activeGuesses.card} setGuesses={newGuesses => setActiveGuesses('card', newGuesses)} useShinySprites={activeDaily?.card?.card?.cardType === 'shiny'} />;
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={activeDaily.map} guesses={activeGuesses.map || []} setGuesses={newGuesses => setActiveGuesses('map', newGuesses)} useShinySprites={false} />;

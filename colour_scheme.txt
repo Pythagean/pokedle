@@ -1,0 +1,5 @@
+DE627B - darker
+
+FF8394 - regular
+
+FFA4A4 - lighter

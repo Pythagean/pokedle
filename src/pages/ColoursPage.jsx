@@ -30,13 +30,15 @@ function mulberry32(a) {
   }
 }
 
-export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
+const INITIAL_CLUE_TYPES = ['generation', 'types', 'habitat'];
+
+export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const prevCorrectRef = useRef(false);
   
-  const today = new Date();
+  const today = date || new Date();
   const defaultSeed = (getSeedFromUTCDate(today) + 9 * 1000 + 'c'.charCodeAt(0)); // UTC-based
   const [resetSeed, setResetSeed] = useState(null);
   const [resetCount, setResetCount] = useState(0);
@@ -45,6 +47,13 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   const dailyIndex = useMemo(() => pokemonData ? Math.floor(rng() * pokemonData.length) : 0, [rng, pokemonData]);
   const computedDaily = pokemonData ? pokemonData[dailyIndex] : null;
   const dailyPokemon = daily || computedDaily;
+
+  // Pick a daily initial clue type (generation, types, or habitat) using the date seed
+  const clueSeed = getSeedFromUTCDate(today) + 50017;
+  const initialClueType = useMemo(() => {
+    const clueRng = mulberry32(clueSeed);
+    return INITIAL_CLUE_TYPES[Math.floor(clueRng() * INITIAL_CLUE_TYPES.length)];
+  }, [clueSeed]);
 
   // Preload the full Pokémon image so it appears immediately after a correct guess
   useEffect(() => {
@@ -328,6 +337,34 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         {!isCorrect && (
           <div style={{ fontWeight: 600, marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <span>Which Pokémon is made up of these colours?</span>
+          </div>
+        )}
+        {/* Initial daily clue */}
+        {dailyPokemon && (
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 8, padding: '6px 14px', fontSize: 14, fontWeight: 600 }}>
+              {initialClueType === 'generation' && (
+                <span>The Pokémon is from Gen {dailyPokemon.generation}</span>
+              )}
+              {initialClueType === 'types' && (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                  <span>This Pokémon is</span>
+                  {dailyPokemon.types.map(t => {
+                    const tLower = String(t).toLowerCase();
+                    const bgColor = TYPE_COLORS[tLower] || '#777';
+                    return (
+                      <span key={t} style={{ background: bgColor, color: '#fff', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 12, textTransform: 'capitalize' }}>{t}</span>
+                    );
+                  })}
+                </span>
+              )}
+              {initialClueType === 'habitat' && (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                  <span>{dailyPokemon.habitat === 'Rare' ? 'This Pokémon is Rare' : `This Pokémon can be found in ${dailyPokemon.habitat} habitats`}</span>
+                  <img src={`images/habitats/${dailyPokemon.habitat}.png`} alt="" style={{ width: 22, height: 22, objectFit: 'contain', verticalAlign: 'middle' }} onError={e => { e.target.style.display = 'none'; }} />
+                </span>
+              )}
+            </div>
           </div>
         )}
         {isCorrect && (
