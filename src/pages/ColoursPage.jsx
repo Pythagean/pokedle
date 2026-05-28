@@ -348,14 +348,14 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
               )}
               {initialClueType === 'types' && (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-                  <span>This Pokémon is</span>
+                  <span>This is a </span>
                   {dailyPokemon.types.map(t => {
                     const tLower = String(t).toLowerCase();
                     const bgColor = TYPE_COLORS[tLower] || '#777';
                     return (
                       <span key={t} style={{ background: bgColor, color: '#fff', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 12, textTransform: 'capitalize' }}>{t}</span>
                     );
-                  })}
+                  })} Pokémon
                 </span>
               )}
               {initialClueType === 'habitat' && (
