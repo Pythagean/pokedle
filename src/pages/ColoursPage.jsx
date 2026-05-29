@@ -7,6 +7,7 @@ import InfoButton from '../components/InfoButton';
 import Confetti from '../components/Confetti';
 import { COLOURS_HINT_THRESHOLDS, ColourHints } from '../config/hintConfig';
 import { TYPE_COLORS } from '../config/typeColors';
+import { getWeaknesses, getResistances, getImmunities } from '../config/typeChart';
 // import pokemonData from '../../data/pokemon_data.json';
 
 
@@ -30,7 +31,7 @@ function mulberry32(a) {
   }
 }
 
-const INITIAL_CLUE_TYPES = ['generation', 'types', 'habitat'];
+const INITIAL_CLUE_TYPES = ['generation', 'types', 'habitat', 'weakness', 'evolution_stage', 'resistance_immunity'];
 
 export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
   const inputRef = useRef(null);
@@ -54,6 +55,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
     const clueRng = mulberry32(clueSeed);
     return INITIAL_CLUE_TYPES[Math.floor(clueRng() * INITIAL_CLUE_TYPES.length)];
   }, [clueSeed]);
+
+  // const initialClueType = 'types'; // for testing
 
   // Preload the full Pokémon image so it appears immediately after a correct guess
   useEffect(() => {
@@ -339,6 +342,12 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             <span>Which Pokémon is made up of these colours?</span>
           </div>
         )}
+        {isCorrect && (
+          <>
+          <CongratsMessage guessCount={guesses.length} mode="Colours" />
+          <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
+          </>
+        )}
         {/* Initial daily clue */}
         {dailyPokemon && (
           <div style={{ marginBottom: 12 }}>
@@ -355,7 +364,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
                     return (
                       <span key={t} style={{ background: bgColor, color: '#fff', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 12, textTransform: 'capitalize' }}>{t}</span>
                     );
-                  })} Pokémon
+                  })} type Pokémon
                 </span>
               )}
               {initialClueType === 'habitat' && (
@@ -364,15 +373,84 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
                   <img src={`images/habitats/${dailyPokemon.habitat}.png`} alt="" style={{ width: 22, height: 22, objectFit: 'contain', verticalAlign: 'middle' }} onError={e => { e.target.style.display = 'none'; }} />
                 </span>
               )}
+              {initialClueType === 'evolution_stage' && (
+                <span>{dailyPokemon.fully_evolved ? 'This Pokémon is fully evolved' : 'This Pokémon is not fully evolved'}</span>
+              )}
+              {/* {initialClueType === 'encounter_method' && (() => {
+                const uniqueMethods = [...new Set(
+                  (dailyPokemon.location_area_encounters || []).map(e => (e.method || '').toLowerCase())
+                )];
+                const displayNames = [...new Set(
+                  uniqueMethods.map(m => METHOD_DISPLAY[m] || null).filter(Boolean)
+                )];
+                if (displayNames.length === 0) return null;
+                return (
+                  <span>
+                    <span>Encounter method{displayNames.length > 1 ? 's' : ''}: </span>
+                    <span style={{ fontWeight: 700 }}>{displayNames.join(', ')}</span>
+                  </span>
+                );
+              })()} */}
+              {initialClueType === 'resistance_immunity' && (() => {
+                const immunities = getImmunities(dailyPokemon.types || []);
+                const resistances = getResistances(dailyPokemon.types || []);
+                if (immunities.length === 0 && resistances.length === 0) return null;
+                const badge = (type) => {
+                  const bg = TYPE_COLORS[type] || '#777';
+                  return (
+                    <span key={type} style={{ background: bg, color: '#fff', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 12, textTransform: 'capitalize' }}>{type}</span>
+                  );
+                };
+                return (
+                  <span style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, justifyContent: 'center' }}>
+                    {immunities.length > 0 && (
+                      <>
+                        <span>This Pokémon is immune to</span>
+                        {immunities.map(badge)}
+                        <span>type attacks</span>
+                      </>
+                    )}
+                    {immunities.length > 0 && resistances.length > 0 && (
+                      <span style={{ color: '#aaa' }}>|</span>
+                    )}
+                    {resistances.length > 0 && (
+                      <>
+                        <span>This Pokémon resists</span>
+                        {resistances.map(badge)}
+                        <span>type attacks</span>
+                      </>
+                    )}
+                  </span>
+                );
+              })()}
+              {initialClueType === 'weakness' && (() => {
+                const weaknesses = getWeaknesses(dailyPokemon.types || []);
+                // Pick one weakness deterministically using the clue seed
+                const weaknessRng = mulberry32(clueSeed + 1);
+                const pickedWeakness = weaknesses.length > 0
+                  ? weaknesses[Math.floor(weaknessRng() * weaknesses.length)]
+                  : null;
+                const bgColor = pickedWeakness ? (TYPE_COLORS[pickedWeakness] || '#777') : '#777';
+                return pickedWeakness ? (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                    <span>This Pokémon is weak to</span>
+                    <span style={{
+                      background: bgColor,
+                      color: '#fff',
+                      padding: '2px 8px',
+                      borderRadius: 4,
+                      fontWeight: 700,
+                      fontSize: 12,
+                      textTransform: 'capitalize'
+                    }}>{pickedWeakness}</span>
+                    <span>type attacks</span>
+                  </span>
+                ) : null;
+              })()}
             </div>
           </div>
         )}
-        {isCorrect && (
-          <>
-          <CongratsMessage guessCount={guesses.length} mode="Colours" />
-          <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
-          </>
-        )}
+        
         <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
           {/* Colour block image */}
           {imgLoaded && (
