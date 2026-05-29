@@ -1,3 +1,24 @@
+## Release Notes — May 29th, 2026
+
+## What’s New
+
+- **Colours** <br>
+    - Add random extra initial hint which is chosen at random each day
+- **Card** <br>
+    - Added Chaos Rising and Paradox Drive cards to pool
+
+## Commits included (newest first)
+
+```text
+93978dc | 2026-05-29 | Adding more backgrounds options to results cards
+9edfd3a | 2026-05-29 | Colours: Added extra initial clues which can be chosen randomly each day
+d4d82ef | 2026-05-29 | Colours: Slight tweak to type clue wording
+7eb234e | 2026-05-29 | New Cards: Paradox Drive
+1379b90 | 2026-05-28 | New Cards: Chaos Rising
+bfd0d0c | 2026-05-27 | Colours: Add random extra initial hint
+d1ad232 | 2026-05-23 | Refactor yesterday date calculation to derive from game-day seed for accurate previous-day seed
+```
+
 ## Release Notes — May 22nd, 2026
 
 ## What’s New
@@ -18,7 +39,6 @@
     - Link to Ko-fi page
 - **About** <br>
     - About page describing the game
-    
 - **Location** <br>
     - Fixed Kanto Route 2 map 
 
