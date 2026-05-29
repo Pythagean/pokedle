@@ -139,6 +139,16 @@ export const DAILY_OVERRIDES = {
     colours: 242,
     map: 241
   },
+  //Kings Birthday
+  "20260601": {
+    theme: true,
+    classic: 289, // Slaking
+    card: { pokemonId: 119 }, // Seaking
+    pokedex: 34, // Nidoking
+    details: 99, // Kingler
+    colours: 199, // Slowking
+    map: 230 // Kingdra
+  },
   //World  Ocean's Day
   "20260608": {
     theme: true,
