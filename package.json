@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.5.0",
   "type": "module",
-  "homepage": "https://Pythagean.github.io/pokedle/",
+  "homepage": "https://pokedle.fortmaximus.com/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
