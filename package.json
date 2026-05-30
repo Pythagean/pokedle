@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.5.0",
   "type": "module",
-  "homepage": "https://pokedle.fortmaximus.com/",
+  "homepage": "https://slowpokle.com/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
