@@ -256,9 +256,9 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   }
   // Always show the in-game sprite colours and top 30 colours
   const spriteColourDisplay = (
-    <div style={{ margin: '16px auto 0', maxWidth: 350, textAlign: 'center' }}>
+    <div style={{ margin: '16px auto 0', width: 'min(54vw, 300px)', textAlign: 'center' }}>
       <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 8 }}>In-game sprite colours:</div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: 6, border: '1px solid #bbb', gap: isCorrect ? 8 : 0, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: 6, border: '1px solid #bbb', gap: isCorrect ? 8 : 0, overflow: 'hidden', aspectRatio: '2 / 1' }}>
         <img
           src={spriteColourPath}
           alt="Sprite colours"
@@ -267,7 +267,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
           onContextMenu={e => e.preventDefault()}
           style={{
             width: isCorrect ? '60%' : '100%',
-            height: 100,
+            height: '100%',
             display: 'block',
             objectFit: isCorrect ? 'contain' : 'cover',
             margin: 0,
@@ -282,7 +282,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${dailyPokemon.id}-front.png`}
             alt={dailyPokemon.name}
             draggable={false}
-            style={{ width: '30%', height: 100, display: 'block', objectFit: 'contain', margin: 0, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
+            style={{ width: '30%', height: '100%', display: 'block', objectFit: 'contain', margin: 0, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
             onError={e => { e.target.style.display = 'none'; }}
           />
         )}
@@ -381,7 +381,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
               {initialClueType === 'habitat' && (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
                   <span>{dailyPokemon.habitat === 'Rare' ? 'This Pokémon is Rare' : `This Pokémon can be found in ${dailyPokemon.habitat} habitats`}</span>
-                  <img src={`images/habitats/${dailyPokemon.habitat}.png`} alt="" style={{ width: 22, height: 22, objectFit: 'contain', verticalAlign: 'middle' }} onError={e => { e.target.style.display = 'none'; }} />
+                  <img src={`images/habitats/${dailyPokemon.habitat}.png`} alt="" style={{ width: 40, height: 40, objectFit: 'contain', verticalAlign: 'middle' }} onError={e => { e.target.style.display = 'none'; }} />
                 </span>
               )}
               {initialClueType === 'evolution_stage' && (
@@ -491,7 +491,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             <img
               src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`}
               alt={dailyPokemon.name}
-              style={{ display: 'block', width: '40%', height: '100%', objectFit: 'contain', margin: 0, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
+              style={{ display: 'block', width: '40%', height: '100%', objectFit: 'contain', margin: 8, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
               draggable={false}
               onError={e => { e.target.style.display = 'none'; }}
             />
