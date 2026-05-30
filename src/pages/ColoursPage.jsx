@@ -258,24 +258,35 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   const spriteColourDisplay = (
     <div style={{ margin: '16px auto 0', maxWidth: 350, textAlign: 'center' }}>
       <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 8 }}>In-game sprite colours:</div>
-      <img
-        src={spriteColourPath}
-        alt="Sprite colours"
-        draggable={false}
-        onDragStart={e => e.preventDefault()}
-        onContextMenu={e => e.preventDefault()}
-        style={{
-          width: 'auto',
-          maxWidth: '100%',
-          height: 100,
-          display: 'block',
-          margin: '0 auto',
-          objectFit: 'contain',
-          borderRadius: 6,
-          border: '1px solid #bbb',
-          background: '#fff'
-        }}
-      />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: 6, border: '1px solid #bbb', gap: isCorrect ? 8 : 0, overflow: 'hidden' }}>
+        <img
+          src={spriteColourPath}
+          alt="Sprite colours"
+          draggable={false}
+          onDragStart={e => e.preventDefault()}
+          onContextMenu={e => e.preventDefault()}
+          style={{
+            width: isCorrect ? '60%' : '100%',
+            height: 100,
+            display: 'block',
+            objectFit: isCorrect ? 'contain' : 'cover',
+            margin: 0,
+            padding: 0,
+            border: 'none',
+            background: '#fff',
+            transition: 'width 0.3s, object-fit 0.3s'
+          }}
+        />
+        {isCorrect && (
+          <img
+            src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/sprites_trimmed/${dailyPokemon.id}-front.png`}
+            alt={dailyPokemon.name}
+            draggable={false}
+            style={{ width: '30%', height: 100, display: 'block', objectFit: 'contain', margin: 0, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
+            onError={e => { e.target.style.display = 'none'; }}
+          />
+        )}
+      </div>
       {/* <div style={{ marginTop: 12 }}>
         <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 6 }}>Top 30 colours (no grouping or aggregation):</div>
         <img
