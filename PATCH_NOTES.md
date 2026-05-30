@@ -1,3 +1,34 @@
+## Release Notes — May 31st, 2026
+
+## What’s New
+
+- **Overall** <br>
+    - Site is live on slowpokle.com
+- **Colours** <br>
+    - Style and layout tweaks
+    - Show sprite image next to sprite colours image after correct guess
+- **Results** <br>
+    - Make it obvious who the current player is on leaderboard and guess breakdown
+    - Only show top 20 players on leaderboard and guess breakdown
+- **Locations** <br>
+    - Fix Kanto Power Plant map not showing
+
+## Commits included (newest first)
+
+```text
+f279897 | 2026-05-31 | Colours: Style and layout tweaks
+e74f10f | 2026-05-31 | Updating to slowpokle.com
+8593e24 | 2026-05-30 | Update homepage URL and add CNAME file for custom domain
+4769d84 | 2026-05-30 | Configure base path to always use root for Vite
+793d2dd | 2026-05-30 | Adding CNAME file for pokedle.fortmaximus.com
+9b7b38b | 2026-05-30 | Change supabase edge function limit to only return 20 results for leaderboard (rather than 50)
+b213c31 | 2026-05-30 | Results: Make it obvious who the current player is on leaderboard and guess breakdown
+a904844 | 2026-05-30 | Colours: Show sprite image next to sprite colours image after correct guess
+225c7f3 | 2026-05-30 | Locations: Fix Kanto Power Plant map not showing
+de199e4 | 2026-05-29 | Adding some daily overrides
+070b10f | 2026-05-29 | Patch notes May 29th
+```
+
 ## Release Notes — May 29th, 2026
 
 ## What’s New
