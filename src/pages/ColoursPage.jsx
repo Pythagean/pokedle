@@ -491,7 +491,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             <img
               src={`https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`}
               alt={dailyPokemon.name}
-              style={{ display: 'block', width: '40%', height: '100%', objectFit: 'contain', margin: 8, padding: 0, border: 'none', background: 'none', transition: 'width 0.3s' }}
+              style={{ display: 'block', width: '30%', height: '100%', objectFit: 'contain', margin: 8, padding: 8, border: 'none', background: 'none', transition: 'width 0.3s' }}
               draggable={false}
               onError={e => { e.target.style.display = 'none'; }}
             />
