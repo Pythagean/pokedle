@@ -32,7 +32,7 @@ serve(async (req) => {
         query = query.eq('group_code', groupCode)
       }
 
-      const { data, error } = await query.order('total', { ascending: true }).limit(50)
+      const { data, error } = await query.order('total', { ascending: true }).limit(20)
 
       if (error) return json(500, { error: error.message })
       const results = data ?? []
@@ -80,11 +80,11 @@ serve(async (req) => {
 
       const updates: Record<string, unknown> = {}
       if (player !== undefined) {
-        if (typeof player !== 'string' || player.length > 50) return json(400, { error: 'Invalid player name' })
+        if (typeof player !== 'string' || player.length > 20) return json(400, { error: 'Invalid player name' })
         updates.player = player.trim().slice(0, 12) || null
       }
       if (group_code !== undefined) {
-        if (typeof group_code !== 'string' || group_code.length > 50) return json(400, { error: 'Invalid group_code' })
+        if (typeof group_code !== 'string' || group_code.length > 20) return json(400, { error: 'Invalid group_code' })
         if (!/^\d+(-\d+)*$/.test(group_code)) return json(400, { error: 'Invalid group_code format' })
         updates.group_code = group_code
       }
@@ -107,7 +107,7 @@ serve(async (req) => {
 
     if (!result || !guesses) return json(400, { error: 'Missing `result` or `guesses` in request body' })
     if (!Array.isArray(guesses)) return json(400, { error: '`guesses` must be an array' })
-    if (guesses.length > 5000) return json(400, { error: 'Too many guesses' })
+    if (guesses.length > 500) return json(400, { error: 'Too many guesses' })
 
     // Basic sanitization / size limits
     if (result.replay && JSON.stringify(result.replay).length > 50_000) delete result.replay
