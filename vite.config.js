@@ -7,7 +7,7 @@ const { version } = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/pokedle/' : '/',
+  base: '/',
   plugins: [react()],
   define: {
     __APP_VERSION__: JSON.stringify(version),
