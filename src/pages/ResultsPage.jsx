@@ -1651,6 +1651,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 } else if (t === bronze) {
                                     medal = '🥉';
                                 }
+                                const isCurrentPlayer = cardName && row.player && row.player === cardName.trim();
 
                                 return (
                                     <div
@@ -1659,16 +1660,21 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             display: 'grid',
                                             gridTemplateColumns: gridCols,
                                             gap: isMobile ? 2 : 4,
-                                            padding: '6px 4px',
+                                            padding: '6px 8px',
                                             borderBottom: i !== leaderResults.length - 1 ? '1px solid #fafafa' : 'none',
                                             fontSize: isMobile ? 11 : 13,
-                                            alignItems: 'center'
+                                            alignItems: 'center',
+                                            background: isCurrentPlayer ? '#fef3f7' : 'transparent',
+                                            borderRadius: isCurrentPlayer ? 6 : 0
                                         }}
                                     >
-                                        <div style={{ fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                        <div style={{ fontWeight: isCurrentPlayer ? 700 : 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                            {isCurrentPlayer && (
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff75a3" style={{ width: isMobile ? 12 : 14, height: isMobile ? 12 : 14, flexShrink: 0 }} aria-label="You"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                                            )}
                                             {row.player || '—'}
-                                            {medal ? <span style={{ fontSize: isMobile ? 14 : 16 }}>{medal}</span> : null}
                                             
+                                            {medal ? <span style={{ fontSize: isMobile ? 14 : 16 }}>{medal}</span> : null}
                                         </div>
                                         {modes.map(m => (
                                             <div key={m.key} style={{ textAlign: 'center' }}>{row[m.key] ?? '—'}</div>
@@ -1893,7 +1899,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         )}
                         {!breakdownLoading && !breakdownError && displayRows && displayRows.length > 0 && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                                {displayRows.map((row, ri) => (
+                                {displayRows.map((row, ri) => {
+                                    const isMe = cardName && row.player && row.player === cardName.trim();
+                                    return (
                                     <div
                                         key={ri}
                                         style={{
@@ -1905,7 +1913,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             borderBottom: ri !== displayRows.length - 1 ? '1px solid #f5f5f5' : 'none',
                                         }}
                                     >
-                                        <span style={{ fontWeight: 600, fontSize: isMobile ? 12 : 13, textAlign: 'center' }}>
+                                        <span style={{ fontWeight: 700, fontSize: isMobile ? 12 : 13, textAlign: 'center', color: isMe ? '#ff75a3' : undefined, display: 'flex', alignItems: 'center', gap: 5 }}>
+                                            {isMe && (
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff75a3" style={{ width: isMobile ? 12 : 14, height: isMobile ? 12 : 14, flexShrink: 0 }} aria-label="You"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                                            )}
                                             {row.player}
                                         </span>
                                         <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', marginTop: 4 }}>
@@ -1941,7 +1952,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             ))}
                                         </div>
                                     </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
