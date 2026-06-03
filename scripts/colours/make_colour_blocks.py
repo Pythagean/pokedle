@@ -305,10 +305,26 @@ def main():
             print(f"[{idx+1}/{len(files)}] Processing {fname} -> {out_fname} ...")
         try:
             colors = get_most_common_colors(in_path, args.num_colors)
+            total_pixels = sum(count for color, count in colors)
             # Optionally merge visually-similar clusters before drawing blocks
             merged_colors = merge_similar_clusters(colors, threshold=args.threshold)
             # Reduce to requested number of blocks if necessary
             reduced_colors = reduce_clusters_to_n(merged_colors, args.num_blocks)
+            
+            # Filter out colors that make up less than 1% of the image
+            filtered_colors = []
+            for color, count in reduced_colors:
+                percentage = (count / total_pixels * 100) if total_pixels > 0 else 0
+                if percentage >= 1.0:
+                    filtered_colors.append((color, count))
+                else:
+                    if args.verbose:
+                        try:
+                            rgb = tuple(int(v) for v in color)
+                        except Exception:
+                            rgb = color
+                        print(f"    Skipping color {rgb} - {percentage:.1f}% (below 1% threshold)")
+            
             if args.verbose:
                 print("    After merging/reducing clusters:")
                 for i, (c, cnt) in enumerate(reduced_colors, start=1):
@@ -317,7 +333,7 @@ def main():
                     except Exception:
                         rgb = c
                     print(f"      {i}: {rgb} - {cnt} px")
-            create_color_blocks(reduced_colors, out_path)
+            create_color_blocks(filtered_colors, out_path)
             # Only consider top 5 colors (after merging/reducing), and select up to 3 visually distinct names with special rules
             top_colors = reduced_colors[:5]
             csv_colors = []  # (rgb, name) for csv

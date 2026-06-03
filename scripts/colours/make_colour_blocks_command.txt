@@ -1,3 +1,4 @@
 python .\colours\make_colour_blocks.py .\images\ --input-json ..\public\data\pokemon_data.json --num-colors 30 --verbose --threshold 0.05 --num-blocks 10
 
-python .\make_colour_blocks.py .\images\ --input-json ..\public\data\pokemon_data.json --num-colors 10 --verbose --threshold 0.2 --num-blocks 10 --sprites
+# Sprites
+python .\make_colour_blocks.py D:\Github\pokedle_assets\sprites --input-json ..\..\public\data\pokemon_data.json --num-colors 10 --verbose --threshold 0.01 --num-blocks 10 --sprites
