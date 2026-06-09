@@ -56,7 +56,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
     return INITIAL_CLUE_TYPES[Math.floor(clueRng() * INITIAL_CLUE_TYPES.length)];
   }, [clueSeed]);
 
-  // const initialClueType = 'types'; // for testing
+  // const initialClueType = 'weakness'; // for testing
 
   // Preload the full Pokémon image so it appears immediately after a correct guess
   useEffect(() => {
@@ -443,7 +443,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
                   : null;
                 const bgColor = pickedWeakness ? (TYPE_COLORS[pickedWeakness] || '#777') : '#777';
                 return pickedWeakness ? (
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'center', flexWrap: 'wrap' }}>
                     <span>This Pokémon is weak to</span>
                     <span style={{
                       background: bgColor,
