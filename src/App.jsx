@@ -861,7 +861,11 @@ function App() {
         const cardFile = fullArtList[Math.floor(localRng() * fullArtList.length)];
         const folder = `${BASE_URL}/full_art`;
         return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'full_art' };
-      } else if (shinyRoll < 0.05 && hasShinySomething) {
+      } else if (shinyRoll < 0.05) {
+        // Only return a shiny card if this pokemon actually has shiny cards available
+        if (!hasShinySomething) {
+          return null;
+        }
         const allShinyFiles = [
           ...shinyRegularFiles.map(f => ({ file: f, variant: 'regular' })),
           ...shinyFullFiles.map(f => ({ file: f, variant: 'full' }))
@@ -869,7 +873,7 @@ function App() {
         const entry = allShinyFiles[Math.floor(localRng() * allShinyFiles.length)];
         const baseShinyFolder = `${BASE_URL}/shiny`;
         return entry.variant === 'regular'
-          ? { cropped: `${baseShinyFolder}/regular/cropped/${entry.file}`, resized: `${baseShinyFolder}/regular/${entry.file}`, cardFile: entry.file, folder: `${baseShinyFolder}/regular`, cardType: 'shiny', shinyVariant: 'regular' }
+          ? { cropped: `${baseShinyFolder}/cropped/${entry.file}`, resized: `${baseShinyFolder}/regular/${entry.file}`, cardFile: entry.file, folder: `${baseShinyFolder}/regular`, cardType: 'shiny', shinyVariant: 'regular' }
           : { cropped: `${baseShinyFolder}/full/${entry.file}`, resized: `${baseShinyFolder}/full/${entry.file}`, cardFile: entry.file, folder: `${baseShinyFolder}/full`, cardType: 'shiny', shinyVariant: 'full' };
       } else {
         const cardFile = normalList[Math.floor(localRng() * normalList.length)];

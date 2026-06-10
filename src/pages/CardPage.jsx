@@ -412,7 +412,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
               let eventLabel = null;
               let example = null;
               if (cardType === 'shiny') {
-                eventLabel = 'Shiny!';
+                eventLabel = '✨ Shiny! ✨';
                 example = (
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontWeight: 700, marginBottom: 8 }}>✨ Today the card chosen is Shiny! ✨</div>
