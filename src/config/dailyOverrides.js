@@ -253,7 +253,18 @@ export const DAILY_OVERRIDES = {
     details: 277, // Swellow
     colours: 254, // Sceptile
     map: 341 // Corphish
-  }
+  },
+
+  // // TEST
+  // "20260617": {
+  //   theme: false,
+  //   classic: 1, 
+  //   card: { pokemonId: 1 },
+  //   pokedex: 1, 
+  //   details: 1,
+  //   colours: 1, 
+  //   map: 380 
+  // }
 
 };
 
