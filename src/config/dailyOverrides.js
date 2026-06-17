@@ -198,6 +198,61 @@ export const DAILY_OVERRIDES = {
     details: 200,
     colours: 94,
     map: 354
+  },
+
+  // Ash's Kanto Team
+  "20270402": {
+    theme: false,
+    classic: 4, // charmander
+    card: { pokemonId: 7 }, // squirtle
+    pokedex: 1, // bulbasaur
+    details: 12, // butterfree
+    colours: 25, // pikachu
+    map: 17 // Pidgeotto
+  },
+
+  // Ash's Orange Islands Team
+  "20270129": {
+    theme: false,
+    classic: 143, // Snorlax
+    card: { pokemonId: 6 }, // charizard
+    pokedex: 7, // squirtle
+    details: 25, // pikachu
+    colours: 131, // lapras
+    map: 1 // bulbasaur
+  },
+
+  // Ash's Johto Team
+  "20261014": {
+    theme: false,
+    classic: 164, // Noctowl
+    card: { pokemonId: 231 }, // Phanpy
+    pokedex: 153, // Bayleef
+    details: 25, // pikachu
+    colours: 158, // Totodile
+    map: 155 // Cyndaquil
+  },
+
+  // Ash's Hoenn Team
+  "20261121": {
+    theme: false,
+    classic: 341, // Corphish
+    card: { pokemonId: 25 }, // pikachu
+    pokedex: 324, // Torkoal
+    details: 362, // Glalie
+    colours: 277, // Swellow
+    map: 253 // Grovyle
+  },
+
+  // Ash's Battle Frontier Team
+  "20261006": {
+    theme: false,
+    classic: 190, // Aipom
+    card: { pokemonId: 232 }, // Donphan
+    pokedex: 25, // pikachu
+    details: 277, // Swellow
+    colours: 254, // Sceptile
+    map: 341 // Corphish
   }
 
 };
