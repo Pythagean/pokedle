@@ -2,22 +2,26 @@
 
 ## What’s New
 
-- **Colours** <br>
-    - Some tweaks to how colour blocks are generated
 - **Results** <br>
     - Added paging to Leaderboard and Guess Breakdown
+- **Overall** <br>
+    - Added Dark Mode (in hamburger menu in header)
+- **Colours** <br>
+    - Some tweaks to how colour blocks are generated
 - **Card** <br>
     - Fixed cards not appearing on Shiny days
 - **Data** <br>
     - Fixes to some pokemon data (mainly Shapes)
-- **Overall** <br>
-    - Adding some "theme" days around Ash's pokemon teams
 - **Locations** <br>
     - Fixed issue where Southern Island wasn't showing
 
 ## Commits included (newest first)
 
 ```text
+2999d7d | 2026-06-17 | Finishing (?) work on Dark Mode
+da1471b | 2026-06-17 | More work on Dark Mode for different mode pages
+a174a99 | 2026-06-17 | Initial work on Dark Mode
+5779aba | 2026-06-17 | Patch Notes June 17th
 192991c | 2026-06-17 | Adding paging to leaderboard and guess breakdown
 6d49552 | 2026-06-17 | Fixing Southern Island location image
 f792eec | 2026-06-17 | Adding some "theme" days around Ash's pokemon teams
