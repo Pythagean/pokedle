@@ -331,6 +331,8 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   const [fullArtTypesT, revealFullCardT, normalTypesT] = CARD_HINT_THRESHOLDS;
   // Reveal full card after revealFullCardT guesses
   const revealFullCard = guesses.length >= revealFullCardT;
+  const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+  const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
   function handleReset() {
     if (resetCount >= 2) return;
@@ -684,7 +686,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
           <div ref={lastGuessRef}
             onClick={isCorrect && showBlurred ? () => setBlurredAtGuessIdx(blurredAtGuessIdx === 0 ? null : 0) : undefined}
             style={{
-            background: guesses[0].name === (answer && answer.name) ? '#a5d6a7' : '#ef9a9a',
+            background: guesses[0].name === (answer && answer.name) ? guessCorrectBg : guessMissBg,
             border: blurredAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${guesses[0].name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
@@ -715,7 +717,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
                 <div key={g.name + i}
                   onClick={isCorrect && showBlurred ? () => setBlurredAtGuessIdx(blurredAtGuessIdx === i + 1 ? null : i + 1) : undefined}
                   style={{
-                  background: g.name === (answer && answer.name) ? '#a5d6a7' : '#ef9a9a',
+                  background: g.name === (answer && answer.name) ? guessCorrectBg : guessMissBg,
                   border: blurredAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === (answer && answer.name) ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,

@@ -62,6 +62,12 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
   // Determine whether the daily Pokemon has been guessed correctly
   const lastGuess = guesses && guesses.length > 0 ? guesses[0] : null;
   const isCorrect = !!(lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name);
+  const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+  const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
+  const hintTextColor = darkMode ? '#d1d5db' : '#333';
+  const placeholderTextColor = darkMode ? '#9ca3af' : '#888';
+  const hintDividerColor = darkMode ? '#6b7280' : '#bbb';
+  const placeholderDividerColor = darkMode ? '#4b5563' : '#eee';
 
   // Confetti: trigger a short explosion once when the user first guesses correctly
   const [showConfetti, setShowConfetti] = useState(false);
@@ -212,10 +218,10 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
-        <div style={{ color: '#333', marginBottom: (showShapeHint || (guesses.length > 0 && guesses.length < shapeT)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
+        <div style={{ color: hintTextColor, marginBottom: (showShapeHint || (guesses.length > 0 && guesses.length < shapeT)) ? 12 : 0 }}>{flavorEntries[mainFlavorIdx]}</div>
         {/* Shape hint or placeholder */}
         {showShapeHint ? (
-          <div style={{ color: '#333', marginBottom: (showGenusHint || (guesses.length >= shapeT && guesses.length < genusT)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ color: hintTextColor, marginBottom: (showGenusHint || (guesses.length >= shapeT && guesses.length < genusT)) ? 12 : 0, borderTop: `1px dashed ${hintDividerColor}`, paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontWeight: 700 }}>Shape:</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span>{dailyPokemon.bulbapedia_shape || dailyPokemon.shape || 'Unknown'}</span>
@@ -241,34 +247,34 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             </div>
           </div>
         ) : (!isCorrect && guesses.length > 0 && guesses.length < shapeT && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: placeholderTextColor, fontSize: 15, borderTop: `1px dashed ${placeholderDividerColor}`, paddingTop: 10, marginTop: 16 }}>
             The shape will be revealed in {shapeT - guesses.length} guess{shapeT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Genus hint or placeholder */}
         {showGenusHint ? (
-          <div style={{ color: '#333', marginBottom: (showSecondHint || (guesses.length >= genusT && guesses.length < secondT)) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ color: hintTextColor, marginBottom: (showSecondHint || (guesses.length >= genusT && guesses.length < secondT)) ? 12 : 0, borderTop: `1px dashed ${hintDividerColor}`, paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontWeight: 700 }}>Genus:</span>
             <span>{dailyPokemon.genus || 'Unknown'}</span>
           </div>
         ) : (!isCorrect && guesses.length >= shapeT && guesses.length < genusT && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: placeholderTextColor, fontSize: 15, borderTop: `1px dashed ${placeholderDividerColor}`, paddingTop: 10, marginTop: 16 }}>
             The genus will be revealed in {genusT - guesses.length} guess{genusT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Second hint or placeholder */}
         {showSecondHint && flavorEntries.length > 1 ? (
-          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10 }}>
+          <div style={{ color: hintTextColor, borderTop: `1px dashed ${hintDividerColor}`, paddingTop: 10 }}>
             {flavorEntries[secondFlavorIdx]}
           </div>
         ) : (!isCorrect && guesses.length >= genusT && guesses.length < secondT && flavorEntries.length > 1 && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: placeholderTextColor, fontSize: 15, borderTop: `1px dashed ${placeholderDividerColor}`, paddingTop: 10, marginTop: 16 }}>
             The second Pokédex entry will be revealed in {secondT - guesses.length} guess{secondT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
         {/* Types hint or placeholder */}
         {guesses.length >= typesT ? (
-          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ color: hintTextColor, borderTop: `1px dashed ${hintDividerColor}`, paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontWeight: 700 }}>Type{dailyPokemon.types && dailyPokemon.types.length > 1 ? 's' : ''}:</span>
             {dailyPokemon.types && dailyPokemon.types.length > 0 ? (
               dailyPokemon.types.map(t => {
@@ -297,7 +303,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             )}
           </div>
         ) : (!isCorrect && guesses.length >= secondT && guesses.length < typesT && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: placeholderTextColor, fontSize: 15, borderTop: `1px dashed ${placeholderDividerColor}`, paddingTop: 10, marginTop: 16 }}>
             The Pokémon's types will be revealed in {typesT - guesses.length} guess{typesT - guesses.length === 1 ? '' : 'es'}!
           </div>
         ))}
@@ -339,7 +345,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
           <div ref={lastGuessRef} style={{
-            background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+            background: isCorrect ? guessCorrectBg : guessMissBg,
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
@@ -366,7 +372,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               {guesses.slice(1).map((g, i) => (
                 <div key={g.name + i} style={{
-                  background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                  background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                   border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,

@@ -168,6 +168,8 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
     // Only show the most recent guess
     const lastGuess = guesses[0];
     const isCorrect = lastGuess && dailyPokemon && lastGuess.name === dailyPokemon.name;
+    const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+    const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
     useEffect(() => {
         const key = `pokedle_confetti_locations_${seed}`;
@@ -592,9 +594,9 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                 maxWidth: 60, 
                                 maxHeight: 60, 
                                 objectFit: 'contain',
-                                background: '#fafafa',
+                                background: darkMode ? '#4a4a4a' : '#fafafa',
                                 borderRadius: 8,
-                                border: '2px solid #959595ff',
+                                border: darkMode ? '2px solid #6b7280' : '2px solid #959595ff',
                                 padding: 12
                             }}
                             onError={(e) => { 
@@ -607,12 +609,12 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             display: 'none', 
                             width: 60, 
                             height: 60, 
-                            background: '#fafafa', 
+                            background: darkMode ? '#4a4a4a' : '#fafafa', 
                             alignItems: 'center', 
                             justifyContent: 'center', 
-                            color: '#666', 
+                            color: darkMode ? '#e5e7eb' : '#666', 
                             borderRadius: 8, 
-                            border: '1px dashed #ddd',
+                            border: darkMode ? '1px dashed #4b5563' : '1px dashed #ddd',
                             fontSize: 13,
                             padding: 8,
                             textAlign: 'center',
@@ -759,7 +761,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     <div style={{ fontWeight: 600, fontSize: 18 }}>Evolution Stage:</div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
                         
-                        <div style={{ color: '#333', fontSize: 16, fontWeight: 600, marginTop: 5 }}>{stageText}</div>
+                        <div style={{ color: darkMode ? '#e5e7eb' : '#333', fontSize: 16, fontWeight: 600, marginTop: 5 }}>{stageText}</div>
                         <img 
                             src={spriteUrl} 
                             alt={`Stage ${stage}`}
@@ -781,7 +783,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     width: auto;
                     border-collapse: collapse;
                     font-size: 12px;
-                    border: 1px solid #cfcfcf;
+                    border: 1px solid ${darkMode ? '#4b5563' : '#cfcfcf'};
                     border-radius: 8px;
                     overflow: visible;
                     margin: 0 auto 12px auto;
@@ -789,20 +791,20 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 }
                 .loc-table th,
                 .loc-table td {
-                    border: 1px solid #d0d0d0;
+                    border: 1px solid ${darkMode ? '#4b5563' : '#d0d0d0'};
                 }
                 /* Make the horizontal grid line under each location group a bit bolder */
                 .loc-group {
-                    border-bottom: 2px solid #d0d0d0;
+                    border-bottom: 2px solid ${darkMode ? '#4b5563' : '#d0d0d0'};
                 }
                 .loc-th {
-                    background: #f6f6f6;
+                    background: ${darkMode ? '#4a4a4a' : '#f6f6f6'};
                     padding: 8px 10px;
                     font-size: 11px;
                     font-weight: 700;
                     text-align: center;
                     vertical-align: middle;
-                    color: #444;
+                    color: ${darkMode ? '#d1d5db' : '#444'};
                     text-transform: uppercase;
                     letter-spacing: 0.04em;
                     white-space: nowrap;
@@ -815,7 +817,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-td {
                     padding: 8px 10px;
                     vertical-align: middle;
-                    color: #333;
+                    color: ${darkMode ? '#d1d5db' : '#333'};
                     font-size: 12px;
                     white-space: normal;
                 }
@@ -824,22 +826,22 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 .loc-td--levels { text-align: center; font-size: 14px; font-weight: 700; }
                 .loc-td--chance { width: 60px; max-width: 80px; text-align: center; font-size: 14px; font-weight: 700; }
                 .loc-td--chance-split { width: 60px; max-width: 80px; text-align: center; font-size: 14px; font-weight: 700; }
-                .loc-td--muted { color: #414141; }
+                .loc-td--muted { color: ${darkMode ? '#e5e7eb' : '#414141'}; }
                 .loc-map-td {
                     vertical-align: top;
                     padding: 8px;
                     text-align: center;
                     width: 140px;
                     min-width: 120px;
-                    border-right: 2px solid #d0d0d0;
-                    background: #fafafa;
+                    border-right: 2px solid ${darkMode ? '#4b5563' : '#d0d0d0'};
+                    background: ${darkMode ? '#4a4a4a' : '#fafafa'};
                 }
                 .loc-map-img {
                     width: 100%;
                     height: auto;
                     max-height: 90px;
                     object-fit: contain;
-                    background: #fafafa;
+                    background: ${darkMode ? '#4a4a4a' : '#fafafa'};
                     border-radius: 5px;
                     border: none;
                     cursor: pointer;
@@ -850,12 +852,12 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     display: none;
                     width: 100%;
                     height: 90px;
-                    background: #fafafa;
+                    background: ${darkMode ? '#4a4a4a' : '#fafafa'};
                     align-items: center;
                     justify-content: center;
-                    color: #999;
+                    color: ${darkMode ? '#6b7280' : '#999'};
                     border-radius: 5px;
-                    border: 1px dashed #ddd;
+                    border: ${darkMode ? '1px dashed #4b5563' : '1px dashed #ddd'};
                     font-size: 12px;
                 }
                 .loc-map-no-img--show { display: flex; }
@@ -863,7 +865,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     margin-top: 5px;
                     font-size: 11px;
                     text-align: center;
-                    color: #1976d2;
+                    color: ${darkMode ? '#60a5fa' : '#1976d2'};
                     cursor: pointer;
                     text-decoration: underline;
                     word-break: break-word;
@@ -886,7 +888,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                 /* Default: show full labels */
                 .loc-th .label-full { display: inline; }
                 .loc-th .label-short { display: none; }
-                tbody tr:nth-child(even) { background: #fbfbfb; }
+                tbody tr:nth-child(even) { background: ${darkMode ? '#374151' : '#fbfbfb'}; }
                 @media (max-width: 600px) {
                     .loc-table { font-size: 10px; }
                     .loc-th, .loc-td { padding: 3px 4px; }
@@ -917,7 +919,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     aria-modal="true"
                     onClick={() => setMapPopup({ visible: false, title: null, url: null })}
                     style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }}>
-                    <div onClick={e => e.stopPropagation()} style={{ background: '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '70%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)' }}>
+                    <div onClick={e => e.stopPropagation()} style={{ background: darkMode ? '#1f2937' : '#fff', padding: 12, borderRadius: 8, maxWidth: '90%', maxHeight: '70%', boxShadow: '0 6px 30px rgba(0,0,0,0.5)', color: darkMode ? '#e5e7eb' : '#111' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                             <div style={{ fontWeight: 700 }}>{mapPopup.title || 'Map'}</div>
                             <button onClick={() => setMapPopup({ visible: false, title: null, url: null })} style={{ marginLeft: 12 }}>Close</button>
@@ -925,7 +927,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         {mapPopup.url ? (
                             <img src={mapPopup.url} alt={mapPopup.title || 'map'} style={{ maxWidth: '80vw', maxHeight: '60vh', display: 'block', margin: '0 auto' }} onError={(e) => { e.target.style.display = 'none'; }} />
                         ) : (
-                            <div style={{ padding: 24, color: '#666' }}>No map available for this location.</div>
+                            <div style={{ padding: 24, color: darkMode ? '#9ca3af' : '#666' }}>No map available for this location.</div>
                         )}
                     </div>
                 </div>
@@ -998,7 +1000,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         // Next: Additional locations at threshold[0] (2 guesses)
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[0] - guesses.length;
                         return (
-                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                            <div style={{ color: darkMode ? '#9ca3af' : '#888', borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                                 All Locations will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
@@ -1006,7 +1008,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         // Next: Types at threshold[1] (4 guesses)
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[1] - guesses.length;
                         return (
-                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                            <div style={{ color: darkMode ? '#9ca3af' : '#888', borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                                 The Pokémon's types will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
@@ -1014,7 +1016,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         // Next: Evolution stage at threshold[2] (6 guesses)
                         const cluesLeft = LOCATIONS_HINT_THRESHOLDS[2] - guesses.length;
                         return (
-                            <div style={{ color: '#888', borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
+                            <div style={{ color: darkMode ? '#9ca3af' : '#888', borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee', paddingTop: 10, marginTop: 16, fontSize: 15 }}>
                                 The evolution stage will be revealed in {cluesLeft} guess{cluesLeft === 1 ? '' : 'es'}!
                             </div>
                         );
@@ -1059,7 +1061,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
             {lastGuess && (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
                     <div ref={lastGuessRef} style={{
-                        background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+                        background: isCorrect ? guessCorrectBg : guessMissBg,
                         border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
                         borderRadius: 12,
                         padding: 12,
@@ -1086,7 +1088,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
                             {guesses.slice(1).map((g, i) => (
                                 <div key={g.name + i} style={{
-                                    background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                                    background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                                     border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                                     borderRadius: 8,
                                     padding: 6,

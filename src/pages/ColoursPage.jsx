@@ -138,6 +138,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   // Only show the most recent guess
   const lastGuess = guesses[0];
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+  const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+  const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
   useEffect(() => {
     const key = `pokedle_confetti_colours_${seed}`;
@@ -218,8 +220,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             margin: '0 auto',
             objectFit: 'contain',
             borderRadius: 6,
-            border: '1px solid #bbb',
-            background: '#fff'
+            border: darkMode ? '1px solid #4b5563' : '1px solid #bbb',
+            background: darkMode ? '#4a4a4a' : '#fff'
           }}
         />
       </div>
@@ -258,7 +260,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
   const spriteColourDisplay = (
     <div style={{ margin: '16px auto 0', width: 'min(54vw, 300px)', textAlign: 'center' }}>
       <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 8 }}>In-game sprite colours:</div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: 6, border: '1px solid #bbb', gap: isCorrect ? 8 : 0, overflow: 'hidden', aspectRatio: '2 / 1' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: darkMode ? '#1f2937' : '#fff', borderRadius: 6, border: darkMode ? '1px solid #4b5563' : '1px solid #bbb', gap: isCorrect ? 8 : 0, overflow: 'hidden', aspectRatio: '2 / 1' }}>
         <img
           src={spriteColourPath}
           alt="Sprite colours"
@@ -273,7 +275,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             margin: 0,
             padding: 0,
             border: 'none',
-            background: '#fff',
+            background: darkMode ? 'none' : '#fff',
             transition: 'width 0.3s, object-fit 0.3s'
           }}
         />
@@ -362,7 +364,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         {/* Initial daily clue */}
         {dailyPokemon && (
           <div style={{ marginBottom: 12 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 8, padding: '6px 14px', fontSize: 14, fontWeight: 600 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: darkMode ? '#1f4d2f' : '#e8f5e9', border: darkMode ? '1px solid #4d7d5d' : '1px solid #a5d6a7', borderRadius: 8, padding: '6px 14px', fontSize: 14, fontWeight: 600, color: darkMode ? '#a7d5b8' : '#333' }}>
               {initialClueType === 'generation' && (
                 <span>The Pokémon is from Gen {dailyPokemon.generation}</span>
               )}
@@ -462,7 +464,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
           </div>
         )}
         
-        <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', borderRadius: 8, border: '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
+        <div className="colours-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: darkMode ? '#1f2937' : '#fff', borderRadius: 8, border: darkMode ? '1px solid #4b5563' : '1px solid #ccc', gap: isCorrect ? 12 : 0 }}>
           {/* Colour block image */}
           {imgLoaded && (
             <img
@@ -479,7 +481,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
                 margin: 0,
                 padding: 0,
                 border: 'none',
-                background: '#fff',
+                background: darkMode ? 'none' : '#fff',
                 transition: 'width 0.3s, object-fit 0.3s'
               }}
               onLoad={() => setImgLoaded(true)}
@@ -502,8 +504,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         {/* Hints section: Mosaic, Types, then Generation */}
         {typeHint && (
           <div style={{
-            color: '#333',
-            borderTop: '1px dashed #bbb',
+            color: darkMode ? '#d1d5db' : '#333',
+            borderTop: darkMode ? '1px dashed #6b7280' : '1px dashed #bbb',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 16
@@ -511,8 +513,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         )}
         {typeHintPlaceholder && (
           <div style={{
-            color: '#888',
-            borderTop: '1px dashed #eee',
+            color: darkMode ? '#9ca3af' : '#888',
+            borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 15
@@ -520,8 +522,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         )}
         {mosaicHint && (
           <div style={{
-            color: '#333',
-            borderTop: '1px dashed #bbb',
+            color: darkMode ? '#d1d5db' : '#333',
+            borderTop: darkMode ? '1px dashed #6b7280' : '1px dashed #bbb',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 16
@@ -529,8 +531,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         )}
         {mosaicHintPlaceholder && (
           <div style={{
-            color: '#888',
-            borderTop: '1px dashed #eee',
+            color: darkMode ? '#9ca3af' : '#888',
+            borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 15
@@ -539,8 +541,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         
         {generationHint && (
           <div style={{
-            color: '#333',
-            borderTop: '1px dashed #bbb',
+            color: darkMode ? '#d1d5db' : '#333',
+            borderTop: darkMode ? '1px dashed #6b7280' : '1px dashed #bbb',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 16
@@ -548,8 +550,8 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
         )}
         {generationHintPlaceholder && (
           <div style={{
-            color: '#888',
-            borderTop: '1px dashed #eee',
+            color: darkMode ? '#9ca3af' : '#888',
+            borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee',
             paddingTop: 10,
             marginTop: 16,
             fontSize: 15
@@ -594,7 +596,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
       {lastGuess && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
           <div ref={lastGuessRef} style={{
-            background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+            background: isCorrect ? guessCorrectBg : guessMissBg,
             border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
@@ -621,7 +623,7 @@ export default function ColoursPage({ pokemonData, guesses, setGuesses, daily, u
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
               {guesses.slice(1).map((g, i) => (
                 <div key={g.name + i} style={{
-                  background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                  background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                   border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,

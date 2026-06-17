@@ -130,6 +130,8 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
     // Only show the most recent guess
     const lastGuess = guesses[0];
     const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+    const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+    const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
     // Use thresholds from hintConfig
     const [fullImageThreshold, secondFeatureThreshold, thirdFeatureThreshold, fourthFeatureThreshold, fifthFeatureThreshold] = FeaturesHints.thresholds;
@@ -183,7 +185,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background: #fff;
+          background: ${darkMode ? '#1f2937' : '#fff'};
           margin: 0 auto;
           box-sizing: border-box;
           border-radius: 8px;
@@ -391,7 +393,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
             {lastGuess && (
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24, flexDirection: 'column', alignItems: 'center' }}>
                     <div ref={lastGuessRef} style={{
-                        background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+                        background: isCorrect ? guessCorrectBg : guessMissBg,
                         border: `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
                         borderRadius: 12,
                         padding: 12,
@@ -418,7 +420,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
                             {guesses.slice(1).map((g, i) => (
                                 <div key={g.name + i} style={{
-                                    background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                                    background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                                     border: `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                                     borderRadius: 8,
                                     padding: 6,

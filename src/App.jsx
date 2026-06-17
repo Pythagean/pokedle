@@ -202,6 +202,17 @@ function getDetailsModeForDate(date) {
   if (utcDay === 3 || utcDay === 6) {
     return 'features';
   }
+  // if (utcDay === 1 || utcDay === 4) {
+  //   return 'silhouette';
+  // }
+  // // Zoom days: 2 (Tue), 5 (Friday), 0 (Sun)
+  // if (utcDay === 2 || utcDay === 5 || utcDay === 0) {
+  //   return 'zoom';
+  // }
+  // // Features days: 3 (Wed), 6 (Sat)
+  // if (utcDay === 3 || utcDay === 6) {
+  //   return 'features';
+  // }
 }
 
 function App() {

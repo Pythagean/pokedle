@@ -140,6 +140,8 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
   // Only show the most recent guess
   const lastGuess = guesses[0];
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+  const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+  const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
   // Real image path
   const realImagePath = `https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/images/${dailyPokemon.id}.png`;
@@ -440,7 +442,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
-         <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff' }}>
+         <div className="zoom-img-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: darkMode ? '#1f2937' : '#fff' }}>
            <div ref={imgContainerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
               <img
                  src={realImagePath}
@@ -506,7 +508,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           <div style={{ textAlign: 'center', marginTop: 10 }}>
             <button
               onClick={() => setShowZoomed(z => !z)}
-              style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+              style={{ height: 40, minWidth: 120, borderRadius: 8, border: darkMode ? '1px solid #4b5563' : '1px solid #e0e0e0', background: darkMode ? '#374151' : '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: darkMode ? '#e5e7eb' : '#111' }}
             >
               {showZoomed ? 'Show Answer' : 'Show Zoomed'}
             </button>
@@ -553,7 +555,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
           <div ref={lastGuessRef}
             onClick={isCorrect && showZoomed ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === 0 ? null : 0) : undefined}
             style={{
-            background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+            background: isCorrect ? guessCorrectBg : guessMissBg,
             border: zoomedAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
@@ -584,7 +586,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
                 <div key={g.name + i}
                   onClick={isCorrect && showZoomed ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === i + 1 ? null : i + 1) : undefined}
                   style={{
-                  background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                  background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                   border: zoomedAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,

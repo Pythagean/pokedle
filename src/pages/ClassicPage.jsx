@@ -514,7 +514,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
           </form>
         )}
       </div>
-      <div className="classic-grid-fit" style={{ width: '100%' }}>
+      <div className={`classic-grid-fit ${darkMode ? 'classic-grid-fit-dark' : ''}`} style={{ width: '100%' }}>
         <div className="classic-grid-header" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', fontWeight: 600, gap: 1, marginBottom: 8, alignItems: 'center', width: '100%' }}>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>Pokémon</div>
           <div style={{ textAlign: 'center', fontSize: '1em' }}>{isMobile ? 'Gen' : 'Generation'}</div>
@@ -893,9 +893,21 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
           z-index: 2;
           font-weight: 700;
         }
+        .classic-grid-fit-dark .feedback-box-content {
+          color: #d1d5db;
+          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+        }
         .feedback-pokemon-box {
           background: #fff !important;
           border-color: #333 !important;
+        }
+        .classic-grid-fit-dark .feedback-pokemon-box {
+          background: #1f2937 !important;
+          border-color: #6b7280 !important;
+        }
+        .classic-grid-fit-dark .feedback-pokemon-box .feedback-box-content {
+          background: rgba(17, 24, 39, 0.86) !important;
+          color: #e5e7eb !important;
         }
         .heading-row {
           margin-bottom: 8px;
@@ -918,6 +930,18 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
         .miss {
           background: #f2acacff !important;
           border-color: #c03636ff !important;
+        }
+        .classic-grid-fit-dark .match {
+          background: #355843 !important;
+          border-color: #4f7a60 !important;
+        }
+        .classic-grid-fit-dark .partial {
+          background: #665d35 !important;
+          border-color: #8a7d46 !important;
+        }
+        .classic-grid-fit-dark .miss {
+          background: #6a4040 !important;
+          border-color: #8f5656 !important;
         }
         @media (max-width: 700px) {
           .feedback-grid, .classic-grid-fit > div {

@@ -128,6 +128,8 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
   // Only show the most recent guess
   const lastGuess = guesses[0];
   const isCorrect = lastGuess && lastGuess.name === dailyPokemon.name;
+  const guessCorrectBg = darkMode ? '#4d6653' : '#a5d6a7';
+  const guessMissBg = darkMode ? '#6b4b4b' : '#ef9a9a';
 
   useEffect(() => {
     const key = `pokedle_confetti_silhouette_${seed}`;
@@ -613,7 +615,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
-        <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#fff', padding: '10px' }}>
+        <div className="silhouette-viewport" style={{ margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: darkMode ? '#2a2f38' : '#f5f5f5', border: darkMode ? '2px solid #4b5563' : '2px solid #ccc', padding: '10px' }}>
           <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
             {/* Always render both images and cross-fade between them when the real image is loaded */}
             <img
@@ -714,7 +716,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           <div style={{ textAlign: 'center', marginTop: 10 }}>
             <button
               onClick={() => setShowSilhouette(s => !s)}
-              style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+              style={{ height: 40, minWidth: 120, borderRadius: 8, border: darkMode ? '1px solid #4b5563' : '1px solid #e0e0e0', background: darkMode ? '#374151' : '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: darkMode ? '#e5e7eb' : '#111' }}
             >
               {showSilhouette ? 'Show Answer' : 'Show Silhouette'}
             </button>
@@ -722,21 +724,21 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
         )}
         {/* Generation hint or placeholder */}
         {generationHint ? (
-          <div style={{ color: '#333', marginBottom: (typeHint || typeHintPlaceholder) ? 12 : 0, borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ color: darkMode ? '#d1d5db' : '#333', marginBottom: (typeHint || typeHintPlaceholder) ? 12 : 0, borderTop: darkMode ? '1px dashed #6b7280' : '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {generationHint}
           </div>
         ) : (!isCorrect && generationHintPlaceholder && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: darkMode ? '#9ca3af' : '#888', fontSize: 15, borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
             {generationHintPlaceholder}
           </div>
         ))}
         {/* Types hint or placeholder */}
         {typeHint ? (
-          <div style={{ color: '#333', borderTop: '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ color: darkMode ? '#d1d5db' : '#333', borderTop: darkMode ? '1px dashed #6b7280' : '1px dashed #bbb', paddingTop: 10, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {typeHint}
           </div>
         ) : (!isCorrect && typeHintPlaceholder && (
-          <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
+          <div style={{ color: darkMode ? '#9ca3af' : '#888', fontSize: 15, borderTop: darkMode ? '1px dashed #4b5563' : '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
             {typeHintPlaceholder}
           </div>
         ))}
@@ -780,7 +782,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
           <div ref={lastGuessRef}
             onClick={isCorrect && showSilhouette ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === 0 ? null : 0) : undefined}
             style={{
-            background: isCorrect ? '#a5d6a7' : '#ef9a9a',
+            background: isCorrect ? guessCorrectBg : guessMissBg,
             border: zoomedAtGuessIdx === 0 ? '2px solid #1565c0' : `2px solid ${isCorrect ? '#388e3c' : '#b71c1c'}`,
             borderRadius: 12,
             padding: 12,
@@ -811,7 +813,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
                 <div key={g.name + i}
                   onClick={isCorrect && showSilhouette ? () => setZoomedAtGuessIdx(zoomedAtGuessIdx === i + 1 ? null : i + 1) : undefined}
                   style={{
-                  background: g.name === dailyPokemon.name ? '#a5d6a7' : '#ef9a9a',
+                  background: g.name === dailyPokemon.name ? guessCorrectBg : guessMissBg,
                   border: zoomedAtGuessIdx === i + 1 ? '2px solid #1565c0' : `2px solid ${g.name === dailyPokemon.name ? '#388e3c' : '#b71c1c'}`,
                   borderRadius: 8,
                   padding: 6,
