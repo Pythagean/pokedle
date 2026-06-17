@@ -31,7 +31,7 @@ function mulberry32(a) {
     }
 }
 
-export default function EyesPage({ pokemonData, guesses, setGuesses, daily, bodyPartsManifest, useShinySprites = false, date = null }) {
+export default function EyesPage({ pokemonData, guesses, setGuesses, daily, bodyPartsManifest, useShinySprites = false, date = null, darkMode = false }) {
     const inputRef = useRef(null);
     const lastGuessRef = useRef(null);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -195,10 +195,11 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
           margin: 24px auto;
           max-width: 500px;
           width: 100%;
-          background: #f5f5f5;
+                    background: ${darkMode ? '#2a2f38' : '#f5f5f5'};
+                    color: ${darkMode ? '#e5e7eb' : '#111'};
           border-radius: 8px;
           padding: 18px;
-          border: 1px solid #ddd;
+                    border: 1px solid ${darkMode ? '#4b5563' : '#ddd'};
           box-sizing: border-box;
         }
         @media (max-width: 520px) {
@@ -264,7 +265,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon's feature is this?</div>}
                 {isCorrect && (
                     <>
-                        <CongratsMessage guessCount={guesses.length} mode="Features" />
+                        <CongratsMessage guessCount={guesses.length} mode="Features" darkMode={darkMode} />
                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                     </>
                 )}
@@ -382,6 +383,7 @@ export default function EyesPage({ pokemonData, guesses, setGuesses, daily, body
                         dropdownRef={dropdownRef}
                         handleGuessSubmit={handleGuessSubmit}
                         useShinySprites={useShinySprites}
+                        darkMode={darkMode}
                     />
                 </form>
             )}

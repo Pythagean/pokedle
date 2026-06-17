@@ -33,7 +33,7 @@ function getSeedFromUTCDate(date) {
 
 const BASE_CLUE_TYPES = ['locations'];
 
-function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
+function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, darkMode = false }) {
     const infoRef = useRef(null);
     const [infoVisible, setInfoVisible] = useState(false);
     const [locationFileMap, setLocationFileMap] = useState(null);
@@ -978,11 +978,11 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     <span style={{ fontSize: 13, color: '#666' }}>({overridePokemon.name})</span>
                 )}
             </div> */}
-            <div style={{ margin: '24px auto', maxWidth: 'none', width: 'min(1200px, 95%)', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+            <div style={{ margin: '24px auto', maxWidth: 'none', width: 'min(1200px, 95%)', fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line' }}>
                 {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is found in these locations?</div>}
                 {isCorrect && (
                     <>
-                        <CongratsMessage guessCount={guesses.length} mode="Location Mode" />
+                        <CongratsMessage guessCount={guesses.length} mode="Location Mode" darkMode={darkMode} />
                         <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
                     </>
                 )}
@@ -1052,6 +1052,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                         dropdownRef={dropdownRef}
                         handleGuessSubmit={handleGuessSubmit}
                         useShinySprites={useShinySprites}
+                        darkMode={darkMode}
                     />
                 </form>
             )}

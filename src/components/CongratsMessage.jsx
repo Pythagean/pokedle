@@ -206,8 +206,29 @@ export function getCongratsPhrase(guessCount, mode = 'all', divideBy = 1) {
   return text;
 }
 
-export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', classic = false, guesses = [], answer = null }) {
+export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', classic = false, guesses = [], answer = null, darkMode = undefined }) {
   const [phraseResetSeed, setPhraseResetSeed] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof darkMode === 'boolean') return darkMode;
+    if (typeof document === 'undefined') return false;
+    return document.body.classList.contains('dark-mode');
+  });
+
+  useEffect(() => {
+    if (typeof darkMode === 'boolean') {
+      setIsDarkMode(darkMode);
+      return;
+    }
+    if (typeof document === 'undefined') return;
+
+    const update = () => setIsDarkMode(document.body.classList.contains('dark-mode'));
+    update();
+
+    const observer = new MutationObserver(update);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, [darkMode]);
   useEffect(() => {
     // Inject styles into the document (only once)
     if (typeof document !== 'undefined' && !document.getElementById('pokedle-congrats-styles')) {
@@ -517,11 +538,31 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
     }
   }
 
+  const theme = isDarkMode
+    ? {
+        heading: '#f3f4f6',
+        text: '#e5e7eb',
+        copyBg: '#2b3344',
+        copyBorder: '#909db0',
+        iconStroke: '#c8d2e1',
+        iconFillPrimary: '#1f2937',
+        iconFillSecondary: '#2b3344'
+      }
+    : {
+        heading: '#111827',
+        text: '#1f2937',
+        copyBg: '#e3eafc',
+        copyBorder: '#626262',
+        iconStroke: '#626262',
+        iconFillPrimary: '#ffffff',
+        iconFillSecondary: '#e3eafc'
+      };
+
   return (
     <div style={{ textAlign: 'center', margin: '12px 0' }}>
-      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Congratulations!</div>
+      <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 6, color: theme.heading }}>Congratulations!</div>
       <div className="silhouette-congrats" style={{ marginTop: 6, display: 'flex', flexDirection: classic ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-            <div className="congrats-text" style={{ fontSize: 16, flex: '1 1 auto', minWidth: 0, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div className="congrats-text" style={{ fontSize: 16, flex: '1 1 auto', minWidth: 0, display: 'flex', alignItems: 'center', gap: 6, color: theme.text }}>
               <span style={{ whiteSpace: 'normal' }}>
                 {phrasePrefix}- You found the Slowpokle #{dayNumber} <strong style={{ fontWeight: 700 }}>{mode}</strong> Pokémon in <strong>{guessCount}</strong> {guessCount === 1 ? 'guess' : 'guesses'}! {celebrationEmoji}
               </span>
@@ -571,9 +612,9 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
           style={{
             padding: '4px',
             borderRadius: 6,
-            background: '#e3eafc',
-            border: '1px solid #626262ff',
-            color: '#e9e9e9ff',
+            background: theme.copyBg,
+            border: `1px solid ${theme.copyBorder}`,
+            color: theme.text,
             fontWeight: 600,
             fontSize: 14,
             cursor: 'pointer',
@@ -630,8 +671,8 @@ export default function CongratsMessage({ guessCount, mode = 'Silhouette Mode', 
         >
           {/* Copy icon SVG */}
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false" style={{ display: 'block' }}>
-            <rect x="6" y="6" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.5" fill="#fff" />
-            <rect x="3" y="3" width="9" height="9" rx="2" stroke="#626262ff" strokeWidth="1.2" fill="#e3eafc" />
+            <rect x="6" y="6" width="9" height="9" rx="2" stroke={theme.iconStroke} strokeWidth="1.5" fill={theme.iconFillPrimary} />
+            <rect x="3" y="3" width="9" height="9" rx="2" stroke={theme.iconStroke} strokeWidth="1.2" fill={theme.iconFillSecondary} />
           </svg>
         </button>
         {/*

@@ -45,7 +45,7 @@ const SHAPE_ICON_MAP = {
   "Pokémon with two or more pairs of wings": "two_or_more_wings"
 };
 
-export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
+export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, date = null, darkMode = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   
@@ -200,7 +200,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
         >
           Reset
         </button> */}
-      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (
           <div style={{ fontWeight: 600, marginBottom: 8 }}>
             What Pokémon has this Pokédex entry?
@@ -208,7 +208,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
         )}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Pokédex" />
+            <CongratsMessage guessCount={guesses.length} mode="Pokédex" darkMode={darkMode} />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
@@ -332,6 +332,7 @@ export default function PokedexPage({ pokemonData, guesses, setGuesses, daily, u
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
             useShinySprites={useShinySprites}
+            darkMode={darkMode}
           />
         </form>
       )}

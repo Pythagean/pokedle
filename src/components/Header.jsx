@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null, onYesterdayClick = null, yesterdayMode = false }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null, onYesterdayClick = null, yesterdayMode = false, darkMode = false, onDarkModeToggle = null }) {
     const hamburgerRef = useRef(null);
     const dropdownRef = useRef(null);
     const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
@@ -107,12 +107,13 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                 left: 0,
                 right: 0,
                 width: '100%',
-                background: '#e7e9edff',
-                borderBottom: '5px solid #f1f2f4ff',
-                boxShadow: '0 6px 6px rgba(0, 0, 0, 0.07)',
+                background: darkMode ? '#2a2a2a' : '#e7e9edff',
+                borderBottom: darkMode ? '5px solid #404040' : '5px solid #f1f2f4ff',
+                boxShadow: darkMode ? '0 6px 6px rgba(0, 0, 0, 0.3)' : '0 6px 6px rgba(0, 0, 0, 0.07)',
                 padding: 0,
                 margin: 0,
                 zIndex: 10000,
+                transition: 'background 0.3s, border-color 0.3s, box-shadow 0.3s',
             }}>
                 <div className="main-header-inner" style={{
                     display: 'flex',
@@ -169,9 +170,9 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 const baseBtnStyle = {
                                     padding: compactNav ? '2px' : '7px 9px',
                                     borderRadius: 12,
-                                    background: isSelected ? '#ffaab5' : (isDisabled ? '#f0f0f0' : '#f4f4f4ff'),
-                                    color: isSelected ? '#fff' : (isDisabled ? '#888' : '#DE627B'),
-                                    border: isSelected ? '2px solid transparent' : (isDisabled ? '2px solid #929292ff' : '2px solid #DE627B'),
+                                    background: isSelected ? '#ffaab5' : (isDisabled ? (darkMode ? '#4a4a4a' : '#f0f0f0') : (darkMode ? '#4a4a4a' : '#f4f4f4ff')),
+                                    color: isSelected ? '#fff' : (isDisabled ? (darkMode ? '#888' : '#888') : (darkMode ? '#ff9db5' : '#DE627B')),
+                                    border: isSelected ? '2px solid transparent' : (isDisabled ? (darkMode ? '2px solid #666' : '2px solid #929292ff') : (darkMode ? '2px solid #666' : '2px solid #DE627B')),
                                     fontWeight: 700,
                                     fontSize: 15,
                                     cursor: isDisabled ? 'pointer' : 'pointer',
@@ -237,9 +238,9 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                             style={{
                                 padding: compactNav ? '2px' : '7px 9px',
                                 borderRadius: 12,
-                                background: menuOpen ? '#ffaab5' : '#f4f4f4ff',
-                                color: menuOpen ? '#fff' : '#DE627B',
-                                border: menuOpen ? '2px solid transparent' : '2px solid #fc7083',
+                                background: menuOpen ? '#ffaab5' : (darkMode ? '#4a4a4a' : '#f4f4f4ff'),
+                                color: menuOpen ? '#fff' : (darkMode ? '#ff9db5' : '#DE627B'),
+                                border: menuOpen ? '2px solid transparent' : (darkMode ? '2px solid #666' : '2px solid #fc7083'),
                                 fontWeight: 700,
                                 fontSize: 15,
                                 cursor: 'pointer',
@@ -279,16 +280,17 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         position: 'fixed',
                         top: dropdownPos.top,
                         right: dropdownPos.right,
-                        background: '#fff',
-                        border: '2px solid #ffaab5',
+                        background: darkMode ? '#3a3a3a' : '#fff',
+                        border: darkMode ? '2px solid #555' : '2px solid #ffaab5',
                         borderRadius: 12,
-                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                        boxShadow: darkMode ? '0 8px 24px rgba(0,0,0,0.5)' : '0 8px 24px rgba(0,0,0,0.12)',
                         minWidth: 180,
                         zIndex: 20000,
                         overflow: 'hidden',
+                        transition: 'background 0.3s, border-color 0.3s',
                     }}
                 >
-                    {[[yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Slowpokle" : "Yesterday's Slowpokle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
+                    {[[yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Slowpokle" : "Yesterday's Slowpokle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [darkMode ? '☀️' : '🌙', darkMode ? 'Light Mode' : 'Dark Mode', () => { onDarkModeToggle && onDarkModeToggle(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
                         <button
                             key={label}
                             role="menuitem"
@@ -301,14 +303,14 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                                 padding: '12px 16px',
                                 background: 'none',
                                 border: 'none',
-                                borderTop: i > 0 ? '1px solid #e8edf3' : 'none',
+                                borderTop: i > 0 ? (darkMode ? '1px solid #555' : '1px solid #e8edf3') : 'none',
                                 fontSize: 15,
                                 fontWeight: 600,
-                                color: '#DE627B',
+                                color: darkMode ? '#ff9db5' : '#DE627B',
                                 cursor: 'pointer',
                                 textAlign: 'left',
                             }}
-                            onMouseEnter={e => e.currentTarget.style.background = '#e3f0fc'}
+                            onMouseEnter={e => e.currentTarget.style.background = darkMode ? '#4a4a4a' : '#e3f0fc'}
                             onMouseLeave={e => e.currentTarget.style.background = 'none'}
                         >
                             <span style={{ display: 'inline-flex', width: 24, justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>{icon}</span> {label}

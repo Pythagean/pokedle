@@ -28,7 +28,7 @@ function mulberry32(a) {
   }
 }
 
-export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false, date = null }) {
+export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoomMeta, useShinySprites = false, date = null, darkMode = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const imgContainerRef = useRef(null);
@@ -432,11 +432,11 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
         />
       </div>
       
-      <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
+      <div className="zoom-main" style={{ margin: '24px auto', fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line', width: '100%' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Zoom" />
+            <CongratsMessage guessCount={guesses.length} mode="Zoom" darkMode={darkMode} />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
@@ -544,6 +544,7 @@ export default function ZoomPage({ pokemonData, guesses, setGuesses, daily, zoom
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
             useShinySprites={useShinySprites}
+            darkMode={darkMode}
           />
         </form>
       )}

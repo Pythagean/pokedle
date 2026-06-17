@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 
-export default function ResetCountdown({ active = false, resetHourUtc = RESET_HOUR_UTC }) {
+export default function ResetCountdown({ active = false, resetHourUtc = RESET_HOUR_UTC, darkMode = undefined }) {
   const [msUntilReset, setMsUntilReset] = useState(null);
   const [nextResetLocalTime, setNextResetLocalTime] = useState('');
   const [nextResetLocalDate, setNextResetLocalDate] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof darkMode === 'boolean') return darkMode;
+    if (typeof document === 'undefined') return false;
+    return document.body.classList.contains('dark-mode');
+  });
+
+  useEffect(() => {
+    if (typeof darkMode === 'boolean') {
+      setIsDarkMode(darkMode);
+      return;
+    }
+    if (typeof document === 'undefined') return;
+    const update = () => setIsDarkMode(document.body.classList.contains('dark-mode'));
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, [darkMode]);
 
   useEffect(() => {
     function computeNextReset() {
@@ -54,8 +72,12 @@ export default function ResetCountdown({ active = false, resetHourUtc = RESET_HO
 
   if (!active) return null;
 
+  const theme = isDarkMode
+    ? { text: '#cbd5e1', mutedText: '#94a3b8' }
+    : { text: '#444', mutedText: '#444' };
+
   return (
-    <div style={{ marginTop: 8, marginBottom: 12, fontSize: 13, color: '#444' }}>
+    <div style={{ marginTop: 8, marginBottom: 12, fontSize: 13, color: theme.text }}>
       <div style={{ fontWeight: 600, marginBottom: 4 }}>
         Next puzzle resets on {nextResetLocalDate ? `${nextResetLocalDate} ` : ''}at {nextResetLocalTime || '—'}
       </div>

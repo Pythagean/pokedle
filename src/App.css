@@ -56,6 +56,13 @@ body::before {
   background-size: 1000px 800px;
   opacity: 0.05;
   will-change: opacity;
+  transition: background-image 0.3s ease;
+}
+
+/* Dark mode background image - override with full specificity */
+body.dark-mode::before {
+  background-image: url('/images/background_image_dark.png');
+  opacity: 1;
 }
 
 @media (max-width: 520px) {

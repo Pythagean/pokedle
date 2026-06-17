@@ -31,7 +31,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function CardPage({ pokemonData, guesses, setGuesses, daily }) {
+function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false }) {
 
   const [reloadSeed, setReloadSeed] = useState(0); // for retrying if card not found
   const [resetCount, setResetCount] = useState(0);
@@ -403,7 +403,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         </select>
         */}
       </div>
-      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && (
           <div style={{ marginBottom: 8 }}>
             <div style={{ fontWeight: 600 }}>Which Pokémon is on this card?</div>
@@ -454,7 +454,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
         )}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Card" />
+            <CongratsMessage guessCount={guesses.length} mode="Card" darkMode={darkMode} />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
@@ -674,6 +674,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily }) {
             inputRef={inputRef}
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
+            darkMode={darkMode}
           />
         </form>
       )}

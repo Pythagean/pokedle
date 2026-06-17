@@ -37,7 +37,7 @@ function getSeedFromUTCDate(date) {
   return parseInt(`${year}${month}${day}`, 10);
 }
 
-function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false }) {
+function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites = false, darkMode = false }) {
   const MAX_PLACEHOLDER_ROWS = 1;
   const [guess, setGuess] = useState('');
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
@@ -472,11 +472,11 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
           />
         </div>
       </div>
-      <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
+      <div className="classic-main-container" style={{ margin: '24px auto', maxWidth: 800, width: '100%', fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line', boxSizing: 'border-box' }}>
         <Confetti active={showConfetti && congratsVisible} centerRef={solved ? lastGuessRef : null} />
         {congratsVisible ? (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Classic" classic={true} guesses={guesses} answer={dailyPokemon} />
+            <CongratsMessage guessCount={guesses.length} mode="Classic" classic={true} guesses={guesses} answer={dailyPokemon} darkMode={darkMode} />
             <ResetCountdown active={true} resetHourUtc={RESET_HOUR_UTC} />
           </>
         ) : (
@@ -509,6 +509,7 @@ function ClassicPage({ pokemonData, guesses, setGuesses, daily, useShinySprites 
               dropdownRef={dropdownRef}
               handleGuessSubmit={handleGuessSubmit}
               useShinySprites={useShinySprites}
+              darkMode={darkMode}
             />
           </form>
         )}

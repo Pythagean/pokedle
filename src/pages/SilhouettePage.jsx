@@ -30,7 +30,7 @@ function mulberry32(a) {
   }
 }
 
-export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily, useShinySprites = false, date = null }) {
+export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, setGuesses, daily, useShinySprites = false, date = null, darkMode = false }) {
   const inputRef = useRef(null);
   const lastGuessRef = useRef(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -605,11 +605,11 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
       </div>
 
 
-      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: '#f5f5f5', borderRadius: 8, padding: 18, border: '1px solid #ddd', whiteSpace: 'pre-line' }}>
+      <div style={{ margin: '24px auto', maxWidth: 500, fontSize: 18, background: darkMode ? '#2a2f38' : '#f5f5f5', color: darkMode ? '#e5e7eb' : '#111', borderRadius: 8, padding: 18, border: darkMode ? '1px solid #4b5563' : '1px solid #ddd', whiteSpace: 'pre-line' }}>
         {!isCorrect && <div style={{ fontWeight: 600, marginBottom: 8 }}>Which Pokémon is this?</div>}
         {isCorrect && (
           <>
-            <CongratsMessage guessCount={guesses.length} mode="Silhouette" />
+            <CongratsMessage guessCount={guesses.length} mode="Silhouette" darkMode={darkMode} />
             <ResetCountdown active={isCorrect} resetHourUtc={RESET_HOUR_UTC} />
           </>
         )}
@@ -771,6 +771,7 @@ export default function SilhouettePage({ pokemonData, silhouetteMeta, guesses, s
             dropdownRef={dropdownRef}
             handleGuessSubmit={handleGuessSubmit}
             useShinySprites={useShinySprites}
+            darkMode={darkMode}
           />
         </form>
       )}

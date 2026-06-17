@@ -11,11 +11,55 @@ export default function GuessInput({
   inputRef,
   dropdownRef,
   handleGuessSubmit,
-  useShinySprites = false
+  useShinySprites = false,
+  darkMode = undefined
 }) {
   const [loadedSprites, setLoadedSprites] = useState({});
   const wrapperRef = React.useRef(null);
   const [dropdownRect, setDropdownRect] = useState({ left: 0, width: null });
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof darkMode === 'boolean') return darkMode;
+    if (typeof document === 'undefined') return false;
+    return document.body.classList.contains('dark-mode');
+  });
+
+  useEffect(() => {
+    if (typeof darkMode === 'boolean') {
+      setIsDarkMode(darkMode);
+      return;
+    }
+    if (typeof document === 'undefined') return;
+
+    const update = () => setIsDarkMode(document.body.classList.contains('dark-mode'));
+    update();
+
+    const observer = new MutationObserver(update);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, [darkMode]);
+
+  const theme = isDarkMode
+    ? {
+      inputBg: '#1f2937',
+      inputBorder: '#4b5563',
+      inputText: '#e5e7eb',
+      dropdownBg: '#1f2937',
+      dropdownBorder: '#4b5563',
+      itemHover: '#334155',
+      itemText: '#e5e7eb',
+      spritePlaceholder: '#374151'
+    }
+    : {
+      inputBg: '#ffffff',
+      inputBorder: '#bbbbbb',
+      inputText: '#111111',
+      dropdownBg: '#ffffff',
+      dropdownBorder: '#bbbbbb',
+      itemHover: '#e3f2fd',
+      itemText: '#111111',
+      spritePlaceholder: '#f2f2f2'
+    };
 
   // Prefetch sprite images for visible filtered options so they show up quicker
   useEffect(() => {
@@ -197,7 +241,7 @@ export default function GuessInput({
           }
         }}
         placeholder="Enter a Pokémon name..."
-        style={{ width: '100%', minWidth: 120, maxWidth: 500, padding: 10, borderRadius: 8, border: '1px solid #bbb', fontSize: 16, boxSizing: 'border-box', background: '#fff', color: '#111' }}
+        style={{ width: '100%', minWidth: 120, maxWidth: 500, padding: 10, borderRadius: 8, border: `1px solid ${theme.inputBorder}`, fontSize: 16, boxSizing: 'border-box', background: theme.inputBg, color: theme.inputText }}
         autoComplete="off"
       />
       {dropdownOpen && guess.length > 0 && sortedOptions.length > 0 && (
@@ -208,8 +252,8 @@ export default function GuessInput({
             position: 'absolute',
             top: '100%',
             left: dropdownRect.left || 0,
-            background: '#fff',
-            border: '1px solid #bbb',
+            background: theme.dropdownBg,
+            border: `1px solid ${theme.dropdownBorder}`,
             borderTop: 'none',
             maxHeight: 180,
             overflowY: 'auto',
@@ -227,11 +271,12 @@ export default function GuessInput({
               style={{
                 padding: '12px 16px',
                 cursor: 'pointer',
-                background: i === highlightedIdx ? '#e3f2fd' : undefined,
+                background: i === highlightedIdx ? theme.itemHover : undefined,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
                 fontSize: 17,
+                color: theme.itemText,
                     }}
               onMouseDown={() => {
                 handleGuessSubmit(null, opt.name);
@@ -248,7 +293,7 @@ export default function GuessInput({
                   width: 44,
                   height: 44,
                   borderRadius: 6,
-                  background: '#f2f2f2',
+                  background: theme.spritePlaceholder,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -301,17 +346,17 @@ export default function GuessInput({
       {/* Responsive mobile styles for GuessInput */}
       <style>{`
         .guess-input {
-          color-scheme: light;
-          background: #fff !important;
-          color: #111 !important;
+          color-scheme: ${isDarkMode ? 'dark' : 'light'};
+          background: ${theme.inputBg} !important;
+          color: ${theme.inputText} !important;
         }
         .guess-dropdown {
-          color-scheme: light;
-          background: #fff !important;
-          color: #111 !important;
+          color-scheme: ${isDarkMode ? 'dark' : 'light'};
+          background: ${theme.dropdownBg} !important;
+          color: ${theme.itemText} !important;
         }
         .guess-dropdown li {
-          color: #111 !important;
+          color: ${theme.itemText} !important;
         }
         @media (max-width: 600px) {
           .guess-input {
