@@ -1,3 +1,37 @@
+## Release Notes — June 17th, 2026
+
+## What’s New
+
+- **Colours** <br>
+    - Some tweaks to how colour blocks are generated
+- **Results** <br>
+    - Added paging to Leaderboard and Guess Breakdown
+- **Card** <br>
+    - Fixed cards not appearing on Shiny days
+- **Data** <br>
+    - Fixes to some pokemon data (mainly Shapes)
+- **Overall** <br>
+    - Adding some "theme" days around Ash's pokemon teams
+- **Locations** <br>
+    - Fixed issue where Southern Island wasn't showing
+
+## Commits included (newest first)
+
+```text
+192991c | 2026-06-17 | Adding paging to leaderboard and guess breakdown
+6d49552 | 2026-06-17 | Fixing Southern Island location image
+f792eec | 2026-06-17 | Adding some "theme" days around Ash's pokemon teams
+76daabf | 2026-06-17 | Removing CNAME file for fortmaximus
+e5e9484 | 2026-06-11 | Fixing shiny cards
+de2e51a | 2026-06-10 | Colours: change styling slightly on one of the extra clues
+2d22d2f | 2026-06-07 | Fixing more shapes
+3110b29 | 2026-06-07 | Fix Natu shape
+24e655f | 2026-06-05 | Adding more result card images
+31fca05 | 2026-06-03 | Updating sprite colours
+fc49931 | 2026-05-31 | Adjust image styling in ColoursPage for improved layout
+4fc6238 | 2026-05-31 | Patch notes May 31st
+```
+
 ## Release Notes — May 31st, 2026
 
 ## What’s New
