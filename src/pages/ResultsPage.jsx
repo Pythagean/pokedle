@@ -3,7 +3,27 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { PHRASES, POKEMON } from '../components/CongratsMessage';
 import { updateResult } from '../utils/updateResult';
 
+const pendingJsonRequests = new Map();
+
+async function fetchJsonDedup(url, options = {}) {
+    const method = options.method || 'GET';
+    const key = `${method}:${url}`;
+    if (pendingJsonRequests.has(key)) return pendingJsonRequests.get(key);
+
+    const requestPromise = (async () => {
+        const res = await fetch(url, options);
+        const data = await res.json().catch(() => ({}));
+        return { res, data };
+    })().finally(() => {
+        pendingJsonRequests.delete(key);
+    });
+
+    pendingJsonRequests.set(key, requestPromise);
+    return requestPromise;
+}
+
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null, date = null }) {
+    const PAGE_LIMIT = 20;
     const [copied, setCopied] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -42,6 +62,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [leaderLoading, setLeaderLoading] = useState(false);
     const [leaderError, setLeaderError] = useState(null);
     const [leaderLoaded, setLeaderLoaded] = useState(false);
+    const [leaderPage, setLeaderPage] = useState(1);
+    const [leaderHasMore, setLeaderHasMore] = useState(false);
     const [breakdownMode, setBreakdownMode] = useState('classic');
     const [allBreakdownGuesses, setAllBreakdownGuesses] = useState(null);
     const [breakdownLoading, setBreakdownLoading] = useState(false);
@@ -100,6 +122,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const entries = (results || []).map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
     const allCompleted = Array.isArray(results) && results.length > 0 && results.every(r => r && r.solved);
+    const currentPlayerName = (cardName && String(cardName).trim()) || 'You';
     const summaryLines = [`I've completed all the modes of ${pokedleLabel}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
     const summaryText = summaryLines.join('\n');
 
@@ -846,61 +869,49 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     }, [cardPreviewUrl, dayNumber]);
 
-    // Auto-fetch today's leaderboard once all modes are completed.
-    // Extracted into a named function so it can be triggered manually (refresh).
-    const fetchLeaderResults = async () => {
+    const fetchBreakdownData = async () => {
         setLeaderLoading(true);
         setLeaderError(null);
-        try {
-            const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-            const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-            const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}`;
-            const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
-            const data = await res.json().catch(() => ({}));
-            if (res.ok) {
-                // support both possible shapes
-                setLeaderResults(Array.isArray(data) ? data : (data.results ?? data.data ?? []));
-            } else {
-                setLeaderError(data.error ?? data.message ?? 'Failed to load leaderboard');
-            }
-        } catch (e) {
-            setLeaderError(e?.message ?? String(e));
-        } finally {
-            setLeaderLoading(false);
-            setLeaderLoaded(true);
-        }
-    };
-
-    useEffect(() => {
-        if (!allCompleted) return;
-        fetchLeaderResults();
-    }, [allCompleted, dayNumber]);
-
-    const fetchBreakdownData = async () => {
         setBreakdownLoading(true);
         setBreakdownError(null);
         try {
             const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
             const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-            const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}&include_guesses=true`;
-            const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
-            const data = await res.json().catch(() => ({}));
+            const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}&include_guesses=true&limit=${PAGE_LIMIT}&page=${leaderPage}`;
+            const { res, data } = await fetchJsonDedup(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
             if (!res.ok) throw new Error(data.error ?? 'Failed to load breakdown data');
+
+            // Use the include_guesses response as the single source for leaderboard + breakdown.
+            const serverRows = Array.isArray(data) ? data : (data.results ?? data.data ?? []);
+            setLeaderResults(serverRows);
+            const responseHasMore = !Array.isArray(data) && typeof data?.hasMore === 'boolean'
+                ? data.hasMore
+                : serverRows.length === PAGE_LIMIT;
+            setLeaderHasMore(responseHasMore);
             setAllBreakdownGuesses({
                 resultMap: data.resultMap ?? {},
                 guesses: Array.isArray(data.guesses) ? data.guesses : [],
             });
         } catch (e) {
-            setBreakdownError(e?.message ?? String(e));
+            const message = e?.message ?? String(e);
+            setLeaderError(message);
+            setBreakdownError(message);
+            setLeaderHasMore(false);
         } finally {
+            setLeaderLoading(false);
+            setLeaderLoaded(true);
             setBreakdownLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!leaderResults || leaderResults.length === 0) return;
+        if (!allCompleted) return;
         fetchBreakdownData();
-    }, [leaderResults]);
+    }, [allCompleted, dayNumber, leaderPage]);
+
+    useEffect(() => {
+        setLeaderPage(1);
+    }, [dayNumber]);
 
     // Persist group code to localStorage whenever picks change
     useEffect(() => {
@@ -1583,7 +1594,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 {allCompleted && leaderLoaded ? (
                     <div style={{ textAlign: 'center', marginTop: 6 }}>
                         <button
-                            onClick={() => { if (!allCompleted || leaderLoading) return; fetchLeaderResults(); }}
+                            onClick={() => { if (!allCompleted || leaderLoading) return; fetchBreakdownData(); }}
                             disabled={!allCompleted || leaderLoading}
                             title="Refresh leaderboard"
                             style={{
@@ -1612,9 +1623,11 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13 }}>{leaderError}</div>
                 )}
                 {allCompleted && !leaderLoading && leaderResults && leaderResults.length === 0 && (
-                    <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>No results submitted yet today.</div>
+                    <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>
+                        {leaderPage > 1 ? 'No results on this page.' : 'No results submitted yet today.'}
+                    </div>
                 )}
-                {allCompleted && !leaderLoading && leaderResults && leaderResults.length > 0 && (() => {
+                {allCompleted && !leaderLoading && leaderResults && (leaderResults.length > 0 || leaderPage > 1) && (() => {
                     const modes = [
                         { key: 'classic',   label: 'Classic',  short: 'Cls' },
                         { key: 'card',      label: 'Card',     short: 'Crd' },
@@ -1624,11 +1637,26 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         { key: 'locations', label: 'Locations',short: 'Loc' },
                     ];
                     const colW = isMobile ? 'minmax(0,0.6fr)' : '56px';
+                    const placeColW = isMobile ? 'minmax(0,0.45fr)' : '44px';
+                    const rankedRows = [...(leaderResults || [])].sort(
+                        (a, b) => Number(a.total ?? Number.POSITIVE_INFINITY) - Number(b.total ?? Number.POSITIVE_INFINITY)
+                    );
+                    const pageOffset = Math.max(0, (leaderPage - 1) * PAGE_LIMIT);
+                    let lastScore = null;
+                    let lastPlace = pageOffset;
+                    const rankedRowsWithPlace = rankedRows.map((row, i) => {
+                        const score = Number(row.total ?? Number.POSITIVE_INFINITY);
+                        if (i === 0 || score !== lastScore) {
+                            lastPlace = pageOffset + i + 1;
+                        }
+                        lastScore = score;
+                        return { ...row, place: lastPlace };
+                    });
                     const gridCols = isMobile
-                        ? `minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
-                        : `minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
+                        ? `${placeColW} minmax(0, 2fr) repeat(${modes.length}, ${colW}) minmax(0,0.7fr)`
+                        : `${placeColW} minmax(0, 1.5fr) repeat(${modes.length}, ${colW}) minmax(0,1fr)`;
                     // Compute distinct totals (sorted desc) to assign medals: 🥇, 🥈, 🥉
-                    const totals = (leaderResults || []).map(r => Number(r.total ?? 0));
+                    const totals = rankedRowsWithPlace.map(r => Number(r.total ?? 0));
                     const distinctTotals = Array.from(new Set(totals)).sort((a,b) => a - b);
                     const gold = distinctTotals[0];
                     const silver = distinctTotals[1];
@@ -1637,21 +1665,22 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     return (
                         <div style={{ marginTop: 14 }}>
                             <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
+                                <div style={{ textAlign: 'center' }}>#</div>
                                 <div>Player</div>
                                 {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
                                 <div style={{ textAlign: 'right' }}>Total</div>
                             </div>
-                            {leaderResults.map((row, i) => {
+                            {rankedRowsWithPlace.map((row, i) => {
                                 const t = Number(row.total ?? 0);
                                 let medal = null;
-                                if (t === gold) {
+                                if (leaderPage === 1 && t === gold) {
                                     medal = '🥇';
-                                } else if (t === silver) {
+                                } else if (leaderPage === 1 && t === silver) {
                                     medal = '🥈';
-                                } else if (t === bronze) {
+                                } else if (leaderPage === 1 && t === bronze) {
                                     medal = '🥉';
                                 }
-                                const isCurrentPlayer = cardName && row.player && row.player === cardName.trim();
+                                const isCurrentPlayer = row.player && row.player === currentPlayerName;
 
                                 return (
                                     <div
@@ -1661,13 +1690,14 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             gridTemplateColumns: gridCols,
                                             gap: isMobile ? 2 : 4,
                                             padding: '6px 8px',
-                                            borderBottom: i !== leaderResults.length - 1 ? '1px solid #fafafa' : 'none',
+                                            borderBottom: i !== rankedRowsWithPlace.length - 1 ? '1px solid #fafafa' : 'none',
                                             fontSize: isMobile ? 11 : 13,
                                             alignItems: 'center',
                                             background: isCurrentPlayer ? '#fef3f7' : 'transparent',
                                             borderRadius: isCurrentPlayer ? 6 : 0
                                         }}
                                     >
+                                        <div style={{ textAlign: 'center', fontWeight: 700 }}>{row.place}</div>
                                         <div style={{ fontWeight: isCurrentPlayer ? 700 : 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 6 }}>
                                             {isCurrentPlayer && (
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff75a3" style={{ width: isMobile ? 12 : 14, height: isMobile ? 12 : 14, flexShrink: 0 }} aria-label="You"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
@@ -1683,6 +1713,23 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     </div>
                                 );
                             })}
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginTop: 10 }}>
+                                <button
+                                    onClick={() => { if (leaderLoading || leaderPage <= 1) return; setLeaderPage(p => Math.max(1, p - 1)); }}
+                                    disabled={leaderLoading || leaderPage <= 1}
+                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || leaderPage <= 1) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || leaderPage <= 1) ? '#999' : '#111' }}
+                                >
+                                    Previous
+                                </button>
+                                <div style={{ fontSize: 13, color: '#666', minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
+                                <button
+                                    onClick={() => { if (leaderLoading || !leaderHasMore) return; setLeaderPage(p => p + 1); }}
+                                    disabled={leaderLoading || !leaderHasMore}
+                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || !leaderHasMore) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || !leaderHasMore) ? '#999' : '#111' }}
+                                >
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     );
                 })()}
@@ -1835,7 +1882,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             {/* </div> */}
 
             {/* Guess Breakdown */}
-            {allCompleted && !leaderLoading && leaderResults && leaderResults.length > 0 && (() => {
+            {allCompleted && !leaderLoading && leaderResults && (leaderResults.length > 0 || leaderPage > 1) && (() => {
                 const BREAKDOWN_MODES = [
                     { key: 'classic',   label: 'Classic' },
                     { key: 'card',      label: 'Card' },
@@ -1864,7 +1911,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
 
                 return (
                     <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
-                        <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 10 }}>Guess Breakdown</div>
+                        <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 10 }}>🎯 Guess Breakdown 🎯</div>
 
                         {/* Mode selector buttons */}
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 12 }}>
@@ -1900,7 +1947,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         {!breakdownLoading && !breakdownError && displayRows && displayRows.length > 0 && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                                 {displayRows.map((row, ri) => {
-                                    const isMe = cardName && row.player && row.player === cardName.trim();
+                                    const isMe = row.player && row.player === currentPlayerName;
                                     return (
                                     <div
                                         key={ri}
@@ -1956,6 +2003,24 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 })}
                             </div>
                         )}
+
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginTop: 10 }}>
+                            <button
+                                onClick={() => { if (leaderLoading || leaderPage <= 1) return; setLeaderPage(p => Math.max(1, p - 1)); }}
+                                disabled={leaderLoading || leaderPage <= 1}
+                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || leaderPage <= 1) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || leaderPage <= 1) ? '#999' : '#111' }}
+                            >
+                                Previous
+                            </button>
+                            <div style={{ fontSize: 13, color: '#666', minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
+                            <button
+                                onClick={() => { if (leaderLoading || !leaderHasMore) return; setLeaderPage(p => p + 1); }}
+                                disabled={leaderLoading || !leaderHasMore}
+                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || !leaderHasMore) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || !leaderHasMore) ? '#999' : '#111' }}
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
                 );
             })()}

@@ -10,6 +10,11 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
 
 const supabaseAdmin = createClient(SUPABASE_URL ?? '', SUPABASE_SERVICE_ROLE_KEY ?? '', { global: { fetch } })
 
+const DEFAULT_RESULTS_LIMIT = 20
+const DEFAULT_GUESSES_LIMIT = 500
+const MAX_RESULTS_LIMIT = 100
+const MAX_GUESSES_LIMIT = 1000
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: corsHeaders() })
 
@@ -19,9 +24,20 @@ serve(async (req) => {
       const pokledleNumber = parseInt(url.searchParams.get('pokedle_number') ?? '', 10)
       const groupCode = url.searchParams.get('group_code') ?? ''
       const includeGuesses = url.searchParams.get('include_guesses') === 'true'
+      const resultsLimit = parseLimit(url.searchParams.get('limit'), DEFAULT_RESULTS_LIMIT, MAX_RESULTS_LIMIT)
+      const page = parsePage(url.searchParams.get('page'))
+      const guessesLimit = includeGuesses
+        ? parseLimit(url.searchParams.get('guesses_limit'), DEFAULT_GUESSES_LIMIT, MAX_GUESSES_LIMIT)
+        : DEFAULT_GUESSES_LIMIT
 
       if (!pokledleNumber || isNaN(pokledleNumber)) return json(400, { error: 'Missing or invalid pokedle_number' })
       if (groupCode && !/^\d+(-\d+)*$/.test(groupCode)) return json(400, { error: 'Invalid group_code' })
+      if (resultsLimit === null) return json(400, { error: 'Invalid limit' })
+      if (page === null) return json(400, { error: 'Invalid page' })
+      if (includeGuesses && guessesLimit === null) return json(400, { error: 'Invalid guesses_limit' })
+
+      const start = (page - 1) * resultsLimit
+      const end = start + resultsLimit
 
       let query = supabaseAdmin
         .from('results')
@@ -32,14 +48,16 @@ serve(async (req) => {
         query = query.eq('group_code', groupCode)
       }
 
-      const { data, error } = await query.order('total', { ascending: true }).limit(20)
+      const { data, error } = await query.order('total', { ascending: true }).range(start, end)
 
       if (error) return json(500, { error: error.message })
-      const results = data ?? []
+      const fetchedResults = data ?? []
+      const hasMore = fetchedResults.length > resultsLimit
+      const results = hasMore ? fetchedResults.slice(0, resultsLimit) : fetchedResults
 
       if (!includeGuesses) {
         // Strip internal `id` field before returning to keep existing response shape
-        return json(200, { results: results.map(({ id: _id, ...rest }) => rest) })
+        return json(200, { results: results.map(({ id: _id, ...rest }) => rest), hasMore })
       }
 
       // Fetch all guesses for these result IDs
@@ -52,7 +70,7 @@ serve(async (req) => {
           .in('result_id', resultIds)
           .order('result_id', { ascending: true })
           .order('guess_number', { ascending: true })
-          .limit(5000)
+          .limit(guessesLimit)
         if (gError) return json(500, { error: gError.message })
         guesses = gData ?? []
       }
@@ -63,6 +81,7 @@ serve(async (req) => {
 
       return json(200, {
         results: results.map(({ id: _id, ...rest }) => rest),
+        hasMore,
         guesses,
         resultMap,
       })
@@ -157,4 +176,18 @@ function json(status: number, body: unknown) {
     status,
     headers: { 'Content-Type': 'application/json', ...corsHeaders() }
   })
+}
+
+function parseLimit(value: string | null, defaultValue: number, maxValue: number): number | null {
+  if (value === null || value === '') return defaultValue
+  const parsed = Number.parseInt(value, 10)
+  if (!Number.isFinite(parsed) || parsed < 1) return null
+  return Math.min(parsed, maxValue)
+}
+
+function parsePage(value: string | null): number | null {
+  if (value === null || value === '') return 1
+  const parsed = Number.parseInt(value, 10)
+  if (!Number.isFinite(parsed) || parsed < 1) return null
+  return parsed
 }
