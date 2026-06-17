@@ -594,7 +594,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                                 maxWidth: 60, 
                                 maxHeight: 60, 
                                 objectFit: 'contain',
-                                background: darkMode ? '#4a4a4a' : '#fafafa',
+                                background: darkMode ? '#919191' : '#fafafa',
                                 borderRadius: 8,
                                 border: darkMode ? '2px solid #6b7280' : '2px solid #959595ff',
                                 padding: 12
@@ -609,7 +609,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                             display: 'none', 
                             width: 60, 
                             height: 60, 
-                            background: darkMode ? '#4a4a4a' : '#fafafa', 
+                            background: darkMode ? '#828282' : '#fafafa', 
                             alignItems: 'center', 
                             justifyContent: 'center', 
                             color: darkMode ? '#e5e7eb' : '#666', 

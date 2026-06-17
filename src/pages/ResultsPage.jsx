@@ -22,7 +22,7 @@ async function fetchJsonDedup(url, options = {}) {
     return requestPromise;
 }
 
-export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null, date = null }) {
+export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null, date = null, darkMode = false }) {
     const PAGE_LIMIT = 20;
     const [copied, setCopied] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
@@ -70,6 +70,20 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [breakdownError, setBreakdownError] = useState(null);
     const cardRef = useRef(null);
     const sparkleIdCounter = useRef(0);
+    const panelBackground = darkMode ? '#2a2f38' : '#fff';
+    const panelBackgroundRaised = darkMode ? '#2a2f38' : 'rgba(255,255,255,0.98)';
+    const borderColor = darkMode ? '#3a4250' : '#f0f0f0';
+    const dividerColor = darkMode ? '#3a4250' : '#fafafa';
+    const textColor = darkMode ? '#e5e7eb' : '#111';
+    const mutedTextColor = darkMode ? '#e5e7eb' : '#666';
+    const subduedTextColor = darkMode ? '#e5e7eb' : '#888';
+    const buttonBackground = darkMode ? '#3a4150' : '#efefef';
+    const buttonActiveBackground = darkMode ? '#4b5563' : '#1976d2';
+    const inputBackground = darkMode ? '#1f2430' : '#fff';
+    const inputBorderColor = darkMode ? '#4b5563' : '#e0e0e0';
+    const summaryHighlightBackground = darkMode ? '#35303b' : '#fef3f7';
+    const successBackground = darkMode ? '#323b34' : '#f0fff0';
+    const neutralTileBackground = darkMode ? '#333845' : '#fafafa';
 
     // Fallback: if no results provided, attempt to read a global exported value
     if ((!results || results.length === 0) && typeof window !== 'undefined' && window.__pokedle_results__) {
@@ -1071,11 +1085,25 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         margin: '0px auto',
         alignItems: 'center',
         fontFamily: 'Inter, Arial, sans-serif',
-        width: isMobile ? 'calc(100% - 20px)' : 'calc(100% - 48px)'
+        width: isMobile ? 'calc(100% - 20px)' : 'calc(100% - 48px)',
+        color: textColor,
+        background: darkMode ? '#1f232a' : 'transparent'
     };
 
     const summaryMax = isMobile ? '100%' : 580;
     const historyMax = isMobile ? '100%' : 780;
+    const makeSectionStyle = (maxWidth, extra = {}) => ({
+        marginTop: 12,
+        maxWidth,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: 12,
+        borderRadius: 6,
+        background: panelBackground,
+        border: `1px solid ${borderColor}`,
+        color: textColor,
+        ...extra,
+    });
 
     return (
         <div style={outerStyle}>
@@ -1109,18 +1137,18 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             `}</style>
             <div style={{ textAlign: 'center', marginTop: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                    <h2 style={{ marginBottom: 10 }}>Results</h2>
+                    <h2 style={{ marginBottom: 10, color: textColor }}>Results</h2>
                 </div>
             </div>
 
-            <div style={{ position: 'relative', borderRadius: 6, padding: 18, background: 'rgba(255,255,255,0.98)', border: '1px solid #f0f0f0', overflow: 'hidden', maxWidth: summaryMax, alignContent: 'center', marginLeft: 'auto', marginRight: 'auto' }}>
+            <div style={makeSectionStyle(summaryMax, { position: 'relative', borderRadius: 6, padding: 18, background: panelBackgroundRaised, overflow: 'hidden', alignContent: 'center' })}>
                 <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: `url('icons/results.png')`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', opacity: 0.06, filter: 'grayscale(40%)', pointerEvents: 'none', margin: '65px' }} />
                 {/* Small section header for today's summary */}
                 {!showDetails ? (
                     entries.map((e, i) => (
-                        <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '10px 0', lineHeight: '1.1', borderBottom: i !== entries.length - 1 ? '1px solid #fafafa' : 'none' }}>
-                            <span style={{ fontWeight: 500, fontSize: 15, color: '#222', justifySelf: 'start', textAlign: 'left' }}>{e.label}:</span>
-                            <span style={{ fontWeight: 700, fontSize: 16, textAlign: 'right', justifySelf: 'end' }}>{e.value}</span>
+                        <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '10px 0', lineHeight: '1.1', borderBottom: i !== entries.length - 1 ? `1px solid ${dividerColor}` : 'none' }}>
+                            <span style={{ fontWeight: 500, fontSize: 15, color: textColor, justifySelf: 'start', textAlign: 'left' }}>{e.label}:</span>
+                            <span style={{ fontWeight: 700, fontSize: 16, textAlign: 'right', justifySelf: 'end', color: textColor }}>{e.value}</span>
                         </div>
                     ))
                 ) : (
@@ -1138,8 +1166,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             const names = guesses.slice().reverse().map(g => g.name).filter(Boolean);
                             const countDisplay = r.solved ? guesses.length : '-';
                             return (
-                                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '8px 0', lineHeight: '1.3', borderBottom: i !== results.length - 1 ? '1px solid #fafafa' : 'none' }}>
-                                    <span style={{ fontWeight: 500, fontSize: 15, color: '#222', justifySelf: 'start', textAlign: 'left' }}>
+                                <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '8px 0', lineHeight: '1.3', borderBottom: i !== results.length - 1 ? `1px solid ${dividerColor}` : 'none' }}>
+                                    <span style={{ fontWeight: 500, fontSize: 15, color: textColor, justifySelf: 'start', textAlign: 'left' }}>
                                         {r.label}
                                         {names.length > 0 ? (
                                             <>
@@ -1155,13 +1183,13 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                         ) : null}
                                         :
                                     </span>
-                                    <span style={{ fontWeight: 700, fontSize: 16, textAlign: 'right', justifySelf: 'end' }}>{countDisplay}</span>
+                                    <span style={{ fontWeight: 700, fontSize: 16, textAlign: 'right', justifySelf: 'end', color: textColor }}>{countDisplay}</span>
                                 </div>
                             );
                         })}
                     </div>
                 )}
-                {copied && <div style={{ color: '#1976d2', fontSize: 14 }}>Copied to clipboard</div>}
+                {copied && <div style={{ color: textColor, fontSize: 14 }}>Copied to clipboard</div>}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 18 }}>
                     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                         <button onClick={async () => {
@@ -1213,15 +1241,15 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             }
                             setTimeout(() => setExportStatus(null), 1700);
                             setTimeout(() => setExportError(null), 4000);
-                        }} style={{ height: 40, padding: '8px 12px', borderRadius: 8, background: showDetails ? '#1976d2' : '#efefef', color: showDetails ? '#fff' : '#111', border: '1px solid #e0e0e0', cursor: 'pointer', fontSize: 14 }}>{showDetails ? 'Hide Guesses' : 'Show Guesses'}</button>
-                        <button onClick={handleCopy} title="Copy" style={{ height: 40, minWidth: 64, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111', WebkitTextFillColor: '#111', forcedColorAdjust: 'none' }}>Copy</button>
+                        }} style={{ height: 40, padding: '8px 12px', borderRadius: 8, background: showDetails ? buttonActiveBackground : buttonBackground, color: textColor, border: `1px solid ${inputBorderColor}`, cursor: 'pointer', fontSize: 14 }}>{showDetails ? 'Hide Guesses' : 'Show Guesses'}</button>
+                        <button onClick={handleCopy} title="Copy" style={{ height: 40, minWidth: 64, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: buttonBackground, cursor: 'pointer', padding: '0 12px', fontSize: 14, color: textColor, WebkitTextFillColor: textColor, forcedColorAdjust: 'none' }}>Copy</button>
                     </div>
-                    <div style={{ fontWeight: 700, fontSize: 16, textAlign: 'right' }}>{`Total: ${total}`}</div>
+                    <div style={{ fontWeight: 700, fontSize: 16, textAlign: 'right', color: textColor }}>{`Total: ${total}`}</div>
                 </div>
                 
             </div>
             {/* Card export container: placed below Today's results */}
-            <div style={{ marginTop: 12, maxWidth: summaryMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+            <div style={makeSectionStyle(summaryMax)}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexDirection: isMobile ? 'column' : 'row', width: isMobile ? '100%' : 'auto' }}>
                         
@@ -1265,7 +1293,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             }}
                             title="Export a card image"
                             disabled={!allCompleted || generatedDisabled}
-                            style={{ height: 40, minWidth: isMobile ? '100%' : 180, borderRadius: 8, border: '1px solid #e0e0e0', background: (!allCompleted || generatedDisabled) ? '#f5f5f5' : '#efefef', cursor: (!allCompleted || generatedDisabled) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 14, color: (!allCompleted || generatedDisabled) ? '#999' : '#111' }}
+                            style={{ height: 40, minWidth: isMobile ? '100%' : 180, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: (!allCompleted || generatedDisabled) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground, cursor: (!allCompleted || generatedDisabled) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 14, color: textColor }}
                         >
                             {showDetails ? 'Generate Guesses Image' : 'Generate Results TCG Card'}
                         </button>
@@ -1276,13 +1304,13 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             onChange={(e) => { setCardName(e.target.value.slice(0,12)); setGeneratedDisabled(false); }}
                             placeholder="Type your name here..."
                             aria-label="Card name"
-                            style={{ height: 28, padding: '6px 8px', borderRadius: 8, border: '1px solid #e0e0e0', fontSize: 14, minWidth: 80, width: isMobile ? '95%' : undefined, colorScheme: 'light', background: '#fff', color: '#111' }}
+                            style={{ height: 28, padding: '6px 8px', borderRadius: 8, border: `1px solid ${inputBorderColor}`, fontSize: 14, minWidth: 80, width: isMobile ? '95%' : undefined, colorScheme: darkMode ? 'dark' : 'light', background: inputBackground, color: textColor }}
                         />
-                        {exportStatus === 'working' && <div style={{ color: '#666', fontSize: 13 }}>Generating</div>}
-                        {exportStatus === 'copied' && <div style={{ color: '#1976d2', fontSize: 13 }}>Copied</div>}
-                        {exportStatus === 'downloaded' && <div style={{ color: '#1976d2', fontSize: 13 }}>Downloaded</div>}
+                        {exportStatus === 'working' && <div style={{ color: mutedTextColor, fontSize: 13 }}>Generating</div>}
+                        {exportStatus === 'copied' && <div style={{ color: textColor, fontSize: 13 }}>Copied</div>}
+                        {exportStatus === 'downloaded' && <div style={{ color: textColor, fontSize: 13 }}>Downloaded</div>}
                         {exportStatus === 'failed' && (
-                            <div style={{ color: '#b00020', fontSize: 13 }}>
+                            <div style={{ color: textColor, fontSize: 13 }}>
                                 {exportError ? `Export failed: ${exportError}` : 'Export failed'}
                             </div>
                         )}
@@ -1305,7 +1333,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                         // ignore
                                     }
                                 }}
-                                style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
+                                style={{ height: 40, minWidth: 120, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: buttonBackground, cursor: 'pointer', padding: '0 12px', fontSize: 14, color: textColor }}
                             >
                                 Download
                             </button>
@@ -1357,7 +1385,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                         style={{
                                             position: 'relative',
                                             //padding: 8,
-                                            background: '#fff',
+                                            background: panelBackground,
                                             transform: (holoEnabled && previewType !== 'guesses') 
                                                 ? `rotateX(${holoRotate.x}deg) rotateY(${holoRotate.y}deg)`
                                                 : 'none',
@@ -1578,7 +1606,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                 // ignore
                                             }
                                         }}
-                                        style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111', width: '100%' }}
+                                        style={{ height: 40, minWidth: 120, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: buttonBackground, cursor: 'pointer', padding: '0 12px', fontSize: 14, color: textColor, width: '100%' }}
                                     >
                                         Download
                                     </button>
@@ -1589,7 +1617,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 ) : null}
             </div>
             {/* Today's / Yesterday's Leaderboard */}
-            <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+            <div style={makeSectionStyle(historyMax)}>
                 <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 6 }}>🏆 {date ? "Yesterday's Leaderboard" : "Today's Leaderboard"} 🏆</div>
                 {allCompleted && leaderLoaded ? (
                     <div style={{ textAlign: 'center', marginTop: 6 }}>
@@ -1601,12 +1629,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 height: 40,
                                 minWidth: isMobile ? '100%' : 120,
                                 borderRadius: 8,
-                                border: '1px solid #e0e0e0',
-                                background: (!allCompleted || leaderLoading) ? '#f5f5f5' : '#efefef',
+                                border: `1px solid ${inputBorderColor}`,
+                                background: (!allCompleted || leaderLoading) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground,
                                 cursor: (!allCompleted || leaderLoading) ? 'not-allowed' : 'pointer',
                                 padding: '0 12px',
                                 fontSize: 14,
-                                color: (!allCompleted || leaderLoading) ? '#999' : '#111'
+                                color: textColor
                             }}
                         >
                             {leaderLoading ? 'Refreshing…' : '🔄 Refresh'}
@@ -1614,16 +1642,16 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     </div>
                 ) : null}
                 {!allCompleted && (
-                    <div style={{ textAlign: 'center', fontSize: 13, color: '#666' }}>Complete all of today's modes to see the leaderboard</div>
+                    <div style={{ textAlign: 'center', fontSize: 13, color: mutedTextColor }}>Complete all of today's modes to see the leaderboard</div>
                 )}
                 {allCompleted && leaderLoading && (
-                    <div style={{ textAlign: 'center', fontSize: 13, color: '#666' }}>Loading…</div>
+                    <div style={{ textAlign: 'center', fontSize: 13, color: mutedTextColor }}>Loading…</div>
                 )}
                 {allCompleted && leaderError && (
-                    <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13 }}>{leaderError}</div>
+                    <div style={{ textAlign: 'center', color: textColor, fontSize: 13 }}>{leaderError}</div>
                 )}
                 {allCompleted && !leaderLoading && leaderResults && leaderResults.length === 0 && (
-                    <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>
+                    <div style={{ textAlign: 'center', color: subduedTextColor, fontSize: 13 }}>
                         {leaderPage > 1 ? 'No results on this page.' : 'No results submitted yet today.'}
                     </div>
                 )}
@@ -1664,7 +1692,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
 
                     return (
                         <div style={{ marginTop: 14 }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: '1px solid #eee', fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: isMobile ? 2 : 4, padding: '6px 4px', borderBottom: `1px solid ${dividerColor}`, fontSize: isMobile ? 10 : 12, fontWeight: 700 }}>
                                 <div style={{ textAlign: 'center' }}>#</div>
                                 <div>Player</div>
                                 {modes.map(m => <div key={m.key} style={{ textAlign: 'center' }}>{isMobile ? m.short : m.label}</div>)}
@@ -1690,10 +1718,10 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                             gridTemplateColumns: gridCols,
                                             gap: isMobile ? 2 : 4,
                                             padding: '6px 8px',
-                                            borderBottom: i !== rankedRowsWithPlace.length - 1 ? '1px solid #fafafa' : 'none',
+                                            borderBottom: i !== rankedRowsWithPlace.length - 1 ? `1px solid ${dividerColor}` : 'none',
                                             fontSize: isMobile ? 11 : 13,
                                             alignItems: 'center',
-                                            background: isCurrentPlayer ? '#fef3f7' : 'transparent',
+                                            background: isCurrentPlayer ? summaryHighlightBackground : 'transparent',
                                             borderRadius: isCurrentPlayer ? 6 : 0
                                         }}
                                     >
@@ -1717,15 +1745,15 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 <button
                                     onClick={() => { if (leaderLoading || leaderPage <= 1) return; setLeaderPage(p => Math.max(1, p - 1)); }}
                                     disabled={leaderLoading || leaderPage <= 1}
-                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || leaderPage <= 1) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || leaderPage <= 1) ? '#999' : '#111' }}
+                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: (leaderLoading || leaderPage <= 1) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground, cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: textColor }}
                                 >
                                     Previous
                                 </button>
-                                <div style={{ fontSize: 13, color: '#666', minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
+                                <div style={{ fontSize: 13, color: mutedTextColor, minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
                                 <button
                                     onClick={() => { if (leaderLoading || !leaderHasMore) return; setLeaderPage(p => p + 1); }}
                                     disabled={leaderLoading || !leaderHasMore}
-                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || !leaderHasMore) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || !leaderHasMore) ? '#999' : '#111' }}
+                                    style={{ height: 34, minWidth: 80, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: (leaderLoading || !leaderHasMore) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground, cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: textColor }}
                                 >
                                     Next
                                 </button>
@@ -1910,7 +1938,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                 }
 
                 return (
-                    <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                    <div style={makeSectionStyle(historyMax)}>
                         <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 10 }}>🎯 Guess Breakdown 🎯</div>
 
                         {/* Mode selector buttons */}
@@ -1922,9 +1950,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     style={{
                                         padding: '6px 12px',
                                         borderRadius: 8,
-                                        border: '1px solid #e0e0e0',
-                                        background: breakdownMode === m.key ? '#1976d2' : '#efefef',
-                                        color: breakdownMode === m.key ? '#fff' : '#111',
+                                        border: `1px solid ${inputBorderColor}`,
+                                        background: breakdownMode === m.key ? buttonActiveBackground : buttonBackground,
+                                        color: textColor,
                                         cursor: 'pointer',
                                         fontSize: 13,
                                         fontWeight: breakdownMode === m.key ? 700 : 400,
@@ -1936,13 +1964,13 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                         </div>
 
                         {breakdownLoading && (
-                            <div style={{ textAlign: 'center', color: '#666', fontSize: 13 }}>Loading…</div>
+                            <div style={{ textAlign: 'center', color: mutedTextColor, fontSize: 13 }}>Loading…</div>
                         )}
                         {breakdownError && (
-                            <div style={{ textAlign: 'center', color: '#b00020', fontSize: 13 }}>{breakdownError}</div>
+                            <div style={{ textAlign: 'center', color: textColor, fontSize: 13 }}>{breakdownError}</div>
                         )}
                         {!breakdownLoading && !breakdownError && displayRows && displayRows.length === 0 && (
-                            <div style={{ textAlign: 'center', color: '#888', fontSize: 13 }}>No guesses recorded for this mode.</div>
+                            <div style={{ textAlign: 'center', color: subduedTextColor, fontSize: 13 }}>No guesses recorded for this mode.</div>
                         )}
                         {!breakdownLoading && !breakdownError && displayRows && displayRows.length > 0 && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -1975,8 +2003,8 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                                         width: isMobile ? 48 : 64,
                                                         height: isMobile ? 48 : 64,
                                                         borderRadius: 6,
-                                                        border: g.correct ? '2px solid #4caf50' : '2px solid #e0e0e0',
-                                                        background: g.correct ? '#f0fff0' : '#fafafa',
+                                                        border: g.correct ? '2px solid #4caf50' : `2px solid ${inputBorderColor}`,
+                                                        background: g.correct ? successBackground : neutralTileBackground,
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
@@ -2008,15 +2036,15 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                             <button
                                 onClick={() => { if (leaderLoading || leaderPage <= 1) return; setLeaderPage(p => Math.max(1, p - 1)); }}
                                 disabled={leaderLoading || leaderPage <= 1}
-                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || leaderPage <= 1) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || leaderPage <= 1) ? '#999' : '#111' }}
+                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: (leaderLoading || leaderPage <= 1) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground, cursor: (leaderLoading || leaderPage <= 1) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: textColor }}
                             >
                                 Previous
                             </button>
-                            <div style={{ fontSize: 13, color: '#666', minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
+                            <div style={{ fontSize: 13, color: mutedTextColor, minWidth: 56, textAlign: 'center' }}>Page {leaderPage}</div>
                             <button
                                 onClick={() => { if (leaderLoading || !leaderHasMore) return; setLeaderPage(p => p + 1); }}
                                 disabled={leaderLoading || !leaderHasMore}
-                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: '1px solid #e0e0e0', background: (leaderLoading || !leaderHasMore) ? '#f5f5f5' : '#efefef', cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: (leaderLoading || !leaderHasMore) ? '#999' : '#111' }}
+                                style={{ height: 34, minWidth: 80, borderRadius: 8, border: `1px solid ${inputBorderColor}`, background: (leaderLoading || !leaderHasMore) ? (darkMode ? '#323845' : '#f5f5f5') : buttonBackground, cursor: (leaderLoading || !leaderHasMore) ? 'not-allowed' : 'pointer', padding: '0 12px', fontSize: 13, color: textColor }}
                             >
                                 Next
                             </button>
@@ -2027,9 +2055,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
 
             {/* Previous days history (last 10) - moved to its own container */}
                 {history && history.length > 0 ? (
-                <div style={{ marginTop: 14, maxWidth: historyMax, marginLeft: 'auto', marginRight: 'auto', padding: 12, borderRadius: 6, background: '#fff', border: '1px solid #f0f0f0' }}>
+                <div style={makeSectionStyle(historyMax)}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-                        <div style={{ fontWeight: 700, textAlign: 'center' }}>Last 7 Days</div>
+                        <div style={{ fontWeight: 700, textAlign: 'center' }}>📅 Last 7 Days 📅</div>
                     </div>
                     <div style={{ overflowX: 'auto' }} onTouchStart={onHistoryTouchStart} onTouchMove={onHistoryTouchMove} onWheel={onHistoryWheel}>
                         {(() => {
@@ -2138,7 +2166,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                     })}
 
                                     {/* totals row per date (moved to bottom) */}
-                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 4, alignItems: 'center', padding: '8px 6px', borderTop: '1px solid #eee', fontSize: 13, background: '#fbfbfb', marginTop: 6 }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 4, alignItems: 'center', padding: '8px 6px', borderTop: '1px solid #eee', fontSize: 13, background: darkMode ? '#333' : '#fbfbfb', marginTop: 6 }}>
                                         <div style={{ fontWeight: 700, textAlign: 'left', paddingLeft: 2 }}>Total</div>
                                         {dateTotals.map((dt, i) => (
                                             <div key={i} style={{ fontWeight: 800, textAlign: 'center' }}>{dt}</div>

@@ -1261,7 +1261,7 @@ function App() {
     if (key === 'locations') return <LocationsPage pokemonData={pokemonData} guesses={guessesByPage.locations} setGuesses={newGuesses => setGuessesByPage(g => ({ ...g, locations: newGuesses }))} useShinySprites={false} darkMode={darkMode} />;
     if (key === 'card') return <CardPage pokemonData={pokemonData} daily={activeDaily.card} guesses={activeGuesses.card} setGuesses={newGuesses => setActiveGuesses('card', newGuesses)} useShinySprites={activeDaily?.card?.card?.cardType === 'shiny'} darkMode={darkMode} />;
     if (key === 'map') return <LocationsPage pokemonData={pokemonData} daily={activeDaily.map} guesses={activeGuesses.map || []} setGuesses={newGuesses => setActiveGuesses('map', newGuesses)} useShinySprites={false} darkMode={darkMode} />;
-    if (key === 'results') return <ResultsPage results={yesterdayMode ? yesterdayPerPageResults : perPageResults} guessesByPage={activeGuesses} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} date={yesterdayMode ? yesterdayDate : undefined} />;
+    if (key === 'results') return <ResultsPage results={yesterdayMode ? yesterdayPerPageResults : perPageResults} guessesByPage={activeGuesses} onBack={() => setPage('classic')} backgroundsManifest={backgroundsManifest} date={yesterdayMode ? yesterdayDate : undefined} darkMode={darkMode} />;
     if (key === 'patchnotes') return <PatchNotesPage />;
     if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} setPage={setPage} />;
     if (key === 'privacy') return <PrivacyPolicyPage onBack={() => setPage('about')} />;
