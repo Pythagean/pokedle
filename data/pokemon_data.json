@@ -16833,7 +16833,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/45.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [
       "Pink"
@@ -18819,7 +18819,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [],
     "shape": "Quadruped",
@@ -20725,7 +20725,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/57.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "White",
     "secondary_colours": [
       "Brown"
@@ -25623,7 +25623,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/62.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [
       "White",
@@ -36555,7 +36555,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/80.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow",
@@ -36994,7 +36994,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/82.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [],
     "shape": "Heads",
@@ -45202,7 +45202,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/108.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Pink",
     "secondary_colours": [
       "Yellow"
@@ -45934,7 +45934,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [
       "Yellow"
@@ -46268,7 +46268,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/114.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/114.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [
       "Red"
@@ -52450,7 +52450,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Pink",
     "secondary_colours": [
       "White",
@@ -52826,7 +52826,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/125.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [
       "Black"
@@ -52958,7 +52958,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [
       "Orange"
@@ -62245,7 +62245,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [
       "White"
@@ -62356,7 +62356,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [
       "White"
@@ -62479,7 +62479,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Red",
     "secondary_colours": [
       "Yellow"
@@ -69048,7 +69048,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/176.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/176.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "White",
     "secondary_colours": [],
     "shape": "Humanoid",
@@ -72967,7 +72967,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/190.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/190.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Purple",
     "secondary_colours": [
       "Yellow"
@@ -73229,7 +73229,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/193.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/193.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Red",
     "secondary_colours": [
       "Green",
@@ -73714,7 +73714,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/195.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/195.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [],
     "shape": "Upright",
@@ -73815,7 +73815,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Purple",
     "secondary_colours": [],
     "shape": "Quadruped",
@@ -73918,7 +73918,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/197.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow"
@@ -74021,7 +74021,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/198.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/198.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow"
@@ -74659,7 +74659,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/200.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/200.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [
       "Red"
@@ -74956,7 +74956,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/203.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [
       "Brown"
@@ -75227,7 +75227,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/206.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/206.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Yellow",
     "secondary_colours": [
       "Blue"
@@ -75308,7 +75308,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/207.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/207.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Purple",
     "secondary_colours": [
       "Blue"
@@ -75988,7 +75988,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/211.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/211.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [
       "Yellow"
@@ -76117,7 +76117,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/212.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/212.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Red",
     "secondary_colours": [
       "Black"
@@ -76559,7 +76559,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/215.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/215.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Black",
     "secondary_colours": [
       "Red"
@@ -76792,7 +76792,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/217.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/217.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Brown",
     "secondary_colours": [
       "Yellow"
@@ -77250,7 +77250,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/221.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/221.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Brown",
     "secondary_colours": [
       "White",
@@ -77593,7 +77593,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/222.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/222.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Pink",
     "secondary_colours": [
       "White"
@@ -79569,7 +79569,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/233.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/233.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Red",
     "secondary_colours": [
       "Blue"
@@ -79658,7 +79658,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/234.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/234.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Brown",
     "secondary_colours": [],
     "shape": "Quadruped",
@@ -80221,7 +80221,7 @@
     "id": 242,
     "name": "Blissey",
     "generation": 2,
-    "evolution_stage": 1,
+    "evolution_stage": 2,
     "genus": "Happiness Pokemon",
     "habitat": "Urban",
     "height": 1.5,
@@ -81028,7 +81028,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/250.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Red",
     "secondary_colours": [
       "White",
@@ -82558,7 +82558,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/264.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/264.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "White",
     "secondary_colours": [
       "Brown"
@@ -82898,7 +82898,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/267.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/267.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow",
@@ -85673,7 +85673,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/282.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "White",
     "secondary_colours": [
       "Green",
@@ -86455,7 +86455,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/291.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/291.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Black",
     "secondary_colours": [
       "Yellow",
@@ -87159,7 +87159,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/299.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [
       "Pink"
@@ -88501,7 +88501,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/315.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/315.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Green",
     "secondary_colours": [
       "Red",
@@ -94106,7 +94106,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/356.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/356.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Grey",
     "secondary_colours": [],
     "shape": "Humanoid",
@@ -94539,7 +94539,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/362.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/362.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "White",
     "secondary_colours": [
       "Black"
@@ -94955,7 +94955,7 @@
       "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/367.png",
       "official_artwork": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/367.png"
     },
-    "fully_evolved": false,
+    "fully_evolved": true,
     "main_colour": "Blue",
     "secondary_colours": [
       "Orange"
