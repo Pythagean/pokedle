@@ -1,3 +1,28 @@
+## Release Notes — August 7th, 2026
+
+## What’s New
+
+- **Card** <br>
+    - Removed regional variant cards from pool
+    - Added new cards: Everyday Wonders from TCG Pocket
+    - Added new cards: Rule of the Skies from TCG Pocket
+- **General** <br>
+    - Fixed some bugs around the evolution stages and fully evolved values in some pokemon
+    - Fixed a bug in the typing chart used for clues in some modes
+
+## Commits included (newest first)
+
+```text
+aa92ed  | 2026-08-07 | New Cards: Ruler of the Skies     
+1b377c5 | 2026-08-07 | Removed random json file            
+7314e0a | 2026-08-07 | Summary of failed card matches                                       
+62e4d2a | 2026-08-07 | Scripts for fixing pokemon_data
+6a8ec80 | 2026-08-07 | Fixed some evo stage and full_evolved bugs
+e8af0ab | 2026-07-17 | New Cards: Everyday Wonders (Pocket)
+4309690 | 2026-06-20 | Fixing type chart
+3034af5 | 2026-06-19 | Adding more result card backgrounds
+```
+
 ## Release Notes — June 17th, 2026
 
 ## What’s New
