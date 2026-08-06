@@ -151,7 +151,7 @@ def main():
         print('No supported image files found in the input folder.')
         return
 
-    failed = []
+    failed = {}  # Maps filename -> reason for failure
 
     for fname in files:
         stem, ext = os.path.splitext(fname)
@@ -167,8 +167,9 @@ def main():
 
         poke_id = name_to_id.get(poke_name)
         if not poke_id:
-            print(f'  SKIP: No Pokémon found for name "{poke_name}" (file: {fname})')
-            failed.append(fname)
+            reason = f'No Pokémon found for name "{poke_name}"'
+            print(f'  SKIP: {reason} (file: {fname})')
+            failed[fname] = reason
             continue
 
         if args.verbose:
@@ -199,12 +200,16 @@ def main():
                 rgb.save(dst_path, 'JPEG')
             print(f'OK  {fname} -> {MODE_SUBDIR[mode]}/{new_fname}  (mode={mode}, id={poke_id})')
         except Exception as e:
-            print(f'FAIL {fname}: {e}')
-            failed.append(fname)
+            reason = str(e)
+            print(f'FAIL {fname}: {reason}')
+            failed[fname] = reason
 
     print(f'\nDone. {len(files) - len(failed)}/{len(files)} files processed successfully.')
     if failed:
-        print(f'Failed ({len(failed)}): {chr(44).join(failed)}')
+        print(f'\n❌ Failed ({len(failed)} files):')
+        for fname, reason in sorted(failed.items()):
+            print(f'  • {fname}')
+            print(f'    → {reason}')
 
     # --- Post-processing: resize (and optionally crop) each mode directory ---
     if args.dry_run:
