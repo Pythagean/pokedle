@@ -12,7 +12,15 @@ Right click > Save Page As > Save to .\scripts\card\pocket_download\
 Move card images you want to keep back into .\scripts\card\pocket_download\
 Delete everything else
 
-Rename each image you want to keep with {pokemon_name}.webp (use the -shiny -spec -full -shiny_full suffix to denote different types)
+Rename each image you want to keep with {pokemon_name}.webp 
+(use the 
+
+-shiny 
+-spec 
+-full 
+-shiny_full 
+
+suffix to denote different types)
 eg. caterpie.webp
 pikachu-spec.webp
 
