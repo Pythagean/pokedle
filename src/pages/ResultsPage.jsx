@@ -65,6 +65,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const [leaderPage, setLeaderPage] = useState(1);
     const [leaderHasMore, setLeaderHasMore] = useState(false);
     const [breakdownMode, setBreakdownMode] = useState('classic');
+    const [scoreHistoryMode, setScoreHistoryMode] = useState('total');
     const [allBreakdownGuesses, setAllBreakdownGuesses] = useState(null);
     const [breakdownLoading, setBreakdownLoading] = useState(false);
     const [breakdownError, setBreakdownError] = useState(null);
@@ -2179,6 +2180,174 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                     </div>
                 </div>
             ) : null}
+
+            {/* Score History Line Graph */}
+            {history && history.length > 0 && (() => {
+                const SCORE_MODES = [
+                    { key: 'total',     label: 'Total' },
+                    { key: 'classic',   label: 'Classic' },
+                    { key: 'card',      label: 'Card' },
+                    { key: 'pokedex',   label: 'Pokédex' },
+                    { key: 'details',   label: 'Details' },
+                    { key: 'colours',   label: 'Colours' },
+                    { key: 'locations', label: 'Locations' },
+                ];
+
+                // history is newest-first; take last 50 and reverse for chronological order
+                const recent = history.slice(0, 50).slice().reverse();
+
+                const getValueForEntry = (h, mode) => {
+                    if (!h || !h.results || h.results.length === 0) return null;
+                    if (mode === 'total') {
+                        const tot = h.results.reduce((acc, r) => acc + ((r.solved && typeof r.guessCount === 'number') ? r.guessCount : 0), 0);
+                        return tot > 0 ? tot : null;
+                    }
+                    const match = h.results.find(r => {
+                        const k = String(r.label || '').toLowerCase();
+                        return k === mode || k.includes(mode) || mode.includes(k);
+                    });
+                    return (match && match.solved && typeof match.guessCount === 'number') ? match.guessCount : null;
+                };
+
+                const points = recent.map((h, i) => ({
+                    index: i,
+                    value: getValueForEntry(h, scoreHistoryMode),
+                    dateKey: h.date,
+                }));
+
+                const chartW = 500;
+                const chartH = 180;
+                const padLeft = 32;
+                const padRight = 12;
+                const padTop = 14;
+                const padBottom = 30;
+                const innerW = chartW - padLeft - padRight;
+                const innerH = chartH - padTop - padBottom;
+
+                const validPoints = points.filter(p => p.value !== null);
+
+                const maxVal = validPoints.length > 0 ? Math.max(...validPoints.map(p => p.value)) : 10;
+                const minVal = 0;
+                const yRange = Math.max(maxVal - minVal, 1);
+
+                const xOf = (idx) => padLeft + (points.length <= 1 ? innerW / 2 : (idx / (points.length - 1)) * innerW);
+                const yOf = (val) => padTop + innerH - ((val - minVal) / yRange) * innerH;
+
+                // Single continuous line skipping null entries
+
+                const lineColor = '#ff75a3';
+                const gridColor = darkMode ? '#3a4250' : '#f0f0f0';
+                const axisColor = darkMode ? '#4b5563' : '#e0e0e0';
+                const labelColor = darkMode ? '#9ca3af' : '#888';
+
+                const tickCount = 4;
+                const ticks = Array.from({ length: tickCount + 1 }, (_, i) => {
+                    return Math.round(minVal + (i / tickCount) * yRange);
+                });
+
+                const xStep = Math.max(1, Math.ceil(points.length / 7));
+
+                const dayLabelOf = (dateKey) => {
+                    const y = parseInt(String(dateKey).slice(0, 4), 10);
+                    const mo = parseInt(String(dateKey).slice(4, 6), 10) - 1;
+                    const dd = parseInt(String(dateKey).slice(6, 8), 10);
+                    const dt = new Date(y, mo, dd);
+                    const effDate = effectiveUTCDate(dt);
+                    const dn = Math.floor((effDate.getTime() - epoch.getTime()) / MS_PER_DAY) + 2;
+                    return `#${dn}`;
+                };
+
+                return (
+                    <div style={makeSectionStyle(historyMax)}>
+                        <div style={{ fontWeight: 700, textAlign: 'center', marginBottom: 10 }}>📈 Score History (Last 50) 📈</div>
+
+                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 12 }}>
+                            {SCORE_MODES.map(m => (
+                                <button
+                                    key={m.key}
+                                    onClick={() => setScoreHistoryMode(m.key)}
+                                    style={{
+                                        padding: '6px 12px',
+                                        borderRadius: 8,
+                                        border: `1px solid ${inputBorderColor}`,
+                                        background: scoreHistoryMode === m.key ? buttonActiveBackground : buttonBackground,
+                                        color: scoreHistoryMode === m.key ? '#fff' : textColor,
+                                        cursor: 'pointer',
+                                        fontSize: 13,
+                                        fontWeight: scoreHistoryMode === m.key ? 700 : 400,
+                                    }}
+                                >
+                                    {m.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {validPoints.length === 0 ? (
+                            <div style={{ textAlign: 'center', color: subduedTextColor, fontSize: 13, padding: '20px 0' }}>No data for this mode.</div>
+                        ) : (
+                            <div style={{ overflowX: 'auto' }}>
+                                <svg
+                                    viewBox={`0 0 ${chartW} ${chartH}`}
+                                    style={{ width: '100%', minWidth: 260, display: 'block' }}
+                                    aria-label="Score history line graph"
+                                >
+                                    {/* Horizontal grid lines + Y axis labels */}
+                                    {ticks.map((tick, ti) => {
+                                        const y = yOf(tick);
+                                        return (
+                                            <g key={ti}>
+                                                <line x1={padLeft} y1={y} x2={chartW - padRight} y2={y} stroke={gridColor} strokeWidth={1} />
+                                                <text x={padLeft - 5} y={y + 4} textAnchor="end" fontSize={9} fill={labelColor}>{tick}</text>
+                                            </g>
+                                        );
+                                    })}
+
+                                    {/* X axis day labels */}
+                                    {points.map((p, i) => {
+                                        if (i % xStep !== 0 && i !== points.length - 1) return null;
+                                        return (
+                                            <text key={i} x={xOf(i)} y={chartH - 6} textAnchor="middle" fontSize={9} fill={labelColor}>
+                                                {dayLabelOf(p.dateKey)}
+                                            </text>
+                                        );
+                                    })}
+
+                                    {/* Axis lines */}
+                                    <line x1={padLeft} y1={padTop} x2={padLeft} y2={padTop + innerH} stroke={axisColor} strokeWidth={1} />
+                                    <line x1={padLeft} y1={padTop + innerH} x2={chartW - padRight} y2={padTop + innerH} stroke={axisColor} strokeWidth={1} />
+
+                                    {/* Line path */}
+                                    {validPoints.length >= 2 && (
+                                        <path
+                                            d={validPoints.map((p, pi) => `${pi === 0 ? 'M' : 'L'}${xOf(p.index).toFixed(1)},${yOf(p.value).toFixed(1)}`).join(' ')}
+                                            fill="none"
+                                            stroke={lineColor}
+                                            strokeWidth={2.5}
+                                            strokeLinejoin="round"
+                                            strokeLinecap="round"
+                                        />
+                                    )}
+
+                                    {/* Data point dots */}
+                                    {validPoints.map((p, pi) => (
+                                        <circle
+                                            key={pi}
+                                            cx={xOf(p.index)}
+                                            cy={yOf(p.value)}
+                                            r={3.5}
+                                            fill={lineColor}
+                                            stroke={darkMode ? '#2a2f38' : '#fff'}
+                                            strokeWidth={1.5}
+                                        >
+                                            <title>{`${dayLabelOf(p.dateKey)}: ${p.value}`}</title>
+                                        </circle>
+                                    ))}
+                                </svg>
+                            </div>
+                        )}
+                    </div>
+                );
+            })()}
         </div>
     );
 }
