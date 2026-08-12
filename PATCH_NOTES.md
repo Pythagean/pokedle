@@ -1,3 +1,16 @@
+## Release Notes — August 12th, 2026
+
+## What’s New
+
+- **Results** <br>
+    - Added Score History section to Results page
+
+## Commits included (newest first)
+
+```text
+aa07a06 | 2026-08-12 | Added score history graph to results page
+```
+
 ## Release Notes — August 7th, 2026
 
 ## What’s New
