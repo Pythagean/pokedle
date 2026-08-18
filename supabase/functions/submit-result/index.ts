@@ -23,6 +23,7 @@ serve(async (req) => {
       const url = new URL(req.url)
       const pokledleNumber = parseInt(url.searchParams.get('pokedle_number') ?? '', 10)
       const groupCode = url.searchParams.get('group_code') ?? ''
+      const anonId = url.searchParams.get('anon_id') ?? ''
       const includeGuesses = url.searchParams.get('include_guesses') === 'true'
       const resultsLimit = parseLimit(url.searchParams.get('limit'), DEFAULT_RESULTS_LIMIT, MAX_RESULTS_LIMIT)
       const page = parsePage(url.searchParams.get('page'))
@@ -32,6 +33,7 @@ serve(async (req) => {
 
       if (!pokledleNumber || isNaN(pokledleNumber)) return json(400, { error: 'Missing or invalid pokedle_number' })
       if (groupCode && !/^\d+(-\d+)*$/.test(groupCode)) return json(400, { error: 'Invalid group_code' })
+      if (anonId && !/^[0-9a-f-]{36}$/.test(anonId)) return json(400, { error: 'Invalid anon_id' })
       if (resultsLimit === null) return json(400, { error: 'Invalid limit' })
       if (page === null) return json(400, { error: 'Invalid page' })
       if (includeGuesses && guessesLimit === null) return json(400, { error: 'Invalid guesses_limit' })
@@ -39,13 +41,21 @@ serve(async (req) => {
       const start = (page - 1) * resultsLimit
       const end = start + resultsLimit
 
+      // Private (anon_id) requests get replay; public leaderboard requests do not
+      const selectFields = anonId
+        ? 'id, player, classic, card, pokedex, details, colours, locations, total, replay'
+        : 'id, player, classic, card, pokedex, details, colours, locations, total'
+
       let query = supabaseAdmin
         .from('results')
-        .select('id, player, classic, card, pokedex, details, colours, locations, total')
+        .select(selectFields)
         .eq('pokedle_number', pokledleNumber)
 
-      if (groupCode) {
-        query = query.eq('group_code', groupCode)
+      if (anonId) {
+        query = query.eq('anon_id', anonId).order('created_at', { ascending: false }).limit(1)
+      } else {
+        if (groupCode) query = query.eq('group_code', groupCode)
+        query = query.order('total', { ascending: true }).range(start, end)
       }
 
       const { data, error } = await query.order('total', { ascending: true }).range(start, end)

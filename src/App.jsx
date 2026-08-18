@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { RESET_HOUR_UTC } from './config/resetConfig';
 import { submitResult } from './utils/submitResult';
+import { loadGuessesFromServer } from './utils/loadGuessesFromServer';
 // import pokemonData from '../data/pokemon_data.json';
 // import titleImg from '../data/title.png';
 
@@ -509,6 +510,34 @@ function App() {
       console.error('[Storage] Unexpected error in guess persistence:', e);
     }
   }, [guessesByPage]);
+
+  // On first pokemonData load, attempt to restore guesses from server if local data is absent.
+  // Only runs as disaster recovery — never overwrites existing local data.
+  useEffect(() => {
+    if (!pokemonData) return;
+
+    // Skip if we already have local data for today
+    const localTotal = Object.values(guessesByPage).reduce((n, arr) => n + arr.length, 0);
+    if (localTotal > 0) return;
+
+    // Only fetch if we know we previously submitted from this device
+    const todaySeed = getSeedFromDate(new Date());
+    if (!localStorage.getItem(`pokedle_submitted_${todaySeed}`)) return;
+
+    loadGuessesFromServer(pokemonData).then(serverGuesses => {
+      if (!serverGuesses) return;
+      setGuessesByPage(current => {
+        // Guard against a race where local data appeared while the fetch was in-flight
+        const currentTotal = Object.values(current).reduce((n, arr) => n + arr.length, 0);
+        if (currentTotal > 0) return current;
+        const serverTotal = Object.values(serverGuesses).reduce((n, arr) => n + arr.length, 0);
+        console.log(`[Storage] Restored ${serverTotal} guesses from server`);
+        return { ...current, ...serverGuesses };
+      });
+    }).catch(() => {});
+  // Run once when pokemonData first becomes available
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemonData]);
 
   // Debug state for testing different days
   const [debugDayOffset, setDebugDayOffset] = useState(0);

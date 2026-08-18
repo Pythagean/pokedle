@@ -87,6 +87,15 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed, d
     }
     result.total = total || null;
 
+    // Compact replay snapshot: { pageKey: [id, id, ...] } newest-first — used to restore state on reload
+    const replay = {};
+    for (const r of perPageResults) {
+      if (!MODE_TO_COLUMN[r.key]) continue;
+      const ids = (guessesByPage[r.key] || []).map(g => g.id ?? g.pokemon_id ?? null).filter(id => id != null);
+      if (ids.length > 0) replay[r.key] = ids;
+    }
+    if (Object.keys(replay).length > 0) result.replay = replay;
+
     // Flat list of every individual guess as { mode, guess: pokemonId, guess_number, correct }
     const guesses = [];
     for (const r of perPageResults) {
