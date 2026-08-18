@@ -520,12 +520,12 @@ function App() {
     const localTotal = Object.values(guessesByPage).reduce((n, arr) => n + arr.length, 0);
     if (localTotal > 0) return;
 
-    // Only fetch if we know we previously submitted from this device
-    const todaySeed = getSeedFromDate(new Date());
-    if (!localStorage.getItem(`pokedle_submitted_${todaySeed}`)) return;
-
+    console.log('[Storage] Local data empty, attempting to load from server...');
     loadGuessesFromServer(pokemonData).then(serverGuesses => {
-      if (!serverGuesses) return;
+      if (!serverGuesses) {
+        console.log('[Storage] No data found on server');
+        return;
+      }
       setGuessesByPage(current => {
         // Guard against a race where local data appeared while the fetch was in-flight
         const currentTotal = Object.values(current).reduce((n, arr) => n + arr.length, 0);
@@ -534,7 +534,9 @@ function App() {
         console.log(`[Storage] Restored ${serverTotal} guesses from server`);
         return { ...current, ...serverGuesses };
       });
-    }).catch(() => {});
+    }).catch(err => {
+      console.warn('[Storage] Server load failed:', err?.message ?? err);
+    });
   // Run once when pokemonData first becomes available
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokemonData]);
