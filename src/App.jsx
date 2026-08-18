@@ -938,16 +938,10 @@ function App() {
     const isWeekend = dayForCard.getUTCDay() === 0 || dayForCard.getUTCDay() === 6;
 
     function buildCardForPokemon(chosen) {
-      if (isWeekend) {
-        const manifestList = cardManifest['special']?.[chosen.id];
-        if (!manifestList || manifestList.length === 0) return null;
-        const cardFile = manifestList[Math.floor(localRng() * manifestList.length)];
-        const folder = `${BASE_URL}/special`;
-        return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'special' };
-      }
       const normalList = cardManifest['normal']?.[chosen.id];
       if (!normalList || normalList.length === 0) return null;
       const typeRng = mulberry32(baseSeed + chosen.id * 7777);
+      const specialRoll = typeRng();
       const fullArtRoll = typeRng();
       const shinyRoll = typeRng();
       const hasFullArt = cardManifest['full_art']?.[chosen.id]?.length > 0;
@@ -955,7 +949,14 @@ function App() {
       const shinyRegularFiles = shinyData?.regular || [];
       const shinyFullFiles = shinyData?.full || [];
       const hasShinySomething = shinyRegularFiles.length > 0 || shinyFullFiles.length > 0;
-      if (fullArtRoll < 0.05 && hasFullArt) {
+      const hasSpecial = cardManifest['special']?.[chosen.id]?.length > 0;
+      
+      if (specialRoll < 0.10 && hasSpecial) {
+        const specialList = cardManifest['special'][chosen.id];
+        const cardFile = specialList[Math.floor(localRng() * specialList.length)];
+        const folder = `${BASE_URL}/special`;
+        return { cropped: `${folder}/${cardFile}`, resized: `${folder}/${cardFile}`, cardFile, folder, cardType: 'special' };
+      } else if (fullArtRoll < 0.05 && hasFullArt) {
         const fullArtList = cardManifest['full_art'][chosen.id];
         const cardFile = fullArtList[Math.floor(localRng() * fullArtList.length)];
         const folder = `${BASE_URL}/full_art`;
