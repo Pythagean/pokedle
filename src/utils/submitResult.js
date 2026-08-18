@@ -31,9 +31,9 @@ function getOrCreateAnonId() {
 }
 
 const FALLBACK_NAMES = ['Red', 'Blue', 'Ash', 'Gary', 'Brock', 'Misty', 'Erika', 'Lt. Surge', 'Sabrina', 'Koga', 'Blaine', 'Giovanni', 
-    'Lance', 'Cynthia', 'Steven', 'Wallace', 'Dawn', 'May', 'Serena', 'Lillie', 'Gloria', 'Hop', 'Rosa', 'Jessie', 'James', 'Ethan', 'Silver', 'Brendan' ];
+    'Lance', 'Cynthia', 'Steven', 'Wallace', 'Dawn', 'May', 'Serena', 'Lillie', 'Gloria', 'Hop', 'Rosa', 'Jessie', 'James', 'Ethan', 'Silver', 'Brendan', 'Nurse Joy', 'Officer Jenny' ];
 
-function getPlayerName() {
+export function getPlayerName() {
   const stored = localStorage.getItem('pokedle_card_name');
   if (stored && stored.trim().length > 0) return stored.trim();
   return FALLBACK_NAMES[Math.floor(Math.random() * FALLBACK_NAMES.length)];
@@ -128,10 +128,11 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed, d
 
     if (response.ok) {
       localStorage.setItem(submittedKey, '1');
+      localStorage.setItem('pokedle_card_name', result.player);
       if (data.result_id != null) {
         localStorage.setItem(`pokedle_result_id_${pokledleNumber}`, String(data.result_id));
       }
-      return { success: true, resultId: data.result_id };
+      return { success: true, resultId: data.result_id, playerName: result.player };
     }
 
     console.error('[pokedle] Failed to submit result:', data);

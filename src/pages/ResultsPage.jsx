@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { PHRASES, POKEMON } from '../components/CongratsMessage';
 import { updateResult } from '../utils/updateResult';
+import { getPlayerName } from '../utils/submitResult';
 
 const pendingJsonRequests = new Map();
 
@@ -137,7 +138,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     const entries = (results || []).map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
     const allCompleted = Array.isArray(results) && results.length > 0 && results.every(r => r && r.solved);
-    const currentPlayerName = (cardName && String(cardName).trim()) || 'You';
+    const currentPlayerName = (cardName && String(cardName).trim()) || getPlayerName();
     const summaryLines = [`I've completed all the modes of ${pokedleLabel}! \n`, ...entries.map(e => `${e.label}: ${e.value}`), `Total: ${total}`];
     const summaryText = summaryLines.join('\n');
 
