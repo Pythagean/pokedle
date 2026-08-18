@@ -419,14 +419,17 @@ function App() {
         const storedDate = data.date;
         const todaySeed = getSeedFromDate(new Date());
         if (storedDate === todaySeed) {
+          console.log('[Storage] Loaded guesses for today from localStorage');
           return data.guesses || {};
+        } else {
+          console.log('[Storage] Stored guesses are from different day (stored:', storedDate, 'today:', todaySeed, ')');
         }
       }
     } catch (e) {
-      // console.error('Failed to load guesses from localStorage:', e);
+      console.error('[Storage] Failed to load guesses from localStorage:', e);
     }
     // Return default empty guesses if nothing stored or data is old
-    return {
+    const defaultGuesses = {
       classic: [],
       pokedex: [],
       stats: [],
@@ -438,6 +441,8 @@ function App() {
       locations: [],
       card: []
     };
+    console.log('[Storage] Using default empty guesses');
+    return defaultGuesses;
   });
 
   // Persist guesses to localStorage whenever they change
@@ -448,11 +453,60 @@ function App() {
         date: todaySeed,
         guesses: guessesByPage
       };
-      localStorage.setItem('pokedle_guesses', JSON.stringify(data));
+      const jsonStr = JSON.stringify(data);
+      
+      try {
+        localStorage.setItem('pokedle_guesses', jsonStr);
+      } catch (storageError) {
+        // If quota exceeded, try to free space by removing old daily entries
+        if (storageError.name === 'QuotaExceededError' || storageError.code === 22) {
+          console.warn('[Storage] QuotaExceededError - attempting to free space');
+          
+          // Clear old confetti and emoji entries more aggressively
+          try {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 2); // 2 days ago
+            const twoDaysAgoSeed = getSeedFromDate(yesterday);
+            const keysToRemove = [];
+            
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (!key) continue;
+              
+              // Remove confetti, emoji, phrase, card data from 2+ days ago
+              const prefixes = ['pokedle_confetti_', 'pokedle_emoji_', 'pokedle_phrase_', 'pokedle_card_'];
+              if (prefixes.some(p => key.startsWith(p))) {
+                const parts = key.split('_');
+                const seedStr = parts[parts.length - 1];
+                const seed = parseInt(seedStr, 10);
+                if (!isNaN(seed) && seed < twoDaysAgoSeed) {
+                  keysToRemove.push(key);
+                }
+              }
+            }
+            
+            keysToRemove.forEach(k => localStorage.removeItem(k));
+            console.log(`[Storage] Removed ${keysToRemove.length} old entries, retrying save`);
+            
+            // Retry the save
+            localStorage.setItem('pokedle_guesses', jsonStr);
+          } catch (retryError) {
+            console.error('[Storage] Failed to save guesses even after cleanup:', retryError);
+            // Give up on storage
+          }
+        } else {
+          console.error('[Storage] Failed to save guesses to localStorage:', storageError);
+        }
+      }
+      
       // Also save under a dated key so yesterday-mode can retrieve them after the day rolls over
-      localStorage.setItem(`pokedle_guesses_${todaySeed}`, JSON.stringify(data));
+      try {
+        localStorage.setItem(`pokedle_guesses_${todaySeed}`, jsonStr);
+      } catch (dateKeyError) {
+        console.warn('[Storage] Failed to save dated guess key:', dateKeyError.name || dateKeyError);
+      }
     } catch (e) {
-      // console.error('Failed to save guesses to localStorage:', e);
+      console.error('[Storage] Unexpected error in guess persistence:', e);
     }
   }, [guessesByPage]);
 
@@ -508,8 +562,15 @@ function App() {
   // Persist yesterday guesses under their dated key
   useEffect(() => {
     try {
-      localStorage.setItem(`pokedle_guesses_${yesterdaySeed}`, JSON.stringify({ date: yesterdaySeed, guesses: yesterdayGuessesByPage }));
-    } catch (e) {}
+      const jsonStr = JSON.stringify({ date: yesterdaySeed, guesses: yesterdayGuessesByPage });
+      localStorage.setItem(`pokedle_guesses_${yesterdaySeed}`, jsonStr);
+    } catch (e) {
+      if (e.name === 'QuotaExceededError' || e.code === 22) {
+        console.warn('[Storage] QuotaExceededError saving yesterday guesses');
+      } else {
+        console.warn('[Storage] Failed to save yesterday guesses:', e.name || e);
+      }
+    }
   }, [yesterdayGuessesByPage, yesterdaySeed]);
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
