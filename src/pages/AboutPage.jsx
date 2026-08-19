@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { clearGuessesFromStorage } from '../utils/clearStorage';
 
 const MODES = [
     { key: 'classic',   label: 'Classic',     desc: 'Guess the Pokémon from its types, generation, height, weight, habitat.' },
@@ -10,6 +11,24 @@ const MODES = [
 ];
 
 export default function AboutPage({ onPrivacyClick, setPage }) {
+    const [clearStatus, setClearStatus] = useState(null);
+    const [anonId, setAnonId] = useState(null);
+
+    useEffect(() => {
+      const id = localStorage.getItem('pokedle_anon_id');
+      setAnonId(id);
+    }, []);
+
+    const handleClearStorage = () => {
+      if (!window.confirm('Clear all saved guesses and game data? Your ID and settings will be preserved.')) return;
+      const result = clearGuessesFromStorage();
+      if (result.success) {
+        setClearStatus(`Cleared ${result.cleared} entries. Reload to sync from server.`);
+        setTimeout(() => setClearStatus(null), 5000);
+      } else {
+        setClearStatus(`Error: ${result.error}`);
+      }
+    };
     return (
         <div style={{ maxWidth: 700, margin: '0 auto', padding: '8px 4px 40px' }}>
             {/* Header */}
@@ -121,6 +140,48 @@ export default function AboutPage({ onPrivacyClick, setPage }) {
                 ! ☕
             </div>
 
+            {/* Clear Storage */}
+            <div style={{
+                marginTop: 28,
+                padding: '12px 16px',
+                background: '#fef3f7',
+                border: '1px solid #f0c4d4',
+                borderRadius: 8,
+                textAlign: 'center',
+            }}>
+                <div style={{ fontSize: 13, color: '#666', marginBottom: 10 }}>
+                    If you're experiencing sync issues or want to refresh your data:
+                </div>
+                {anonId && (
+                  <div style={{ fontSize: 12, color: '#888', marginBottom: 12, wordBreak: 'break-all', fontFamily: 'monospace' }}>
+                    ID: {anonId}
+                  </div>
+                )}
+                <button
+                    onClick={handleClearStorage}
+                    style={{
+                        background: '#ff6b9d',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 6,
+                        padding: '8px 16px',
+                        fontSize: 14,
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'background 0.2s',
+                    }}
+                    onMouseOver={(e) => e.target.style.background = '#ff5285'}
+                    onMouseOut={(e) => e.target.style.background = '#ff6b9d'}
+                >
+                    Clear Saved Guesses
+                </button>
+                {clearStatus && (
+                    <div style={{ fontSize: 12, color: '#666', marginTop: 8, fontStyle: 'italic' }}>
+                        ✓ {clearStatus}
+                    </div>
+                )}
+            </div>
+
             {/* Disclaimer */}
             <div style={{
                 marginTop: 28,
@@ -157,6 +218,8 @@ export default function AboutPage({ onPrivacyClick, setPage }) {
                     Privacy Policy
                 </button>
             </div>
+
+            
         </div>
     );
 }
