@@ -1,3 +1,30 @@
+## Release Notes — August 19th, 2026
+
+## What’s New
+
+- **Results** <br>
+    - Use server side saving/loading for Results instead of Local Storage
+- **Locations** <br>
+    - Change a certain Pokemon easter egg to be 0% instead of 100%
+- **Card** <br>
+    - Change Card mode to use Special Illustration cards 10% of the time, rather than just on weekends
+- **About** <br>
+    - Added button to clear local storage, as well as display anon_id for debugging purposes
+
+## Commits included (newest first)
+
+```text
+c0f4da4 | 2026-08-19 | Enhance history loading: fetch from server with localStorage fallback and improve error handling
+11950f3 | 2026-08-19 | Add clear storage functionality to AboutPage for managing saved guesses
+a4d0191 | 2026-08-19 | Add player name retrieval and store in localStorage on result submission
+e56adc1 | 2026-08-19 | Improve server data loading: add logging for empty local storage and server fetch failures
+38ec719 | 2026-08-19 | Implement server-side guess loading and enhance persistence strategy
+2649c13 | 2026-08-19 | Change Card mode to use Special Illustration cards 10% of the time, rather than just on weekends
+db4dc32 | 2026-08-19 | Changed Mew to be 0% under the truck
+95cebe1 | 2026-08-19 | Enhance localStorage handling for guesses: add error logging, cleanup on quota exceeded, and improve persistence logic
+89a990d | 2026-08-12 | Patch notes: Aug 12th
+```
+
 ## Release Notes — August 12th, 2026
 
 ## What’s New
