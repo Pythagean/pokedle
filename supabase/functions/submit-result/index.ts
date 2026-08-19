@@ -58,7 +58,7 @@ serve(async (req) => {
         query = query.order('total', { ascending: true }).range(start, end)
       }
 
-      const { data, error } = await query.order('total', { ascending: true }).range(start, end)
+      const { data, error } = await query
 
       if (error) return json(500, { error: error.message })
       const fetchedResults = data ?? []

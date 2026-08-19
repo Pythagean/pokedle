@@ -26,16 +26,29 @@ export async function loadGuessesFromServer(pokemonData, date = null) {
     const url = `${EDGE_FUNCTION_URL}?pokedle_number=${pokledleNumber}&anon_id=${encodeURIComponent(anonId)}`;
 
     const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.warn('[Storage] Edge Function returned status', res.status);
+      return null;
+    }
 
-    const { results } = await res.json();
-    if (!results?.length) return null;
+    const body = await res.json();
+    console.log('[Storage] Edge Function response:', body);
+
+    const { results } = body;
+    if (!results?.length) {
+      console.warn('[Storage] No results from Edge Function');
+      return null;
+    }
 
     const result = results[0];
+    console.log('[Storage] First result:', result);
 
     // Restore from compact replay JSONB: { pageKey: [pokemonId, ...] } newest-first
     // replay is only present when the Edge Function has been deployed with anon_id filtering
-    if (!result.replay || typeof result.replay !== 'object') return null;
+    if (!result.replay || typeof result.replay !== 'object') {
+      console.warn('[Storage] No replay field in result');
+      return null;
+    }
 
     const restored = {};
     for (const [key, ids] of Object.entries(result.replay)) {
@@ -44,6 +57,7 @@ export async function loadGuessesFromServer(pokemonData, date = null) {
       if (full.length > 0) restored[key] = full;
     }
 
+    console.log('[Storage] Restored guesses:', restored);
     return Object.keys(restored).length > 0 ? restored : null;
   } catch (e) {
     console.warn('[Storage] Failed to load guesses from server:', e?.message ?? e);

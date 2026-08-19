@@ -3,6 +3,7 @@ import { RESET_HOUR_UTC } from '../config/resetConfig';
 import { PHRASES, POKEMON } from '../components/CongratsMessage';
 import { updateResult } from '../utils/updateResult';
 import { getPlayerName } from '../utils/submitResult';
+import { loadHistoryFromServer } from '../utils/loadHistoryFromServer';
 
 const pendingJsonRequests = new Map();
 
@@ -837,20 +838,30 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         }
     };
 
-    // Load history of simple daily summaries from localStorage (written by App)
+    // Load history of simple daily summaries from server, with localStorage fallback
     const [history, setHistory] = useState([]);
     useEffect(() => {
-        try {
-            const raw = localStorage.getItem('pokedle_results_history');
-            if (!raw) return;
-            const parsed = JSON.parse(raw);
-            if (!Array.isArray(parsed)) return;
-            // Keep the full parsed history in reverse-chronological order (newest first)
-            const full = parsed.slice().reverse();
-            setHistory(full);
-        } catch (e) {
-            // ignore
+        async function loadHistory() {
+            // Try to load from server first (50 days of history)
+            const serverHistory = await loadHistoryFromServer(50);
+            if (serverHistory && serverHistory.length > 0) {
+                setHistory(serverHistory);
+                return;
+            }
+            // Fallback: load from localStorage if server returns nothing
+            try {
+                const raw = localStorage.getItem('pokedle_results_history');
+                if (!raw) return;
+                const parsed = JSON.parse(raw);
+                if (!Array.isArray(parsed)) return;
+                // Keep the full parsed history in reverse-chronological order (newest first)
+                const full = parsed.slice().reverse();
+                setHistory(full);
+            } catch (e) {
+                // ignore
+            }
         }
+        loadHistory();
     }, []);
 
     // detect mobile (match CSS breakpoint) so we can widen content on small screens
