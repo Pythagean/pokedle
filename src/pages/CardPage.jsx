@@ -432,10 +432,11 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
                   }
                   return new Date(Date.UTC(y, m, d, 0, 0, 0));
                 })();
-                eventLabel = seedDateForLabel.getUTCDay() === 0 ? 'Illustration Sunday' : 'Illustration Saturday';
+                // eventLabel = seedDateForLabel.getUTCDay() === 0 ? 'Illustration Sunday' : 'Illustration Saturday';
+                eventLabel = "Special Illustration Card!";
                 example = (
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontWeight: 700, marginBottom: 8 }}>{eventLabel}</div>
+                    <div style={{ fontWeight: 700, marginBottom: 8 }}>🎨 Today the card chosen is a Special Illustration! 🎨</div>
                     <img src="https://raw.githubusercontent.com/Pythagean/pokedle_assets/main/cards/special/1-26.jpg" alt="Illustration example" style={{ width: '100%', maxWidth: 100, borderRadius: 6, border: '1px solid #ddd' }} />
                   </div>
                 );
