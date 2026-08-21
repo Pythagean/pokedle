@@ -10,6 +10,10 @@ import { TYPE_COLORS } from '../config/typeColors';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
 
+const SCRAMBLE_COLS = 28;
+const SCRAMBLE_ROWS = 20;
+const SCRAMBLE_TILE_COUNT = SCRAMBLE_COLS * SCRAMBLE_ROWS;
+
 function mulberry32(a) {
   return function () {
     var t = a += 0x6D2B79F5;
@@ -67,6 +71,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   const [showConfetti, setShowConfetti] = useState(false);
   const [showBlurred, setShowBlurred] = useState(false);
   const [blurredAtGuessIdx, setBlurredAtGuessIdx] = useState(null);
+  const [scrambleFading, setScrambleFading] = useState(false);
   const prevCorrectRef = useRef(false);
 
 
@@ -153,7 +158,26 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   // shiny/full cards use full_art-style rendering (no cropped phase)
   const isFullTypeCard = cardType === 'full_art' || cardType === 'special' || (cardType === 'shiny' && shinyVariant === 'full');
 
+  // Scramble day: 15% seeded chance — card is split into shuffled tiles instead of blurred
+  const isScrambleDay = useMemo(() => mulberry32(baseSeed + 13579)() < 0.15, [baseSeed]);
 
+  // baseOrder[slot]=origTileIdx (initial full shuffle); unscrambleOrder=which tiles lock in first
+  const scrambleTileData = useMemo(() => {
+    if (!isScrambleDay) return null;
+    const rng = mulberry32(baseSeed + 24680);
+    const baseOrder = Array.from({ length: SCRAMBLE_TILE_COUNT }, (_, i) => i);
+    for (let i = baseOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [baseOrder[i], baseOrder[j]] = [baseOrder[j], baseOrder[i]];
+    }
+    const rng2 = mulberry32(baseSeed + 77777);
+    const unscrambleOrder = Array.from({ length: SCRAMBLE_TILE_COUNT }, (_, i) => i);
+    for (let i = unscrambleOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(rng2() * (i + 1));
+      [unscrambleOrder[i], unscrambleOrder[j]] = [unscrambleOrder[j], unscrambleOrder[i]];
+    }
+    return { baseOrder, unscrambleOrder };
+  }, [isScrambleDay, baseSeed]);
 
   if (!pokemonData) return <div>Shuffling Pokémon cards...</div>;
 
@@ -314,6 +338,15 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
 
   // If correct, always show resized image
   const forceReveal = isCorrect;
+
+  // Scramble progress: 0 = fully scrambled, 1 = fully unscrambled
+  const scrambleProgress = isCorrect ? 1 : Math.min(guesses.length / 12, 1);
+  const effectiveScrambleProgress = (isCorrect && showBlurred)
+    ? (blurredAtGuessIdx !== null
+        ? Math.min((guesses.length - blurredAtGuessIdx - 1) / 12, 1)
+        : Math.min(Math.max(0, guesses.length - 1) / 12, 1))
+    : scrambleProgress;
+
   useEffect(() => {
     const key = `pokedle_confetti_card_${baseSeed}`;
     let alreadyShown = false;
@@ -327,6 +360,12 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
     }
     prevCorrectRef.current = isCorrect;
   }, [isCorrect, baseSeed]);
+  // After tiles animate into place, fade them out and reveal the full card
+  useEffect(() => {
+    if (!isCorrect || !isScrambleDay) { setScrambleFading(false); return; }
+    const t = setTimeout(() => setScrambleFading(true), 1500);
+    return () => clearTimeout(t);
+  }, [isCorrect, isScrambleDay, baseSeed]);
   // thresholds: [fullArtTypesThreshold, revealFullCardThreshold, normalTypesThreshold]
   const [fullArtTypesT, revealFullCardT, normalTypesT] = CARD_HINT_THRESHOLDS;
   // Reveal full card after revealFullCardT guesses
@@ -453,6 +492,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
               }
               return null;
             })()}
+            {isScrambleDay && (
+              <div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>🔀 Today is <strong>Scramble Day!</strong> The tiles will unscramble with each guess.</div>
+            )}
           </div>
         )}
         {isCorrect && (
@@ -463,70 +505,144 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
         )}
         <div className="card-viewport" style={{ position: 'relative', margin: '0 auto', overflow: 'hidden', borderRadius: 8, background: '#fff' }}>
           {cardFile ? (
-            <>
-              {/* For full_art, special, or shiny/full: always show resized image */}
-              {isFullTypeCard ? (
-                <img
-                  src={cardPath.resized}
-                  alt={answer ? answer.name : 'Pokemon Card'}
-                  className="card-img card-img-resized"
-                  draggable={false}
-                  onDragStart={e => e.preventDefault()}
-                  onContextMenu={e => e.preventDefault()}
-                  style={{
-                    borderRadius: 8,
-                    filter: `blur(${effectiveBlur}px)`,
-                    transition: 'filter 0.4s',
-                  }}
-                />
-              ) : (
-                <>
-                  {/* For normal or shiny: use current switching logic */}
-                  {/* Resized image as base, only visible when revealed or correct */}
-                  {(revealFullCard || forceReveal) && (
-                    <img
-                      src={cardPath.resized}
-                      alt={answer ? answer.name : 'Pokemon Card'}
-                      className="card-img card-img-resized overlay"
-                      draggable={false}
-                      onDragStart={e => e.preventDefault()}
-                      onContextMenu={e => e.preventDefault()}
-                      style={{
-                        zIndex: 1,
-                        borderRadius: 8,
-                        filter: `blur(${effectiveBlur}px)`,
-                        transition: 'filter 0.4s',
-                      }}
-                    />
-                  )}
-                  {/* Cropped image overlay, blurred until reveal or correct */}
-                  {!(revealFullCard || forceReveal) && (
-                    <img
-                      src={cardPath.cropped}
-                      alt={answer ? answer.name : 'Pokemon Card'}
-                      className="card-img card-img-cropped overlay"
-                      draggable={false}
-                      onDragStart={e => e.preventDefault()}
-                      onContextMenu={e => e.preventDefault()}
-                      style={{
-                        zIndex: 2,
-                        borderRadius: 8,
-                        background: 'transparent',
-                        filter: `blur(${effectiveBlur}px)`,
-                        transition: 'filter 0.4s',
-                        /* Display the cropped image smaller and inset within the viewport
-                           so only a portion is visible (like a magnified crop). */
-                        left: '8%',
-                        top: '-10%',
-                        width: '84%',
-                        height: '84%',
-                        objectFit: 'contain',
-                      }}
-                    />
-                  )}
-                </>
-              )}
-            </>
+            isScrambleDay && scrambleTileData ? (
+              <>
+                <div style={{
+                  ...( (!isFullTypeCard && cardPath.cropped)
+                    ? { position: 'absolute', left: '8%', top: '5%', width: '84%', height: '44%', overflow: 'hidden', borderRadius: 8 }
+                    : { position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: 8 }
+                  ),
+                  opacity: scrambleFading && !showBlurred ? 0 : 1,
+                  transition: 'opacity 0.8s ease',
+                }}>
+                  {(() => {
+                    // Build current permutation: swap fixedCount tiles into correct slots
+                    const fixedCount = Math.round(effectiveScrambleProgress * SCRAMBLE_TILE_COUNT);
+                    const current = [...scrambleTileData.baseOrder];
+                    for (let k = 0; k < fixedCount; k++) {
+                      const tileToFix = scrambleTileData.unscrambleOrder[k];
+                      const fromSlot = current.indexOf(tileToFix);
+                      const displaced = current[tileToFix];
+                      current[tileToFix] = tileToFix;
+                      current[fromSlot] = displaced;
+                    }
+                    const tileToSlot = new Array(SCRAMBLE_TILE_COUNT);
+                    current.forEach((origIdx, slot) => { tileToSlot[origIdx] = slot; });
+                    const imgUrl = (!isFullTypeCard && cardPath.cropped) ? cardPath.cropped : cardPath.resized;
+                    const tileTransition = isCorrect
+                      ? 'left 1.5s ease, top 1.5s ease'
+                      : 'left 0.5s ease, top 0.5s ease';
+                    return Array.from({ length: SCRAMBLE_TILE_COUNT }, (_, i) => {
+                      const origCol = i % SCRAMBLE_COLS;
+                      const origRow = Math.floor(i / SCRAMBLE_COLS);
+                      const slot = tileToSlot[i];
+                      const leftPct = (slot % SCRAMBLE_COLS) * (100 / SCRAMBLE_COLS);
+                      const topPct = Math.floor(slot / SCRAMBLE_COLS) * (100 / SCRAMBLE_ROWS);
+                      const bgX = origCol === 0 ? 0 : origCol / (SCRAMBLE_COLS - 1) * 100;
+                      const bgY = origRow === 0 ? 0 : origRow / (SCRAMBLE_ROWS - 1) * 100;
+                      return (
+                        <div
+                          key={i}
+                          style={{
+                            position: 'absolute',
+                            left: `${leftPct}%`,
+                            top: `${topPct}%`,
+                            width: `${100 / SCRAMBLE_COLS}%`,
+                            height: `${100 / SCRAMBLE_ROWS}%`,
+                            backgroundImage: `url(${imgUrl})`,
+                            backgroundSize: `${SCRAMBLE_COLS * 100}% ${SCRAMBLE_ROWS * 100}%`,
+                            backgroundPosition: `${bgX}% ${bgY}%`,
+                            transition: tileTransition,
+                            outline: '1px solid rgba(255,255,255,0.35)',
+                            boxSizing: 'border-box',
+                          }}
+                        />
+                      );
+                    });
+                  })()}
+                </div>
+                {isCorrect && (
+                  <img
+                    src={cardPath.resized}
+                    alt={answer ? answer.name : 'Pokemon Card'}
+                    className="card-img card-img-resized"
+                    draggable={false}
+                    onDragStart={e => e.preventDefault()}
+                    onContextMenu={e => e.preventDefault()}
+                    style={{
+                      borderRadius: 8,
+                      opacity: scrambleFading && !showBlurred ? 1 : 0,
+                      transition: 'opacity 0.8s ease',
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                {/* For full_art, special, or shiny/full: always show resized image */}
+                {isFullTypeCard ? (
+                  <img
+                    src={cardPath.resized}
+                    alt={answer ? answer.name : 'Pokemon Card'}
+                    className="card-img card-img-resized"
+                    draggable={false}
+                    onDragStart={e => e.preventDefault()}
+                    onContextMenu={e => e.preventDefault()}
+                    style={{
+                      borderRadius: 8,
+                      filter: `blur(${effectiveBlur}px)`,
+                      transition: 'filter 0.4s',
+                    }}
+                  />
+                ) : (
+                  <>
+                    {/* For normal or shiny: use current switching logic */}
+                    {/* Resized image as base, only visible when revealed or correct */}
+                    {(revealFullCard || forceReveal) && (
+                      <img
+                        src={cardPath.resized}
+                        alt={answer ? answer.name : 'Pokemon Card'}
+                        className="card-img card-img-resized overlay"
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        onContextMenu={e => e.preventDefault()}
+                        style={{
+                          zIndex: 1,
+                          borderRadius: 8,
+                          filter: `blur(${effectiveBlur}px)`,
+                          transition: 'filter 0.4s',
+                        }}
+                      />
+                    )}
+                    {/* Cropped image overlay, blurred until reveal or correct */}
+                    {!(revealFullCard || forceReveal) && (
+                      <img
+                        src={cardPath.cropped}
+                        alt={answer ? answer.name : 'Pokemon Card'}
+                        className="card-img card-img-cropped overlay"
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        onContextMenu={e => e.preventDefault()}
+                        style={{
+                          zIndex: 2,
+                          borderRadius: 8,
+                          background: 'transparent',
+                          filter: `blur(${effectiveBlur}px)`,
+                          transition: 'filter 0.4s',
+                          /* Display the cropped image smaller and inset within the viewport
+                             so only a portion is visible (like a magnified crop). */
+                          left: '8%',
+                          top: '-10%',
+                          width: '84%',
+                          height: '84%',
+                          objectFit: 'contain',
+                        }}
+                      />
+                    )}
+                  </>
+                )}
+              </>
+            )
           ) : (
             <span style={{ color: '#888' }}>No card found.</span>
           )}
@@ -539,7 +655,9 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
               onClick={() => { setShowBlurred(b => !b); setBlurredAtGuessIdx(null); }}
               style={{ height: 40, minWidth: 120, borderRadius: 8, border: '1px solid #e0e0e0', background: '#efefef', cursor: 'pointer', padding: '0 12px', fontSize: 14, color: '#111' }}
             >
-              {showBlurred ? 'Show Un-Blurred' : 'Show Blurred'}
+              {isScrambleDay
+                ? (showBlurred ? 'Show Unscrambled' : 'Show Scrambled')
+                : (showBlurred ? 'Show Un-Blurred' : 'Show Blurred')}
             </button>
           </div>
         )}
@@ -595,12 +713,12 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
             ) : (
               <>
                 {/* For normal/shiny: Full card at 4 guesses, Types at 8 guesses */}
-                {guesses.length > 0 && !revealFullCard && (
+                {!isScrambleDay && guesses.length > 0 && !revealFullCard && (
                   <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                     The full card will be revealed in {Math.max(0, revealFullCardT - guesses.length)} guess{revealFullCardT - guesses.length === 1 ? '' : 'es'}!
                   </div>
                 )}
-                {revealFullCard && guesses.length < normalTypesT && (
+                {(!isScrambleDay && revealFullCard || isScrambleDay && guesses.length > 0) && guesses.length < normalTypesT && (
                   <div style={{ color: '#888', fontSize: 15, borderTop: '1px dashed #eee', paddingTop: 10, marginTop: 16 }}>
                     Pokémon Types will be revealed in {normalTypesT - guesses.length} guess{normalTypesT - guesses.length === 1 ? '' : 'es'}!
                   </div>
