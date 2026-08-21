@@ -1,3 +1,23 @@
+## Release Notes — August 21st, 2026
+
+## What’s New
+
+- **Card** <br>
+    - Added new 'Scramble' sub-mode which appears 15% of the time
+    - Added new cards from Pitch Black set
+- **Results** <br>
+    - Added more images for results card
+
+## Commits included (newest first)
+
+```text
+db9aa47 | 2026-08-21 | New Cards: Pitch Black            
+0865ae6 | 2026-08-21 | Added more results card images      
+4590528 | 2026-08-21 | Added scramble day sub-mode to Card mode                             
+0750cb0 | 2026-08-21 | Removed Illustration Sat/Sun labels
+ae905e3 | 2026-08-19 | Patch Notes: Aug 19th
+```
+
 ## Release Notes — August 19th, 2026
 
 ## What’s New
