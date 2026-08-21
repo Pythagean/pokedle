@@ -54,8 +54,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 53,Persian,18,1,0,1,1
 54,Psyduck,23,1,0,0,3
 55,Golduck,20,1,0,0,0
-56,Mankey,17,2,0,0,0
-57,Primeape,19,2,0,0,0
+56,Mankey,18,2,0,0,0
+57,Primeape,20,2,0,0,0
 58,Growlithe,23,1,0,0,1
 59,Arcanine,18,1,1,1,0
 60,Poliwag,12,1,0,0,0
@@ -77,8 +77,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 76,Golem,12,1,0,1,0
 77,Ponyta,19,2,0,0,1
 78,Rapidash,20,1,0,0,4
-79,Slowpoke,20,2,0,0,2
-80,Slowbro,17,2,0,0,1
+79,Slowpoke,21,2,0,0,2
+80,Slowbro,18,2,0,0,2
 81,Magnemite,25,2,0,0,2
 82,Magneton,23,2,0,0,1
 83,Farfetchd,13,1,0,0,0
@@ -116,13 +116,13 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 115,Kangaskhan,20,1,0,3,1
 116,Horsea,19,1,0,0,1
 117,Seadra,14,1,0,0,0
-118,Goldeen,12,0,0,0,1
-119,Seaking,11,0,0,0,0
+118,Goldeen,13,0,0,0,2
+119,Seaking,12,0,0,0,0
 120,Staryu,22,2,0,0,0
 121,Starmie,17,2,1,4,1
 122,Mr Mime,20,2,0,0,1
 123,Scyther,19,2,0,0,0
-124,Jynx,16,1,0,1,1
+124,Jynx,17,1,0,1,1
 125,Electabuzz,21,1,0,0,0
 126,Magmar,20,1,0,0,0
 127,Pinsir,16,1,0,1,2
@@ -225,7 +225,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 224,Octillery,13,0,0,0,2
 225,Delibird,9,0,0,0,2
 226,Mantine,12,0,0,0,0
-227,Skarmory,19,0,0,2,2
+227,Skarmory,20,0,0,2,2
 228,Houndour,21,0,0,0,1
 229,Houndoom,23,0,1,2,4
 230,Kingdra,13,0,1,4,4
@@ -307,8 +307,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 306,Aggron,13,0,0,2,0
 307,Meditite,16,0,0,0,1
 308,Medicham,15,0,0,3,2
-309,Electrike,20,1,0,0,1
-310,Manectric,21,0,0,1,0
+309,Electrike,21,1,0,0,1
+310,Manectric,22,0,0,1,1
 311,Plusle,17,1,0,0,1
 312,Minun,17,0,0,0,2
 313,Volbeat,7,0,0,0,0
@@ -318,8 +318,8 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 317,Swalot,9,0,0,0,0
 318,Carvanha,19,0,0,0,0
 319,Sharpedo,14,0,0,0,0
-320,Wailmer,15,0,0,0,0
-321,Wailord,14,0,0,3,2
+320,Wailmer,16,0,0,0,0
+321,Wailord,15,0,0,4,2
 322,Numel,18,0,0,0,1
 323,Camerupt,14,0,0,0,0
 324,Torkoal,16,0,0,2,2
@@ -351,11 +351,11 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 350,Milotic,15,0,0,3,4
 351,Castform,17,0,0,0,3
 352,Kecleon,8,0,0,0,1
-353,Shuppet,12,1,0,0,0
-354,Banette,11,0,1,2,1
+353,Shuppet,13,1,0,0,0
+354,Banette,12,0,1,2,1
 355,Duskull,15,0,0,0,2
 356,Dusclops,13,0,0,0,1
-357,Tropius,16,0,0,0,1
+357,Tropius,17,0,0,0,1
 358,Chimecho,11,0,0,0,1
 359,Absol,20,1,0,1,1
 360,Wynaut,6,0,0,0,1
@@ -367,7 +367,7 @@ pokemon_id,pokemon_name,normal,shiny_regular,shiny_full,full_art,special
 366,Clamperl,7,0,0,0,1
 367,Huntail,7,0,0,0,0
 368,Gorebyss,7,0,0,0,0
-369,Relicanth,12,0,0,0,1
+369,Relicanth,13,0,0,0,1
 370,Luvdisc,10,0,0,0,0
 371,Bagon,12,1,0,0,0
 372,Shelgon,15,0,0,0,0
