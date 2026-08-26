@@ -75507,6 +75507,18 @@
     ],
     "location_area_encounters": [
       {
+        "name": "Johto Route 38",
+        "region": "Johto",
+        "generation": 2,
+        "games": [
+          "gold",
+          "silver"
+        ],
+        "method": "grass",
+        "level_range": "13",
+        "chance": "1%"
+      },
+      {
         "name": "Hoenn Safari Zone",
         "region": "Hoenn",
         "generation": 3,
