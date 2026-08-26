@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Header.css';
 
-export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null, onYesterdayClick = null, yesterdayMode = false, darkMode = false, onDarkModeToggle = null }) {
+export default function Header({ pages, page, setPage, titleImg, showCompletionButton = false, onCompletionClick = null, highlightCompletion = false, completionActive = false, completedPages = {}, compactNav = false, onMenuClick = null, menuOpen = false, onPatchNotesClick = null, onAboutClick = null, onYesterdayClick = null, yesterdayMode = false, darkMode = false, onDarkModeToggle = null, onAccountClick = null, accountDisplayName = null }) {
     const hamburgerRef = useRef(null);
     const dropdownRef = useRef(null);
     const [dropdownPos, setDropdownPos] = useState({ top: 0, right: 0 });
@@ -290,7 +290,7 @@ export default function Header({ pages, page, setPage, titleImg, showCompletionB
                         transition: 'background 0.3s, border-color 0.3s',
                     }}
                 >
-                    {[[yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Slowpokle" : "Yesterday's Slowpokle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [darkMode ? '☀️' : '🌙', darkMode ? 'Light Mode' : 'Dark Mode (beta)', () => { onDarkModeToggle && onDarkModeToggle(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
+                    {[[accountDisplayName ? '👤' : '👤', accountDisplayName ? `Logged in as ${accountDisplayName}` : 'Account', () => { onAccountClick && onAccountClick(); onMenuClick && onMenuClick(); }], [yesterdayMode ? '📅' : '📅', yesterdayMode ? "Today's Slowpokle" : "Yesterday's Slowpokle", () => { onYesterdayClick && onYesterdayClick(); onMenuClick && onMenuClick(); }], [darkMode ? '☀️' : '🌙', darkMode ? 'Light Mode' : 'Dark Mode (beta)', () => { onDarkModeToggle && onDarkModeToggle(); onMenuClick && onMenuClick(); }], [<img key="pokegrid" src="icons/pokegrid.png" alt="" style={{ width: 18, height: 18, objectFit: 'contain' }} />, 'Pokegrid', () => { window.open('https://pythagean.github.io/pokegrid/', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }],  ['📋', 'Patch Notes', () => { onPatchNotesClick && onPatchNotesClick(); onMenuClick && onMenuClick(); }], ['☕', 'Donate', () => { window.open('https://ko-fi.com/pythagean', '_blank', 'noopener,noreferrer'); onMenuClick && onMenuClick(); }], ['ℹ️', 'About', () => { onAboutClick && onAboutClick(); onMenuClick && onMenuClick(); }]].map(([icon, label, handler], i) => (
                         <button
                             key={label}
                             role="menuitem"

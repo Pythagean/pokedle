@@ -14,18 +14,25 @@ function getPokledleNumber(date) {
 }
 
 /**
- * Fetches today's saved guesses from the server for this anonymous user.
+ * Fetches today's saved guesses from the server for this anonymous user or logged-in account.
  * Returns a guessesByPage object (partial keys only for modes with guesses), or null.
  */
-export async function loadGuessesFromServer(pokemonData, date = null) {
+export async function loadGuessesFromServer(pokemonData, date = null, session = null) {
   try {
-    const anonId = localStorage.getItem('pokedle_anon_id');
-    if (!anonId) return null;
-
     const pokledleNumber = getPokledleNumber(date);
-    const url = `${EDGE_FUNCTION_URL}?pokedle_number=${pokledleNumber}&anon_id=${encodeURIComponent(anonId)}`;
+    const authToken = session?.access_token ?? SUPABASE_ANON_KEY;
 
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+    let url;
+    if (session?.user?.id) {
+      // Logged-in user: fetch by user_id (JWT-verified server-side)
+      url = `${EDGE_FUNCTION_URL}?pokedle_number=${pokledleNumber}&user_id=${encodeURIComponent(session.user.id)}`;
+    } else {
+      const anonId = localStorage.getItem('pokedle_anon_id');
+      if (!anonId) return null;
+      url = `${EDGE_FUNCTION_URL}?pokedle_number=${pokledleNumber}&anon_id=${encodeURIComponent(anonId)}`;
+    }
+
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${authToken}` } });
     if (!res.ok) {
       console.warn('[Storage] Edge Function returned status', res.status);
       return null;

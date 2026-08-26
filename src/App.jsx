@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { RESET_HOUR_UTC } from './config/resetConfig';
 import { submitResult } from './utils/submitResult';
 import { loadGuessesFromServer } from './utils/loadGuessesFromServer';
+import { AuthProvider, useAuth } from './utils/AuthContext';
 // import pokemonData from '../data/pokemon_data.json';
 // import titleImg from '../data/title.png';
 
@@ -150,6 +151,7 @@ import ResultsPage from './pages/ResultsPage';
 import PatchNotesPage from './pages/PatchNotesPage';
 import AboutPage from './pages/AboutPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import AccountPage from './pages/AccountPage';
 import { getDailyOverride, getDailyTheme } from './config/dailyOverrides';
 
 
@@ -225,6 +227,7 @@ function App() {
   const eyesManifest = useEyesManifest();
   const bodyPartsManifest = useBodyPartsManifest();
   const titleImg = useTitleImg();
+  const { session, displayName: authDisplayName } = useAuth();
   
   // Clean up old confetti localStorage entries on mount
   useEffect(() => {
@@ -521,7 +524,7 @@ function App() {
     if (localTotal > 0) return;
 
     console.log('[Storage] Local data empty, attempting to load from server...');
-    loadGuessesFromServer(pokemonData).then(serverGuesses => {
+    loadGuessesFromServer(pokemonData, null, session).then(serverGuesses => {
       if (!serverGuesses) {
         console.log('[Storage] No data found on server');
         return;
@@ -1281,14 +1284,14 @@ function App() {
   useEffect(() => {
     if (!allCompleted) return;
     const todaySeed = getSeedFromDate(new Date());
-    submitResult({ perPageResults, guessesByPage, todaySeed });
+    submitResult({ perPageResults, guessesByPage, todaySeed, session });
   }, [allCompleted, perPageResults, guessesByPage]);
 
   // Submit yesterday's result to Supabase when all yesterday modes are completed
   const yesterdayAllCompleted = yesterdayPerPageResults.length > 0 && yesterdayPerPageResults.every(r => r.solved);
   useEffect(() => {
     if (!yesterdayAllCompleted) return;
-    submitResult({ perPageResults: yesterdayPerPageResults, guessesByPage: yesterdayGuessesByPage, todaySeed: yesterdaySeed, date: yesterdayDate });
+    submitResult({ perPageResults: yesterdayPerPageResults, guessesByPage: yesterdayGuessesByPage, todaySeed: yesterdaySeed, date: yesterdayDate, session });
   }, [yesterdayAllCompleted, yesterdayPerPageResults, yesterdayGuessesByPage, yesterdaySeed]);
 
   if (!pokemonData) return <div>Loading data...</div>;
@@ -1358,6 +1361,7 @@ function App() {
     if (key === 'patchnotes') return <PatchNotesPage />;
     if (key === 'about') return <AboutPage onPrivacyClick={() => setPage('privacy')} setPage={setPage} />;
     if (key === 'privacy') return <PrivacyPolicyPage onBack={() => setPage('about')} />;
+    if (key === 'account') return <AccountPage darkMode={darkMode} />;
     return null;
   }
 
@@ -1389,7 +1393,7 @@ function App() {
       {
         (() => {
           const completedPages = (yesterdayMode ? yesterdayPerPageResults : perPageResults).reduce((acc, r) => ({ ...acc, [r.key]: !!r.solved }), {});
-          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(m => !m); }} yesterdayMode={yesterdayMode} darkMode={darkMode} onDarkModeToggle={() => setDarkMode(m => !m)} />;
+          return <Header pages={PAGES} page={page} setPage={setPage} titleImg={titleImg} showCompletionButton={allCompleted} onCompletionClick={() => setPage('results')} highlightCompletion={completionJustCompleted} completionActive={page === 'results'} completedPages={completedPages} compactNav={compactNav} onMenuClick={() => setMenuOpen(o => !o)} menuOpen={menuOpen} onPatchNotesClick={() => setPage('patchnotes')} onAboutClick={() => setPage('about')} onYesterdayClick={() => { setYesterdayMode(m => !m); }} yesterdayMode={yesterdayMode} darkMode={darkMode} onDarkModeToggle={() => setDarkMode(m => !m)} onAccountClick={() => setPage('account')} accountDisplayName={authDisplayName} />;
         })()
       }
       {/* Page Content - separate scrollable container so header stays fixed */}
@@ -1658,4 +1662,11 @@ function App() {
     </>
   );
 }
-export default App;
+function AppWithAuth() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}
+export default AppWithAuth;

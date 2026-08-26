@@ -53,9 +53,9 @@ const MODE_TO_COLUMN = {
  * Submits the player's daily result to Supabase via the Edge Function.
  * Safe to call multiple times — uses localStorage to prevent duplicate submissions.
  *
- * @param {{ perPageResults: Array, guessesByPage: Object, todaySeed: number, date?: Date }} params
+ * @param {{ perPageResults: Array, guessesByPage: Object, todaySeed: number, date?: Date, session?: object }} params
  */
-export async function submitResult({ perPageResults, guessesByPage, todaySeed, date = null }) {
+export async function submitResult({ perPageResults, guessesByPage, todaySeed, date = null, session = null }) {
   try {
     const submittedKey = `pokedle_submitted_${todaySeed}`;
     if (localStorage.getItem(submittedKey)) return { alreadySubmitted: true };
@@ -63,11 +63,16 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed, d
     const anonId = getOrCreateAnonId();
     const pokledleNumber = getPokledleNumber(date);
 
+    // Use authenticated player name if logged in, otherwise fall back to stored/random name
+    const playerName = (session?.user && session.user?.user_metadata?.display_name)
+      ? session.user.user_metadata.display_name
+      : getPlayerName();
+
     // Build per-mode score columns from actual guess array lengths
     const result = {
       pokedle_number: pokledleNumber,
       anon_id: anonId,
-      player: getPlayerName(),
+      player: playerName,
       client_version: typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : null,
       device_info: {
         userAgent: navigator.userAgent,
@@ -115,11 +120,14 @@ export async function submitResult({ perPageResults, guessesByPage, todaySeed, d
       });
     }
 
+    // Use the user's access token when logged in so the edge function can verify user_id
+    const authToken = session?.access_token ?? SUPABASE_ANON_KEY;
+
     const response = await fetch(EDGE_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ result, guesses, anon_id: anonId }),
     });
