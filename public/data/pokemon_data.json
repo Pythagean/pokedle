@@ -64197,7 +64197,7 @@
     ],
     "location_area_encounters": [
       {
-        "name": "Kanto Vermilion City",
+        "name": "Vermilion City",
         "region": "Kanto",
         "generation": 1,
         "games": [
@@ -64210,7 +64210,7 @@
         "chance": "0%"
       },
       {
-        "name": "Hoenn Faraway Island",
+        "name": "Faraway Island",
         "region": "Hoenn",
         "generation": 3,
         "games": [
@@ -64999,7 +64999,7 @@
         "chance": "morning:20%;day:20%;night:0%"
       },
       {
-        "name": "Kanto Canyon Entrance",
+        "name": "Canyon Entrance",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -65011,7 +65011,7 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -65023,7 +65023,7 @@
         "chance": "30%"
       },
       {
-        "name": "Kanto Water Path",
+        "name": "Water Path",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72216,7 +72216,7 @@
         "chance": "30%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72228,7 +72228,7 @@
         "chance": "15%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72464,7 +72464,7 @@
         "chance": "30%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72476,7 +72476,7 @@
         "chance": "15%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72709,7 +72709,7 @@
         "chance": "30%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -72721,7 +72721,7 @@
         "chance": "15%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -75870,7 +75870,7 @@
         "chance": "10%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -76963,7 +76963,7 @@
     ],
     "location_area_encounters": [
       {
-        "name": "Kanto Mt Ember",
+        "name": "Mt. Ember",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -77685,7 +77685,7 @@
         "chance": "65%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -77918,7 +77918,7 @@
         "chance": "65%"
       },
       {
-        "name": "Five Island Meadow",
+        "name": "Five Isle Meadow",
         "region": "Kanto",
         "generation": 3,
         "games": [
@@ -81065,7 +81065,7 @@
     ],
     "location_area_encounters": [
       {
-        "name": "Johto Ilex Forest",
+        "name": "Ilex Forest",
         "region": "Johto",
         "games": [
           "crystal"

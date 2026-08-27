@@ -953,6 +953,7 @@ function LocationsPage({ pokemonData, guesses, setGuesses, daily, useShinySprite
                     }
                 />
 
+                {/* DEBUG MODE */}
                 {/* <button
                     style={{ padding: '4px 12px', borderRadius: 6, background: resetCount >= 200 ? '#ccc' : '#eee', border: '1px solid #bbb', fontWeight: 600, fontSize: 14, cursor: resetCount >= 200 ? 'not-allowed' : 'pointer', opacity: resetCount >= 200 ? 0.5 : 1 }}
                     onClick={() => {
