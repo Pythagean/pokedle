@@ -10,8 +10,8 @@ import { TYPE_COLORS } from '../config/typeColors';
 // import cardManifest from '../../data/card_manifest.json';
 // import pokemonData from '../../data/pokemon_data.json';
 
-const SCRAMBLE_COLS = 28;
-const SCRAMBLE_ROWS = 20;
+const SCRAMBLE_COLS = 14;
+const SCRAMBLE_ROWS = 10;
 const SCRAMBLE_TILE_COUNT = SCRAMBLE_COLS * SCRAMBLE_ROWS;
 
 function mulberry32(a) {
@@ -159,7 +159,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   const isFullTypeCard = cardType === 'full_art' || cardType === 'special' || (cardType === 'shiny' && shinyVariant === 'full');
 
   // Scramble day: 15% seeded chance — card is split into shuffled tiles instead of blurred
-  const isScrambleDay = useMemo(() => mulberry32(baseSeed + 13579)() < 0.15, [baseSeed]);
+  const isScrambleDay = useMemo(() => mulberry32(baseSeed + 13579)() < 0.999, [baseSeed]);
 
   // baseOrder[slot]=origTileIdx (initial full shuffle); unscrambleOrder=which tiles lock in first
   const scrambleTileData = useMemo(() => {
@@ -340,11 +340,11 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   const forceReveal = isCorrect;
 
   // Scramble progress: 0 = fully scrambled, 1 = fully unscrambled
-  const scrambleProgress = isCorrect ? 1 : Math.min(guesses.length / 12, 1);
+  const scrambleProgress = isCorrect ? 1 : Math.min(guesses.length / 9, 1);
   const effectiveScrambleProgress = (isCorrect && showBlurred)
     ? (blurredAtGuessIdx !== null
-        ? Math.min((guesses.length - blurredAtGuessIdx - 1) / 12, 1)
-        : Math.min(Math.max(0, guesses.length - 1) / 12, 1))
+        ? Math.min((guesses.length - blurredAtGuessIdx - 1) / 9, 1)
+        : Math.min(Math.max(0, guesses.length - 1) / 9, 1))
     : scrambleProgress;
 
   useEffect(() => {
