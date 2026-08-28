@@ -631,6 +631,34 @@ function App() {
       }
     }
   }, [yesterdayGuessesByPage, yesterdaySeed]);
+
+  // Sync yesterday's guesses from server for authenticated users (same gate as today's sync)
+  const syncedYesterdayUserIdRef = useRef(null);
+  useEffect(() => {
+    if (!pokemonData || !session?.user?.id) return;
+    const userId = session.user.id;
+    if (syncedYesterdayUserIdRef.current === userId) return;
+    syncedYesterdayUserIdRef.current = userId;
+
+    loadGuessesFromServer(pokemonData, yesterdayDate, session).then(serverGuesses => {
+      if (!serverGuesses) return;
+      // Prevent re-submission if yesterday sync makes yesterdayAllCompleted true
+      try {
+        const submittedKey = `pokedle_submitted_${yesterdaySeed}`;
+        if (!localStorage.getItem(submittedKey)) localStorage.setItem(submittedKey, 'synced');
+      } catch (e) { /* ignore */ }
+      setYesterdayGuessesByPage(current => {
+        const merged = { ...current };
+        for (const [key, serverArr] of Object.entries(serverGuesses)) {
+          if (serverArr.length > 0) merged[key] = serverArr;
+        }
+        return merged;
+      });
+    }).catch(err => {
+      console.warn('[Storage] Yesterday server load failed:', err?.message ?? err);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemonData, session]);
   const [highlightedIdx, setHighlightedIdx] = useState(-1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const inputRef = useRef(null);
