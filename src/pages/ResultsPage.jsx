@@ -4,6 +4,7 @@ import { PHRASES, POKEMON } from '../components/CongratsMessage';
 import { updateResult } from '../utils/updateResult';
 import { getPlayerName } from '../utils/submitResult';
 import { loadHistoryFromServer } from '../utils/loadHistoryFromServer';
+import { useAuth } from '../utils/AuthContext';
 
 const pendingJsonRequests = new Map();
 
@@ -26,6 +27,7 @@ async function fetchJsonDedup(url, options = {}) {
 
 export default function ResultsPage({ results = [], guessesByPage = {}, onBack, backgroundsManifest = null, date = null, darkMode = false }) {
     const PAGE_LIMIT = 20;
+    const { session, displayName } = useAuth();
     const [copied, setCopied] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -117,8 +119,12 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             const storedUrl = localStorage.getItem('pokedle_card_preview_url');
             const storedName = localStorage.getItem('pokedle_card_name');
             
-            // Always load the stored name (persists across days)
-            if (storedName) setCardName(storedName);
+            // Load stored name, or fall back to display name
+            if (storedName) {
+                setCardName(storedName);
+            } else if (displayName) {
+                setCardName(displayName);
+            }
             
             if (storedDay && parseInt(storedDay, 10) === dayNumber) {
                 if (storedUrl) {
@@ -134,7 +140,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         } catch (e) {
             // ignore
         }
-    }, [dayNumber]);
+    }, [dayNumber, displayName]);
     
     const entries = (results || []).map(r => ({ label: r.label, value: r.solved ? r.guessCount : '-' }));
     const total = entries.reduce((acc, e) => acc + (typeof e.value === 'number' ? e.value : 0), 0);
@@ -843,7 +849,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
     useEffect(() => {
         async function loadHistory() {
             // Try to load from server first (50 days of history)
-            const serverHistory = await loadHistoryFromServer(50);
+            const serverHistory = await loadHistoryFromServer(50, session);
             if (serverHistory && serverHistory.length > 0) {
                 setHistory(serverHistory);
                 return;
@@ -862,7 +868,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
             }
         }
         loadHistory();
-    }, []);
+    }, [session]);
 
     // detect mobile (match CSS breakpoint) so we can widen content on small screens
     useEffect(() => {
@@ -904,8 +910,9 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
         try {
             const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
             const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+            const authToken = session?.access_token ?? SUPABASE_ANON_KEY;
             const url = `${SUPABASE_URL}/functions/v1/pokedle-results?pokedle_number=${dayNumber}&include_guesses=true&limit=${PAGE_LIMIT}&page=${leaderPage}`;
-            const { res, data } = await fetchJsonDedup(url, { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+            const { res, data } = await fetchJsonDedup(url, { headers: { Authorization: `Bearer ${authToken}` } });
             if (!res.ok) throw new Error(data.error ?? 'Failed to load breakdown data');
 
             // Use the include_guesses response as the single source for leaderboard + breakdown.

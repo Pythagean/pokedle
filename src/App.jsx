@@ -514,35 +514,60 @@ function App() {
     }
   }, [guessesByPage]);
 
-  // On first pokemonData load, attempt to restore guesses from server if local data is absent.
-  // Only runs as disaster recovery — never overwrites existing local data.
+  // Sync guesses from server when pokemonData is available.
+  // Authenticated users: sync once per login to enable cross-device progress.
+  // Anonymous users: only restore if local data is absent (disaster recovery).
+  const syncedUserIdRef = useRef(null);
   useEffect(() => {
     if (!pokemonData) return;
 
-    // Skip if we already have local data for today
-    const localTotal = Object.values(guessesByPage).reduce((n, arr) => n + arr.length, 0);
-    if (localTotal > 0) return;
+    const userId = session?.user?.id ?? null;
 
-    console.log('[Storage] Local data empty, attempting to load from server...');
+    if (userId) {
+      // Sync once per distinct user ID — prevents overwriting mid-session local progress on re-renders
+      if (syncedUserIdRef.current === userId) return;
+      syncedUserIdRef.current = userId;
+    } else {
+      // Anonymous: skip if local data already exists
+      const localTotal = Object.values(guessesByPage).reduce((n, arr) => n + arr.length, 0);
+      if (localTotal > 0) return;
+    }
+
+    console.log('[Storage] Syncing guesses from server...');
     loadGuessesFromServer(pokemonData, null, session).then(serverGuesses => {
       if (!serverGuesses) {
         console.log('[Storage] No data found on server');
         return;
       }
+      // Mark today as already submitted so the submitResult effect won't create a duplicate row
+      try {
+        const todaySeed = getSeedFromDate(new Date());
+        const submittedKey = `pokedle_submitted_${todaySeed}`;
+        if (!localStorage.getItem(submittedKey)) {
+          localStorage.setItem(submittedKey, 'synced');
+        }
+      } catch (e) { /* ignore */ }
       setGuessesByPage(current => {
-        // Guard against a race where local data appeared while the fetch was in-flight
+        const serverTotal = Object.values(serverGuesses).reduce((n, arr) => n + arr.length, 0);
+        console.log(`[Storage] Merging ${serverTotal} guesses from server`);
+        if (userId) {
+          // Authenticated: server is the source of truth — replace any mode where server has guesses
+          const merged = { ...current };
+          for (const [key, serverArr] of Object.entries(serverGuesses)) {
+            if (serverArr.length > 0) merged[key] = serverArr;
+          }
+          return merged;
+        }
+        // Anonymous: only restore if local is still empty (guard against in-flight race)
         const currentTotal = Object.values(current).reduce((n, arr) => n + arr.length, 0);
         if (currentTotal > 0) return current;
-        const serverTotal = Object.values(serverGuesses).reduce((n, arr) => n + arr.length, 0);
-        console.log(`[Storage] Restored ${serverTotal} guesses from server`);
         return { ...current, ...serverGuesses };
       });
     }).catch(err => {
       console.warn('[Storage] Server load failed:', err?.message ?? err);
     });
-  // Run once when pokemonData first becomes available
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pokemonData]);
+  }, [pokemonData, session]);
 
   // Debug state for testing different days
   const [debugDayOffset, setDebugDayOffset] = useState(0);

@@ -29,13 +29,18 @@ function formatDateKey(date) {
 }
 
 /**
- * Fetches the last N days of results history from the server for this anonymous user.
+ * Fetches the last N days of results history from the server.
+ * Uses user_id when authenticated, falls back to anon_id.
  * Returns array of { date: 'YYYYMMDD', results: [...] } in newest-first order, or null.
  */
-export async function loadHistoryFromServer(days = 50) {
+export async function loadHistoryFromServer(days = 50, session = null) {
   try {
+    const userId = session?.user?.id ?? null;
+    const authToken = session?.access_token ?? SUPABASE_ANON_KEY;
     const anonId = localStorage.getItem('pokedle_anon_id');
-    if (!anonId) return null;
+
+    // Need at least one identifier
+    if (!userId && !anonId) return null;
 
     // Calculate pokedle_numbers for the last N days
     const today = new Date();
@@ -47,14 +52,17 @@ export async function loadHistoryFromServer(days = 50) {
     }
 
     // Fetch results for each day (all in parallel)
-    const promises = pokledleNumbers.map(num =>
-      fetch(
-        `${EDGE_FUNCTION_URL}?pokedle_number=${num}&anon_id=${encodeURIComponent(anonId)}`,
-        { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    const promises = pokledleNumbers.map(num => {
+      const param = userId
+        ? `user_id=${encodeURIComponent(userId)}`
+        : `anon_id=${encodeURIComponent(anonId)}`;
+      return fetch(
+        `${EDGE_FUNCTION_URL}?pokedle_number=${num}&${param}`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
       )
         .then(res => res.ok ? res.json() : null)
-        .catch(() => null)
-    );
+        .catch(() => null);
+    });
 
     const responses = await Promise.all(promises);
 
