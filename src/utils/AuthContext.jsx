@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   async function fetchProfile(userId) {
     const { data } = await supabase
       .from('user_profiles')
-      .select('display_name')
+      .select('display_name, avatar_pokemon_id, avatar_bg_color, avatar_zoom, avatar_offset_x, avatar_offset_y')
       .eq('id', userId)
       .single();
     if (data) setProfile(data);
@@ -69,6 +69,23 @@ export function AuthProvider({ children }) {
     return { error };
   }
 
+  async function updateAvatar(pokemonId, bgColor, zoom, offsetX, offsetY) {
+    if (!user) return { error: new Error('Not logged in') };
+    const { error } = await supabase
+      .from('user_profiles')
+      .upsert({
+        id: user.id,
+        avatar_pokemon_id: pokemonId || null,
+        avatar_bg_color: bgColor || null,
+        avatar_zoom: zoom ?? 1,
+        avatar_offset_x: offsetX ?? 0,
+        avatar_offset_y: offsetY ?? 0,
+        updated_at: new Date().toISOString(),
+      });
+    if (!error) setProfile(p => ({ ...(p ?? {}), avatar_pokemon_id: pokemonId || null, avatar_bg_color: bgColor || null, avatar_zoom: zoom ?? 1, avatar_offset_x: offsetX ?? 0, avatar_offset_y: offsetY ?? 0 }));
+    return { error };
+  }
+
   // The name to display / use as player name — profile beats user_metadata beats email prefix
   const displayName =
     profile?.display_name ||
@@ -76,7 +93,7 @@ export function AuthProvider({ children }) {
     (user?.email ? user.email.split('@')[0] : null);
 
   return (
-    <AuthContext.Provider value={{ user, session, profile, loading, displayName, signIn, signUp, signInWithMagicLink, signOut, updateDisplayName }}>
+    <AuthContext.Provider value={{ user, session, profile, loading, displayName, signIn, signUp, signInWithMagicLink, signOut, updateDisplayName, updateAvatar }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,0 +1,9 @@
+-- Migration: add avatar fields to user_profiles
+-- Run this in the Supabase SQL editor after creating the initial user_profiles table
+
+ALTER TABLE public.user_profiles
+  ADD COLUMN IF NOT EXISTS avatar_pokemon_id INTEGER,
+  ADD COLUMN IF NOT EXISTS avatar_bg_color TEXT,
+  ADD COLUMN IF NOT EXISTS avatar_zoom REAL NOT NULL DEFAULT 1,
+  ADD COLUMN IF NOT EXISTS avatar_offset_x REAL NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS avatar_offset_y REAL NOT NULL DEFAULT 0;
