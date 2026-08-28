@@ -159,7 +159,7 @@ function CardPage({ pokemonData, guesses, setGuesses, daily, darkMode = false })
   const isFullTypeCard = cardType === 'full_art' || cardType === 'special' || (cardType === 'shiny' && shinyVariant === 'full');
 
   // Scramble day: 15% seeded chance — card is split into shuffled tiles instead of blurred
-  const isScrambleDay = useMemo(() => mulberry32(baseSeed + 13579)() < 0.999, [baseSeed]);
+  const isScrambleDay = useMemo(() => mulberry32(baseSeed + 13579)() < 0.15, [baseSeed]);
 
   // baseOrder[slot]=origTileIdx (initial full shuffle); unscrambleOrder=which tiles lock in first
   const scrambleTileData = useMemo(() => {
