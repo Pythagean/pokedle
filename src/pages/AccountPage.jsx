@@ -13,7 +13,7 @@ const AVATAR_BG_COLORS = [
 const DEFAULT_AVATAR_BG = AVATAR_BG_COLORS[0];
 
 export default function AccountPage({ darkMode = false }) {
-  const { user, displayName, profile, loading, signIn, signUp, signInWithMagicLink, signOut, updateDisplayName, updateAvatar } = useAuth();
+  const { user, displayName, profile, loading, signIn, signUp, signOut, updateDisplayName, updateAvatar } = useAuth();
 
   const bg = darkMode ? '#1f232a' : 'transparent';
   const panelBg = darkMode ? '#2a2f38' : '#fff';
@@ -64,7 +64,6 @@ export default function AccountPage({ darkMode = false }) {
             inputBorder={inputBorder}
             signIn={signIn}
             signUp={signUp}
-            signInWithMagicLink={signInWithMagicLink}
           />
         )}
       </div>
@@ -72,8 +71,8 @@ export default function AccountPage({ darkMode = false }) {
   );
 }
 
-function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder, signIn, signUp, signInWithMagicLink }) {
-  const [tab, setTab] = useState('signin'); // 'signin' | 'signup' | 'magic'
+function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder, signIn, signUp }) {
+  const [tab, setTab] = useState('signin'); // 'signin' | 'signup'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -120,10 +119,6 @@ function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder
         const { error } = await signUp(email, password, displayName);
         if (error) { setStatus('error'); setMessage(error.message); }
         else { setStatus('success'); setMessage('Account created! Check your email to confirm.'); }
-      } else {
-        const { error } = await signInWithMagicLink(email);
-        if (error) { setStatus('error'); setMessage(error.message); }
-        else { setStatus('success'); setMessage('Magic link sent! Check your email.'); }
       }
     } catch (err) {
       setStatus('error');
@@ -150,7 +145,6 @@ function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder
       <div style={{ display: 'flex', gap: 4, background: darkMode ? '#1f2430' : '#fff0f3', borderRadius: 10, padding: 4, marginBottom: 24 }}>
         <button style={tabStyle(tab === 'signin')} onClick={() => { setTab('signin'); setStatus(null); setMessage(''); }}>Sign In</button>
         <button style={tabStyle(tab === 'signup')} onClick={() => { setTab('signup'); setStatus(null); setMessage(''); }}>Sign Up</button>
-        <button style={tabStyle(tab === 'magic')} onClick={() => { setTab('magic'); setStatus(null); setMessage(''); }}>Magic Link</button>
       </div>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -180,21 +174,19 @@ function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder
             autoComplete="email"
           />
         </div>
-        {tab !== 'magic' && (
-          <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: muted, display: 'block', marginBottom: 4 }}>Password</label>
-            <input
-              style={inputStyle}
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required={tab !== 'magic'}
-              minLength={6}
-              autoComplete={tab === 'signup' ? 'new-password' : 'current-password'}
-            />
-          </div>
-        )}
+        <div>
+          <label style={{ fontSize: 13, fontWeight: 600, color: muted, display: 'block', marginBottom: 4 }}>Password</label>
+          <input
+            style={inputStyle}
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="••••••••"
+            required
+            minLength={6}
+            autoComplete={tab === 'signup' ? 'new-password' : 'current-password'}
+          />
+        </div>
 
         {message && (
           <div style={{
@@ -210,14 +202,13 @@ function AuthForm({ darkMode, panelBg, border, text, muted, inputBg, inputBorder
 
         <button
           type="submit"
-          disabled={status === 'loading' || (tab === 'magic' && status === 'success')}
-          style={btnStyle(status === 'loading' || (tab === 'magic' && status === 'success'))}
+          disabled={status === 'loading'}
+          style={btnStyle(status === 'loading')}
         >
           {status === 'loading'
             ? 'Please wait…'
             : tab === 'signin' ? 'Sign In'
-            : tab === 'signup' ? 'Create Account'
-            : 'Send Magic Link'}
+            : 'Create Account'}
         </button>
       </form>
 
