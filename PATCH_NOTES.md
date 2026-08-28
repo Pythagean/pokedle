@@ -1,3 +1,34 @@
+## Release Notes — August 28th, 2026
+
+## What’s New
+
+- **Card** <br>
+    - Tweaked Scramble mode parameters (Less pieces, closer to correct image with each incorrect guess)
+- **Locations** <br>  
+    - Fixed Snubbell Locations
+    - Fixing Sevii Island map image mappings
+- **Overall** <br>
+    - Added Account log-in feature (WIP)
+    - Results should save against logged in user (if applicable) which allows syncing across devices
+    - Added ability to change Profile Picture (not currently used for anything)
+
+## Commits included (newest first)
+
+```text
+6191224 | 2026-08-28 | Change Scramble back to 15%
+dafaa31 | 2026-08-28 | Sync yesterday's guesses from server for authenticated users
+b370a8a | 2026-08-28 | More work on Account feature
+2956676 | 2026-08-28 | Added Profile Picture creator to Account Page
+2ec142c | 2026-08-28 | Locations: Fixing Sevii Island map image mappings
+00fd829 | 2026-08-28 | Card: Tweaked Scramble mode parameters. Less pieces, closer to correct image with each incorrect guess
+bd896d5 | 2026-08-26 | Initial work on Account feature
+ed71e13 | 2026-08-26 | Fixed Snubbell Locations
+ea2c930 | 2026-08-25 | Add script to find missing IDs in PNG files
+f059fb7 | 2026-08-21 | Back to 15%
+1ced7e0 | 2026-08-21 | Change to 5% change for scramble
+9d806ed | 2026-08-21 | Patch notes: Aug 21st
+```
+
 ## Release Notes — August 21st, 2026
 
 ## What’s New
