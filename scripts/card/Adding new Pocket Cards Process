@@ -24,6 +24,8 @@ suffix to denote different types)
 eg. caterpie.webp
 pikachu-spec.webp
 
+cd ./scripts/card 
+
 python .\rename_card_images.py .\pocket_download\ `
   --pokemon-data ..\..\public\data\pokemon_data.json `
   --card-manifest ..\..\public\data\card_manifest.json `
