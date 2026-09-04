@@ -1728,7 +1728,7 @@ export default function ResultsPage({ results = [], guessesByPage = {}, onBack, 
                                 } else if (leaderPage === 1 && t === bronze) {
                                     medal = '🥉';
                                 }
-                                const isCurrentPlayer = row.player && row.player === currentPlayerName;
+                                const isCurrentPlayer = row.player && row.player === currentPlayerName && Number(row.total ?? 0) === total;
 
                                 return (
                                     <div
